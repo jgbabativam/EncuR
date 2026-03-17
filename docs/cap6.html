@@ -1,0 +1,2128 @@
+<!DOCTYPE html>
+<html lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 6 Modelos de regresión | Análisis de encuestas con R</title>
+  <meta name="description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 6 Modelos de regresión | Análisis de encuestas con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="github-repo" content="psirusteam/2021ASDA" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 6 Modelos de regresión | Análisis de encuestas con R" />
+  
+  <meta name="twitter:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  
+
+<meta name="author" content="Andrés Gutiérrez, Stalyn Guerrero, Cristian Téllez, Giovany Babativa-Márquez" />
+
+
+<meta name="date" content="2026-03-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="análisis-de-variables-categóricas.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#universo-de-estudio-y-población-objetivo"><i class="fa fa-check"></i><b>2.1</b> Universo de estudio y población objetivo</a></li>
+<li class="chapter" data-level="2.2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#unidades-de-análisis"><i class="fa fa-check"></i><b>2.2</b> Unidades de análisis</a></li>
+<li class="chapter" data-level="2.3" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#unidades-de-muestreo"><i class="fa fa-check"></i><b>2.3</b> Unidades de muestreo</a></li>
+<li class="chapter" data-level="2.4" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#marcos-de-muestreo"><i class="fa fa-check"></i><b>2.4</b> Marcos de muestreo</a></li>
+<li class="chapter" data-level="2.5" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#sec-motivacion"><i class="fa fa-check"></i><b>2.5</b> Motivación</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#la-importancia-de-considerar-el-diseño-muestral"><i class="fa fa-check"></i><b>2.5.1</b> La importancia de considerar el diseño muestral</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#parámetros-y-estimadores"><i class="fa fa-check"></i><b>2.6</b> Parámetros y estimadores</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#ajustes-adicionales-de-los-pesos"><i class="fa fa-check"></i><b>2.6.1</b> Ajustes adicionales de los pesos</a></li>
+<li class="chapter" data-level="2.6.2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#importancia-de-los-ajustes"><i class="fa fa-check"></i><b>2.6.2</b> Importancia de los ajustes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#estimación-de-totales"><i class="fa fa-check"></i><b>2.7</b> Estimación de totales</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#ejemplo-ilustrativo-1"><i class="fa fa-check"></i><b>2.7.1</b> Ejemplo ilustrativo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#efecto-del-diseño-deff"><i class="fa fa-check"></i><b>2.8</b> Efecto del diseño (DEFF)</a></li>
+<li class="chapter" data-level="2.9" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#muestreo-estratificado-aleatorio-simple-con-dos-etapas"><i class="fa fa-check"></i><b>2.9</b> Muestreo estratificado aleatorio simple con dos etapas</a></li>
+<li class="chapter" data-level="2.10" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#práctica-en-r"><i class="fa fa-check"></i><b>2.10</b> Práctica en <code>R</code></a></li>
+<li class="chapter" data-level="2.11" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#calibrando-con-r"><i class="fa fa-check"></i><b>2.11</b> Calibrando con <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><i class="fa fa-check"></i><b>3</b> Del manejo de datos al análisis de encuestas complejas en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#fundamentos-básicos-de-r-y-rstudio"><i class="fa fa-check"></i><b>3.1</b> Fundamentos básicos de R y Rstudio</a></li>
+<li class="chapter" data-level="3.2" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#paquetes-para-el-análisis-de-encuestas"><i class="fa fa-check"></i><b>3.2</b> Paquetes para el análisis de encuestas</a></li>
+<li class="chapter" data-level="3.3" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#paquetes-complementarios-para-la-manipulación-y-visualización-de-datos"><i class="fa fa-check"></i><b>3.3</b> Paquetes complementarios para la manipulación y visualización de datos</a></li>
+<li class="chapter" data-level="3.4" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#creación-de-proyectos-en-r"><i class="fa fa-check"></i><b>3.4</b> Creación de proyectos en <code>R</code></a></li>
+<li class="chapter" data-level="3.5" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#lectura-de-bases-de-datos-y-manipulación"><i class="fa fa-check"></i><b>3.5</b> Lectura de bases de datos y manipulación</a></li>
+<li class="chapter" data-level="3.6" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#el-operador-pipe"><i class="fa fa-check"></i><b>3.6</b> El operador <code>pipe</code></a></li>
+<li class="chapter" data-level="3.7" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#transformación-y-resumen-de-datos"><i class="fa fa-check"></i><b>3.7</b> Transformación y resumen de datos</a></li>
+<li class="chapter" data-level="3.8" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas"><i class="fa fa-check"></i><b>3.8</b> Diferencias entre el análisis tradicional y el análisis de encuestas complejas</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de las variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="cap4.html"><a href="cap4.html#definición-del-objeto-de-diseño"><i class="fa fa-check"></i><b>4.1</b> Definición del objeto de diseño</a></li>
+<li class="chapter" data-level="4.2" data-path="cap4.html"><a href="cap4.html#estimación-de-totales-y-medias"><i class="fa fa-check"></i><b>4.2</b> Estimación de totales y medias</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="cap4.html"><a href="cap4.html#estimación-puntual"><i class="fa fa-check"></i><b>4.2.1</b> Estimación puntual</a></li>
+<li class="chapter" data-level="4.2.2" data-path="cap4.html"><a href="cap4.html#estimación-de-totales-1"><i class="fa fa-check"></i><b>4.2.2</b> Estimación de totales</a></li>
+<li class="chapter" data-level="4.2.3" data-path="cap4.html"><a href="cap4.html#estimación-de-la-media-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.2.3</b> Estimación de la media e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.2.4" data-path="cap4.html"><a href="cap4.html#estimación-de-medidas-de-localización-y-dispersión"><i class="fa fa-check"></i><b>4.2.4</b> Estimación de medidas de localización y dispersión</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="cap4.html"><a href="cap4.html#estimación-de-razones"><i class="fa fa-check"></i><b>4.3</b> Estimación de razones</a>
+<ul>
+<li class="chapter" data-level="" data-path="cap4.html"><a href="cap4.html#implementación-computacional-en-r"><i class="fa fa-check"></i>Implementación computacional en <code>R</code></a></li>
+<li class="chapter" data-level="" data-path="cap4.html"><a href="cap4.html#interpretación-aplicada"><i class="fa fa-check"></i>Interpretación aplicada</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="cap4.html"><a href="cap4.html#estimación-del-coeficiente-de-gini"><i class="fa fa-check"></i><b>4.4</b> Estimación del coeficiente de Gini</a></li>
+<li class="chapter" data-level="4.5" data-path="cap4.html"><a href="cap4.html#análisis-de-correlación"><i class="fa fa-check"></i><b>4.5</b> Análisis de correlación</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="cap4.html"><a href="cap4.html#ajuste-al-diseño-muestral"><i class="fa fa-check"></i><b>4.5.1</b> Ajuste al diseño muestral</a></li>
+<li class="chapter" data-level="4.5.2" data-path="cap4.html"><a href="cap4.html#expresión-formal"><i class="fa fa-check"></i><b>4.5.2</b> Expresión formal</a></li>
+<li class="chapter" data-level="4.5.3" data-path="cap4.html"><a href="cap4.html#implementación-en-r"><i class="fa fa-check"></i><b>4.5.3</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="cap4.html"><a href="cap4.html#pruebas-de-hipótesis"><i class="fa fa-check"></i><b>4.6</b> Pruebas de hipótesis</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="cap4.html"><a href="cap4.html#planteamiento-general"><i class="fa fa-check"></i><b>4.6.1</b> Planteamiento general</a></li>
+<li class="chapter" data-level="4.6.2" data-path="cap4.html"><a href="cap4.html#prueba-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.6.2</b> Prueba para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.6.3" data-path="cap4.html"><a href="cap4.html#estadístico-de-prueba-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.6.3</b> Estadístico de prueba e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.6.4" data-path="cap4.html"><a href="cap4.html#ejemplo-aplicado-en-r"><i class="fa fa-check"></i><b>4.6.4</b> Ejemplo aplicado en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="cap4.html"><a href="cap4.html#estimación-de-contrastes"><i class="fa fa-check"></i><b>4.7</b> Estimación de contrastes</a></li>
+<li class="chapter" data-level="4.8" data-path="cap4.html"><a href="cap4.html#viz-continuas"><i class="fa fa-check"></i><b>4.8</b> Visualización de variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="cap4.html"><a href="cap4.html#histogramas"><i class="fa fa-check"></i><b>4.8.1</b> Histogramas</a></li>
+<li class="chapter" data-level="4.8.2" data-path="cap4.html"><a href="cap4.html#densidades-y-boxplots"><i class="fa fa-check"></i><b>4.8.2</b> Densidades y Boxplots</a></li>
+<li class="chapter" data-level="4.8.3" data-path="cap4.html"><a href="cap4.html#diagramas-de-dispersión"><i class="fa fa-check"></i><b>4.8.3</b> Diagramas de dispersión</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html"><i class="fa fa-check"></i><b>5</b> Análisis de variables categóricas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#estimación-del-tamaño-poblacional"><i class="fa fa-check"></i><b>5.1</b> Estimación del tamaño poblacional</a>
+<ul>
+<li class="chapter" data-level="" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#estimación-de-totales-en-r"><i class="fa fa-check"></i>Estimación de totales en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#estimación-de-proporciones"><i class="fa fa-check"></i><b>5.2</b> Estimación de proporciones</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#estimación-de-proporciones-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Estimación de proporciones en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#tablas-cruzadas"><i class="fa fa-check"></i><b>5.3</b> Tablas cruzadas</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#definición-y-notación"><i class="fa fa-check"></i><b>5.3.1</b> Definición y notación</a></li>
+<li class="chapter" data-level="5.3.2" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#tablas-de-doble-entrada"><i class="fa fa-check"></i><b>5.3.2</b> Tablas de doble entrada</a></li>
+<li class="chapter" data-level="5.3.3" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#proporciones-para-variables-binarias"><i class="fa fa-check"></i><b>5.3.3</b> Proporciones para variables binarias</a></li>
+<li class="chapter" data-level="5.3.4" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#proporciones-para-variables-multinomiales"><i class="fa fa-check"></i><b>5.3.4</b> Proporciones para variables multinomiales</a></li>
+<li class="chapter" data-level="5.3.5" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#tablas-cruzadas-o-de-contingencia"><i class="fa fa-check"></i><b>5.3.5</b> Tablas cruzadas o de contingencia</a></li>
+<li class="chapter" data-level="5.3.6" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#prueba-de-independencia-chi2"><i class="fa fa-check"></i><b>5.3.6</b> Prueba de independencia <span class="math inline">\(\chi^{2}\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#viz-categoricas"><i class="fa fa-check"></i><b>5.4</b> Visualización de variables categóricas</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#gráficos-de-barras"><i class="fa fa-check"></i><b>5.4.1</b> Gráficos de barras</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#viz-mapas"><i class="fa fa-check"></i><b>5.5</b> Visualización de variables categóricas en mapas</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#carga-del-shapefile-y-mapa-base"><i class="fa fa-check"></i><b>5.5.1</b> Carga del shapefile y mapa base</a></li>
+<li class="chapter" data-level="5.5.2" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#mapa-coroplético-de-pobreza-masculina-por-región"><i class="fa fa-check"></i><b>5.5.2</b> Mapa coroplético de pobreza masculina por región</a></li>
+<li class="chapter" data-level="5.5.3" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#mapa-del-coeficiente-de-variación-del-ingreso-medio"><i class="fa fa-check"></i><b>5.5.3</b> Mapa del coeficiente de variación del ingreso medio</a></li>
+<li class="chapter" data-level="5.5.4" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#mapa-bivariante-con-ggplot2"><i class="fa fa-check"></i><b>5.5.4</b> Mapa bivariante con <code>ggplot2</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cap6.html"><a href="cap6.html"><i class="fa fa-check"></i><b>6</b> Modelos de regresión</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="cap6.html"><a href="cap6.html#antecedentes-históricos-y-desarrollos-metodológicos"><i class="fa fa-check"></i><b>6.1</b> Antecedentes históricos y desarrollos metodológicos</a></li>
+<li class="chapter" data-level="6.2" data-path="cap6.html"><a href="cap6.html#relevancia-práctica"><i class="fa fa-check"></i><b>6.2</b> Relevancia práctica</a></li>
+<li class="chapter" data-level="6.3" data-path="cap6.html"><a href="cap6.html#uso-de-ponderaciones"><i class="fa fa-check"></i><b>6.3</b> Uso de ponderaciones</a></li>
+<li class="chapter" data-level="6.4" data-path="cap6.html"><a href="cap6.html#enfoques-inferenciales-para-el-análisis-de-datos"><i class="fa fa-check"></i><b>6.4</b> Enfoques inferenciales para el análisis de datos</a></li>
+<li class="chapter" data-level="6.5" data-path="cap6.html"><a href="cap6.html#estimación-de-los-parámetros"><i class="fa fa-check"></i><b>6.5</b> Estimación de los parámetros</a></li>
+<li class="chapter" data-level="6.6" data-path="cap6.html"><a href="cap6.html#diagnóstico-del-modelo"><i class="fa fa-check"></i><b>6.6</b> Diagnóstico del modelo</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="cap6.html"><a href="cap6.html#coeficiente-de-determinación"><i class="fa fa-check"></i><b>6.6.1</b> Coeficiente de determinación</a></li>
+<li class="chapter" data-level="6.6.2" data-path="cap6.html"><a href="cap6.html#diagnóstico-de-los-residuales"><i class="fa fa-check"></i><b>6.6.2</b> Diagnóstico de los residuales</a></li>
+<li class="chapter" data-level="6.6.3" data-path="cap6.html"><a href="cap6.html#observaciones-influyentes"><i class="fa fa-check"></i><b>6.6.3</b> Observaciones influyentes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="cap6.html"><a href="cap6.html#inferencia-sobre-los-parámetros-del-modelo"><i class="fa fa-check"></i><b>6.7</b> Inferencia sobre los parámetros del modelo</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="cap6.html"><a href="cap6.html#estimación-puntual-e-intervalo-de-predicción"><i class="fa fa-check"></i><b>6.7.1</b> Estimación puntual e intervalo de predicción</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis de encuestas con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cap6" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Capítulo 6</span> Modelos de regresión<a href="cap6.html#cap6" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>La regresión estadística constituye una técnica fundamental para examinar los vínculos entre variables en el marco de los datos muestrales obtenidos mediante encuestas. A través de este procedimiento, es posible determinar la forma en que una o varias variables de respuesta (dependientes) se relacionan con una o varias variables explicativas (independientes). La validez de los resultados depende de una adecuada formulación del modelo <span class="citation">(<a href="#ref-heeringa2017applied">Heeringa et al., 2017</a>)</span>.</p>
+<p>Un ejemplo ilustrativo es la estimación del ingreso de los hogares (variable dependiente) en función del nivel educativo alcanzado y de la situación laboral de sus miembros (variables independientes), empleando datos provenientes de encuestas de hogares. Este tipo de análisis permite identificar patrones, cuantificar efectos y generar evidencia útil para la formulación de políticas públicas.</p>
+<p>No obstante, dado que estas encuestas suelen estar sustentadas en diseños muestrales complejos, los enfoques tradicionales de regresión resultan insuficientes. Ignorar los pesos muestrales, la estratificación o la conglomeración puede derivar en sesgos en los coeficientes estimados y, sobre todo, en una subestimación de sus varianzas, comprometiendo así la validez de las inferencias. Por esta razón, los modelos de regresión aplicados a encuestas deben modificarse y ajustarse para garantizar resultados representativos y robustos.</p>
+<p>En consecuencia, el análisis de datos provenientes de encuestas exige una atención detallada al diseño de muestreo. La incorporación de los pesos de la encuesta y los ajustes correspondientes a la estratificación y la conglomeración permite obtener inferencias válidas y precisas. Adicionalmente, en algunos casos se han propuesto alternativas simplificadas, como el uso de pesos normalizados o enfoques de ponderación aproximada, que buscan equilibrar la complejidad metodológica con la factibilidad práctica del análisis.</p>
+<div id="antecedentes-históricos-y-desarrollos-metodológicos" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Antecedentes históricos y desarrollos metodológicos<a href="cap6.html#antecedentes-históricos-y-desarrollos-metodológicos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El estudio de la regresión bajo diseños de muestreo complejos cuenta con una trayectoria bien documentada. <span class="citation">Kish &amp; Frankel (<a href="#ref-kish1974inference">1974</a>)</span> fueron de los primeros en discutir el impacto de estos diseños sobre las inferencias derivadas de modelos de regresión. Posteriormente, <span class="citation">Fuller (<a href="#ref-fuller1975regression">1975</a>)</span> desarrolló un estimador de varianza apoyado en técnicas de linealización para modelos de regresión lineal múltiple con ponderación desigual, e introdujo métodos específicos para diseños estratificados y de dos etapas.</p>
+<p>Más adelante, <span class="citation">Shah et al. (<a href="#ref-shah1977inference">1977</a>)</span> abordaron el problema de las violaciones a los supuestos clásicos al trabajar con datos de encuestas, proponiendo alternativas de inferencia robusta para los parámetros. En paralelo, <span class="citation">Binder (<a href="#ref-binder1983variances">1983</a>)</span> se enfocó en las distribuciones muestrales de los estimadores de regresión en poblaciones finitas, estableciendo procedimientos para estimar varianzas bajo esquemas complejos.</p>
+<p>En los años siguientes, <span class="citation">Skinner et al. (<a href="#ref-skinner1989analysis">1989</a>)</span> ampliaron estos aportes mediante estimadores de varianza para los coeficientes de regresión que incorporaban la estratificación y la conglomeración, recomendando explícitamente el uso de métodos de linealización o técnicas alternativas para la estimación de la varianza. Posteriormente, <span class="citation">Fuller (<a href="#ref-fuller2002regression">2002</a>)</span> realizó un compendio de los métodos de estimación aplicables a modelos de regresión en encuestas complejas, mientras que <span class="citation">Pfeffermann (<a href="#ref-pfeffermann2011modelling">2011</a>)</span> discutió desarrollos más recientes, como los métodos de ponderación <em>q-weighted</em>, mostrando evidencia empírica de su utilidad.</p>
+</div>
+<div id="relevancia-práctica" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Relevancia práctica<a href="cap6.html#relevancia-práctica" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En la actualidad, los modelos de regresión bajo diseños de muestreo complejos representan una herramienta esencial para el análisis de encuestas de hogares. Permiten trascender las estadísticas descriptivas y aproximarse a explicaciones causales o predictivas, siempre que se reconozcan y ajusten las particularidades del diseño muestral. Su correcta aplicación abre la posibilidad de examinar cómo las características sociodemográficas y económicas se asocian con distintos resultados de interés, aportando evidencia clave para la formulación de políticas públicas.</p>
+<p>En las siguientes secciones se mostrará cómo implementar estos modelos en <code>R</code> mediante la librería <code>survey</code>. Se abordará la especificación del diseño muestral, la estimación de modelos lineales y logísticos, así como la obtención de errores estándar y pruebas de hipótesis ajustadas al diseño, integrando los fundamentos teóricos con ejemplos prácticos en un flujo de trabajo reproducible.</p>
+<p>Como punto de partida, conviene comprender la estructura básica de los modelos de regresión. El modelo de regresión lineal simple se define como</p>
+<p><span class="math display">\[
+y = \beta_{0} + \beta_{1}x + \varepsilon,
+\]</span></p>
+<p>donde <span class="math inline">\(y\)</span> es la variable dependiente, <span class="math inline">\(x\)</span> la variable independiente, <span class="math inline">\(\beta_{0}\)</span> y <span class="math inline">\(\beta_{1}\)</span> los parámetros del modelo, y <span class="math inline">\(\varepsilon\)</span> el error aleatorio, definido como la diferencia entre el valor observado y el ajustado:</p>
+<p><span class="math display">\[
+\varepsilon = y - \hat{y} = y - (\beta_{0} + \beta_{1}x).
+\]</span></p>
+<p>Generalizando este planteamiento, los modelos de regresión lineal múltiple incorporan varias covariables:</p>
+<p><span class="math display">\[
+y = \beta_{0} + \beta_{1}x_{1} + \cdots + \beta_{p}x_{p} + \varepsilon,
+\]</span></p>
+<p>expresión que en notación matricial adopta la forma</p>
+<p><span class="math display">\[
+y_{i} = x_{i}\boldsymbol{\beta} + \varepsilon_{i}, \quad i=1,\ldots,n,
+\]</span></p>
+<p>donde <span class="math inline">\(x_{i} = [1, x_{1i}, \ldots, x_{pi}]\)</span> corresponde al vector de covariables del individuo <span class="math inline">\(i\)</span>, y <span class="math inline">\(\boldsymbol{\beta}^{T} = [\beta_{0}, \beta_{1}, \ldots, \beta_{p}]\)</span> es el vector de parámetros.</p>
+<p>En este contexto, el valor esperado de la variable respuesta condicionado a las covariables puede escribirse como:</p>
+<p><span class="math display">\[
+E(y \mid x) = \hat{\beta}_{0} + \hat{\beta}_{1}x_{1} + \cdots + \hat{\beta}_{p}x_{p}.
+\]</span></p>
+<p>Para que estos modelos sean válidos, es necesario que se cumplan ciertos supuestos clásicos, recogidos en la literatura <span class="citation">(<a href="#ref-heeringa2017applied">Heeringa et al., 2017</a>)</span>, entre los que destacan:</p>
+<ul>
+<li><strong>Esperanza nula de los residuos</strong>: <span class="math inline">\(E(\varepsilon_{i} \mid x_{i}) = 0\)</span>.</li>
+<li><strong>Homogeneidad de varianza</strong>: <span class="math inline">\(Var(\varepsilon_{i} \mid x_{i}) = \sigma^2\)</span>.</li>
+<li><strong>Normalidad de los errores</strong>: <span class="math inline">\(\varepsilon_{i} \mid x_{i} \sim N(0,\sigma^2)\)</span>.</li>
+<li><strong>Independencia de los residuos</strong>: <span class="math inline">\(cov(\varepsilon_{i},\varepsilon_{j}\mid x_{i},x_{j})=0\)</span>.</li>
+</ul>
+<p>Estos supuestos garantizan que los estimadores obtenidos posean buenas propiedades estadísticas, tales como: insesgamiento, eficiencia y consistencia. Sin embargo, al trabajar con encuestas bajo diseños complejos, dichas condiciones rara vez se cumplen de manera estricta, por lo que se requieren adaptaciones que serán abordadas en las próximas secciones.</p>
+<p>Una vez definido el modelo y sus supuestos, se pueden deducir los siguientes resultados:</p>
+<p><span class="math display">\[
+\hat{y}  =  E\left(y\mid x\right)
+=  E\left(\boldsymbol{x}\boldsymbol{\beta}\right)+E\left(\varepsilon\right)
+=  \boldsymbol{x}\boldsymbol{\beta}+0
+  =  \beta_{0}+\beta_{1}x_{1}+\cdots+\beta_{p}x_{p}
+\]</span></p>
+<p>y adicionalmente,</p>
+<p><span class="math display">\[
+var\left(y_{i}\mid x_{i}\right)  =  \sigma_{y,x}^{2}
+\]</span></p>
+<p><span class="math display">\[
+cov\left(y_{i},y_{j}\mid x_{i},x_{j}\right)  = 0
+\]</span></p>
+<p><span class="math display">\[
+y_{i}  \sim  N\left(x_{i}\boldsymbol{\beta},\sigma_{y,x}^{2}\right)
+\]</span></p>
+</div>
+<div id="uso-de-ponderaciones" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Uso de ponderaciones<a href="cap6.html#uso-de-ponderaciones" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En el análisis de datos provenientes de encuestas con diseños complejos surge un interrogante clave: ¿cómo deben incorporarse los pesos muestrales en los modelos de regresión? La respuesta no es trivial, ya que los pesos reflejan tanto la probabilidad de selección como los ajustes por no respuesta y calibración, pero su inclusión directa en el modelado puede generar problemas de eficiencia y elevar la varianza de los estimadores. En este marco, <span class="citation">Heeringa et al. (<a href="#ref-heeringa2017applied">2017</a>)</span> distinguen dos enfoques principales:</p>
+<ul>
+<li><p><strong>Enfoque orientado al diseño</strong>: busca realizar inferencias válidas sobre la población total. Los pesos de la encuesta resultan indispensables para obtener estimaciones insesgadas de los coeficientes, pues corrigen las probabilidades desiguales de selección derivadas del diseño muestral. No obstante, este enfoque no protege frente a la mala especificación del modelo: si la relación planteada no refleja adecuadamente lo que ocurre en la población, los coeficientes estimados, aunque insesgados en el marco del diseño, pueden carecer de utilidad sustantiva.</p></li>
+<li><p><strong>Enfoque orientado al modelo</strong>: sostiene que los pesos no son necesarios siempre que el modelo esté correctamente formulado y el muestreo sea no informativo, es decir, que el modelo válido para la muestra coincida con el de la población. Bajo este supuesto, las relaciones entre variables quedan bien descritas por el modelo independientemente del diseño muestral, y la incorporación de ponderaciones podría incrementar innecesariamente la variabilidad de las estimaciones, elevando los errores estándar.</p></li>
+</ul>
+<p>La decisión de ponderar o no depende tanto del contexto como de la sensibilidad de los resultados a su inclusión. Autores como <span class="citation">Skinner et al. (<a href="#ref-skinner1989analysis">1989</a>)</span> y <span class="citation">Pfeffermann (<a href="#ref-pfeffermann2011modelling">2011</a>)</span> han debatido ampliamente sobre la pertinencia de incorporar los pesos muestrales en la estimación de los parámetros y sus errores estándar.</p>
+<p>Una recomendación metodológica ampliamente aceptada consiste en estimar los modelos con y sin ponderaciones y comparar los resultados: si al incluir los pesos se observan variaciones sustanciales en los coeficientes o en las conclusiones, ello indica que el muestreo fue informativo o que el modelo presenta deficiencias de especificación, por lo que conviene optar por estimaciones ponderadas. En cambio, si las ponderaciones solo incrementan los errores estándar sin modificar esencialmente los coeficientes, puede asumirse que el modelo está bien planteado y que ponderar no es indispensable.</p>
+<p>En términos prácticos, la decisión puede resumirse en dos escenarios:</p>
+<ul>
+<li><p><strong>Inferencia descriptiva</strong>: es obligatorio aplicar ponderaciones, pues el objetivo es reflejar con precisión la estructura de la población.</p></li>
+<li><p><strong>Inferencia analítica</strong>: es posible recurrir a modelos no ponderados o ajustados por pesos. Cuando la meta es analizar relaciones o contrastar hipótesis, la ponderación no siempre es necesaria, especialmente si el modelo incluye variables del diseño muestral (estratos o conglomerados). Con todo, el uso de modelos sin ponderar debe justificarse explícitamente, pues implica supuestos más restrictivos que los modelos ponderados.</p></li>
+</ul>
+<p>Cuando se opta por ponderar, las ponderaciones corrigen posibles sesgos de sobre o subrepresentación de determinados grupos y contribuyen a obtener estimaciones de varianza más exactas, al considerar la estratificación, el agrupamiento y las probabilidades desiguales de selección. Dentro del enfoque basado en el diseño, esto permite que los resultados se aproximen a valores insesgados comparables a los que se obtendrían en un censo completo, incluso cuando el modelo no esté formulado de manera óptima. Sin embargo, cuando los pesos presentan gran dispersión, pueden aumentar la varianza de los parámetros estimados y volver inestables las estimaciones, razón por la que en contextos explicativos o analíticos los modelos sin ponderar pueden, en ocasiones, arrojar resultados más consistentes y eficientes. En cualquier caso, si el modelo está mal especificado, prescindir de las ponderaciones puede producir estimaciones poco útiles o carentes de validez, por lo que la selección cuidadosa de las variables del modelo es siempre indispensable.
+Para hacer frente a estas tensiones, se han propuesto estrategias de ajuste que buscan equilibrar precisión y eficiencia. Entre los procedimientos más utilizados destacan los siguientes:</p>
+<p><strong>Pesos tipo Senado</strong>
+Este procedimiento ajusta los pesos de manera que su suma coincida con el tamaño de la muestra, en lugar del tamaño de la población. El objetivo es mantener la representatividad relativa de las unidades, pero reduciendo la dispersión de los pesos originales, lo que resulta particularmente ventajoso en encuestas donde existe alta variabilidad entre los factores de expansión:</p>
+<p><span class="math display">\[
+w_k^{Senate} = w_k \times \frac{n}{\sum w_k}
+\]</span></p>
+<p><strong>Pesos normalizados</strong>
+En este enfoque los pesos originales se reescalan para que su suma sea igual a uno, lo que evita un incremento innecesario de la varianza en los modelos. Esta técnica es especialmente útil cuando se trabaja con diferentes subconjuntos de datos (por ejemplo, modelos estimados en subpoblaciones) o cuando se busca minimizar la inflación de la varianza:</p>
+<p><span class="math display">\[
+w_k^{Normalized} = \frac{w_k}{\sum w_k}
+\]</span></p>
+<p>Es importante destacar que, en ambos métodos, los pesos ajustados se obtienen mediante transformaciones multiplicativas directas de los pesos muestrales originales. Por ello, no deben emplearse para calcular totales poblacionales ni modifican los coeficientes de variación asociados a ellos. Asimismo, estos procedimientos no alteran las estimaciones de razones —como medias o proporciones—, ya que en tales casos los pesos se cancelan en el cociente.</p>
+<p>En la práctica, el uso de estos ajustes puede considerarse una solución pragmática en contextos donde no se dispone de software especializado para encuestas. No obstante, cuando se cuenta con herramientas como los paquetes <code>survey</code> y <code>srvyr</code> de R, descritos en los capítulos anteriores, el reescalamiento deja de ser necesario, pues dichos paquetes realizan el tratamiento adecuado para preservar tanto la representatividad como las propiedades inferenciales del modelo.</p>
+<p>En definitiva, la decisión sobre aplicar o no ponderaciones exige un análisis crítico de los objetivos del estudio, del diseño de la encuesta y de la robustez de los modelos estimados, complementado siempre con un diagnóstico riguroso de residuales, observaciones influyentes y supuestos, tal como se detalla en las secciones siguientes de este capítulo.</p>
+</div>
+<div id="enfoques-inferenciales-para-el-análisis-de-datos" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Enfoques inferenciales para el análisis de datos<a href="cap6.html#enfoques-inferenciales-para-el-análisis-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En el análisis de encuestas, uno de los principales retos consiste en manejar adecuadamente la variabilidad de los datos, la cual proviene de dos fuentes fundamentales: el diseño muestral, que determina cómo se recolecta la información, y el modelo estadístico, que define cómo se interpreta dicha información para inferir propiedades de la población. Ignorar cualquiera de estas dimensiones puede comprometer la validez de los resultados.</p>
+<p>Por ello, se han desarrollado metodologías inferenciales avanzadas que integran ambas fuentes de incertidumbre en un mismo marco analítico, buscando reflejar tanto la estructura del diseño como los supuestos y limitaciones del modelo. Entre las aproximaciones más relevantes se encuentran la pseudo-verosimilitud <span class="citation">(<a href="#ref-molina1992pseudo">Molina &amp; Skinner, 1992</a>)</span> y la inferencia combinada <span class="citation">(<a href="#ref-binder2011estimating">Binder, 2011</a>)</span>.</p>
+<p>El método de pseudo-verosimilitud extiende las técnicas tradicionales de máxima verosimilitud para ajustarlas a las particularidades de los diseños muestrales complejos. En este enfoque, la distribución de muestreo definida por el diseño ocupa un rol central, mientras que la distribución del modelo pasa a un segundo plano. Si bien en contextos de modelos bien especificados los estimadores basados en pseudo-verosimilitud tienden a ser insesgados o consistentes, su principal virtud radica en evitar los sesgos que se originarían al ignorar el diseño muestral. En términos prácticos, este método traduce el modelo tradicional en uno que respeta la forma en que los datos fueron obtenidos, garantizando inferencias más sólidas.</p>
+<p>En contraste, la inferencia combinada propone un marco unificado en el que se integran simultáneamente la variabilidad del muestreo y la incertidumbre del modelo. Al considerar ambas fuentes, este enfoque ofrece una visión más completa de la variabilidad total y permite obtener estimaciones más precisas y confiables. Su principal aporte radica en evitar los sesgos que pueden surgir cuando el análisis se realiza exclusivamente desde la perspectiva del diseño o del modelo. De este modo, la inferencia combinada resulta especialmente útil en aplicaciones donde se requiere equilibrar representatividad poblacional y solidez estadística de los modelos ajustados.</p>
+</div>
+<div id="estimación-de-los-parámetros" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Estimación de los parámetros<a href="cap6.html#estimación-de-los-parámetros" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una vez establecidos los supuestos del modelo y las características distribucionales de los errores, el paso siguiente consiste en la estimación de los parámetros teniendo en cuenta el diseño de muestreo complejo. A modo ilustrativo, si en lugar de observar una muestra de tamaño <span class="math inline">\(n\)</span> de los <span class="math inline">\(N\)</span> elementos de la población se hubiera realizado un censo completo, el parámetro de regresión de población finita <span class="math inline">\(\beta_{1}\)</span> podría calcularse como sigue <span class="citation">(<a href="#ref-tellez2015estadistica">Tellez Piñerez &amp; Lemus Polanía, 2015</a>)</span>:</p>
+<p><span class="math display">\[
+\beta_{1}  =  \frac{\sum_{i=1}^{N}\left(X_{i}-\bar{X}\right)\left(Y_{i}-\bar{Y}\right)}{\sum_{i=1}^{N}\left(X_{i}-\bar{X}\right)^{2}}
+\]</span></p>
+<p>Sin embargo, cuando se desea estimar los parámetros de un modelo de regresión lineal a partir de encuestas con diseños complejos, el enfoque estándar cambia. La razón principal es que los datos no satisfacen los supuestos clásicos de independencia e idéntica distribución, pues el diseño muestral introduce elementos como estratificación, conglomerados o probabilidades de selección desiguales. En consecuencia, los estimadores tradicionales, como los obtenidos por máxima verosimilitud o mínimos cuadrados, pueden resultar sesgados y producir errores estándar poco confiables.</p>
+<p>Frente a esta situación, <span class="citation">Wolter &amp; Wolter (<a href="#ref-wolter2007">2007</a>)</span> propone el uso de métodos no paramétricos robustos, como la linealización de Taylor o los procedimientos de replicación (Jackknife, Bootstrap, Balanced Repeated Replication, entre otros), para estimar varianzas y obtener inferencias válidas.</p>
+<p>En el caso de un modelo de regresión lineal simple, la estimación de la pendiente <span class="math inline">\((\beta_1)\)</span> bajo un esquema de encuesta compleja se realiza mediante un estimador ponderado, que puede expresarse de la siguiente forma:</p>
+<p><span class="math display">\[
+\hat{\beta_{1}}  =  
+\frac{\sum_{h=1}^H \sum_{\alpha=1}^{a_h} \sum_{i=1}^{n_{h\alpha}} \omega_{h\alpha i}\,(y_{h\alpha i}-\bar{y}_{\omega})(x_{h\alpha i}-\bar{x}_{\omega})}
+{\sum_{h=1}^H \sum_{\alpha=1}^{a_h} \sum_{i=1}^{n_{h\alpha}} \omega_{h\alpha i}\,(x_{h\alpha i}-\bar{x}_{\omega})^{2}}
+= \frac{t_{xy}}{t_{x^{2}}}
+\]</span></p>
+<p>donde <span class="math inline">\(\omega_{h\alpha i}\)</span> representa los pesos de muestreo. La diferencia fundamental respecto al estimador clásico es la incorporación explícita de dichos pesos, los cuales corrigen las probabilidades desiguales de selección y aseguran la representatividad de las estimaciones.</p>
+<p>La varianza del estimador <span class="math inline">\(\hat{\beta_1}\)</span> puede expresarse como:</p>
+<p><span class="math display">\[
+var\left(\hat{\beta_{1}}\right)  
+=  \frac{var(t_{xy})+\hat{\beta}_{1}^{2}var(t_{x^{2}})-2\hat{\beta}_{1}cov(t_{xy},t_{x^{2}})}{(t_{x^{2}})^{2}}
+\]</span></p>
+<p>Este enfoque permite cuantificar la precisión del coeficiente considerando tanto los pesos como la estructura del diseño muestral.</p>
+<p>En el caso de la regresión múltiple, la varianza de cada coeficiente se calcula considerando su interdependencia con los demás parámetros, lo que se refleja en la construcción de una matriz de varianza-covarianza que recoge tanto la variabilidad individual como las covarianzas entre todos los estimadores. De acuerdo con <span class="citation">Kish &amp; Frankel (<a href="#ref-kish1974inference">1974</a>)</span>, este cálculo requiere utilizar totales ponderados de cuadrados y productos cruzados de todas las combinaciones entre la variable dependiente <span class="math inline">\(y\)</span> y el conjunto de predictores <span class="math inline">\(x = \{1, x_1, \ldots, x_p\}\)</span>. En términos generales:</p>
+<p><span class="math display">\[
+var(\hat{\beta}) = \hat{\Sigma}(\hat{\beta}) =
+\begin{bmatrix}
+var(\hat{\beta}_{0}) &amp; cov(\hat{\beta}_{0},\hat{\beta}_{1}) &amp; \cdots &amp; cov(\hat{\beta}_{0},\hat{\beta}_{p}) \\
+cov(\hat{\beta}_{0},\hat{\beta}_{1}) &amp; var(\hat{\beta}_{1}) &amp; \cdots &amp; cov(\hat{\beta}_{1},\hat{\beta}_{p}) \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+cov(\hat{\beta}_{0},\hat{\beta}_{p}) &amp; cov(\hat{\beta}_{1},\hat{\beta}_{p}) &amp; \cdots &amp; var(\hat{\beta}_{p})
+\end{bmatrix}
+\]</span></p>
+<p>Este marco permite evaluar la estabilidad y precisión de los parámetros en modelos más complejos, garantizando que las inferencias reflejen adecuadamente tanto el diseño de la encuesta como la relación entre las variables.</p>
+<p>Para ejemplificar los conceptos desarrollados hasta este punto, se empleará la misma base de datos utilizada a lo largo del libro. El proceso inicia con la carga de las librerías, los datos y la definición del diseño de muestreo:</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="cap6.html#cb195-1" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb195-2"><a href="cap6.html#cb195-2" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
+<span id="cb195-3"><a href="cap6.html#cb195-3" tabindex="-1"></a><span class="fu">library</span>(convey)</span>
+<span id="cb195-4"><a href="cap6.html#cb195-4" tabindex="-1"></a><span class="fu">library</span>(TeachingSampling)</span>
+<span id="cb195-5"><a href="cap6.html#cb195-5" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb195-6"><a href="cap6.html#cb195-6" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb195-7"><a href="cap6.html#cb195-7" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span>
+<span id="cb195-8"><a href="cap6.html#cb195-8" tabindex="-1"></a><span class="fu">library</span>(jtools)</span>
+<span id="cb195-9"><a href="cap6.html#cb195-9" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb195-10"><a href="cap6.html#cb195-10" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb195-11"><a href="cap6.html#cb195-11" tabindex="-1"></a><span class="fu">library</span>(ggpmisc)</span></code></pre></div>
+<p>Cargue de la base y definición del diseño muestral:</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="cap6.html#cb196-1" tabindex="-1"></a><span class="fu">data</span>(BigCity, <span class="at">package =</span> <span class="st">&quot;TeachingSampling&quot;</span>)</span>
+<span id="cb196-2"><a href="cap6.html#cb196-2" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Data/encuesta.rds&quot;</span>)</span>
+<span id="cb196-3"><a href="cap6.html#cb196-3" tabindex="-1"></a></span>
+<span id="cb196-4"><a href="cap6.html#cb196-4" tabindex="-1"></a>diseno <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb196-5"><a href="cap6.html#cb196-5" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(</span>
+<span id="cb196-6"><a href="cap6.html#cb196-6" tabindex="-1"></a>    <span class="at">strata =</span> Stratum,</span>
+<span id="cb196-7"><a href="cap6.html#cb196-7" tabindex="-1"></a>    <span class="at">ids =</span> PSU,</span>
+<span id="cb196-8"><a href="cap6.html#cb196-8" tabindex="-1"></a>    <span class="at">weights =</span> wk,</span>
+<span id="cb196-9"><a href="cap6.html#cb196-9" tabindex="-1"></a>    <span class="at">nest =</span> T</span>
+<span id="cb196-10"><a href="cap6.html#cb196-10" tabindex="-1"></a>  )</span></code></pre></div>
+<p>Para los ejemplos de este capítulo se definen los mismos subgrupos utilizados en capítulos anteriores:</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="cap6.html#cb197-1" tabindex="-1"></a>sub_Urbano <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span>  <span class="fu">filter</span>(Zone <span class="sc">==</span> <span class="st">&quot;Urban&quot;</span>)</span>
+<span id="cb197-2"><a href="cap6.html#cb197-2" tabindex="-1"></a>sub_Rural  <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span>  <span class="fu">filter</span>(Zone <span class="sc">==</span> <span class="st">&quot;Rural&quot;</span>)</span>
+<span id="cb197-3"><a href="cap6.html#cb197-3" tabindex="-1"></a>sub_Mujer  <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span>  <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="st">&quot;Female&quot;</span>)</span>
+<span id="cb197-4"><a href="cap6.html#cb197-4" tabindex="-1"></a>sub_Hombre <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span>  <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="st">&quot;Male&quot;</span>)</span></code></pre></div>
+<p>Dado que los modelos de regresión hacen uso frecuente de recursos gráficos, se define a continuación el tema visual estándar de la CEPAL, que se empleará en todas las figuras del capítulo.</p>
+<p>Para verificar la correlación entre ingreso y gasto, las variables que se emplearán en el ajuste de los modelos, se construye un diagrama de dispersión con <code>ggplot2</code>. Dado que <code>encuesta</code> es una muestra de <code>BigCity</code>, se examina primero el comportamiento poblacional de ambas variables antes de proceder con la muestra, como se presenta en la Figura <a href="cap6.html#fig:fig-scatter-bigcity">6.1</a>:</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="cap6.html#cb198-1" tabindex="-1"></a>plot_BigCity <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> BigCity,</span>
+<span id="cb198-2"><a href="cap6.html#cb198-2" tabindex="-1"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">y =</span> Income)) <span class="sc">+</span></span>
+<span id="cb198-3"><a href="cap6.html#cb198-3" tabindex="-1"></a>                       <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb198-4"><a href="cap6.html#cb198-4" tabindex="-1"></a>                       <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb198-5"><a href="cap6.html#cb198-5" tabindex="-1"></a>                       <span class="at">formula =</span> y <span class="sc">~</span> x) <span class="sc">+</span> <span class="fu">theme_cepal</span>()</span>
+<span id="cb198-6"><a href="cap6.html#cb198-6" tabindex="-1"></a></span>
+<span id="cb198-7"><a href="cap6.html#cb198-7" tabindex="-1"></a>plot_BigCity <span class="sc">+</span> <span class="fu">stat_poly_eq</span>(<span class="at">formula =</span> y<span class="sc">~</span>x, <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(..eq.label..,</span>
+<span id="cb198-8"><a href="cap6.html#cb198-8" tabindex="-1"></a>   ..rr.label.., <span class="at">sep =</span> <span class="st">&quot;~~~&quot;</span>),<span class="at">size =</span> <span class="dv">3</span>), <span class="at">parse =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-scatter-bigcity"></span>
+<img src="06-Regresion_files/figure-html/fig-scatter-bigcity-1.png" alt="Diagrama de dispersión entre gasto e ingreso en la población BigCity" width="65%" />
+<p class="caption">
+Figura 6.1: Diagrama de dispersión entre gasto e ingreso en la población BigCity
+</p>
+</div>
+<p>Aunque existen algunas observaciones alejadas de la nube de puntos, el comportamiento general de la relación ingreso-gasto mantiene una tendencia lineal.</p>
+<p>Verificada esta relación, se ajusta primero el modelo con los datos poblacionales para disponer de una referencia con la cual comparar las estimaciones muestrales:</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="cap6.html#cb199-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Income <span class="sc">~</span> Expenditure, <span class="at">data =</span> BigCity)</span></code></pre></div>
+<p>Para visualizar los parámetros poblacionales del modelo se empleará la función <code>modelsummary</code>, cuyos resultados se presentan en la Tabla <a href="cap6.html#tab:tab-modelo-poblacional">6.1</a>:</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="cap6.html#cb200-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb200-2"><a href="cap6.html#cb200-2" tabindex="-1"></a>  Término <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span>, <span class="st">&quot;Expenditure&quot;</span>, <span class="st">&quot;Num.Obs.&quot;</span>, <span class="st">&quot;R2&quot;</span>, <span class="st">&quot;R2 Adj.&quot;</span>, <span class="st">&quot;RMSE&quot;</span>),</span>
+<span id="cb200-3"><a href="cap6.html#cb200-3" tabindex="-1"></a>  Población <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">123.337</span>, <span class="fl">1.229</span>, <span class="dv">150266</span>, <span class="fl">0.359</span>, <span class="fl">0.359</span>, <span class="fl">461.74</span>)</span>
+<span id="cb200-4"><a href="cap6.html#cb200-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb200-5"><a href="cap6.html#cb200-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-modelo-poblacional">Cuadro 6.1: </span><span id="tab:tab-modelo-poblacional">Cuadro 6.2: </span>Parámetros del modelo de regresión ajustado con datos poblacionales (BigCity)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+Término
+</th>
+<th style="text-align:center;font-weight: bold;">
+Población
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+1.233e+02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Expenditure
+</td>
+<td style="text-align:center;">
+1.229e+00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+1.503e+05
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+3.590e-01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+3.590e-01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RMSE
+</td>
+<td style="text-align:center;">
+4.617e+02
+</td>
+</tr>
+</tbody>
+</table>
+<p>De esta salida se observa que el intercepto es igual a 123.337 y el parámetro <span class="math inline">\(\beta_{1}\)</span> asociado al gasto es 1.229. Los demás indicadores se analizarán más adelante.</p>
+<p>Con la referencia poblacional establecida, se procede a estimar los parámetros a partir de la muestra para evaluar la calidad de las estimaciones. A continuación se construye el diagrama de dispersión correspondiente a los datos muestrales, como se muestra en la Figura <a href="cap6.html#fig:fig-scatter-muestra-sinP">6.2</a>:</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="cap6.html#cb201-1" tabindex="-1"></a>plot_sin <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> encuesta,</span>
+<span id="cb201-2"><a href="cap6.html#cb201-2" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">y =</span> Income)) <span class="sc">+</span></span>
+<span id="cb201-3"><a href="cap6.html#cb201-3" tabindex="-1"></a>            <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb201-4"><a href="cap6.html#cb201-4" tabindex="-1"></a>            <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb201-5"><a href="cap6.html#cb201-5" tabindex="-1"></a>            <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">formula =</span> y <span class="sc">~</span> x) <span class="sc">+</span> <span class="fu">theme_cepal</span>()</span>
+<span id="cb201-6"><a href="cap6.html#cb201-6" tabindex="-1"></a></span>
+<span id="cb201-7"><a href="cap6.html#cb201-7" tabindex="-1"></a>plot_sin <span class="sc">+</span> <span class="fu">stat_poly_eq</span>(<span class="at">formula =</span> y<span class="sc">~</span>x, <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(..eq.label..,</span>
+<span id="cb201-8"><a href="cap6.html#cb201-8" tabindex="-1"></a>     ..rr.label.., <span class="at">sep =</span> <span class="st">&quot;~~~&quot;</span>), <span class="at">size =</span> <span class="dv">5</span>), <span class="at">parse =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-scatter-muestra-sinP"></span>
+<img src="06-Regresion_files/figure-html/fig-scatter-muestra-sinP-1.png" alt="Diagrama de dispersión entre gasto e ingreso en la muestra (sin ponderar)" width="65%" />
+<p class="caption">
+Figura 6.2: Diagrama de dispersión entre gasto e ingreso en la muestra (sin ponderar)
+</p>
+</div>
+<p>Los datos muestrales mantienen una tendencia lineal, aunque con mayor dispersión a medida que crecen los gastos de los hogares.</p>
+<p>Completados los análisis gráficos, se procede a ajustar los modelos de regresión lineal. Con el fin de ilustrar el efecto de incorporar correctamente los factores de expansión del diseño, se ajusta primero un modelo sin tenerlos en cuenta:</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="cap6.html#cb202-1" tabindex="-1"></a>fit_sinP <span class="ot">&lt;-</span> <span class="fu">lm</span>(Income <span class="sc">~</span> Expenditure, <span class="at">data =</span> encuesta)</span></code></pre></div>
+<p>Para este modelo, <span class="math inline">\(\hat{\beta}_{0}\)</span> es 121.52 y <span class="math inline">\(\hat{\beta}_{1}\)</span>, asociado a la variable gastos, es 1.22.</p>
+<p>A continuación, se construye el diagrama de dispersión incorporando los factores de expansión del diseño mediante el argumento <code>mapping = aes(weight = wk)</code> en la función <code>geom_smooth</code>, como se presenta en la Figura <a href="cap6.html#fig:fig-scatter-muestra-ponde">6.3</a>:</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="cap6.html#cb203-1" tabindex="-1"></a>plot_Ponde <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> encuesta,</span>
+<span id="cb203-2"><a href="cap6.html#cb203-2" tabindex="-1"></a>                     <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">y =</span> Income)) <span class="sc">+</span></span>
+<span id="cb203-3"><a href="cap6.html#cb203-3" tabindex="-1"></a>                     <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> wk)) <span class="sc">+</span></span>
+<span id="cb203-4"><a href="cap6.html#cb203-4" tabindex="-1"></a>                     <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb203-5"><a href="cap6.html#cb203-5" tabindex="-1"></a>                     <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">weight =</span> wk)) <span class="sc">+</span> <span class="fu">theme_cepal</span>()</span>
+<span id="cb203-6"><a href="cap6.html#cb203-6" tabindex="-1"></a></span>
+<span id="cb203-7"><a href="cap6.html#cb203-7" tabindex="-1"></a>plot_Ponde <span class="sc">+</span> <span class="fu">stat_poly_eq</span>(<span class="at">formula =</span> y<span class="sc">~</span>x, <span class="fu">aes</span>(<span class="at">weight =</span> wk,</span>
+<span id="cb203-8"><a href="cap6.html#cb203-8" tabindex="-1"></a><span class="at">label =</span> <span class="fu">paste</span>(..eq.label..,..rr.label.., <span class="at">sep =</span> <span class="st">&quot;~~~&quot;</span>)), <span class="at">parse =</span> <span class="cn">TRUE</span>,<span class="at">size =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-scatter-muestra-ponde"></span>
+<img src="06-Regresion_files/figure-html/fig-scatter-muestra-ponde-1.png" alt="Diagrama de dispersión entre gasto e ingreso en la muestra (ponderado)" width="65%" />
+<p class="caption">
+Figura 6.3: Diagrama de dispersión entre gasto e ingreso en la muestra (ponderado)
+</p>
+</div>
+<p>Para ajustar modelos incorporando los factores de expansión existen dos alternativas: la función <code>lm</code> y la función <code>svyglm</code> de la librería <code>survey</code>. A continuación se ajusta el modelo con la primera opción:</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="cap6.html#cb204-1" tabindex="-1"></a>fit_Ponde <span class="ot">&lt;-</span> <span class="fu">lm</span>(Income <span class="sc">~</span> Expenditure, <span class="at">data =</span> encuesta, <span class="at">weights =</span> wk)</span></code></pre></div>
+<p>Con esta especificación, <span class="math inline">\(\hat{\beta}_{0} = 103.14\)</span> y <span class="math inline">\(\hat{\beta}_{1}=1.26\)</span>. El mismo ajuste mediante <code>svyglm</code> produce resultados idénticos:</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="cap6.html#cb205-1" tabindex="-1"></a>fit_svy <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(Income <span class="sc">~</span> Expenditure,</span>
+<span id="cb205-2"><a href="cap6.html#cb205-2" tabindex="-1"></a>                  <span class="at">design =</span> diseno, <span class="at">family=</span>stats<span class="sc">::</span><span class="fu">gaussian</span>())</span></code></pre></div>
+<p>Las estimaciones coinciden: <span class="math inline">\(\hat{\beta}_{0} = 103.14\)</span> y <span class="math inline">\(\hat{\beta}_{1} = 1.26\)</span>. Dado que, tal como se especificó en los argumentos de la función, la función de enlace es gaussiana.</p>
+<p>Finalmente, a modo de síntesis, la Figura <a href="cap6.html#fig:fig-comparacion-modelos">6.4</a> superpone las rectas de regresión de todos los modelos estimados, permitiendo comparar gráficamente su ajuste:</p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="cap6.html#cb206-1" tabindex="-1"></a>df_model <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb206-2"><a href="cap6.html#cb206-2" tabindex="-1"></a>  <span class="at">intercept =</span> <span class="fu">c</span>(<span class="fu">coefficients</span>(fit)[<span class="dv">1</span>],</span>
+<span id="cb206-3"><a href="cap6.html#cb206-3" tabindex="-1"></a>               <span class="fu">coefficients</span>(fit_sinP)[<span class="dv">1</span>],</span>
+<span id="cb206-4"><a href="cap6.html#cb206-4" tabindex="-1"></a>               <span class="fu">coefficients</span>(fit_Ponde)[<span class="dv">1</span>],</span>
+<span id="cb206-5"><a href="cap6.html#cb206-5" tabindex="-1"></a>               <span class="fu">coefficients</span>(fit_svy)[<span class="dv">1</span>]),</span>
+<span id="cb206-6"><a href="cap6.html#cb206-6" tabindex="-1"></a>  <span class="at">slope =</span> <span class="fu">c</span>(<span class="fu">coefficients</span>(fit)[<span class="dv">2</span>],</span>
+<span id="cb206-7"><a href="cap6.html#cb206-7" tabindex="-1"></a>               <span class="fu">coefficients</span>(fit_sinP)[<span class="dv">2</span>],</span>
+<span id="cb206-8"><a href="cap6.html#cb206-8" tabindex="-1"></a>               <span class="fu">coefficients</span>(fit_Ponde)[<span class="dv">2</span>],</span>
+<span id="cb206-9"><a href="cap6.html#cb206-9" tabindex="-1"></a>               <span class="fu">coefficients</span>(fit_svy)[<span class="dv">2</span>]),</span>
+<span id="cb206-10"><a href="cap6.html#cb206-10" tabindex="-1"></a>  <span class="at">Modelo =</span> <span class="fu">c</span>(<span class="st">&quot;Población&quot;</span>, <span class="st">&quot;Sin ponderar&quot;</span>,</span>
+<span id="cb206-11"><a href="cap6.html#cb206-11" tabindex="-1"></a>             <span class="st">&quot;Ponderado(lm)&quot;</span>, <span class="st">&quot;Ponderado(svyglm)&quot;</span>))</span>
+<span id="cb206-12"><a href="cap6.html#cb206-12" tabindex="-1"></a>plot_BigCity <span class="sc">+</span>  <span class="fu">geom_abline</span>( <span class="at">data =</span> df_model,</span>
+<span id="cb206-13"><a href="cap6.html#cb206-13" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>( <span class="at">slope =</span> slope,</span>
+<span id="cb206-14"><a href="cap6.html#cb206-14" tabindex="-1"></a>      <span class="at">intercept =</span> intercept, <span class="at">linetype =</span> Modelo,</span>
+<span id="cb206-15"><a href="cap6.html#cb206-15" tabindex="-1"></a>      <span class="at">color =</span> Modelo ), <span class="at">size =</span> <span class="dv">2</span></span>
+<span id="cb206-16"><a href="cap6.html#cb206-16" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-comparacion-modelos"></span>
+<img src="06-Regresion_files/figure-html/fig-comparacion-modelos-1.png" alt="Comparación gráfica de las rectas de regresión ajustadas según distintos enfoques de ponderación" width="70%" />
+<p class="caption">
+Figura 6.4: Comparación gráfica de las rectas de regresión ajustadas según distintos enfoques de ponderación
+</p>
+</div>
+</div>
+<div id="diagnóstico-del-modelo" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Diagnóstico del modelo<a href="cap6.html#diagnóstico-del-modelo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En el análisis de encuestas de hogares, la evaluación de un modelo estadístico requiere verificaciones de calidad que garanticen la validez de las conclusiones. La literatura metodológica subraya que un modelo bien especificado no depende únicamente de la selección de las covariables, sino también del cumplimiento de los supuestos básicos que aseguran la coherencia de los resultados <span class="citation">(<a href="#ref-tellez2015estadistica">Tellez Piñerez &amp; Lemus Polanía, 2015</a>)</span>.</p>
+<p>Entre los elementos que deben revisarse al aplicar un modelo de regresión lineal en encuestas complejas se encuentran los siguientes:</p>
+<ul>
+<li><strong>Adecuación del ajuste</strong>: comprobar si el modelo logra explicar una proporción significativa de la variabilidad de la variable de interés y si las predicciones se ajustan razonablemente a los datos observados.</li>
+<li><strong>Normalidad de los errores</strong>: verificar si los errores se distribuyen aproximadamente de manera normal, condición que garantiza la validez de las pruebas de significancia.</li>
+<li><strong>Homogeneidad de la varianza (homocedasticidad)</strong>: confirmar que la variabilidad de los errores se mantenga constante a lo largo de los valores de las covariables, pues la presencia de heterocedasticidad puede sesgar las inferencias.</li>
+<li><strong>Independencia de los errores</strong>: examinar si los errores son independientes entre sí, evitando correlaciones que comprometan la validez de las pruebas estadísticas.</li>
+<li><strong>Casos influyentes</strong>: identificar observaciones que ejercen un efecto desproporcionado en la estimación del modelo y que podrían distorsionar los resultados.</li>
+<li><strong>Datos atípicos (outliers)</strong>: detectar unidades que se apartan significativamente de la tendencia general de la muestra y que pueden afectar el ajuste.</li>
+</ul>
+<p>En el contexto de encuestas complejas, estas verificaciones adquieren especial relevancia. Problemas como la multicolinealidad, la dependencia entre observaciones o la presencia de valores extremos pueden acentuarse por efecto del diseño muestral —estratificación, conglomeración y ponderación—. Por ello, los procedimientos de diagnóstico no deben limitarse a la revisión de los supuestos clásicos, sino extenderse a las particularidades del diseño.</p>
+<p>La aplicación sistemática de estas pruebas permite evaluar la solidez del modelo, fortalecer la confianza en las inferencias y garantizar que los resultados sean representativos y útiles tanto para el análisis de políticas públicas como para la investigación social aplicada.</p>
+<div id="coeficiente-de-determinación" class="section level3 hasAnchor" number="6.6.1">
+<h3><span class="header-section-number">6.6.1</span> Coeficiente de determinación<a href="cap6.html#coeficiente-de-determinación" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Una medida clásica para evaluar el ajuste de un modelo de regresión es el coeficiente de determinación (<span class="math inline">\(R^{2}\)</span>), también conocido como coeficiente de correlación múltiple. Este indicador estima la proporción de la varianza de la variable dependiente explicada por el modelo, con valores que oscilan entre 0 y 1: cuanto más próximo a 1, mayor es la variabilidad explicada; un valor cercano a 0 refleja escasa capacidad explicativa.</p>
+<p>Su interpretación, no obstante, varía según el campo disciplinar. En ciencias físicas es habitual obtener valores superiores a 0.98, mientras que en ciencias químicas suelen superarse niveles de 0.90. En ciencias sociales, en cambio, incluso los mejores modelos raramente explican más del 20% al 40% de la variabilidad de la variable de interés. Esta diferencia pone de manifiesto que la magnitud del <span class="math inline">\(R^{2}\)</span> no debe interpretarse en términos absolutos, sino en función del contexto y la naturaleza de los datos analizados.</p>
+<p>El coeficiente se calcula a partir de las sumas de cuadrados totales y de error:</p>
+<p><span class="math display">\[
+R^{2} = 1 - \frac{SSE}{SST},
+\]</span></p>
+<p>donde <span class="math inline">\(SST\)</span> representa la suma de cuadrados totales y <span class="math inline">\(SSE\)</span> la suma de cuadrados del error.</p>
+<p>En encuestas con diseños de muestreo complejos, esta medida debe ajustarse para incorporar la estructura del diseño y los pesos muestrales. El estimador ponderado correspondiente se define como:</p>
+<p><span class="math display">\[
+\hat{R}_\omega^2 = 1 - \frac{(\widehat{SSE})_\omega}{(\widehat{SST})_\omega},
+\]</span></p>
+<p>donde <span class="math inline">\((\widehat{SSE})_\omega\)</span> es la suma ponderada de errores al cuadrado, calculada como:</p>
+<p><span class="math display">\[
+(\widehat{SSE})_\omega = \sum_{h=1}^{H} \sum_{i \in s_{1h}} \sum_{k \in s_{hi}} w_{hik} \,(y_{hik} - x_{hik}\hat{\beta})^2,
+\]</span></p>
+<p>y <span class="math inline">\((\widehat{SST})_\omega\)</span> representa la suma total ponderada de cuadrados, definida por:</p>
+<p><span class="math display">\[
+(\widehat{SST})_\omega = \sum_{h=1}^{H} \sum_{i \in s_{1h}} \sum_{k \in s_{hi}} w_{hik}\,(y_{hik} - \hat{\bar{Y}})^2.
+\]</span></p>
+<p>Dado que <span class="math inline">\(R^{2}\)</span> tiende a aumentar con el número de variables incluidas en el modelo, se recomienda complementarlo con el coeficiente de determinación ajustado (<span class="math inline">\(R_{adj}^{2}\)</span>), que incorpora una penalización en función del número de covariables y del tamaño muestral <span class="citation">(<a href="#ref-pfeffermann2011modelling">Pfeffermann, 2011</a>)</span>:</p>
+<p><span class="math display">\[
+R_{adj}^{2} = 1 - \frac{(n-1)}{(n-p)} \,(1 - R_{\omega}^{2}),
+\]</span></p>
+<p>donde <span class="math inline">\(n\)</span> es el tamaño de la muestra (número de unidades observadas), <span class="math inline">\(p\)</span> el número de parámetros estimados y <span class="math inline">\(R_{\omega}^{2}\)</span> el coeficiente ponderado definido anteriormente. Nótese que <span class="math inline">\(n\)</span> corresponde al conteo de observaciones en la muestra, no a la suma de los pesos muestrales ni al tamaño poblacional estimado.</p>
+<p>Este ajuste facilita una comparación más equitativa entre modelos con distinto número de predictores y resulta particularmente útil en el análisis de encuestas, donde la complejidad del diseño y el uso de ponderaciones pueden influir notablemente en la magnitud del <span class="math inline">\(R^{2}\)</span>.</p>
+<p>Con base en los modelos ajustados previamente, se estima el <span class="math inline">\(R^{2}\)</span> en R. Para ello, se ajusta primero un modelo nulo —con solo el intercepto— que permite obtener la suma total ponderada de cuadrados (<span class="math inline">\(\widehat{SST}_\omega\)</span>):</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="cap6.html#cb207-1" tabindex="-1"></a>fit_svy <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(Income <span class="sc">~</span> Expenditure,</span>
+<span id="cb207-2"><a href="cap6.html#cb207-2" tabindex="-1"></a>                  <span class="at">design =</span> diseno)</span>
+<span id="cb207-3"><a href="cap6.html#cb207-3" tabindex="-1"></a></span>
+<span id="cb207-4"><a href="cap6.html#cb207-4" tabindex="-1"></a>modNul <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(Income <span class="sc">~</span> <span class="dv">1</span>, <span class="at">design =</span> diseno)</span>
+<span id="cb207-5"><a href="cap6.html#cb207-5" tabindex="-1"></a></span>
+<span id="cb207-6"><a href="cap6.html#cb207-6" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="fu">summary</span>(fit_svy)</span>
+<span id="cb207-7"><a href="cap6.html#cb207-7" tabindex="-1"></a>s0 <span class="ot">&lt;-</span> <span class="fu">summary</span>(modNul)</span>
+<span id="cb207-8"><a href="cap6.html#cb207-8" tabindex="-1"></a></span>
+<span id="cb207-9"><a href="cap6.html#cb207-9" tabindex="-1"></a>WSST <span class="ot">&lt;-</span> s0<span class="sc">$</span>dispersion</span>
+<span id="cb207-10"><a href="cap6.html#cb207-10" tabindex="-1"></a>WSSE <span class="ot">&lt;-</span> s1<span class="sc">$</span>dispersion</span></code></pre></div>
+<p>La estimación del <span class="math inline">\(R^{2}\)</span> resulta:</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="cap6.html#cb208-1" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> WSSE <span class="sc">/</span> WSST</span>
+<span id="cb208-2"><a href="cap6.html#cb208-2" tabindex="-1"></a>R2</span></code></pre></div>
+<pre><code>##      variance    SE
+## [1,]    0.509 19005</code></pre>
+<p>Para estimar el <span class="math inline">\(R_{adj}^{2}\)</span>, se requiere redefinir el diseño muestral incorporando los pesos <em>q-weighted</em> <span class="citation">(<a href="#ref-pfeffermann2011modelling">Pfeffermann, 2011</a>)</span>. El procedimiento es el siguiente:</p>
+<ol style="list-style-type: decimal">
+<li>Ajustar un modelo de regresión a los pesos finales de la encuesta utilizando las variables predictoras del modelo de interés:</li>
+</ol>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="cap6.html#cb210-1" tabindex="-1"></a>fit_Nul <span class="ot">&lt;-</span> <span class="fu">lm</span>(wk <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> encuesta)</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Obtener las predicciones de los pesos para cada caso:</li>
+</ol>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="cap6.html#cb211-1" tabindex="-1"></a>qw <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_Nul)</span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Dividir los pesos finales por los valores predichos:</li>
+</ol>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="cap6.html#cb212-1" tabindex="-1"></a>encuesta <span class="sc">%&lt;&gt;%</span> <span class="fu">mutate</span>(<span class="at">wk1 =</span> wk<span class="sc">/</span>qw)</span></code></pre></div>
+<ol start="4" style="list-style-type: decimal">
+<li>Emplear los nuevos pesos en la definición del diseño:</li>
+</ol>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="cap6.html#cb213-1" tabindex="-1"></a>diseno_qwgt <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb213-2"><a href="cap6.html#cb213-2" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(</span>
+<span id="cb213-3"><a href="cap6.html#cb213-3" tabindex="-1"></a>    <span class="at">strata =</span> Stratum,</span>
+<span id="cb213-4"><a href="cap6.html#cb213-4" tabindex="-1"></a>    <span class="at">ids =</span> PSU,</span>
+<span id="cb213-5"><a href="cap6.html#cb213-5" tabindex="-1"></a>    <span class="at">weights =</span> wk1,</span>
+<span id="cb213-6"><a href="cap6.html#cb213-6" tabindex="-1"></a>    <span class="at">nest =</span> T)</span></code></pre></div>
+<ol start="5" style="list-style-type: decimal">
+<li>Con el diseño <em>q-weighted</em> definido, se calcula el <span class="math inline">\(R_{adj}^{2}\)</span>:</li>
+</ol>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="cap6.html#cb214-1" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">sum</span>(diseno_qwgt<span class="sc">$</span>variables<span class="sc">$</span>wk)</span>
+<span id="cb214-2"><a href="cap6.html#cb214-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">2</span>  </span>
+<span id="cb214-3"><a href="cap6.html#cb214-3" tabindex="-1"></a>R2Adj <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> ((n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> (n <span class="sc">-</span> p)) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> R2)</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-r2adj">Cuadro 6.3: </span><span id="tab:tab-r2adj">Cuadro 6.4: </span>Estimación del coeficiente de determinación ajustado
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+Estadístico
+</th>
+<th style="text-align:center;font-weight: bold;">
+Valor
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+R cuadrado
+</td>
+<td style="text-align:center;">
+5.090e-01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R cuadrado ajustado
+</td>
+<td style="text-align:center;">
+5.090e-01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+n (q-weighted)
+</td>
+<td style="text-align:center;">
+1.503e+05
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p (parametros)
+</td>
+<td style="text-align:center;">
+2.000e+00
+</td>
+</tr>
+</tbody>
+</table>
+<p>La Tabla <a href="cap6.html#tab:tab-r2adj">6.3</a> muestra que el <span class="math inline">\(R_{adj}^{2}\)</span> es levemente inferior al <span class="math inline">\(R^{2}\)</span>, resultado esperable dado el ajuste por el número de parámetros. Su interpretación depende del contexto disciplinar, tal como se discutió al inicio de esta sección.</p>
+<p>Tras comparar las diferentes estrategias de estimación, se adopta como especificación definitiva la metodología implementada en <code>svyglm</code>:</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="cap6.html#cb215-1" tabindex="-1"></a>diseno_qwgt <span class="sc">%&lt;&gt;%</span> <span class="fu">mutate</span>(<span class="at">Age2 =</span> Age<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb215-2"><a href="cap6.html#cb215-2" tabindex="-1"></a>mod_svy <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(Income <span class="sc">~</span> Expenditure <span class="sc">+</span> Zone <span class="sc">+</span> Sex <span class="sc">+</span> Age2,</span>
+<span id="cb215-3"><a href="cap6.html#cb215-3" tabindex="-1"></a>                  <span class="at">design =</span> diseno_qwgt)</span>
+<span id="cb215-4"><a href="cap6.html#cb215-4" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="fu">summary</span>(mod_svy)</span>
+<span id="cb215-5"><a href="cap6.html#cb215-5" tabindex="-1"></a>s0 <span class="ot">&lt;-</span> <span class="fu">summary</span>(modNul)</span></code></pre></div>
+</div>
+<div id="diagnóstico-de-los-residuales" class="section level3 hasAnchor" number="6.6.2">
+<h3><span class="header-section-number">6.6.2</span> Diagnóstico de los residuales<a href="cap6.html#diagnóstico-de-los-residuales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En el diagnóstico de modelos, el análisis de los residuales constituye una herramienta fundamental. Bajo el supuesto de que el modelo ajustado es adecuado, los residuales proporcionan una estimación de los errores y permiten evaluar el cumplimiento de los supuestos del modelo. Su examen cuidadoso ayuda al investigador a determinar si el procedimiento de ajuste ha respetado dichos supuestos o si, por el contrario, alguno ha sido violado, caso en el que sería necesario revisar la especificación o replantear el método de ajuste.</p>
+<div id="residuales-de-pearson" class="section level4 hasAnchor" number="6.6.2.1">
+<h4><span class="header-section-number">6.6.2.1</span> Residuales de Pearson<a href="cap6.html#residuales-de-pearson" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>En encuestas con diseños muestrales complejos, los residuales de Pearson son una herramienta habitual para evaluar discrepancias entre los valores observados y los esperados. Se definen como:</p>
+<p><span class="math display">\[
+r_{p_{i}} = \left(y_{i} - \mu_{i}(\hat{\beta}_{\omega})\right) \sqrt{\frac{\omega_{i}}{V(\hat{\mu}_{i})}},
+\]</span></p>
+<p>donde <span class="math inline">\(\mu_{i}\)</span> representa el valor esperado de <span class="math inline">\(y_{i}\)</span> bajo el modelo ajustado, <span class="math inline">\(\omega_{i}\)</span> es el peso muestral del individuo <span class="math inline">\(i\)</span> y <span class="math inline">\(V(\hat{\mu}_{i})\)</span> la función de varianza del resultado.</p>
+</div>
+<div id="residuos-estandarizados" class="section level4 hasAnchor" number="6.6.2.2">
+<h4><span class="header-section-number">6.6.2.2</span> Residuos estandarizados<a href="cap6.html#residuos-estandarizados" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Los residuos corresponden a la diferencia entre los valores observados y los estimados por el modelo, y su análisis es esencial para verificar los supuestos de la regresión. Una práctica extendida consiste en graficarlos frente a los valores predichos o frente a las variables independientes: en un modelo correctamente especificado, la nube de puntos debería mostrar un patrón aleatorio, mientras que la presencia de estructuras sistemáticas puede ser indicio de <strong>heterocedasticidad</strong> o de <strong>relaciones no lineales</strong> no captadas por el modelo.</p>
+<p>En particular, los gráficos de residuos frente a valores predichos son una de las herramientas más informativas para evaluar la adecuación del ajuste, pues su inspección visual permite determinar si se cumplen los supuestos de normalidad e independencia de los errores.</p>
+<p>En el contexto de encuestas complejas, los residuos ponderados se expresan como:</p>
+<p><span class="math display">\[
+r_{(p_k)} = \frac{y_k - \hat{\mu}_k}{\sqrt{V(\hat{\mu}_k)/w_k}},
+\]</span></p>
+<p>donde <span class="math inline">\(\hat{\mu}_k\)</span> es el valor predicho de <span class="math inline">\(y_k\)</span>, <span class="math inline">\(w_k\)</span> el peso muestral de la unidad <span class="math inline">\(k\)</span> y <span class="math inline">\(V(\hat{\mu}_k)\)</span> la función de varianza asociada. Estos residuos se emplean para evaluar tanto la <strong>normalidad</strong> como la <strong>homogeneidad de la varianza</strong> en los errores.</p>
+</div>
+<div id="evaluación-de-la-homocedasticidad" class="section level4 hasAnchor" number="6.6.2.3">
+<h4><span class="header-section-number">6.6.2.3</span> Evaluación de la homocedasticidad<a href="cap6.html#evaluación-de-la-homocedasticidad" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>La constancia de la varianza de los errores —homocedasticidad— es uno de los supuestos más relevantes en los modelos de regresión. Su violación deja los estimadores de los parámetros insesgados y consistentes, pero los priva de eficiencia: dejan de ser los de menor varianza entre todos los estimadores insesgados.</p>
+<p>Para evaluar este supuesto, se recomienda representar los residuos frente a los valores predichos <span class="math inline">\(\hat{y}\)</span> o frente a alguna covariable <span class="math inline">\(x_j\)</span>. La aparición de patrones sistemáticos, como forma de embudo o curvaturas, es un indicio de <strong>heterocedasticidad</strong>. Ante tal evidencia, pueden considerarse estrategias de corrección como transformaciones de la variable dependiente, inclusión de términos adicionales o el uso de estimadores robustos de varianza.</p>
+<p>Otra herramienta relevante para el análisis de residuales es la <strong>matriz hat</strong>, estimada como:</p>
+<p><span class="math display">\[
+H  =  W^{1/2}X\left(X&#39;WX\right)^{-1}X&#39;W^{1/2}
+\]</span></p>
+<p>donde</p>
+<p><span class="math display">\[
+W  =  diag\left\{ \frac{\omega_{1}}{V\left(\mu_{1}\right)\left[g&#39;\left(\mu_{1}\right)\right]^{2}},...,\frac{\omega_{n}}{V\left(\mu_{n}\right)\left[g&#39;\left(\mu_{n}\right)\right]^{2}}\right\}
+\]</span></p>
+<p>es una matriz diagonal de <span class="math inline">\(n\times n\)</span> y <span class="math inline">\(g(\cdot)\)</span> es la función de enlace del modelo lineal generalizado.</p>
+</div>
+</div>
+<div id="observaciones-influyentes" class="section level3 hasAnchor" number="6.6.3">
+<h3><span class="header-section-number">6.6.3</span> Observaciones influyentes<a href="cap6.html#observaciones-influyentes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En el análisis diagnóstico, la identificación de observaciones influyentes es una técnica de especial importancia. Estas son unidades muestrales cuyo impacto sobre el ajuste del modelo resulta desproporcionado respecto al resto de la muestra. Conviene subrayar que una observación influyente no necesariamente corresponde a un valor atípico: mientras un atípico puede estar alejado del patrón general de los datos sin afectar sustancialmente el ajuste, una observación influyente puede alterar de manera significativa las estimaciones de los parámetros, incluso si no luce inusual.</p>
+<p>Se considera influyente toda observación cuya exclusión provoca cambios sustanciales en el ajuste global del modelo o en parámetros específicos. Para su detección resulta esencial precisar el tipo de influencia que se desea evaluar, pues una unidad puede ser influyente sobre los parámetros pero no sobre la varianza del error, o viceversa.</p>
+<p>En encuestas complejas, este análisis exige atención adicional, ya que los pesos muestrales, la estratificación y las unidades primarias de muestreo (PSU) amplifican o atenúan la influencia de cada observación respecto a lo que ocurriría bajo muestreo aleatorio simple. Para abordar esta complejidad, la literatura recomienda herramientas adaptadas a diseños muestrales complejos, como el paquete <code>svydiags</code> en R <span class="citation">(véase <a href="#ref-Valliant2024">Valliant, 2024</a>)</span>, que implementa diagnósticos extendidos compatibles con datos de encuestas.</p>
+<p>A continuación se describen los principales estadísticos para la detección de observaciones influyentes, con sus respectivas adaptaciones al contexto de encuestas complejas:</p>
+<div id="distancia-de-cook" class="section level4 hasAnchor" number="6.6.3.1">
+<h4><span class="header-section-number">6.6.3.1</span> Distancia de Cook<a href="cap6.html#distancia-de-cook" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>La distancia de Cook mide el efecto de eliminar la observación <span class="math inline">\(i\)</span> sobre el ajuste global del modelo, evaluando simultáneamente el tamaño del residual, la varianza estimada y el apalancamiento de la observación. En el contexto de encuestas complejas, su cálculo incorpora los pesos muestrales:</p>
+<p><span class="math display">\[
+c_{i}=\frac{w_{i}^{*}w_{i}e_{i}^{2}}{p\phi V\left(\hat{\mu}_{i}\right)\left(1-h_{ii}\right)^{2}}\boldsymbol{x}_{i}^{t}\left[\widehat{Var}\left(U_{w}\left(\hat{\boldsymbol{\beta}}_{w}\right)\right)\right]^{-1}\boldsymbol{x}_{i}
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(w_i^*\)</span> son los pesos de la encuesta,</li>
+<li><span class="math inline">\(e_i\)</span> es el residual de la observación <span class="math inline">\(i\)</span>,</li>
+<li><span class="math inline">\(p\)</span> es el número de parámetros del modelo,</li>
+<li><span class="math inline">\(\phi\)</span> es el parámetro de dispersión en el modelo lineal generalizado,</li>
+<li><span class="math inline">\(h_{ii}\)</span> corresponde al apalancamiento de la observación <span class="math inline">\(i\)</span>,</li>
+<li><span class="math inline">\(\widehat{Var}\left(U_{w}\left(\hat{\boldsymbol{\beta}}_{w}\right)\right)\)</span> es la varianza linealizada de la ecuación de puntuación.</li>
+</ul>
+<p>Para evaluar su magnitud, se compara <span class="math inline">\(c_i\)</span> con puntos de referencia mediante el estadístico:</p>
+<p><span class="math display">\[
+\frac{\left(df-p+1\right)\times c_{i}}{df} \doteq F_{\left(p,df-p\right)}
+\]</span></p>
+<p>donde <span class="math inline">\(df\)</span> son los grados de libertad basados en el diseño. En la práctica, se suele considerar influyente toda observación cuyo <span class="math inline">\(c_i\)</span> supera valores críticos de 2 o 3 (Heeringa; Téllez, 2016).</p>
+</div>
+<div id="d_ftextbeta" class="section level4 hasAnchor" number="6.6.3.2">
+<h4><span class="header-section-number">6.6.3.2</span> <span class="math inline">\(D_f\text{Beta}\)</span><a href="cap6.html#d_ftextbeta" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>El estadístico <span class="math inline">\(D_f \text{Beta}_{(i)}\)</span> cuantifica el cambio en los coeficientes de regresión al eliminar la observación <span class="math inline">\(i\)</span>:</p>
+<p><span class="math display">\[
+D_f \text{Beta}_{(i)} = \hat{\boldsymbol{\beta}}-\hat{\boldsymbol{\beta}}_{\left(i\right)}=\frac{\boldsymbol{A}^{-1}\boldsymbol{X}_{\left(i\right)}^{t}\hat{e}_{i}w_{i}}{1-h_{ii}}
+\]</span></p>
+<p>donde <span class="math inline">\(\boldsymbol{A} =\boldsymbol{X}^{t}\boldsymbol{WX}\)</span> y <span class="math inline">\(\hat{\boldsymbol{\beta}}_{(i)}\)</span> es el vector de parámetros estimados sin la observación <span class="math inline">\(i\)</span>.</p>
+<p>En su forma estandarizada:</p>
+<p><span class="math display">\[
+D_f Betas_{\left(i\right)}=\frac{{c_{ji}e_{i}}\big/{\left(1-h_{ii}\right)}}{\sqrt{v\left(\hat{\beta}_{j}\right)}}
+\]</span></p>
+<p>La interpretación es directa: una observación es influyente sobre el coeficiente <span class="math inline">\(\hat{\beta}_j\)</span> si <span class="math inline">\(|D_f Betas_{(i)j}|\geq \frac{z}{\sqrt{n}}\)</span>, con <span class="math inline">\(z=2\)</span> o <span class="math inline">\(3\)</span>, o si supera el umbral <span class="math inline">\(t_{0.025,n-p}/\sqrt{n}\)</span>.</p>
+</div>
+<div id="d_f-textfits" class="section level4 hasAnchor" number="6.6.3.3">
+<h4><span class="header-section-number">6.6.3.3</span> <span class="math inline">\(D_f \text{Fits}\)</span><a href="cap6.html#d_f-textfits" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>El estadístico <span class="math inline">\(D_f \text{Fits}_{(i)}\)</span> mide la influencia de una observación sobre el ajuste total del modelo:</p>
+<p><span class="math display">\[
+D_{f}Fits_{\left(i\right)}= \frac{h_{ii}e_{i}\big/\left(1-h_{ii}\right)}{\sqrt{v\left(\hat{\beta}_{j}\right)}}
+\]</span></p>
+<p>Se considera influyente si:</p>
+<p><span class="math display">\[
+|D_f Fits_{(i)}| \geq z\sqrt{\frac{p}{n}} \quad \text{con } z=2 \text{ o } 3
+\]</span></p>
+<p>Estrechamente vinculado con los estadísticos anteriores, el supuesto de varianza constante en los errores merece especial atención en el ajuste de modelos de regresión. Su incumplimiento no genera sesgo en los estimadores, que permanecen insesgados y consistentes, pero sí les hace perder eficiencia: dejan de poseer la menor varianza entre todos los estimadores insesgados, lo que se traduce en intervalos de confianza más amplios y resultados imprecisos en las pruebas <span class="math inline">\(t\)</span> y <span class="math inline">\(F\)</span> <span class="citation">(<a href="#ref-tellez2015estadistica">Tellez Piñerez &amp; Lemus Polanía, 2015</a>)</span>.</p>
+<p>Una forma habitual de verificar este supuesto es mediante el análisis gráfico: se representan los residuos del modelo frente a <span class="math inline">\(\hat{y}\)</span> o frente a <span class="math inline">\(X_{i}\)</span> y se examina si aparece algún patrón sistemático —como funciones cuadráticas, cúbicas o logarítmicas—, lo que evidenciaría varianza no constante.</p>
+<p>El supuesto de normalidad en los errores también debe comprobarse al ajustar el modelo. Una herramienta ampliamente utilizada es el gráfico cuantil-cuantil normal o QQ-plot, que representa los cuantiles de los residuos observados frente a los de una distribución normal teórica con la misma media y varianza. Una alineación aproximada sobre la diagonal de 45° sugiere que la normalidad es un supuesto razonable para los errores del modelo.</p>
+<p>A modo de ilustración, se aplican estos diagnósticos a los modelos previamente ajustados. El análisis se inicia con la evaluación gráfica de la normalidad, presentada en la Figura <a href="cap6.html#fig:fig-diag-qqplot">6.5</a>:</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="cap6.html#cb216-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb216-2"><a href="cap6.html#cb216-2" tabindex="-1"></a><span class="fu">plot</span>(mod_svy)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-diag-qqplot"></span>
+<img src="06-Regresion_files/figure-html/fig-diag-qqplot-1.png" alt="Gráficos diagnósticos del modelo ajustado con svyglm (QQ-plot y residuos)" width="80%" />
+<p class="caption">
+Figura 6.5: Gráficos diagnósticos del modelo ajustado con svyglm (QQ-plot y residuos)
+</p>
+</div>
+<p>El QQ-plot muestra evidencia gráfica de que los errores no se distribuyen normalmente.</p>
+<p>El paquete <code>svydiags</code>, diseñado como extensión de <code>survey</code> para el diagnóstico de modelos con diseño muestral complejo, permite obtener los residuales estandarizados de la siguiente forma:</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="cap6.html#cb217-1" tabindex="-1"></a><span class="fu">library</span>(svydiags)</span>
+<span id="cb217-2"><a href="cap6.html#cb217-2" tabindex="-1"></a>stdresids <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">svystdres</span>(mod_svy)<span class="sc">$</span>stdresids)</span>
+<span id="cb217-3"><a href="cap6.html#cb217-3" tabindex="-1"></a>diseno_qwgt<span class="sc">$</span>variables <span class="sc">%&lt;&gt;%</span> <span class="fu">mutate</span>(<span class="at">stdresids =</span> stdresids)</span></code></pre></div>
+<p>El análisis de normalidad puede complementarse con el histograma de los residuales estandarizados, presentado en la Figura <a href="cap6.html#fig:fig-hist-residuales">6.6</a>:</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="cap6.html#cb218-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> diseno_qwgt<span class="sc">$</span>variables,</span>
+<span id="cb218-2"><a href="cap6.html#cb218-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> stdresids)) <span class="sc">+</span></span>
+<span id="cb218-3"><a href="cap6.html#cb218-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
+<span id="cb218-4"><a href="cap6.html#cb218-4" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>,</span>
+<span id="cb218-5"><a href="cap6.html#cb218-5" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb218-6"><a href="cap6.html#cb218-6" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb218-7"><a href="cap6.html#cb218-7" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> dnorm, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb218-8"><a href="cap6.html#cb218-8" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb218-9"><a href="cap6.html#cb218-9" tabindex="-1"></a>  <span class="fu">theme_cepal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-hist-residuales"></span>
+<img src="06-Regresion_files/figure-html/fig-hist-residuales-1.png" alt="Histograma de residuales estandarizados con curva de densidad estimada y distribución normal teórica" width="65%" />
+<p class="caption">
+Figura 6.6: Histograma de residuales estandarizados con curva de densidad estimada y distribución normal teórica
+</p>
+</div>
+<p>La Figura <a href="cap6.html#fig:fig-hist-residuales">6.6</a> confirma que los errores no siguen una distribución normal.</p>
+<p>Para evaluar la homocedasticidad, se agregan las predicciones a la base de datos y se construyen los gráficos de residuos frente a cada covariable, presentados en la Figura <a href="cap6.html#fig:fig-residuales-covariables">6.7</a>:</p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="cap6.html#cb219-1" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb219-2"><a href="cap6.html#cb219-2" tabindex="-1"></a></span>
+<span id="cb219-3"><a href="cap6.html#cb219-3" tabindex="-1"></a>diseno_qwgt<span class="sc">$</span>variables <span class="sc">%&lt;&gt;%</span></span>
+<span id="cb219-4"><a href="cap6.html#cb219-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred =</span> <span class="fu">predict</span>(mod_svy))</span>
+<span id="cb219-5"><a href="cap6.html#cb219-5" tabindex="-1"></a></span>
+<span id="cb219-6"><a href="cap6.html#cb219-6" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diseno_qwgt<span class="sc">$</span>variables,</span>
+<span id="cb219-7"><a href="cap6.html#cb219-7" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">y =</span> stdresids)) <span class="sc">+</span></span>
+<span id="cb219-8"><a href="cap6.html#cb219-8" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb219-9"><a href="cap6.html#cb219-9" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="fu">theme_cepal</span>()</span>
+<span id="cb219-10"><a href="cap6.html#cb219-10" tabindex="-1"></a></span>
+<span id="cb219-11"><a href="cap6.html#cb219-11" tabindex="-1"></a>g3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diseno_qwgt<span class="sc">$</span>variables,</span>
+<span id="cb219-12"><a href="cap6.html#cb219-12" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Age2, <span class="at">y =</span> stdresids)) <span class="sc">+</span></span>
+<span id="cb219-13"><a href="cap6.html#cb219-13" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb219-14"><a href="cap6.html#cb219-14" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="fu">theme_cepal</span>()</span>
+<span id="cb219-15"><a href="cap6.html#cb219-15" tabindex="-1"></a></span>
+<span id="cb219-16"><a href="cap6.html#cb219-16" tabindex="-1"></a>g4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diseno_qwgt<span class="sc">$</span>variables,</span>
+<span id="cb219-17"><a href="cap6.html#cb219-17" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Zone, <span class="at">y =</span> stdresids)) <span class="sc">+</span></span>
+<span id="cb219-18"><a href="cap6.html#cb219-18" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb219-19"><a href="cap6.html#cb219-19" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="fu">theme_cepal</span>()</span>
+<span id="cb219-20"><a href="cap6.html#cb219-20" tabindex="-1"></a></span>
+<span id="cb219-21"><a href="cap6.html#cb219-21" tabindex="-1"></a>g5 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> diseno_qwgt<span class="sc">$</span>variables,</span>
+<span id="cb219-22"><a href="cap6.html#cb219-22" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Sex, <span class="at">y =</span> stdresids)) <span class="sc">+</span></span>
+<span id="cb219-23"><a href="cap6.html#cb219-23" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb219-24"><a href="cap6.html#cb219-24" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="fu">theme_cepal</span>()</span>
+<span id="cb219-25"><a href="cap6.html#cb219-25" tabindex="-1"></a></span>
+<span id="cb219-26"><a href="cap6.html#cb219-26" tabindex="-1"></a>(g2<span class="sc">|</span>g3)<span class="sc">/</span>(g4<span class="sc">|</span>g5)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-residuales-covariables"></span>
+<img src="06-Regresion_files/figure-html/fig-residuales-covariables-1.png" alt="Gráficos de residuales estandarizados frente a cada covariable del modelo" width="80%" />
+<p class="caption">
+Figura 6.7: Gráficos de residuales estandarizados frente a cada covariable del modelo
+</p>
+</div>
+<p>La Figura <a href="cap6.html#fig:fig-residuales-covariables">6.7</a> muestra que los gráficos de gastos y edad evidencian tendencias sistemáticas en lugar de un comportamiento aleatorio, lo que indica que la varianza de los errores no es constante.</p>
+<p>Para completar el diagnóstico, se verifica la presencia de observaciones influyentes mediante la distancia de Cook, calculada con la función <code>svyCooksD</code> del paquete <code>svydiags</code>, cuyos resultados se presentan en la Figura <a href="cap6.html#fig:fig-cook">6.8</a>:</p>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="cap6.html#cb220-1" tabindex="-1"></a><span class="fu">library</span>(svydiags)</span>
+<span id="cb220-2"><a href="cap6.html#cb220-2" tabindex="-1"></a></span>
+<span id="cb220-3"><a href="cap6.html#cb220-3" tabindex="-1"></a>d_cook <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb220-4"><a href="cap6.html#cb220-4" tabindex="-1"></a>         <span class="at">cook =</span> <span class="fu">svyCooksD</span>(mod_svy),</span>
+<span id="cb220-5"><a href="cap6.html#cb220-5" tabindex="-1"></a>         <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">svyCooksD</span>(mod_svy)))</span>
+<span id="cb220-6"><a href="cap6.html#cb220-6" tabindex="-1"></a></span>
+<span id="cb220-7"><a href="cap6.html#cb220-7" tabindex="-1"></a><span class="fu">ggplot</span>(d_cook, <span class="fu">aes</span>(<span class="at">y =</span> cook, <span class="at">x =</span> id)) <span class="sc">+</span></span>
+<span id="cb220-8"><a href="cap6.html#cb220-8" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb220-9"><a href="cap6.html#cb220-9" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="dv">20</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-cook"></span>
+<img src="06-Regresion_files/figure-html/fig-cook-1.png" alt="Distancia de Cook para cada observación de la muestra" width="65%" />
+<p class="caption">
+Figura 6.8: Distancia de Cook para cada observación de la muestra
+</p>
+</div>
+<p>Como se observa en la Figura <a href="cap6.html#fig:fig-cook">6.8</a>, ninguna distancia de Cook supera el umbral de 3, por lo que no se identifican observaciones influyentes bajo este criterio.</p>
+<p>A continuación, se evalúa la influencia mediante <span class="math inline">\(D_{f}Betas_{\left(i\right)j}\)</span> con la función <code>svydfbetas</code>, cuyos resultados para las primeras diez observaciones se presentan en la Tabla <a href="cap6.html#tab:tab-dfbetas-primeros">6.5</a>:</p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="cap6.html#cb221-1" tabindex="-1"></a>d_dfbetas <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="fu">t</span>(<span class="fu">svydfbetas</span>(mod_svy)<span class="sc">$</span>Dfbetas))</span>
+<span id="cb221-2"><a href="cap6.html#cb221-2" tabindex="-1"></a><span class="fu">colnames</span>(d_dfbetas) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Beta_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
+<span id="cb221-3"><a href="cap6.html#cb221-3" tabindex="-1"></a>d_dfbetas <span class="sc">%&gt;%</span></span>
+<span id="cb221-4"><a href="cap6.html#cb221-4" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L) <span class="sc">%&gt;%</span></span>
+<span id="cb221-5"><a href="cap6.html#cb221-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-dfbetas-primeros">Cuadro 6.5: </span><span id="tab:tab-dfbetas-primeros">Cuadro 6.6: </span>Valores DfBetas para las primeras diez observaciones de la muestra
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+Beta_1
+</th>
+<th style="text-align:center;font-weight: bold;">
+Beta_2
+</th>
+<th style="text-align:center;font-weight: bold;">
+Beta_3
+</th>
+<th style="text-align:center;font-weight: bold;">
+Beta_4
+</th>
+<th style="text-align:center;font-weight: bold;">
+Beta_5
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.001
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+0.002
+</td>
+<td style="text-align:center;">
+-0.005
+</td>
+<td style="text-align:center;">
+-0.008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+-0.001
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+<td style="text-align:center;">
+0.003
+</td>
+<td style="text-align:center;">
+-0.003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+-0.001
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+<td style="text-align:center;">
+0.002
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+<td style="text-align:center;">
+-0.003
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+-0.001
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+<td style="text-align:center;">
+0.002
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0.001
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+<td style="text-align:center;">
+-0.004
+</td>
+<td style="text-align:center;">
+-0.006
+</td>
+<td style="text-align:center;">
+0.010
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0.003
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+-0.003
+</td>
+<td style="text-align:center;">
+-0.008
+</td>
+<td style="text-align:center;">
+-0.003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0.001
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+-0.003
+</td>
+<td style="text-align:center;">
+0.008
+</td>
+<td style="text-align:center;">
+-0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0.003
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+-0.003
+</td>
+<td style="text-align:center;">
+-0.008
+</td>
+<td style="text-align:center;">
+-0.005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+<td style="text-align:center;">
+-0.004
+</td>
+<td style="text-align:center;">
+-0.004
+</td>
+</tr>
+</tbody>
+</table>
+<p>Una vez obtenidos los <span class="math inline">\(D_{f}Betas_{\left(i\right)j}\)</span>, se calcula el umbral de influencia a partir de los resultados de <code>svydfbetas</code> y se genera una variable dicotómica que clasifica cada observación, como se muestra en la Tabla <a href="cap6.html#tab:tab-dfbetas-influyentes">6.7</a>:</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="cap6.html#cb222-1" tabindex="-1"></a>d_dfbetas<span class="sc">$</span>id <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(d_dfbetas)</span>
+<span id="cb222-2"><a href="cap6.html#cb222-2" tabindex="-1"></a>d_dfbetas <span class="ot">&lt;-</span> reshape2<span class="sc">::</span><span class="fu">melt</span>(d_dfbetas, <span class="at">id.vars =</span> <span class="st">&quot;id&quot;</span>)</span>
+<span id="cb222-3"><a href="cap6.html#cb222-3" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fu">svydfbetas</span>(mod_svy)<span class="sc">$</span>cutoff</span>
+<span id="cb222-4"><a href="cap6.html#cb222-4" tabindex="-1"></a>d_dfbetas <span class="sc">%&lt;&gt;%</span> <span class="fu">mutate</span>(<span class="at">Criterio =</span> <span class="fu">ifelse</span>(<span class="fu">abs</span>(value) <span class="sc">&gt;</span> cutoff, <span class="st">&quot;Si&quot;</span>, <span class="st">&quot;No&quot;</span>))</span>
+<span id="cb222-5"><a href="cap6.html#cb222-5" tabindex="-1"></a></span>
+<span id="cb222-6"><a href="cap6.html#cb222-6" tabindex="-1"></a>tex_label <span class="ot">&lt;-</span> d_dfbetas <span class="sc">%&gt;%</span></span>
+<span id="cb222-7"><a href="cap6.html#cb222-7" tabindex="-1"></a>  <span class="fu">filter</span>(Criterio <span class="sc">==</span> <span class="st">&quot;Si&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb222-8"><a href="cap6.html#cb222-8" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(value))) <span class="sc">%&gt;%</span></span>
+<span id="cb222-9"><a href="cap6.html#cb222-9" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L)</span>
+<span id="cb222-10"><a href="cap6.html#cb222-10" tabindex="-1"></a></span>
+<span id="cb222-11"><a href="cap6.html#cb222-11" tabindex="-1"></a>tex_label <span class="sc">%&gt;%</span></span>
+<span id="cb222-12"><a href="cap6.html#cb222-12" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-dfbetas-influyentes">Cuadro 6.7: </span><span id="tab:tab-dfbetas-influyentes">Cuadro 6.8: </span>Las diez observaciones más influyentes según el criterio DfBetas
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+id
+</th>
+<th style="text-align:center;font-weight: bold;">
+variable
+</th>
+<th style="text-align:center;font-weight: bold;">
+value
+</th>
+<th style="text-align:center;font-weight: bold;">
+Criterio
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+889
+</td>
+<td style="text-align:center;">
+Beta_1
+</td>
+<td style="text-align:center;">
+0.278
+</td>
+<td style="text-align:center;">
+Si
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+890
+</td>
+<td style="text-align:center;">
+Beta_2
+</td>
+<td style="text-align:center;">
+-0.259
+</td>
+<td style="text-align:center;">
+Si
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+891
+</td>
+<td style="text-align:center;">
+Beta_1
+</td>
+<td style="text-align:center;">
+0.256
+</td>
+<td style="text-align:center;">
+Si
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+889
+</td>
+<td style="text-align:center;">
+Beta_2
+</td>
+<td style="text-align:center;">
+-0.254
+</td>
+<td style="text-align:center;">
+Si
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+891
+</td>
+<td style="text-align:center;">
+Beta_2
+</td>
+<td style="text-align:center;">
+-0.249
+</td>
+<td style="text-align:center;">
+Si
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+890
+</td>
+<td style="text-align:center;">
+Beta_1
+</td>
+<td style="text-align:center;">
+0.246
+</td>
+<td style="text-align:center;">
+Si
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2311
+</td>
+<td style="text-align:center;">
+Beta_5
+</td>
+<td style="text-align:center;">
+0.206
+</td>
+<td style="text-align:center;">
+Si
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+889
+</td>
+<td style="text-align:center;">
+Beta_5
+</td>
+<td style="text-align:center;">
+-0.199
+</td>
+<td style="text-align:center;">
+Si
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+890
+</td>
+<td style="text-align:center;">
+Beta_5
+</td>
+<td style="text-align:center;">
+-0.179
+</td>
+<td style="text-align:center;">
+Si
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+890
+</td>
+<td style="text-align:center;">
+Beta_4
+</td>
+<td style="text-align:center;">
+0.162
+</td>
+<td style="text-align:center;">
+Si
+</td>
+</tr>
+</tbody>
+</table>
+<p>Los resultados muestran que varias observaciones superan el umbral establecido por el criterio <span class="math inline">\(D_{f}Betas_{\left(i\right)j}\)</span>. La Figura <a href="cap6.html#fig:fig-dfbetas">6.9</a> representa gráficamente estos valores junto al umbral, donde los puntos rojos identifican las observaciones influyentes:</p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="cap6.html#cb223-1" tabindex="-1"></a><span class="fu">ggplot</span>(d_dfbetas, <span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">abs</span>(value), <span class="at">x =</span> id)) <span class="sc">+</span></span>
+<span id="cb223-2"><a href="cap6.html#cb223-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">col =</span> Criterio)) <span class="sc">+</span></span>
+<span id="cb223-3"><a href="cap6.html#cb223-3" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> tex_label,</span>
+<span id="cb223-4"><a href="cap6.html#cb223-4" tabindex="-1"></a>            <span class="at">angle =</span> <span class="dv">45</span>,</span>
+<span id="cb223-5"><a href="cap6.html#cb223-5" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb223-6"><a href="cap6.html#cb223-6" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">label =</span> id)) <span class="sc">+</span></span>
+<span id="cb223-7"><a href="cap6.html#cb223-7" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> cutoff)) <span class="sc">+</span></span>
+<span id="cb223-8"><a href="cap6.html#cb223-8" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(. <span class="sc">~</span> variable, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb223-9"><a href="cap6.html#cb223-9" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb223-10"><a href="cap6.html#cb223-10" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Si&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>, <span class="st">&quot;No&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb223-11"><a href="cap6.html#cb223-11" tabindex="-1"></a>  <span class="fu">theme_cepal</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-dfbetas"></span>
+<img src="06-Regresion_files/figure-html/fig-dfbetas-1.png" alt="Valores DfBetas por parámetro: observaciones influyentes señaladas en rojo" width="80%" />
+<p class="caption">
+Figura 6.9: Valores DfBetas por parámetro: observaciones influyentes señaladas en rojo
+</p>
+</div>
+<p>Cuando el interés recae en el estadístico <span class="math inline">\(D_{f}Fits_{\left(i\right)}\)</span>, se emplea la función <code>svydffits</code> siguiendo el mismo procedimiento descrito para <span class="math inline">\(D_{f}Betas_{\left(i\right)j}\)</span>, como se presenta en la Figura <a href="cap6.html#fig:fig-dffits">6.10</a>:</p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="cap6.html#cb224-1" tabindex="-1"></a>d_dffits <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">dffits =</span> <span class="fu">svydffits</span>(mod_svy)<span class="sc">$</span>Dffits,</span>
+<span id="cb224-2"><a href="cap6.html#cb224-2" tabindex="-1"></a>                      <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">svydffits</span>(mod_svy)<span class="sc">$</span>Dffits))</span>
+<span id="cb224-3"><a href="cap6.html#cb224-3" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fu">svydffits</span>(mod_svy)<span class="sc">$</span>cutoff</span>
+<span id="cb224-4"><a href="cap6.html#cb224-4" tabindex="-1"></a>d_dffits <span class="sc">%&lt;&gt;%</span> <span class="fu">mutate</span>(<span class="at">C_cutoff =</span> <span class="fu">ifelse</span>(<span class="fu">abs</span>(dffits) <span class="sc">&gt;</span> cutoff, <span class="st">&quot;Si&quot;</span>, <span class="st">&quot;No&quot;</span>))</span>
+<span id="cb224-5"><a href="cap6.html#cb224-5" tabindex="-1"></a></span>
+<span id="cb224-6"><a href="cap6.html#cb224-6" tabindex="-1"></a><span class="fu">ggplot</span>(d_dffits, <span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">abs</span>(dffits), <span class="at">x =</span> id)) <span class="sc">+</span></span>
+<span id="cb224-7"><a href="cap6.html#cb224-7" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">col =</span> C_cutoff)) <span class="sc">+</span></span>
+<span id="cb224-8"><a href="cap6.html#cb224-8" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> cutoff) <span class="sc">+</span></span>
+<span id="cb224-9"><a href="cap6.html#cb224-9" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb224-10"><a href="cap6.html#cb224-10" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Si&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>, <span class="st">&quot;No&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb224-11"><a href="cap6.html#cb224-11" tabindex="-1"></a>  <span class="fu">theme_cepal</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-dffits"></span>
+<img src="06-Regresion_files/figure-html/fig-dffits-1.png" alt="Valores DfFits: observaciones influyentes sobre el ajuste global señaladas en rojo" width="65%" />
+<p class="caption">
+Figura 6.10: Valores DfFits: observaciones influyentes sobre el ajuste global señaladas en rojo
+</p>
+</div>
+<p>La Figura <a href="cap6.html#fig:fig-dffits">6.10</a> confirma la existencia de observaciones influyentes —señaladas en rojo— también bajo este criterio.</p>
+<p>Una aproximación adicional para la detección de influencia hace uso de la <strong>matriz H</strong>. La matriz asociada al Estimador de Pseudo Máxima Verosimilitud (PMLE) de <span class="math inline">\(\hat{\boldsymbol{B}}\)</span> es <span class="math inline">\(\boldsymbol{H}=\boldsymbol{XA}^{-1}\boldsymbol{X}^{t}\boldsymbol{W}\)</span>, cuya diagonal está dada por <span class="math inline">\(h_{ii} = \boldsymbol{x_{i}^t A}^{-1}\boldsymbol{x_{i}}w_{i}\)</span>. Una observación puede resultar influyente en las predicciones cuando su vector de covariables <span class="math inline">\(x_i\)</span> difiere considerablemente del promedio ponderado <span class="math inline">\(\bar{x}_w=\sum_{i\in s}w_{i}\boldsymbol{x_{i}}\big/\sum_{i\in s}w_i\)</span>. Siguiendo a <span class="citation">Tellez Piñerez &amp; Lemus Polanía (<a href="#ref-tellez2015estadistica">2015</a>)</span>, se considera que <span class="math inline">\(h_{ii}\)</span> es grande cuando supera tres veces el promedio de todos los valores de la diagonal. El procedimiento en R utiliza la función <code>svyhat</code> y sus resultados se presentan en la Figura <a href="cap6.html#fig:fig-hat-matrix">6.11</a>:</p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="cap6.html#cb225-1" tabindex="-1"></a>vec_hat <span class="ot">&lt;-</span> <span class="fu">svyhat</span>(mod_svy, <span class="at">doplot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb225-2"><a href="cap6.html#cb225-2" tabindex="-1"></a>d_hat <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">hat =</span> vec_hat, <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(vec_hat))</span>
+<span id="cb225-3"><a href="cap6.html#cb225-3" tabindex="-1"></a>d_hat <span class="sc">%&lt;&gt;%</span> <span class="fu">mutate</span>(<span class="at">C_cutoff =</span> <span class="fu">ifelse</span>(hat <span class="sc">&gt;</span> (<span class="dv">3</span> <span class="sc">*</span> <span class="fu">mean</span>(hat)),<span class="st">&quot;Si&quot;</span>, <span class="st">&quot;No&quot;</span>))</span>
+<span id="cb225-4"><a href="cap6.html#cb225-4" tabindex="-1"></a></span>
+<span id="cb225-5"><a href="cap6.html#cb225-5" tabindex="-1"></a><span class="fu">ggplot</span>(d_hat, <span class="fu">aes</span>(<span class="at">y =</span> hat, <span class="at">x =</span> id)) <span class="sc">+</span></span>
+<span id="cb225-6"><a href="cap6.html#cb225-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">col =</span> C_cutoff)) <span class="sc">+</span></span>
+<span id="cb225-7"><a href="cap6.html#cb225-7" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> (<span class="dv">3</span> <span class="sc">*</span> <span class="fu">mean</span>(d_hat<span class="sc">$</span>hat))) <span class="sc">+</span></span>
+<span id="cb225-8"><a href="cap6.html#cb225-8" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb225-9"><a href="cap6.html#cb225-9" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Si&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>, <span class="st">&quot;No&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>))<span class="sc">+</span></span>
+<span id="cb225-10"><a href="cap6.html#cb225-10" tabindex="-1"></a>  <span class="fu">theme_cepal</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-hat-matrix"></span>
+<img src="06-Regresion_files/figure-html/fig-hat-matrix-1.png" alt="Valores de la diagonal de la matriz H: observaciones con alto apalancamiento en rojo" width="65%" />
+<p class="caption">
+Figura 6.11: Valores de la diagonal de la matriz H: observaciones con alto apalancamiento en rojo
+</p>
+</div>
+<p>Dado el carácter empírico de este criterio, el gráfico revela la presencia de varias observaciones con potencial influencia en los datos de la muestra de hogares.</p>
+</div>
+</div>
+</div>
+<div id="inferencia-sobre-los-parámetros-del-modelo" class="section level2 hasAnchor" number="6.7">
+<h2><span class="header-section-number">6.7</span> Inferencia sobre los parámetros del modelo<a href="cap6.html#inferencia-sobre-los-parámetros-del-modelo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una vez verificado el ajuste del modelo mediante las herramientas descritas y corroboradas las propiedades distribucionales de los errores, el paso siguiente consiste en determinar si los parámetros estimados son estadísticamente significativos. Esta evaluación permite establecer si las covariables incluidas aportan de manera sustantiva a la explicación o predicción de la variable de estudio.</p>
+<p>El enfoque clásico para contrastar hipótesis sobre los parámetros <span class="math inline">\(\beta_k\)</span> se fundamenta en las propiedades distribucionales de sus estimadores. El estadístico de prueba natural para evaluar la significancia de un coeficiente se construye a partir de la distribución <span class="math inline">\(t\)</span>-Student:</p>
+<p><span class="math display">\[
+t=\frac{\hat{\beta}_{k}-\beta_{k}}{se\left(\hat{\beta}_{k}\right)} \sim t_{n-p}
+\]</span></p>
+<p>donde <span class="math inline">\(p\)</span> es el número de parámetros del modelo y <span class="math inline">\(n\)</span> el tamaño muestral. Este estadístico contrasta la hipótesis nula <span class="math inline">\(H_{0}:\beta_{k}=0\)</span> frente a la alternativa <span class="math inline">\(H_{1}:\beta_{k}\neq 0\)</span>: cuando <span class="math inline">\(|t|\)</span> es suficientemente grande, se rechaza <span class="math inline">\(H_0\)</span> y se concluye que la covariable asociada a <span class="math inline">\(\beta_k\)</span> tiene un efecto significativo sobre la variable respuesta.</p>
+<p>Las mismas propiedades distribucionales permiten construir intervalos de confianza al nivel <span class="math inline">\((1-\alpha)\times100\%\)</span>:</p>
+<p><span class="math display">\[
+\hat{\beta}_{k}\pm t_{1-\frac{\alpha}{2},\,df}\,se\left(\hat{\beta}_{k}\right)
+\]</span></p>
+<p>donde <span class="math inline">\(se(\hat{\beta}_k)\)</span> es el error estándar del estimador y <span class="math inline">\(t_{1-\frac{\alpha}{2},\,df}\)</span> el percentil de la distribución <span class="math inline">\(t\)</span>-Student con <span class="math inline">\(df\)</span> grados de libertad.</p>
+<p>En encuestas de hogares con diseños muestrales complejos, los grados de libertad no se calculan simplemente como <span class="math inline">\(n-p\)</span>, sino que deben ajustarse para reflejar la estructura del muestreo. De acuerdo con la teoría de diseño:</p>
+<p><span class="math display">\[
+df = \sum_{h} a_{h} - H
+\]</span></p>
+<p>donde <span class="math inline">\(\sum_{h}a_{h}\)</span> es el número total de conglomerados de primera etapa y <span class="math inline">\(H\)</span> el número de estratos. Este ajuste es fundamental para que la inferencia refleje adecuadamente la variabilidad introducida por la estratificación, la conglomeración y las probabilidades de selección desiguales, evitando conclusiones erróneas sobre la significancia de los parámetros.</p>
+<p>Para aplicar estos procedimientos, se emplean las funciones <code>summary.svyglm</code> para las pruebas <span class="math inline">\(t\)</span> y <code>confint.svyglm</code> para los intervalos de confianza, cuyos resultados se presentan en la Tabla <a href="cap6.html#tab:tab-inferencia-modelo">6.9</a>:</p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="cap6.html#cb226-1" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> <span class="fu">summary</span>(mod_svy)<span class="sc">$</span>coefficients <span class="sc">%&gt;%</span></span>
+<span id="cb226-2"><a href="cap6.html#cb226-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb226-3"><a href="cap6.html#cb226-3" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">&quot;Parámetro&quot;</span>)</span>
+<span id="cb226-4"><a href="cap6.html#cb226-4" tabindex="-1"></a></span>
+<span id="cb226-5"><a href="cap6.html#cb226-5" tabindex="-1"></a>resumen <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-inferencia-modelo">Cuadro 6.9: </span><span id="tab:tab-inferencia-modelo">Cuadro 6.10: </span>Pruebas t e intervalos de confianza al 95% para los parámetros del modelo
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+Parámetro
+</th>
+<th style="text-align:center;font-weight: bold;">
+Estimate
+</th>
+<th style="text-align:center;font-weight: bold;">
+Std. Error
+</th>
+<th style="text-align:center;font-weight: bold;">
+t value
+</th>
+<th style="text-align:center;font-weight: bold;">
+Pr(&gt;&amp;#124;t&amp;#124;)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+62.184
+</td>
+<td style="text-align:center;">
+62.989
+</td>
+<td style="text-align:center;">
+0.987
+</td>
+<td style="text-align:center;">
+0.326
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Expenditure
+</td>
+<td style="text-align:center;">
+1.225
+</td>
+<td style="text-align:center;">
+0.198
+</td>
+<td style="text-align:center;">
+6.190
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ZoneUrban
+</td>
+<td style="text-align:center;">
+63.460
+</td>
+<td style="text-align:center;">
+40.090
+</td>
+<td style="text-align:center;">
+1.583
+</td>
+<td style="text-align:center;">
+0.116
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SexMale
+</td>
+<td style="text-align:center;">
+21.733
+</td>
+<td style="text-align:center;">
+15.781
+</td>
+<td style="text-align:center;">
+1.377
+</td>
+<td style="text-align:center;">
+0.171
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Age2
+</td>
+<td style="text-align:center;">
+0.009
+</td>
+<td style="text-align:center;">
+0.006
+</td>
+<td style="text-align:center;">
+1.530
+</td>
+<td style="text-align:center;">
+0.129
+</td>
+</tr>
+</tbody>
+</table>
+<p>Con una confianza del 95%, el único parámetro que resulta significativo es <code>Expenditure</code>, resultado que los intervalos de confianza confirman.</p>
+<div id="estimación-puntual-e-intervalo-de-predicción" class="section level3 hasAnchor" number="6.7.1">
+<h3><span class="header-section-number">6.7.1</span> Estimación puntual e intervalo de predicción<a href="cap6.html#estimación-puntual-e-intervalo-de-predicción" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Los modelos de regresión cumplen dos propósitos fundamentales <span class="citation">(<a href="#ref-heeringa2017applied">Heeringa et al., 2017</a>)</span>: explicar la variabilidad de la variable respuesta en función de las covariables disponibles —objetivo abordado a lo largo de este capítulo— y predecir el valor esperado de dicha variable para nuevas observaciones, tanto dentro como fuera del rango muestral. A continuación se describe el procedimiento de predicción en el contexto de diseños muestrales complejos.</p>
+<p><span class="math display">\[
+\hat{E}(y_{i}\mid\boldsymbol{x}_{obs,i})=\boldsymbol{x}_{obs,i}\hat{\boldsymbol{\beta}}
+\]</span></p>
+<p>Para un modelo con cuatro covariables, esta expresión adopta la forma:</p>
+<p><span class="math display">\[
+\hat{E}(y_{i}\mid\boldsymbol{x}_{obs,i})=\hat{\beta}_{0}+\hat{\beta}_{1}x_{1i}+\hat{\beta}_{2}x_{2i}+\hat{\beta}_{3}x_{3i}+\hat{\beta}_{4}x_{4i}
+\]</span></p>
+<p>La varianza de la estimación se calcula como:</p>
+<p><span class="math display">\[
+var\left(\hat{E}\left(y_{i}\mid x_{obs,i}\right)\right)
+=  x&#39;_{obs,i}cov\left(\hat{\beta}\right)x{}_{obs,i}
+\]</span></p>
+<p>Los coeficientes estimados del modelo se presentan en la Tabla <a href="cap6.html#tab:tab-coeficientes-modelo">6.11</a>:</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-coeficientes-modelo">Cuadro 6.11: </span><span id="tab:tab-coeficientes-modelo">Cuadro 6.12: </span>Coeficientes estimados del modelo de regresión con diseño muestral complejo
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+term
+</th>
+<th style="text-align:center;font-weight: bold;">
+estimate
+</th>
+<th style="text-align:center;font-weight: bold;">
+std.error
+</th>
+<th style="text-align:center;font-weight: bold;">
+statistic
+</th>
+<th style="text-align:center;font-weight: bold;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+62.184
+</td>
+<td style="text-align:center;">
+62.989
+</td>
+<td style="text-align:center;">
+0.987
+</td>
+<td style="text-align:center;">
+0.326
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Expenditure
+</td>
+<td style="text-align:center;">
+1.225
+</td>
+<td style="text-align:center;">
+0.198
+</td>
+<td style="text-align:center;">
+6.190
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ZoneUrban
+</td>
+<td style="text-align:center;">
+63.460
+</td>
+<td style="text-align:center;">
+40.090
+</td>
+<td style="text-align:center;">
+1.583
+</td>
+<td style="text-align:center;">
+0.116
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SexMale
+</td>
+<td style="text-align:center;">
+21.733
+</td>
+<td style="text-align:center;">
+15.781
+</td>
+<td style="text-align:center;">
+1.377
+</td>
+<td style="text-align:center;">
+0.171
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Age2
+</td>
+<td style="text-align:center;">
+0.009
+</td>
+<td style="text-align:center;">
+0.006
+</td>
+<td style="text-align:center;">
+1.530
+</td>
+<td style="text-align:center;">
+0.129
+</td>
+</tr>
+</tbody>
+</table>
+<p>A partir de estos resultados, la predicción del valor esperado queda:</p>
+<p><span class="math display">\[
+\hat{E}(y_{i}\mid\boldsymbol{x}_{obs,i})=62.2+1.2x_{1i}+63.5x_{2i}+21.7x_{3i}+0.01x_{4i}
+\]</span></p>
+<p>Para calcular la varianza de la estimación se requiere la matriz de varianzas y covarianzas de los parámetros, presentada en la Tabla <a href="cap6.html#tab:tab-vcov-modelo">6.13</a>:</p>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="cap6.html#cb227-1" tabindex="-1"></a><span class="fu">vcov</span>(mod_svy) <span class="sc">%&gt;%</span></span>
+<span id="cb227-2"><a href="cap6.html#cb227-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb227-3"><a href="cap6.html#cb227-3" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">&quot;Parámetro&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb227-4"><a href="cap6.html#cb227-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-vcov-modelo">Cuadro 6.13: </span><span id="tab:tab-vcov-modelo">Cuadro 6.14: </span>Matriz de varianzas y covarianzas de los coeficientes del modelo
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+Parámetro
+</th>
+<th style="text-align:center;font-weight: bold;">
+(Intercept)
+</th>
+<th style="text-align:center;font-weight: bold;">
+Expenditure
+</th>
+<th style="text-align:center;font-weight: bold;">
+ZoneUrban
+</th>
+<th style="text-align:center;font-weight: bold;">
+SexMale
+</th>
+<th style="text-align:center;font-weight: bold;">
+Age2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+3967.650
+</td>
+<td style="text-align:center;">
+-11.310
+</td>
+<td style="text-align:center;">
+275.986
+</td>
+<td style="text-align:center;">
+312.453
+</td>
+<td style="text-align:center;">
+-0.185
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Expenditure
+</td>
+<td style="text-align:center;">
+-11.310
+</td>
+<td style="text-align:center;">
+0.039
+</td>
+<td style="text-align:center;">
+-3.553
+</td>
+<td style="text-align:center;">
+-0.500
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ZoneUrban
+</td>
+<td style="text-align:center;">
+275.986
+</td>
+<td style="text-align:center;">
+-3.553
+</td>
+<td style="text-align:center;">
+1607.228
+</td>
+<td style="text-align:center;">
+-130.711
+</td>
+<td style="text-align:center;">
+-0.056
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SexMale
+</td>
+<td style="text-align:center;">
+312.453
+</td>
+<td style="text-align:center;">
+-0.500
+</td>
+<td style="text-align:center;">
+-130.711
+</td>
+<td style="text-align:center;">
+249.034
+</td>
+<td style="text-align:center;">
+-0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Age2
+</td>
+<td style="text-align:center;">
+-0.185
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+<td style="text-align:center;">
+-0.056
+</td>
+<td style="text-align:center;">
+-0.004
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+</tr>
+</tbody>
+</table>
+<p>Con esta información, los cálculos se implementan como sigue:</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="cap6.html#cb228-1" tabindex="-1"></a>xobs <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(mod_svy) <span class="sc">%&gt;%</span></span>
+<span id="cb228-2"><a href="cap6.html#cb228-2" tabindex="-1"></a>        <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb228-3"><a href="cap6.html#cb228-3" tabindex="-1"></a></span>
+<span id="cb228-4"><a href="cap6.html#cb228-4" tabindex="-1"></a>cov_beta <span class="ot">&lt;-</span> <span class="fu">vcov</span>(mod_svy) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb228-5"><a href="cap6.html#cb228-5" tabindex="-1"></a></span>
+<span id="cb228-6"><a href="cap6.html#cb228-6" tabindex="-1"></a><span class="fu">as.numeric</span>(xobs <span class="sc">%*%</span> cov_beta <span class="sc">%*%</span> <span class="fu">t</span>(xobs))</span></code></pre></div>
+<pre><code>## [1] 1921</code></pre>
+<p>El intervalo de confianza para la predicción se obtiene mediante:</p>
+<p><span class="math display">\[
+\boldsymbol{x}_{obs,i}\hat{\beta}\pm t_{\left(1-\frac{\alpha}{2},n-p\right)}\sqrt{var\left(\hat{E}\left(y_{i}\mid\boldsymbol{x}_{obs,i}\right)\right)}
+\]</span></p>
+<p>En R, las funciones <code>predict</code> y <code>confint</code> permiten realizar estos cálculos de manera directa:</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="cap6.html#cb230-1" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">predict</span>(mod_svy, <span class="at">type =</span> <span class="st">&quot;link&quot;</span>))</span>
+<span id="cb230-2"><a href="cap6.html#cb230-2" tabindex="-1"></a>pred_IC <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">confint</span>(<span class="fu">predict</span>(mod_svy, <span class="at">type =</span> <span class="st">&quot;link&quot;</span>)))</span>
+<span id="cb230-3"><a href="cap6.html#cb230-3" tabindex="-1"></a><span class="fu">colnames</span>(pred_IC) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Lim_Inf&quot;</span>, <span class="st">&quot;Lim_Sup&quot;</span>)</span></code></pre></div>
+<p>Las predicciones e intervalos pueden visualizarse gráficamente en la Figura <a href="cap6.html#fig:fig-pred-intervalos">6.12</a>:</p>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="cap6.html#cb231-1" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(pred, pred_IC)</span>
+<span id="cb231-2"><a href="cap6.html#cb231-2" tabindex="-1"></a>pred<span class="sc">$</span>Expenditure <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Expenditure</span>
+<span id="cb231-3"><a href="cap6.html#cb231-3" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span>
+<span id="cb231-4"><a href="cap6.html#cb231-4" tabindex="-1"></a><span class="fu">ggplot</span>(pred <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>100L),</span>
+<span id="cb231-5"><a href="cap6.html#cb231-5" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">y =</span> link)) <span class="sc">+</span></span>
+<span id="cb231-6"><a href="cap6.html#cb231-6" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> Lim_Inf,</span>
+<span id="cb231-7"><a href="cap6.html#cb231-7" tabindex="-1"></a>                    <span class="at">ymax =</span> Lim_Sup),</span>
+<span id="cb231-8"><a href="cap6.html#cb231-8" tabindex="-1"></a>                <span class="at">width =</span> .<span class="dv">1</span>,</span>
+<span id="cb231-9"><a href="cap6.html#cb231-9" tabindex="-1"></a>                <span class="at">linetype =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb231-10"><a href="cap6.html#cb231-10" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">position =</span> pd) <span class="sc">+</span></span>
+<span id="cb231-11"><a href="cap6.html#cb231-11" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-pred-intervalos"></span>
+<img src="06-Regresion_files/figure-html/fig-pred-intervalos-1.png" alt="Predicciones puntuales e intervalos de confianza para las primeras 100 observaciones de la muestra" width="65%" />
+<p class="caption">
+Figura 6.12: Predicciones puntuales e intervalos de confianza para las primeras 100 observaciones de la muestra
+</p>
+</div>
+<p>Cuando el interés es predecir fuera del rango de valores observados en la muestra, la varianza debe incorporar además el término de error del modelo:</p>
+<p><span class="math display">\[
+var\left(\hat{E}\left(y_{i}\mid\boldsymbol{x}_{obs,i}\right)\right)=\boldsymbol{x}_{obs,i}^{t}cov\left(\boldsymbol{\beta}\right)\boldsymbol{x}_{obs,i} + \hat{\sigma}^2_{yx}
+\]</span></p>
+<p>Supóngase, por ejemplo, que se desea predecir para el siguiente perfil:</p>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="cap6.html#cb232-1" tabindex="-1"></a>datos_nuevos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Expenditure =</span> <span class="dv">1600</span>,</span>
+<span id="cb232-2"><a href="cap6.html#cb232-2" tabindex="-1"></a>                           <span class="at">Age2 =</span> <span class="dv">40</span><span class="sc">^</span><span class="dv">2</span>, <span class="at">Sex =</span> <span class="st">&quot;Male&quot;</span>,</span>
+<span id="cb232-3"><a href="cap6.html#cb232-3" tabindex="-1"></a>                           <span class="at">Zone =</span> <span class="st">&quot;Urban&quot;</span>)</span></code></pre></div>
+<p>La varianza asociada a esta predicción se calcula como:</p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="cap6.html#cb233-1" tabindex="-1"></a>x_noObs <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1600</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">40</span><span class="sc">^</span><span class="dv">2</span>),<span class="at">nrow =</span> <span class="dv">1</span>)</span>
+<span id="cb233-2"><a href="cap6.html#cb233-2" tabindex="-1"></a><span class="fu">as.numeric</span>(<span class="fu">sqrt</span>(x_noObs<span class="sc">%*%</span>cov_beta<span class="sc">%*%</span><span class="fu">t</span>(x_noObs)))</span></code></pre></div>
+<pre><code>## [1] 244.6</code></pre>
+<p>El intervalo de confianza correspondiente sigue la expresión:</p>
+<p><span class="math display">\[
+\boldsymbol{x}_{obs,i}\hat{\beta}\pm t_{\left(1-\frac{\alpha}{2},n-p\right)}\sqrt{var\left(\hat{E}\left(y_{i}\mid\boldsymbol{x}_{obs,i}\right)\right)+\hat{\sigma}_{yx}^{2}}
+\]</span></p>
+<p>cuyo cálculo en R se realiza mediante:</p>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="cap6.html#cb235-1" tabindex="-1"></a><span class="fu">predict</span>(mod_svy, <span class="at">newdata =</span> datos_nuevos, <span class="at">type =</span>  <span class="st">&quot;link&quot;</span>)</span></code></pre></div>
+<pre><code>##   link  SE
+## 1 2122 245</code></pre>
+<p>y el intervalo:</p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="cap6.html#cb237-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">predict</span>(mod_svy,<span class="at">newdata =</span> datos_nuevos))</span></code></pre></div>
+<pre><code>##   2.5 % 97.5 %
+## 1  1642   2601</code></pre>
+
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div class="csl-entry">
+Bache, S. M., &amp; Wickham, H. (2025). <em>magrittr: A Forward-Pipe Operator for R</em>. <a href="https://doi.org/10.32614/CRAN.package.magrittr">https://doi.org/10.32614/CRAN.package.magrittr</a>
+</div>
+<div class="csl-entry">
+Bautista, L. (1998). Diseños de muestreo estadístico. <em>Universidad Nacional de Colombia</em>.
+</div>
+<div class="csl-entry">
+Binder, D. A. (1983). On the variances of asymptotically normal estimators from complex surveys. <em>International Statistical Review/Revue Internationale de Statistique</em>, 279-292.
+</div>
+<div class="csl-entry">
+Binder, D. A. (2011). Estimating model parameters from a complex survey under a model-design randomization framework. <em>Pakistan Journal of Statistics</em>, <em>27</em>(4).
+</div>
+<div class="csl-entry">
+Binder, D. A., &amp; Kovacevic, M. S. (1995). Estimating some measures of income inequality from survey data: an application of the estimating equations approach. <em>Survey Methodology</em>, <em>21</em>, 137-146.
+</div>
+<div class="csl-entry">
+Bruch, C., Münnich, R., &amp; Zins, S. (2011). Variance estimation for complex surveys. <em>Deliverable D3</em>, <em>1</em>.
+</div>
+<div class="csl-entry">
+Cochran, W. G. (1977). <em>Sampling techniques</em>. John Wiley &amp; Sons.
+</div>
+<div class="csl-entry">
+Efron, B. (1979). Bootstrap methods: Another look at the jackknife. <em>The Annals of Statistics</em>, <em>7</em>(1), 1-26. <a href="https://doi.org/10.1214/aos/1176344552">https://doi.org/10.1214/aos/1176344552</a>
+</div>
+<div class="csl-entry">
+Freedman Ellis, G., &amp; Schneider, B. (2024). <em>srvyr: ’dplyr’-Like Syntax for Summary Statistics of Survey Data</em>. <a href="https://doi.org/10.32614/CRAN.package.srvyr">https://doi.org/10.32614/CRAN.package.srvyr</a>
+</div>
+<div class="csl-entry">
+Fuller, W. A. (1975). Regression analysis for sample survey. <em>Sankhya, Series C</em>, <em>37</em>, 117-132.
+</div>
+<div class="csl-entry">
+Fuller, W. A. (2002). Regression estimation for survey samples. <em>Survey Methodology</em>, <em>28</em>(1), 5-23.
+</div>
+<div class="csl-entry">
+Gambino, J. G., &amp; Nascimento Silva, P. L. do. (2009). Sampling and estimation in household surveys. En <em>Handbook of Statistics</em> (Vol. 29, pp. 407-439). Elsevier.
+</div>
+<div class="csl-entry">
+Gutiérrez, H. A. (2016). <em>Estrategias de muestreo: diseño de encuestas y estimación de parámetros</em> (Segunda edición). Ediciones de la U.
+</div>
+<div class="csl-entry">
+Gutiérrez, H. A. (2020a). <em>samplesize4surveys: Sample Size Calculations for Complex Surveys</em>. <a href="https://doi.org/10.32614/CRAN.package.samplesize4surveys">https://doi.org/10.32614/CRAN.package.samplesize4surveys</a>
+</div>
+<div class="csl-entry">
+Gutiérrez, H. A. (2020b). <em>TeachingSampling: Selection of Samples and Parameter Estimation in Finite Population</em>. <a href="https://doi.org/10.32614/CRAN.package.TeachingSampling">https://doi.org/10.32614/CRAN.package.TeachingSampling</a>
+</div>
+<div class="csl-entry">
+Gutiérrez, H. A., &amp; Babativa-Márquez, G. (2023). <em>Efectos de diseño para indicadores sociales en Am<span>é</span>rica Latina: función generalizada de varianza para estimadores directos provenientes de encuestas de hogares</em> (LC/TS.2023/95 106). Comisi<span>ó</span>n Econ<span>ó</span>mica para Am<span>é</span>rica Latina y el Caribe (CEPAL), Naciones Unidas. <a href="https://repositorio.cepal.org/server/api/core/bitstreams/feb8c8be-6434-41f2-8fd9-f12f71a0739a/content">https://repositorio.cepal.org/server/api/core/bitstreams/feb8c8be-6434-41f2-8fd9-f12f71a0739a/content</a>
+</div>
+<div class="csl-entry">
+Hansen, M. H., Hurwitz, W. N., Madow, W. G., et al. (1953). <em>Sample survey methods and theory</em>.
+</div>
+<div class="csl-entry">
+Hansen, M. H., &amp; Steinberg, J. (1956). Control of errors in surveys. <em>Biometrics</em>, <em>12</em>(4), 462-474.
+</div>
+<div class="csl-entry">
+Heeringa, S. G., West, B. T., Heeringa, S. G., &amp; Berglund, P. A. (2017). <em>Applied survey data analysis</em>. chapman; hall/CRC.
+</div>
+<div class="csl-entry">
+Jacob, G., Pessoa, D., &amp; Damico, A. (2024). <em>Poverty and Inequality with Complex Survey Data</em>. <a href="https://www.convey-r.org/">https://www.convey-r.org/</a>
+</div>
+<div class="csl-entry">
+Kalton, G., &amp; Flores-Cervantes, I. (2003). Weighting methods. <em>Journal of official statistics</em>, <em>19</em>(2), 81.
+</div>
+<div class="csl-entry">
+Kish, L. (1965). <em>Survey sampling.</em>
+</div>
+<div class="csl-entry">
+Kish, L., &amp; Frankel, M. R. (1974). Inference from complex samples. <em>Journal of the Royal Statistical Society, Series B</em>, <em>36</em>, 1-37.
+</div>
+<div class="csl-entry">
+Korn, E. L., &amp; Graubard, B. I. (1995). Analysis of large health surveys: accounting for the sampling design. <em>Journal of the Royal Statistical Society: Series A (Statistics in Society)</em>, <em>158</em>(2), 263-295.
+</div>
+<div class="csl-entry">
+Kovacevic, M. S., &amp; Binder, D. A. (1997). Variance estimation for measures of income inequality and polarization-the estimating equations approach. <em>Journal of Official Statistics</em>, <em>13</em>(1), 41.
+</div>
+<div class="csl-entry">
+Kovar, J., Rao, J., &amp; Wu, C. (1988). Bootstrap and other methods to measure errors in survey estimates. <em>Canadian Journal of Statistics</em>, <em>16</em>(S1), 25-45.
+</div>
+<div class="csl-entry">
+Langel, M., &amp; Tillé, Y. (2013). Variance estimation of the Gini index: revisiting a result several times published. <em>Journal of the Royal Statistical Society Series A: Statistics in Society</em>, <em>176</em>(2), 521-540.
+</div>
+<div class="csl-entry">
+Loomis, D., Richardson, D. B., &amp; Elliott, L. (2005). Poisson regression analysis of ungrouped data. <em>Occupational and environmental medicine</em>, <em>62</em>(5), 325-329.
+</div>
+<div class="csl-entry">
+Lumley, T. (2010). <em>Complex Surveys: A Guide to Analysis Using R: A Guide to Analysis Using R</em>. John Wiley; Sons.
+</div>
+<div class="csl-entry">
+Lumley, T. (2024). <em>survey: analysis of complex survey samples</em>.
+</div>
+<div class="csl-entry">
+Molina, E. A., &amp; Skinner, C. J. (1992). Pseudo-likelihood and quasi-likelihood estimation for complex sampling schemes. <em>Computational Statistics &amp; Data Analysis</em>, <em>13</em>, 395-405.
+</div>
+<div class="csl-entry">
+Naciones Unidas. (2009). <em>Diseño de Muestras para Encuestas de Hogares: Directrices Prácticas.</em> Naciones Unidas. <a href="https://unstats.un.org/unsd/publication/seriesf/seriesf_98s.pdf">https://unstats.un.org/unsd/publication/seriesf/seriesf_98s.pdf</a>
+</div>
+<div class="csl-entry">
+Osier, G. (2009). Variance estimation for complex indicators of poverty and inequality using linearization techniques. <em>Survey research methods</em>, <em>3</em>, 167-195.
+</div>
+<div class="csl-entry">
+Park, I., Winglee, M., Clark, J., Rust, K., Sedlak, A., &amp; Morganstein, D. (2003). Design Effects and Survey Planning. <em>Proceedings of the Section on Survey Research Methods</em>, 3179-3186. <a href="https://www.asasrms.org/Proceedings/y2003/Files/JSM2003-000156.pdf">https://www.asasrms.org/Proceedings/y2003/Files/JSM2003-000156.pdf</a>
+</div>
+<div class="csl-entry">
+Pebesma, E. (2018). <span>Simple Features for R: Standardized Support for Spatial Vector Data</span>. <em><span>The R Journal</span></em>, <em>10</em>(1), 439-446. <a href="https://doi.org/10.32614/RJ-2018-009">https://doi.org/10.32614/RJ-2018-009</a>
+</div>
+<div class="csl-entry">
+Pedersen, T. L. (2024). <em>patchwork: The composer of plots</em>. <a href="https://CRAN.R-project.org/package=patchwork">https://CRAN.R-project.org/package=patchwork</a>
+</div>
+<div class="csl-entry">
+Pfeffermann, D. (2011). Modelling of complex survey data: <span>W</span>hy model? <span>W</span>hy is it a problem? <span>H</span>ow can we approach it? <em>Survey Methodology</em>, <em>37</em>(2), 115-136.
+</div>
+<div class="csl-entry">
+Rao, J. N. K., &amp; Scott, A. J. (1984). On chi-squared tests for multiway contingency tables with cell proportions estimated from survey data. <em>The Annals of Statistics</em>, <em>12</em>(1), 46-60.
+</div>
+<div class="csl-entry">
+Rao, J. N. K., Wu, C. F. J., &amp; Yue, K. (1992). Some recent work on resampling methods for complex surveys. <em>Survey Methodology</em>, <em>18</em>, 209-217.
+</div>
+<div class="csl-entry">
+Santana Sepúlveda, S., &amp; Mateos Farfán, E. (2014). <em>El arte de programar en R: un lenguaje para la estadística</em>. México: Instituto Mexicano de Tecnología del Agua. UNESCO. Comité Nacional Mexicano del Programa Hidrológico Internacional.
+</div>
+<div class="csl-entry">
+Särndal, C.-E., &amp; Lundström, S. (2005). <em>Estimation in surveys with nonresponse</em>. John Wiley &amp; Sons.
+</div>
+<div class="csl-entry">
+Särndal, C.-E., Swensson, B., &amp; Wretman, J. (2003). <em>Model assisted survey sampling</em>. Springer Science &amp; Business Media.
+</div>
+<div class="csl-entry">
+Shah, B. V., Holt, M. M., &amp; Folsom, R. F. (1977). Inference about regression models from sample survey data. <em>Bulletin of the International Statistical Institute</em>, <em>41</em>(3), 43-57.
+</div>
+<div class="csl-entry">
+Skinner, C. J., Holt, D., &amp; Smith, T. M. F. (Eds.). (1989). <em>Analysis of complex surveys</em>. John Wiley &amp; Sons.
+</div>
+<div class="csl-entry">
+Tellez Piñerez, C. F., &amp; Lemus Polanía, D. F. (2015). <em>Estadística Descriptiva y Probabilidad con aplicaciones en R</em>. Fundación Universitaria Los Libertadores.
+</div>
+<div class="csl-entry">
+Tennekes, M. (2023). <em>tmap: Thematic Maps</em>. <a href="https://CRAN.R-project.org/package=tmap">https://CRAN.R-project.org/package=tmap</a>
+</div>
+<div class="csl-entry">
+Thomas, D. R., &amp; Rao, J. N. K. (1987). Small-sample comparisons of level and power for simple goodness-of-fit statistics under cluster sampling. <em>Journal of the American Statistical Association</em>, <em>82</em>(398), 630-636.
+</div>
+<div class="csl-entry">
+Tillé, Y., &amp; Matei, A. (2025). <em>sampling: Survey Sampling</em>. <a href="https://doi.org/10.32614/CRAN.package.sampling">https://doi.org/10.32614/CRAN.package.sampling</a>
+</div>
+<div class="csl-entry">
+Valliant, R. (2024). <em>svydiags: Regression Model Diagnostics for Survey Data</em>. <a href="https://doi.org/10.32614/CRAN.package.svydiags">https://doi.org/10.32614/CRAN.package.svydiags</a>
+</div>
+<div class="csl-entry">
+Valliant, R., &amp; Zipf, G. (2025). <em>PracTools: Designing and Weighting Survey Samples</em>. <a href="https://doi.org/10.32614/CRAN.package.PracTools">https://doi.org/10.32614/CRAN.package.PracTools</a>
+</div>
+<div class="csl-entry">
+Wickham, H. (2019). <em>Advanced R</em> (2.ª ed.). Chapman; Hall/CRC. <a href="https://adv-r.hadley.nz/">https://adv-r.hadley.nz/</a>
+</div>
+<div class="csl-entry">
+Wickham, H., &amp; Grolemund, G. (2017). <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. O’Reilly Media. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>
+</div>
+<div class="csl-entry">
+Wickham, H., Miller, E., &amp; Smith, D. (2025). <em>haven: Import and Export ’SPSS’, ’Stata’ and ’SAS’ Files</em>. <a href="https://doi.org/10.32614/CRAN.package.haven">https://doi.org/10.32614/CRAN.package.haven</a>
+</div>
+<div class="csl-entry">
+Wickham, H., Navarro, D., &amp; Pedersen, T. L. (2023). <em>ggplot2: Elegant Graphics for Data Analysis</em> (3.ª ed.). Springer. <a href="https://doi.org/10.1007/978-3-319-24277-4">https://doi.org/10.1007/978-3-319-24277-4</a>
+</div>
+<div class="csl-entry">
+Wilkinson, L. (2005). <em>The grammar of graphics</em> (2.ª ed.). Springer.
+</div>
+<div class="csl-entry">
+Wolter, K. M., &amp; Wolter, K. M. (2007). <em>Introduction to variance estimation</em> (Vol. 53). Springer.
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-binder1983variances" class="csl-entry">
+Binder, D. A. (1983). On the variances of asymptotically normal estimators from complex surveys. <em>International Statistical Review/Revue Internationale de Statistique</em>, 279-292.
+</div>
+<div id="ref-binder2011estimating" class="csl-entry">
+Binder, D. A. (2011). Estimating model parameters from a complex survey under a model-design randomization framework. <em>Pakistan Journal of Statistics</em>, <em>27</em>(4).
+</div>
+<div id="ref-fuller1975regression" class="csl-entry">
+Fuller, W. A. (1975). Regression analysis for sample survey. <em>Sankhya, Series C</em>, <em>37</em>, 117-132.
+</div>
+<div id="ref-fuller2002regression" class="csl-entry">
+Fuller, W. A. (2002). Regression estimation for survey samples. <em>Survey Methodology</em>, <em>28</em>(1), 5-23.
+</div>
+<div id="ref-heeringa2017applied" class="csl-entry">
+Heeringa, S. G., West, B. T., Heeringa, S. G., &amp; Berglund, P. A. (2017). <em>Applied survey data analysis</em>. chapman; hall/CRC.
+</div>
+<div id="ref-kish1974inference" class="csl-entry">
+Kish, L., &amp; Frankel, M. R. (1974). Inference from complex samples. <em>Journal of the Royal Statistical Society, Series B</em>, <em>36</em>, 1-37.
+</div>
+<div id="ref-molina1992pseudo" class="csl-entry">
+Molina, E. A., &amp; Skinner, C. J. (1992). Pseudo-likelihood and quasi-likelihood estimation for complex sampling schemes. <em>Computational Statistics &amp; Data Analysis</em>, <em>13</em>, 395-405.
+</div>
+<div id="ref-pfeffermann2011modelling" class="csl-entry">
+Pfeffermann, D. (2011). Modelling of complex survey data: <span>W</span>hy model? <span>W</span>hy is it a problem? <span>H</span>ow can we approach it? <em>Survey Methodology</em>, <em>37</em>(2), 115-136.
+</div>
+<div id="ref-shah1977inference" class="csl-entry">
+Shah, B. V., Holt, M. M., &amp; Folsom, R. F. (1977). Inference about regression models from sample survey data. <em>Bulletin of the International Statistical Institute</em>, <em>41</em>(3), 43-57.
+</div>
+<div id="ref-skinner1989analysis" class="csl-entry">
+Skinner, C. J., Holt, D., &amp; Smith, T. M. F. (Eds.). (1989). <em>Analysis of complex surveys</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-tellez2015estadistica" class="csl-entry">
+Tellez Piñerez, C. F., &amp; Lemus Polanía, D. F. (2015). <em>Estadística Descriptiva y Probabilidad con aplicaciones en R</em>. Fundación Universitaria Los Libertadores.
+</div>
+<div id="ref-Valliant2024" class="csl-entry">
+Valliant, R. (2024). <em>svydiags: Regression Model Diagnostics for Survey Data</em>. <a href="https://doi.org/10.32614/CRAN.package.svydiags">https://doi.org/10.32614/CRAN.package.svydiags</a>
+</div>
+<div id="ref-wolter2007" class="csl-entry">
+Wolter, K. M., &amp; Wolter, K. M. (2007). <em>Introduction to variance estimation</em> (Vol. 53). Springer.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="análisis-de-variables-categóricas.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

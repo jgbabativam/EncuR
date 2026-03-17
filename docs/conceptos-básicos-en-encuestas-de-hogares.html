@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 2 Conceptos básicos en encuestas de hogares | Análisis de encuestas con R</title>
+  <meta name="description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 2 Conceptos básicos en encuestas de hogares | Análisis de encuestas con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="github-repo" content="psirusteam/2021ASDA" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 2 Conceptos básicos en encuestas de hogares | Análisis de encuestas con R" />
+  
+  <meta name="twitter:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  
+
+<meta name="author" content="Andrés Gutiérrez, Stalyn Guerrero, Cristian Téllez, Giovany Babativa-Márquez" />
+
+
+<meta name="date" content="2026-03-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introducción.html"/>
+<link rel="next" href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#universo-de-estudio-y-población-objetivo"><i class="fa fa-check"></i><b>2.1</b> Universo de estudio y población objetivo</a></li>
+<li class="chapter" data-level="2.2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#unidades-de-análisis"><i class="fa fa-check"></i><b>2.2</b> Unidades de análisis</a></li>
+<li class="chapter" data-level="2.3" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#unidades-de-muestreo"><i class="fa fa-check"></i><b>2.3</b> Unidades de muestreo</a></li>
+<li class="chapter" data-level="2.4" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#marcos-de-muestreo"><i class="fa fa-check"></i><b>2.4</b> Marcos de muestreo</a></li>
+<li class="chapter" data-level="2.5" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#sec-motivacion"><i class="fa fa-check"></i><b>2.5</b> Motivación</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#la-importancia-de-considerar-el-diseño-muestral"><i class="fa fa-check"></i><b>2.5.1</b> La importancia de considerar el diseño muestral</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#parámetros-y-estimadores"><i class="fa fa-check"></i><b>2.6</b> Parámetros y estimadores</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#ajustes-adicionales-de-los-pesos"><i class="fa fa-check"></i><b>2.6.1</b> Ajustes adicionales de los pesos</a></li>
+<li class="chapter" data-level="2.6.2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#importancia-de-los-ajustes"><i class="fa fa-check"></i><b>2.6.2</b> Importancia de los ajustes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#estimación-de-totales"><i class="fa fa-check"></i><b>2.7</b> Estimación de totales</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#ejemplo-ilustrativo-1"><i class="fa fa-check"></i><b>2.7.1</b> Ejemplo ilustrativo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#efecto-del-diseño-deff"><i class="fa fa-check"></i><b>2.8</b> Efecto del diseño (DEFF)</a></li>
+<li class="chapter" data-level="2.9" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#muestreo-estratificado-aleatorio-simple-con-dos-etapas"><i class="fa fa-check"></i><b>2.9</b> Muestreo estratificado aleatorio simple con dos etapas</a></li>
+<li class="chapter" data-level="2.10" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#práctica-en-r"><i class="fa fa-check"></i><b>2.10</b> Práctica en <code>R</code></a></li>
+<li class="chapter" data-level="2.11" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#calibrando-con-r"><i class="fa fa-check"></i><b>2.11</b> Calibrando con <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><i class="fa fa-check"></i><b>3</b> Del manejo de datos al análisis de encuestas complejas en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#fundamentos-básicos-de-r-y-rstudio"><i class="fa fa-check"></i><b>3.1</b> Fundamentos básicos de R y Rstudio</a></li>
+<li class="chapter" data-level="3.2" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#paquetes-para-el-análisis-de-encuestas"><i class="fa fa-check"></i><b>3.2</b> Paquetes para el análisis de encuestas</a></li>
+<li class="chapter" data-level="3.3" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#paquetes-complementarios-para-la-manipulación-y-visualización-de-datos"><i class="fa fa-check"></i><b>3.3</b> Paquetes complementarios para la manipulación y visualización de datos</a></li>
+<li class="chapter" data-level="3.4" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#creación-de-proyectos-en-r"><i class="fa fa-check"></i><b>3.4</b> Creación de proyectos en <code>R</code></a></li>
+<li class="chapter" data-level="3.5" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#lectura-de-bases-de-datos-y-manipulación"><i class="fa fa-check"></i><b>3.5</b> Lectura de bases de datos y manipulación</a></li>
+<li class="chapter" data-level="3.6" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#el-operador-pipe"><i class="fa fa-check"></i><b>3.6</b> El operador <code>pipe</code></a></li>
+<li class="chapter" data-level="3.7" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#transformación-y-resumen-de-datos"><i class="fa fa-check"></i><b>3.7</b> Transformación y resumen de datos</a></li>
+<li class="chapter" data-level="3.8" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas"><i class="fa fa-check"></i><b>3.8</b> Diferencias entre el análisis tradicional y el análisis de encuestas complejas</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de las variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="cap4.html"><a href="cap4.html#definición-del-objeto-de-diseño"><i class="fa fa-check"></i><b>4.1</b> Definición del objeto de diseño</a></li>
+<li class="chapter" data-level="4.2" data-path="cap4.html"><a href="cap4.html#estimación-de-totales-y-medias"><i class="fa fa-check"></i><b>4.2</b> Estimación de totales y medias</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="cap4.html"><a href="cap4.html#estimación-puntual"><i class="fa fa-check"></i><b>4.2.1</b> Estimación puntual</a></li>
+<li class="chapter" data-level="4.2.2" data-path="cap4.html"><a href="cap4.html#estimación-de-totales-1"><i class="fa fa-check"></i><b>4.2.2</b> Estimación de totales</a></li>
+<li class="chapter" data-level="4.2.3" data-path="cap4.html"><a href="cap4.html#estimación-de-la-media-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.2.3</b> Estimación de la media e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.2.4" data-path="cap4.html"><a href="cap4.html#estimación-de-medidas-de-localización-y-dispersión"><i class="fa fa-check"></i><b>4.2.4</b> Estimación de medidas de localización y dispersión</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="cap4.html"><a href="cap4.html#estimación-de-razones"><i class="fa fa-check"></i><b>4.3</b> Estimación de razones</a>
+<ul>
+<li class="chapter" data-level="" data-path="cap4.html"><a href="cap4.html#implementación-computacional-en-r"><i class="fa fa-check"></i>Implementación computacional en <code>R</code></a></li>
+<li class="chapter" data-level="" data-path="cap4.html"><a href="cap4.html#interpretación-aplicada"><i class="fa fa-check"></i>Interpretación aplicada</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="cap4.html"><a href="cap4.html#estimación-del-coeficiente-de-gini"><i class="fa fa-check"></i><b>4.4</b> Estimación del coeficiente de Gini</a></li>
+<li class="chapter" data-level="4.5" data-path="cap4.html"><a href="cap4.html#análisis-de-correlación"><i class="fa fa-check"></i><b>4.5</b> Análisis de correlación</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="cap4.html"><a href="cap4.html#ajuste-al-diseño-muestral"><i class="fa fa-check"></i><b>4.5.1</b> Ajuste al diseño muestral</a></li>
+<li class="chapter" data-level="4.5.2" data-path="cap4.html"><a href="cap4.html#expresión-formal"><i class="fa fa-check"></i><b>4.5.2</b> Expresión formal</a></li>
+<li class="chapter" data-level="4.5.3" data-path="cap4.html"><a href="cap4.html#implementación-en-r"><i class="fa fa-check"></i><b>4.5.3</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="cap4.html"><a href="cap4.html#pruebas-de-hipótesis"><i class="fa fa-check"></i><b>4.6</b> Pruebas de hipótesis</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="cap4.html"><a href="cap4.html#planteamiento-general"><i class="fa fa-check"></i><b>4.6.1</b> Planteamiento general</a></li>
+<li class="chapter" data-level="4.6.2" data-path="cap4.html"><a href="cap4.html#prueba-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.6.2</b> Prueba para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.6.3" data-path="cap4.html"><a href="cap4.html#estadístico-de-prueba-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.6.3</b> Estadístico de prueba e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.6.4" data-path="cap4.html"><a href="cap4.html#ejemplo-aplicado-en-r"><i class="fa fa-check"></i><b>4.6.4</b> Ejemplo aplicado en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="cap4.html"><a href="cap4.html#estimación-de-contrastes"><i class="fa fa-check"></i><b>4.7</b> Estimación de contrastes</a></li>
+<li class="chapter" data-level="4.8" data-path="cap4.html"><a href="cap4.html#viz-continuas"><i class="fa fa-check"></i><b>4.8</b> Visualización de variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="cap4.html"><a href="cap4.html#histogramas"><i class="fa fa-check"></i><b>4.8.1</b> Histogramas</a></li>
+<li class="chapter" data-level="4.8.2" data-path="cap4.html"><a href="cap4.html#densidades-y-boxplots"><i class="fa fa-check"></i><b>4.8.2</b> Densidades y Boxplots</a></li>
+<li class="chapter" data-level="4.8.3" data-path="cap4.html"><a href="cap4.html#diagramas-de-dispersión"><i class="fa fa-check"></i><b>4.8.3</b> Diagramas de dispersión</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html"><i class="fa fa-check"></i><b>5</b> Análisis de variables categóricas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#estimación-del-tamaño-poblacional"><i class="fa fa-check"></i><b>5.1</b> Estimación del tamaño poblacional</a>
+<ul>
+<li class="chapter" data-level="" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#estimación-de-totales-en-r"><i class="fa fa-check"></i>Estimación de totales en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#estimación-de-proporciones"><i class="fa fa-check"></i><b>5.2</b> Estimación de proporciones</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#estimación-de-proporciones-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Estimación de proporciones en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#tablas-cruzadas"><i class="fa fa-check"></i><b>5.3</b> Tablas cruzadas</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#definición-y-notación"><i class="fa fa-check"></i><b>5.3.1</b> Definición y notación</a></li>
+<li class="chapter" data-level="5.3.2" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#tablas-de-doble-entrada"><i class="fa fa-check"></i><b>5.3.2</b> Tablas de doble entrada</a></li>
+<li class="chapter" data-level="5.3.3" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#proporciones-para-variables-binarias"><i class="fa fa-check"></i><b>5.3.3</b> Proporciones para variables binarias</a></li>
+<li class="chapter" data-level="5.3.4" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#proporciones-para-variables-multinomiales"><i class="fa fa-check"></i><b>5.3.4</b> Proporciones para variables multinomiales</a></li>
+<li class="chapter" data-level="5.3.5" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#tablas-cruzadas-o-de-contingencia"><i class="fa fa-check"></i><b>5.3.5</b> Tablas cruzadas o de contingencia</a></li>
+<li class="chapter" data-level="5.3.6" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#prueba-de-independencia-chi2"><i class="fa fa-check"></i><b>5.3.6</b> Prueba de independencia <span class="math inline">\(\chi^{2}\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#viz-categoricas"><i class="fa fa-check"></i><b>5.4</b> Visualización de variables categóricas</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#gráficos-de-barras"><i class="fa fa-check"></i><b>5.4.1</b> Gráficos de barras</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#viz-mapas"><i class="fa fa-check"></i><b>5.5</b> Visualización de variables categóricas en mapas</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#carga-del-shapefile-y-mapa-base"><i class="fa fa-check"></i><b>5.5.1</b> Carga del shapefile y mapa base</a></li>
+<li class="chapter" data-level="5.5.2" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#mapa-coroplético-de-pobreza-masculina-por-región"><i class="fa fa-check"></i><b>5.5.2</b> Mapa coroplético de pobreza masculina por región</a></li>
+<li class="chapter" data-level="5.5.3" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#mapa-del-coeficiente-de-variación-del-ingreso-medio"><i class="fa fa-check"></i><b>5.5.3</b> Mapa del coeficiente de variación del ingreso medio</a></li>
+<li class="chapter" data-level="5.5.4" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#mapa-bivariante-con-ggplot2"><i class="fa fa-check"></i><b>5.5.4</b> Mapa bivariante con <code>ggplot2</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cap6.html"><a href="cap6.html"><i class="fa fa-check"></i><b>6</b> Modelos de regresión</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="cap6.html"><a href="cap6.html#antecedentes-históricos-y-desarrollos-metodológicos"><i class="fa fa-check"></i><b>6.1</b> Antecedentes históricos y desarrollos metodológicos</a></li>
+<li class="chapter" data-level="6.2" data-path="cap6.html"><a href="cap6.html#relevancia-práctica"><i class="fa fa-check"></i><b>6.2</b> Relevancia práctica</a></li>
+<li class="chapter" data-level="6.3" data-path="cap6.html"><a href="cap6.html#uso-de-ponderaciones"><i class="fa fa-check"></i><b>6.3</b> Uso de ponderaciones</a></li>
+<li class="chapter" data-level="6.4" data-path="cap6.html"><a href="cap6.html#enfoques-inferenciales-para-el-análisis-de-datos"><i class="fa fa-check"></i><b>6.4</b> Enfoques inferenciales para el análisis de datos</a></li>
+<li class="chapter" data-level="6.5" data-path="cap6.html"><a href="cap6.html#estimación-de-los-parámetros"><i class="fa fa-check"></i><b>6.5</b> Estimación de los parámetros</a></li>
+<li class="chapter" data-level="6.6" data-path="cap6.html"><a href="cap6.html#diagnóstico-del-modelo"><i class="fa fa-check"></i><b>6.6</b> Diagnóstico del modelo</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="cap6.html"><a href="cap6.html#coeficiente-de-determinación"><i class="fa fa-check"></i><b>6.6.1</b> Coeficiente de determinación</a></li>
+<li class="chapter" data-level="6.6.2" data-path="cap6.html"><a href="cap6.html#diagnóstico-de-los-residuales"><i class="fa fa-check"></i><b>6.6.2</b> Diagnóstico de los residuales</a></li>
+<li class="chapter" data-level="6.6.3" data-path="cap6.html"><a href="cap6.html#observaciones-influyentes"><i class="fa fa-check"></i><b>6.6.3</b> Observaciones influyentes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="cap6.html"><a href="cap6.html#inferencia-sobre-los-parámetros-del-modelo"><i class="fa fa-check"></i><b>6.7</b> Inferencia sobre los parámetros del modelo</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="cap6.html"><a href="cap6.html#estimación-puntual-e-intervalo-de-predicción"><i class="fa fa-check"></i><b>6.7.1</b> Estimación puntual e intervalo de predicción</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis de encuestas con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="conceptos-básicos-en-encuestas-de-hogares" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Capítulo 2</span> Conceptos básicos en encuestas de hogares<a href="conceptos-básicos-en-encuestas-de-hogares.html#conceptos-básicos-en-encuestas-de-hogares" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>El análisis riguroso de encuestas de hogares es una herramienta fundamental para comprender la realidad social, económica y demográfica de una población. Sin embargo, la validez de los resultados que se derivan de una encuesta no depende únicamente del tamaño de la muestra o de la calidad de la recolección de datos, sino del modo en que fue diseñada y de la forma en que ese diseño se incorpora en el análisis estadístico.</p>
+<p>Las encuestas de hogares son una de las principales herramientas para comprender la realidad social y económica de una población. A partir de ellas se obtiene información esencial sobre condiciones de vida, empleo, educación, salud y otros aspectos que orientan la formulación de políticas públicas y la toma de decisiones basadas en la evidencia proporcionada por los datos.</p>
+<p>En la práctica, las encuestas de hogares suelen utilizar diseños complejos, que combinan la estratificación y varias etapas para la selección de los informantes. Este tipo de diseños busca optimizar recursos y mejorar la precisión de las estimaciones, lo que induce probabilidades de inclusión desiguales. Ignorar estos aspectos puede conducir a estimaciones sesgadas, errores estándar incorrectos y conclusiones erradas.</p>
+<p>Como señalan <span class="citation">Särndal et al. (<a href="#ref-sarndal2003model">2003</a>)</span> y <span class="citation">Gutiérrez (<a href="#ref-Gutierrez2016">2016</a>)</span>, toda encuesta parte de tres conceptos fundamentales, la población objetivo, y el marco muestral, que sirven de base para el diseño de la encuesta y la selección de la muestra. Estos elementos son esenciales para garantizar la validez de las inferencias y la representatividad de los resultados.</p>
+<p>En este contexto, un aspecto crucial es la consideración del diseño muestral. Para obtener conclusiones válidas sobre la población, es necesario adoptar un enfoque de inferencia basada en el diseño, el cual reconoce que la muestra no surge de una selección aleatoria simple, sino de un plan probabilístico bien definido. En dicho plan, cada unidad de la población tiene una probabilidad conocida y distinta de cero de ser incluida en la muestra, lo que constituye la garantía fundamental de que los resultados puedan generalizarse a la población de referencia.</p>
+<p>Bajo este enfoque, es posible demostrar que las estimaciones son insesgadas (o prácticamente insesgadas) en relación con el esquema de muestreo, sin depender de supuestos sobre la distribución de la variable de interés. Esto otorga a la inferencia basada en el diseño un carácter robusto y ampliamente aceptado en el análisis de encuestas de hogares.</p>
+<p>Un elemento central de este proceso son los pesos de muestreo, que indican cuántas unidades de la población está representando cada unidad seleccionada. Dichos pesos permiten ajustar las estimaciones a las particularidades del diseño, de modo que los resultados reflejen con fidelidad la estructura poblacional. Además, un diseño bien documentado facilita el análisis estadístico, respalda la interpretación rigurosa de los datos y posibilita obtener conclusiones sobre fenómenos complejos.</p>
+<p>En contraste, ignorar el diseño muestral y aplicar métodos de análisis que asumen una muestra aleatoria simple puede llevar a estimaciones sesgadas, errores de inferencia y conclusiones equivocadas. Por ello, el análisis de encuestas de hogares no puede desligarse de su diseño de selección: este no es un detalle técnico accesorio, sino el núcleo mismo que sustenta la validez de la información producida.</p>
+<div id="universo-de-estudio-y-población-objetivo" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Universo de estudio y población objetivo<a href="conceptos-básicos-en-encuestas-de-hogares.html#universo-de-estudio-y-población-objetivo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El término encuesta se encuentra directamente relacionado con una población finita compuesta de individuos a los cuales es necesario entrevistar. El <em>universo de estudio</em> lo constituye el total de individuos o elementos que poseen dichas características a ser estudiadas. Ahora bien, conjunto de unidades de interés sobre los cuales se tendrán resultados recibe el nombre de <em>población objetivo</em>. Por ejemplo, <em>la Encuesta Nacional de Empleo y Desempleo</em> de Ecuador define su población objetivo como todas las personas mayores de 10 años residentes en viviendas particulares en Ecuador.</p>
+</div>
+<div id="unidades-de-análisis" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Unidades de análisis<a href="conceptos-básicos-en-encuestas-de-hogares.html#unidades-de-análisis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Corresponden a los diferentes niveles de desagregación establecidos para consolidar el diseño probabilístico y sobre los que se presentan los resultados de interés. En México, la <em>Encuesta Nacional de Ingresos y Gastos de los Hogares</em> define como unidades de análisis el ámbito al que pertenece la vivienda, urbano alto, complemento urbano y rural. La <em>Gran Encuesta Integrada de Hogares</em> de Colombia tiene cobertura nacional y sus unidades de análisis están definidas por 13 grandes ciudades junto con sus áreas metropolitanas.</p>
+</div>
+<div id="unidades-de-muestreo" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Unidades de muestreo<a href="conceptos-básicos-en-encuestas-de-hogares.html#unidades-de-muestreo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El diseño de una encuesta de hogares en América Latina plantea la necesidad de seleccionar en varias etapas ciertas <em>unidades de muestreo</em> que sirven como medio para seleccionar finalmente a los hogares que participarán de la muestra. La <em>Pesquisa Nacional por Amostra de Domicilios (PNAD)</em> en Brasil se realiza por medio de una muestra de viviendas en tres etapas, cada etapa se define como una unidad de muestreo. Por ejemplo, las unidades de muestreo en PNAD son:</p>
+<ul>
+<li>Las unidades primarias de muestreo (UPM) son los municipios,</li>
+<li>Las unidades secundarias de muestreo (USM) son los sectores censales, que conforman una malla territorial conformada en el último Censo Demográfico.</li>
+<li>Las últimas unidades en ser seleccionadas son las viviendas.</li>
+</ul>
+</div>
+<div id="marcos-de-muestreo" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Marcos de muestreo<a href="conceptos-básicos-en-encuestas-de-hogares.html#marcos-de-muestreo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para realizar un proceso de selección sistemática de hogares es indispensable disponer de un marco muestral que actúe como <em>enlace</em> entre las unidades de muestreo y los hogares que conforman la población objetivo. Dicho marco constituye el conjunto en el cual se identifican a todos los elementos que componen la población objeto de estudio, y a partir del cual se extrae la muestra.</p>
+<p>En las encuestas de hogares con diseños muestrales complejos, los marcos de muestreo suelen ser de áreas geográficas, es decir, estructuras espaciales que vinculan directamente a los hogares o personas con zonas delimitadas que los contienen. Este tipo de marco facilita la organización del territorio en unidades más manejables y permite una selección por etapas, manteniendo los principios del muestreo probabilístico.</p>
+<p>Un ejemplo ilustrativo es la <em>Encuesta Nacional de Hogares</em> de Costa Rica, que utiliza un marco muestral elaborado a partir del Censo Nacional de Población y Vivienda de 2011. Este marco corresponde a un marco de áreas, en el que las unidades de muestreo son superficies geográficas asociadas con las viviendas. Este marco permite la definición de UPM con 150 viviendas en las zonas urbanas y 100 viviendas en las zonas rurales. Sobre esta base, se definen las unidades primarias de muestreo (UPM), conformadas por 10.461 UPM, de las cuales el 64,5% son urbanas y el 35,5% son rurales.</p>
+</div>
+<div id="sec-motivacion" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Motivación<a href="conceptos-básicos-en-encuestas-de-hogares.html#sec-motivacion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<blockquote>
+<p>Desde que se popularizaron las encuestas de hogares en 1940, se han hecho evidentes algunas tendencias vinculadas a los avances tecnológicos tanto en las agencias estadísticas como en la sociedad, las cuales se han acelerado con la introducción del computador.
+<em><span class="citation">Gambino &amp; Nascimento Silva (<a href="#ref-gambino2009sampling">2009</a>)</span></em></p>
+</blockquote>
+<p>El muestreo surge como respuesta a la necesidad de obtener información estadística precisa sobre una población objetivo, sin recurrir a un censo completo. Como señala <span class="citation">Gutiérrez (<a href="#ref-Gutierrez2016">2016</a>)</span>, el muestreo consiste en investigaciones parciales sobre la población que permiten inferir resultados al conjunto total. En las últimas décadas, esta metodología se ha consolidado en distintos campos —especialmente en el sector gubernamental, con la producción de estadísticas oficiales que facilitan el seguimiento de políticas públicas y de los Objetivos de Desarrollo Sostenible—, pero también en el ámbito académico, privado y de comunicaciones.</p>
+<p>En el marco de este libro, el foco se centra en el análisis de encuestas de hogares. Para que el lector disponga de ejemplos prácticos, en este capítulo se empleará la base de datos <em>BigCity</em>, que contiene información socioeconómica de 150.266 personas de una ciudad en un año específico. Entre sus variables se encuentran:</p>
+<ul>
+<li><em>HHID:</em> Identificador del hogar.</li>
+<li><em>PersonID:</em> Identificador de la persona dentro del hogar.</li>
+<li><em>Stratum:</em> Estrato geográfico (119 en total).</li>
+<li><em>PSU:</em> Unidades primarias de muestreo (1664 en total).</li>
+<li><em>Zone:</em> Zona urbana o rural.</li>
+<li><em>Sex:</em> Sexo del entrevistado.</li>
+<li><em>Income:</em> Ingreso mensual per cápita.</li>
+<li><em>Expenditure:</em> Gasto mensual per cápita.</li>
+<li><em>Employment:</em> Situación laboral.</li>
+<li><em>Poverty:</em> Condición de pobreza según ingresos.</li>
+</ul>
+<div id="la-importancia-de-considerar-el-diseño-muestral" class="section level3 hasAnchor" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> La importancia de considerar el diseño muestral<a href="conceptos-básicos-en-encuestas-de-hogares.html#la-importancia-de-considerar-el-diseño-muestral" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Al analizar datos provenientes de encuestas de hogares, ignorar el diseño muestral compromete la representatividad, la precisión y la validez de los resultados. Este descuido puede traducirse en inferencias sesgadas y en decisiones basadas en conclusiones erróneas.</p>
+<p>Como lo muestran <span class="citation">Korn &amp; Graubard (<a href="#ref-korn1995analysis">1995</a>)</span>, las estimaciones ponderadas y no ponderadas pueden diferir sustancialmente, lo que evidencia la importancia de aplicar siempre métodos consistentes con el diseño de la encuesta. Así que, considerar adecuadamente los pesos, la estratificación y las unidades de muestreo no es una opción técnica secundaria, sino un requisito fundamental para garantizar la credibilidad y validez de los resultados.</p>
+<p>Como se mencionó, las encuestas de hogares se caracterizan por:</p>
+<ul>
+<li>Diseños de muestreo complejos (estratificación, conglomeración y probabilidades desiguales de selección), que buscan mejorar la eficiencia y la precisión.</li>
+<li>Pesos de muestreo para cada unidad, que permiten representar adecuadamente a la población.</li>
+</ul>
+<div id="ejemplo-ilustrativo" class="section level4 hasAnchor" number="2.5.1.1">
+<h4><span class="header-section-number">2.5.1.1</span> Ejemplo ilustrativo<a href="conceptos-básicos-en-encuestas-de-hogares.html#ejemplo-ilustrativo" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Suponga un país con dos regiones: la Región A (100 habitantes, ingreso promedio de $10.000) y la Región B (900 habitantes, ingreso promedio de $2.000). El ingreso promedio verdadero es:</p>
+<p><span class="math display">\[
+\theta = \frac{(100 \times 10.000) + (900 \times 2.000)}{100 + 900} = 2.800
+\]</span></p>
+<p>Si se encuesta a 50 personas en cada región y se ignora el diseño de muestreo, asignando el mismo peso a todas las observaciones, se obtiene:</p>
+<p><span class="math display">\[
+\hat{\theta} = \frac{(50 \times 10.000) + (50 \times 2.000)}{100} = 6.000
+\]</span></p>
+<p>El sesgo es evidente: se sobreestima el ingreso nacional, pues la Región A (10% de la población) influye tanto como la Región B (90%).</p>
+<p>En cambio, si se aplican <em>pesos proporcionales al tamaño poblacional</em> (2 para la Región A y 18 para la Región B), la estimación corregida es:</p>
+<p><span class="math display">\[
+\hat{\theta} = \frac{(2 \times 50 \times 10.000) + (18 \times 50 \times 2.000)}{(2 \times 50) + (18 \times 50)} = 2.800
+\]</span></p>
+<p>Lo que reproduce el valor verdadero y elimina el sesgo.</p>
+</div>
+<div id="conglomeración-y-precisión" class="section level4 hasAnchor" number="2.5.1.2">
+<h4><span class="header-section-number">2.5.1.2</span> Conglomeración y precisión<a href="conceptos-básicos-en-encuestas-de-hogares.html#conglomeración-y-precisión" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Otra característica crítica es la <em>conglomeración</em>. La mayoría de encuestas selecciona unidades primarias de muestreo (UPM) como sectores censales o áreas de enumeración, y dentro de ellas, submuestras de hogares. Este diseño reduce costos, pero afecta la precisión: si los hogares dentro de un conglomerado son muy similares, la información adicional que aporta cada uno disminuye.</p>
+<p>Por ejemplo, suponga que una encuesta selecciona 100 conglomerados y, dentro de cada uno, 10 hogares, obteniendo así una muestra total de 1.000 hogares. Si todos los hogares dentro de un mismo conglomerado comparten una característica común —por ejemplo, el acceso a electricidad—, la información adicional aportada por los hogares del mismo conglomerado es mínima. En la práctica, la muestra ofrecería una precisión equivalente a la de una muestra aleatoria simple de solo 100 hogares.</p>
+<p>Analizar estos 1.000 hogares como si fueran observaciones independientes, ignorando la estructura por conglomerados, conduce a una subestimación sustancial de los errores estándar, generando intervalos de confianza excesivamente estrechos y conclusiones potencialmente erróneas sobre la significancia estadística de los resultados.</p>
+</div>
+<div id="recomendaciones-prácticas" class="section level4 hasAnchor" number="2.5.1.3">
+<h4><span class="header-section-number">2.5.1.3</span> Recomendaciones prácticas<a href="conceptos-básicos-en-encuestas-de-hogares.html#recomendaciones-prácticas" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Para un análisis adecuado es indispensable que las bases de datos de encuestas incluyan:</p>
+<ul>
+<li>Identificadores de <em>estratos</em> y de las <em>unidades del muestreo</em>.</li>
+<li>Pesos de muestreo a nivel de hogar o persona.</li>
+</ul>
+<p>Cuando no se dispone de esta información, se recomienda que al menos se proporcionen <em>pesos replicados</em>, junto con instrucciones claras para calcular estimaciones y errores estándar.</p>
+</div>
+</div>
+</div>
+<div id="parámetros-y-estimadores" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Parámetros y estimadores<a href="conceptos-básicos-en-encuestas-de-hogares.html#parámetros-y-estimadores" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Al analizar datos de encuestas, el primer paso es definir el parámetro de interés, un valor numérico fijo que describe una característica de toda la población (<span class="math inline">\(U\)</span>). Ejemplos comunes incluyen el total y la media de la población. Dado que no es práctico observar a toda la población, se utilizan encuestas por muestreo para inferir estos parámetros a partir de una muestra (<span class="math inline">\(s\)</span>).</p>
+<p>El enfoque de inferencia y estimación basado en el diseño se basa en la estructura de probabilidad del plan de muestreo. Las propiedades estadísticas de los estimadores, como la precisión y el sesgo, se evalúan en relación con la distribución de aleatorización que el diseño de muestreo genera.</p>
+<p>En el muestreo probabilístico, cada unidad de la población tiene una probabilidad de inclusión conocida y mayor que cero de ser incluidas en la muestra. Estas probabilidades son la base para el cálculo de los pesos básicos de muestreo, que a su vez se utilizan para estimar los parámetros poblacionales a través de sumas ponderadas de los datos de la encuesta. Cuando se aplican correctamente, las estimaciones son insesgadas, lo que significa que en promedio coinciden con el valor real de la población si la encuesta se repitiera bajo las mismas condiciones.</p>
+<div id="ajustes-adicionales-de-los-pesos" class="section level3 hasAnchor" number="2.6.1">
+<h3><span class="header-section-number">2.6.1</span> Ajustes adicionales de los pesos<a href="conceptos-básicos-en-encuestas-de-hogares.html#ajustes-adicionales-de-los-pesos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A pesar de lo anterior, los pesos básicos de muestreo suelen necesitar ajustes adicionales para mejorar la precisión y robustez de las estimaciones. Los ajustes más comunes son:</p>
+<ul>
+<li>Ajuste por no respuesta: Los pesos de las unidades que sí respondieron se incrementan para representar también a las unidades seleccionadas que no participaron, lo cual ayuda a reducir el sesgo y a aumentar la fiabilidad de los resultados.</li>
+<li>Calibración: Los pesos se modifican para asegurar que las sumas ponderadas de algunas variables de control (como edad o sexo, obtenidas de censos o proyecciones demográficas) coincidan con los totales poblacionales conocidos. La calibración es una herramienta útil para identificar problemas de cobertura o no respuesta y reforzar la validez de las estimaciones.</li>
+</ul>
+</div>
+<div id="importancia-de-los-ajustes" class="section level3 hasAnchor" number="2.6.2">
+<h3><span class="header-section-number">2.6.2</span> Importancia de los ajustes<a href="conceptos-básicos-en-encuestas-de-hogares.html#importancia-de-los-ajustes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Los ajustes de los pesos, y en particular la calibración, desempeñan un papel fundamental en el análisis de encuestas con diseños complejos. Estos procedimientos no solo corrigen las imperfecciones derivadas de la no respuesta o la cobertura incompleta, sino que también fortalecen la coherencia entre la muestra y la población objetivo, garantizando que las inferencias sean estadísticamente válidas y comparables con otras fuentes oficiales <span class="citation">(<a href="#ref-kalton2003weighting">Kalton &amp; Flores-Cervantes, 2003</a>)</span>.</p>
+<p>La calibración es especialmente relevante porque permite confrontar las estimaciones iniciales de la encuesta con valores de referencia externos, generalmente obtenidos de censos, registros administrativos o proyecciones demográficas. Esta comparación constituye una herramienta poderosa para detectar inconsistencias en la composición de la muestra, identificar sesgos potenciales asociados a la no respuesta y evaluar la calidad del trabajo de campo.</p>
+<p>Además, los pesos calibrados tienden a reducir la varianza de las estimaciones, mejorando su precisión sin alterar los totales poblacionales conocidos <span class="citation">(<a href="#ref-sarndal2005nonresponse">Särndal &amp; Lundström, 2005</a>)</span>. En consecuencia, la calibración no solo corrige, sino que también optimiza el uso de la información disponible, permitiendo obtener resultados más precisos.</p>
+<p>En resumen, aplicar y revisar cuidadosamente estos ajustes constituye un paso esencial en cualquier análisis riguroso de encuestas, ya que esto refuerza la validez de los resultados finales.</p>
+</div>
+</div>
+<div id="estimación-de-totales" class="section level2 hasAnchor" number="2.7">
+<h2><span class="header-section-number">2.7</span> Estimación de totales<a href="conceptos-básicos-en-encuestas-de-hogares.html#estimación-de-totales" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La estimación de totales en encuestas constituye un paso central en el análisis estadístico aplicado a poblaciones finitas. Gran parte de los indicadores de interés para la formulación de políticas públicas, como el número de personas en situación de pobreza, el total de ocupados o el gasto agregado de los hogares, se derivan de un total poblacional. Por esta razón, comprender cómo se definen y estiman los totales resulta fundamental para garantizar la calidad y pertinencia de la información producida.</p>
+<p>En términos formales, si <span class="math inline">\(y_k\)</span> denota el valor de una variable de interés para la unidad <span class="math inline">\(k \in U\)</span>, el total poblacional se define como</p>
+<p><span class="math display">\[
+Y = \sum_{U} y_k,
+\]</span></p>
+<p>y su media poblacional como</p>
+<p><span class="math display">\[
+\bar{Y} = \frac{Y}{N}.
+\]</span></p>
+<p>Dado que en la práctica solo se observa una muestra <span class="math inline">\(s \subset U\)</span>, es necesario recurrir a estimadores que incorporen el diseño de muestreo. El estimador de Horvitz–Thompson (HT) es el más utilizado bajo el enfoque de diseño y se expresa como</p>
+<p><span class="math display">\[
+\hat{Y}_{HT} = \sum_{s} d_k y_k, \qquad \bar{y}_{HT} = \frac{\hat{Y}_{HT}}{\hat{N}_{HT}}, \quad \hat{N}_{HT} = \sum_{s} d_k,
+\]</span></p>
+<p>donde <span class="math inline">\(d_k = 1/\pi_k\)</span> son los pesos básicos de diseño y <span class="math inline">\(\pi_k = \Pr(k \in s)\)</span> son las probabilidades de inclusión de primer orden.</p>
+<p>En la práctica, los pesos de diseño suelen modificarse para reflejar procesos adicionales como el ajuste por no respuesta o la calibración a totales poblacionales conocidos, obteniendo así los pesos ajustados <span class="math inline">\(w_k\)</span>. El reemplazo de <span class="math inline">\(d_k\)</span> por <span class="math inline">\(w_k\)</span> permite mejorar la precisión y reducir sesgos en las estimaciones, especialmente cuando existen fuentes auxiliares de información confiables.</p>
+<p>No obstante, toda estimación a partir de una muestra conlleva incertidumbre. Incluso cuando el estimador es insesgado, los resultados varían de una muestra a otra debido a la propiedad de aleatoriedad del diseño. Esta variabilidad se cuantifica mediante la <em>varianza del estimador bajo el diseño muestral</em>, con la cual se puede calcular el <em>error estándar (<span class="math inline">\(se\)</span>)</em> o el <em>coeficiente de variación (<span class="math inline">\(cv\)</span>)</em>. Estos indicadores son herramientas indispensables para evaluar la precisión de los totales estimados y, por tanto, para interpretar de manera adecuada la información estadística.</p>
+<p>Bajo el enfoque de diseño, la varianza insesgada del estimador de Horvitz–Thompson puede expresarse como:</p>
+<p><span class="math display">\[
+\hat{V}_p(\hat{Y}_{HT}) = \sum_{k \in s} \sum_{l \in s} \bigl( d_k d_l - d_{kl} \bigr) y_k y_l,
+\]</span></p>
+<p>donde <span class="math inline">\(d_{kl} = 1/\pi_{kl}\)</span> y <span class="math inline">\(\pi_{kl} = \Pr(k,l \in s)\)</span> representan las probabilidades conjuntas de inclusión. Esta expresión requiere que el diseño de muestreo cumpla <span class="math inline">\(\pi_{kl} &gt; 0\)</span> para todo par de unidades <span class="math inline">\(k,l \in U\)</span>.</p>
+<p>En síntesis, la estimación de totales es la piedra angular sobre la cual se construyen indicadores más complejos. Su estudio permite entender tanto la lógica de los ponderadores como la necesidad de medir y comunicar la precisión de las estimaciones, lo que constituye un elemento esencial en la producción de estadísticas de calidad.</p>
+<div id="ejemplo-ilustrativo-1" class="section level3 hasAnchor" number="2.7.1">
+<h3><span class="header-section-number">2.7.1</span> Ejemplo ilustrativo<a href="conceptos-básicos-en-encuestas-de-hogares.html#ejemplo-ilustrativo-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para comprender de manera más concreta la relevancia de considerar el diseño muestral en la estimación de totales y de sus varianzas, analicemos un ejemplo sencillo que permitirá visualizar cómo el método de estimación se ajusta al esquema de selección adoptado.</p>
+<p>Suponga una población finita de tamaño <span class="math inline">\(N=6\)</span>, de la cual se selecciona una muestra aleatoria simple sin reemplazo de tamaño <span class="math inline">\(n=3\)</span>. En dicha muestra se observan los valores <span class="math inline">\((y_1=10, y_2=14, y_3=18)\)</span>.</p>
+<p>Bajo este diseño, el estimador de Horvitz–Thompson del total poblacional se define como la suma de los valores observados divididos por sus probabilidades de inclusión, y su varianza estimada se obtiene a partir de las covarianzas inducidas por el proceso de selección. De esta forma, la varianza estimada del estimador de Horvitz–Thompson se calcula como:</p>
+<p><span class="math display" id="eq:var-srs">\[\begin{equation}
+\hat{V}_{SRS}(\hat{Y}_{HT}) = \frac{N^2}{n}\left(1-\frac{n}{N}\right)S_{y_s}^2
+\tag{2.1}
+\end{equation}\]</span></p>
+<p>donde <span class="math inline">\(S_{y_s}^2\)</span> corresponde a la varianza muestral de los valores observados. Sustituyendo en la expresión, se obtiene</p>
+<p><span class="math display">\[
+\hat{V}_p(\hat{Y}_{HT}) = \frac{36}{3}\left(1-\frac{3}{6}\right)16 = 96.
+\]</span></p>
+<p>En contraste, si se ignora el diseño de muestreo, un analista inexperto podría calcular erróneamente la varianza mediante la fórmula simplificada:</p>
+<p><span class="math display">\[
+\frac{N^2}{n}S_{y_s}^2 = 192,
+\]</span></p>
+<p>lo que conduciría a una sobreestimación de la varianza por no considerar las características del diseño muestral.</p>
+<p>La estimación del total poblacional es <span class="math inline">\(\hat{Y}_{HT}=84\)</span>. El error estándar calculado según el diseño de muestreo, es</p>
+<p><span class="math display">\[
+\sqrt{\hat{V}_p(\hat{Y}_{HT})} = \sqrt{96} \approx 9.80.
+\]</span></p>
+<p>En cambio, si la varianza se estima usando un método ingenuo que ignore el diseño de muestreo, el intervalo de confianza sería más amplio con evidentes sesgos, lo que podría conducir a inferencias erróneas. Este ejemplo presenta claramente la relevancia de incorporar el diseño de muestreo en la estimación de la varianza, el error estándar y el intervalo de confianza.</p>
+<p>Si bien la fórmula general para la estimación de la varianza, <span class="math inline">\(\hat{V}_p\)</span>, es aplicable a distintos diseños de muestreo, en la práctica rara vez se utiliza porque las probabilidades de inclusión de segundo orden <span class="math inline">\(\pi_{kl}\)</span> y los pesos pareados <span class="math inline">\(d_{kl}\)</span> suelen ser desconocidos para los usuarios secundarios. Incluso las oficinas que producen estos datos suelen usar otros métodos más simples y eficientes para la estimación de la varianza, como el método delta (linealizado) o métodos basados en réplicas (BBR, bootstrap, jackknife), que permiten cuantificar la incertidumbre sin necesidad de contar con información tan detallada del diseño muestral.</p>
+</div>
+</div>
+<div id="efecto-del-diseño-deff" class="section level2 hasAnchor" number="2.8">
+<h2><span class="header-section-number">2.8</span> Efecto del diseño (DEFF)<a href="conceptos-básicos-en-encuestas-de-hogares.html#efecto-del-diseño-deff" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>De acuerdo con <span class="citation">Kish (<a href="#ref-kish1965survey">1965, p. 258</a>)</span>, el efecto del diseño (DEFF) se define como la razón entre la varianza de un estimador obtenida bajo un diseño de muestreo complejo y la varianza del mismo estimador bajo un muestreo aleatorio simple (MAS) de igual tamaño de muestra. Su estimación se expresa como:</p>
+<p><span class="math display">\[\widehat{\text{DEFF}} = \frac{\widehat{V}_{p}(\hat{\theta})}{\widehat{V}_{\text{SRS}}(\hat{\theta})}\]</span>
+donde
+<span class="math inline">\(\widehat{V}_{p}(\hat{\theta})\)</span> corresponde a la varianza estimada de <span class="math inline">\(\hat{\theta}\)</span> bajo el diseño complejo <span class="math inline">\(p(s)\)</span>, mientras que <span class="math inline">\(\widehat{V}_{\text{SRS}}(\hat{\theta})\)</span>
+representa la varianza estimada del mismo estimador bajo un diseño MAS con igual tamaño muestral. Este indicador permite cuantificar cuánto aumenta la varianza debido a la conglomeración y otras características propias de los diseños complejos en comparación con un muestreo simple. Según <span class="citation">Naciones Unidas (<a href="#ref-ONUDeff">2009, p. 40</a>)</span>, el DEFF puede entenderse de tres maneras: como el factor de incremento de la varianza frente al MAS, como una medida de la pérdida relativa de precisión o como una indicación del aumento en el tamaño de la muestra que sería necesario en un diseño complejo para alcanzar el mismo nivel de varianza que en un MAS.</p>
+<p>Según <span class="citation">Park et al. (<a href="#ref-Park2003Design">2003</a>)</span>, el efecto del diseño de una encuesta puede desglosarse en tres factores multiplicativos:</p>
+<ul>
+<li><strong>Ponderación desigual:</strong> La presencia de pesos muestrales no uniformes suele incrementar ligeramente la varianza; por ello, el uso de pesos iguales resulta ventajoso y explica por qué los diseños auto-ponderados son preferidos en encuestas de hogares.</li>
+<li><strong>Estratificación:</strong> Cuando se aplica correctamente, puede disminuir la varianza, aunque en la práctica su efecto reductor suele ser moderado.</li>
+<li><strong>Muestreo en varias etapas:</strong> Generalmente incrementa la varianza, ya que las unidades dentro de un mismo conglomerado tienden a ser más homogéneas entre sí que en comparación con las de otros conglomerados.</li>
+</ul>
+<p>En el análisis de encuestas, el efecto del diseño (DEFF) constituye un indicador esencial para evaluar la precisión y eficiencia de las estimaciones, así como para orientar la planificación de futuros estudios. Un valor elevado evidencia que el diseño complejo introduce ineficiencias que incrementan la varianza y reducen la precisión de los resultados. Por el contrario, un valor cercano a uno indica que el diseño tiene un efecto mínimo sobre la varianza. Esta información permite a los investigadores identificar si es necesario ajustar la ponderación, optimizar la estratificación o modificar el tamaño del submuestreo para aumentar la eficiencia en levantamientos posteriores.</p>
+<p>La interpretación de un DEFF alto debe hacerse con precaución, ya que no siempre implica que el diseño muestral sea inadecuado. Es fundamental considerar el contexto de la encuesta: un valor superior a tres podría parecer alarmante, pero a menudo se debe a limitaciones prácticas como restricciones presupuestales, dificultades logísticas o la necesidad de garantizar la participación de los entrevistados. En ciertos levantamientos de hogares, puede ser indispensable seleccionar solo una fracción de los individuos elegibles en cada hogar. Además, problemas de cobertura o tasas de no respuesta pueden aumentar la variabilidad de los pesos muestrales y, en consecuencia, elevar los valores del DEFF. <span class="citation">Gutiérrez &amp; Babativa-Márquez (<a href="#ref-GutierrezBabativa2023">2023</a>)</span> realizan un análisis detallado de los efectos de diseño en encuestas de hogares en América Latina usando los datos de BADEHOG.</p>
+</div>
+<div id="muestreo-estratificado-aleatorio-simple-con-dos-etapas" class="section level2 hasAnchor" number="2.9">
+<h2><span class="header-section-number">2.9</span> Muestreo estratificado aleatorio simple con dos etapas<a href="conceptos-básicos-en-encuestas-de-hogares.html#muestreo-estratificado-aleatorio-simple-con-dos-etapas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Con la finalidad de mantener un equilibrio entre los costos económicos y las propiedades estadísticas de la estrategia de muestreo se puede aprovechar la homogeneidad dentro de los conglomerados y, así, no tener que realizar censos dentro de cada Unidad Primaria de Muestreo (UPM) sino, proceder a seleccionar una sub-muestra dentro del conglomerado seleccionado.</p>
+<p>Los diseños de muestreo utilizados en las encuestas de hogares se caracterizan por su complejidad, ya que suelen incorporar múltiples etapas de selección, estratificación y estimadores complejos. En la mayoría de los casos, las unidades primarias de muestreo (UPM) se seleccionan dentro de estratos definidos previamente.</p>
+<p>Según <span class="citation">Cochran (<a href="#ref-cochran1977sampling">1977</a>)</span>, se asume que el muestreo realizado en cada estrato cumple con el principio de independencia. Esto implica que tanto las estimaciones de totales como los cálculos de varianza se obtienen mediante la suma de los aportes estimados en cada estrato.</p>
+<p>Dentro de cada estrato <span class="math inline">\(U_h\)</span> con <span class="math inline">\(h=1,\ldots, H\)</span> existen <span class="math inline">\(N_{Ih}\)</span> UPMs, de las cuales se selecciona una muestra <span class="math inline">\(s_{Ih}\)</span> de tamaño <span class="math inline">\(n_{Ih}\)</span> mediante un diseño de muestreo aleatorio simple (MAS). Además, se supone que el submuestreo dentro de cada UPM seleccionada también se realiza bajo un diseño MAS. En consecuencia, para cada UPM seleccionada <span class="math inline">\(i\in s_{Ih}\)</span> de tamaño <span class="math inline">\(N_i\)</span> se selecciona una muestra <span class="math inline">\(s_i\)</span> de elementos de tamaño <span class="math inline">\(n_i\)</span>.</p>
+<p>Como es ampliamente conocido, el proceso de estimación de un parámetro particular, por ejemplo, la media de los ingresos consiste en multiplicar la observación obtenida en la muestra por su respectivo factor de expansión y dividirlo sobre la suma de los factores de expansión, según el nivel de desagregación que se desee estimar. Sin embargo, cuando se trata de diseños muestrales complejos, como los empleados en las encuestas de hogares, la estimación de la varianza se vuelve más difícil de abordar mediante expresiones analíticas cerradas. En estos casos, y como lo recomienda la literatura especializada <span class="citation">Hansen &amp; Steinberg (<a href="#ref-hansen1956control">1956</a>)</span>, se recurre a la técnica del último conglomerado.</p>
+<p>Esta técnica consiste en aproximar la varianza considerando únicamente la variabilidad de los estimadores en la primera etapa del muestreo, asumiendo que el diseño fue realizado con reemplazo. De este modo, la varianza total se estima a partir de la dispersión entre las unidades primarias de muestreo, ignorando la variabilidad dentro de cada conglomerado.</p>
+<p>Para aplicar los principios de estimación del último conglomerado en las encuestas de hogares, es necesario definir las siguientes cantidades:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(d_{I_i} = \dfrac{N_{Ih}}{n_{Ih}}\)</span>, que representa el factor de expansión de la <span class="math inline">\(i\)</span>-ésima UPM en el estrato <span class="math inline">\(h\)</span>.</p></li>
+<li><p><span class="math inline">\(d_{k|i} = \dfrac{N_{i}}{n_{i}}\)</span>, que corresponde al factor de expansión del <span class="math inline">\(k\)</span>-ésimo hogar dentro de la <span class="math inline">\(i\)</span>-ésima UPM.</p></li>
+<li><p><span class="math inline">\(d_k = d_{I_i} \cdot d_{k|i} = \dfrac{N_{Ih}}{n_{Ih}} \cdot \dfrac{N_{i}}{n_{i}}\)</span>, es el factor de expansión final del <span class="math inline">\(k\)</span>-ésimo elemento en la población <span class="math inline">\(U\)</span>.</p></li>
+</ol>
+</div>
+<div id="práctica-en-r" class="section level2 hasAnchor" number="2.10">
+<h2><span class="header-section-number">2.10</span> Práctica en <code>R</code><a href="conceptos-básicos-en-encuestas-de-hogares.html#práctica-en-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En esta sección se presentarán las funciones estudiadas en el capítulo anterior para el procesamiento y análisis de la base de datos de ejemplo. El objetivo es simular un diseño de muestreo estratificado en dos etapas, empleando herramientas del ecosistema <code>tidyverse</code> y paquetes especializados para el análisis de encuestas.</p>
+<p>En primer lugar, se cargarán las librerías necesarias:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(TeachingSampling)</span>
+<span id="cb1-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb1-3"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb1-3" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
+<span id="cb1-4"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb1-4" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-5"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb1-5" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-6"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb1-6" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code></pre></div>
+<p>El paquete <code>TeachingSampling</code> permite extraer muestras probabilísticas bajo los diseños de muestreo más comunes. Por su parte, <code>survey</code> y <code>srvyr</code> facilitan la definición y el análisis de diseños muestrales complejos, mientras que del entorno <code>tidyverse</code>, así como los paquetes <code>janitor</code> y <code>patchwork</code> se emplean para la manipulación, transformación y visualización eficiente de los datos.</p>
+<p>Para el ejemplo se emplean los datos <em>BigCity</em>, descritos en la sección <a href="conceptos-básicos-en-encuestas-de-hogares.html#sec-motivacion">2.5</a>. Una vez cargadas las librerías, se agrupan las observaciones por unidad primaria de muestreo (UPM) y estrato, obteniendo los totales de personas, ingresos y gastos, presentados en la Tabla <a href="conceptos-básicos-en-encuestas-de-hogares.html#tab:tab-BigCity">2.1</a>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb2-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&#39;BigCity&#39;</span>)</span>
+<span id="cb2-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb2-3" tabindex="-1"></a>FrameI <span class="ot">&lt;-</span> BigCity <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb2-4" tabindex="-1"></a>          <span class="fu">group_by</span>(PSU) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb2-5" tabindex="-1"></a>          <span class="fu">summarise</span>(<span class="at">Stratum =</span> <span class="fu">unique</span>(Stratum),</span>
+<span id="cb2-6"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb2-6" tabindex="-1"></a>                    <span class="at">Persons =</span> <span class="fu">n</span>(),</span>
+<span id="cb2-7"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb2-7" tabindex="-1"></a>                    <span class="at">Income =</span> <span class="fu">sum</span>(Income),</span>
+<span id="cb2-8"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb2-8" tabindex="-1"></a>                    <span class="at">Expenditure =</span> <span class="fu">sum</span>(Expenditure))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb3-1" tabindex="-1"></a>  <span class="fu">head</span>(FrameI, <span class="dv">8</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb3-2" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-BigCity">Cuadro 2.1: </span><span id="tab:tab-BigCity">Cuadro 2.2: </span>Total de personas, ingresos y gastos
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+PSU
+</th>
+<th style="text-align:center;font-weight: bold;">
+Stratum
+</th>
+<th style="text-align:center;font-weight: bold;">
+Persons
+</th>
+<th style="text-align:center;font-weight: bold;">
+Income
+</th>
+<th style="text-align:center;font-weight: bold;">
+Expenditure
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+PSU0001
+</td>
+<td style="text-align:center;">
+idStrt001
+</td>
+<td style="text-align:center;">
+118
+</td>
+<td style="text-align:center;">
+70911.72
+</td>
+<td style="text-align:center;">
+44231.78
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSU0002
+</td>
+<td style="text-align:center;">
+idStrt001
+</td>
+<td style="text-align:center;">
+136
+</td>
+<td style="text-align:center;">
+68886.60
+</td>
+<td style="text-align:center;">
+38381.90
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSU0003
+</td>
+<td style="text-align:center;">
+idStrt001
+</td>
+<td style="text-align:center;">
+96
+</td>
+<td style="text-align:center;">
+37213.10
+</td>
+<td style="text-align:center;">
+19494.78
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSU0004
+</td>
+<td style="text-align:center;">
+idStrt001
+</td>
+<td style="text-align:center;">
+88
+</td>
+<td style="text-align:center;">
+36926.46
+</td>
+<td style="text-align:center;">
+24030.74
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSU0005
+</td>
+<td style="text-align:center;">
+idStrt001
+</td>
+<td style="text-align:center;">
+110
+</td>
+<td style="text-align:center;">
+57493.88
+</td>
+<td style="text-align:center;">
+31142.36
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSU0006
+</td>
+<td style="text-align:center;">
+idStrt001
+</td>
+<td style="text-align:center;">
+116
+</td>
+<td style="text-align:center;">
+75272.06
+</td>
+<td style="text-align:center;">
+43473.28
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSU0007
+</td>
+<td style="text-align:center;">
+idStrt001
+</td>
+<td style="text-align:center;">
+68
+</td>
+<td style="text-align:center;">
+33027.84
+</td>
+<td style="text-align:center;">
+21832.66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSU0008
+</td>
+<td style="text-align:center;">
+idStrt001
+</td>
+<td style="text-align:center;">
+136
+</td>
+<td style="text-align:center;">
+64293.02
+</td>
+<td style="text-align:center;">
+47660.02
+</td>
+</tr>
+</tbody>
+</table>
+<p>Paso seguido, se calculan los tamaños poblacionales por estrato (<span class="math inline">\(N_{Ih}\)</span>) y sus respectivos tamaños de muestra (<span class="math inline">\(n_{Ih}\)</span>), como se muestra en la Tabla <a href="conceptos-básicos-en-encuestas-de-hogares.html#tab:tab-sizes">2.3</a>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb4-1" tabindex="-1"></a>sizes <span class="ot">&lt;-</span> FrameI <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb4-2" tabindex="-1"></a>         <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb4-3" tabindex="-1"></a>         <span class="fu">summarise</span>(<span class="at">NIh =</span> <span class="fu">n</span>(),</span>
+<span id="cb4-4"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb4-4" tabindex="-1"></a>                   <span class="at">nIh =</span> <span class="dv">2</span>,</span>
+<span id="cb4-5"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb4-5" tabindex="-1"></a>                   <span class="at">dI =</span> NIh<span class="sc">/</span>nIh)</span>
+<span id="cb4-6"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb4-6" tabindex="-1"></a>        </span>
+<span id="cb4-7"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb4-7" tabindex="-1"></a>NIh <span class="ot">&lt;-</span> sizes<span class="sc">$</span>NIh</span>
+<span id="cb4-8"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb4-8" tabindex="-1"></a>nIh <span class="ot">&lt;-</span> sizes<span class="sc">$</span>nIh</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb5-1" tabindex="-1"></a><span class="fu">head</span>(sizes, <span class="dv">8</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb5-2" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-sizes">Cuadro 2.3: </span><span id="tab:tab-sizes">Cuadro 2.4: </span>Tamaños de muestra y factores de expansión por estrato
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+Stratum
+</th>
+<th style="text-align:center;font-weight: bold;">
+NIh
+</th>
+<th style="text-align:center;font-weight: bold;">
+nIh
+</th>
+<th style="text-align:center;font-weight: bold;">
+dI
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt002
+</td>
+<td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+5.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt003
+</td>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+3.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt004
+</td>
+<td style="text-align:center;">
+13
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+6.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt005
+</td>
+<td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+5.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt006
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+2.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt007
+</td>
+<td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+7.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt008
+</td>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+3.5
+</td>
+</tr>
+</tbody>
+</table>
+<p>A continuación, se extrae una muestra estratificada bajo un diseño MAS empleando la función <code>S.STSI</code> de la librería <code>TeachingSampling</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb6-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456</span>)</span>
+<span id="cb6-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb6-2" tabindex="-1"></a>samI <span class="ot">&lt;-</span> <span class="fu">S.STSI</span>(FrameI<span class="sc">$</span>Stratum, NIh, nIh)</span>
+<span id="cb6-3"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb6-3" tabindex="-1"></a>UI <span class="ot">&lt;-</span> <span class="fu">levels</span>(<span class="fu">as.factor</span>(FrameI<span class="sc">$</span>PSU))</span>
+<span id="cb6-4"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb6-4" tabindex="-1"></a>sampleI <span class="ot">&lt;-</span> UI[samI]</span></code></pre></div>
+<p>Con la función <code>left_join</code> se vinculan las UPM seleccionadas con la información del marco de muestreo.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb7-1" tabindex="-1"></a>FrameII <span class="ot">&lt;-</span> <span class="fu">left_join</span>(sizes, </span>
+<span id="cb7-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb7-2" tabindex="-1"></a>           BigCity[<span class="fu">which</span>(BigCity<span class="sc">$</span>PSU <span class="sc">%in%</span> sampleI), ])</span></code></pre></div>
+<p>Una vez se tiene la base de datos con la muestra de UPMs, se procede a seleccionar aquellas variables que son de interés para el estudio, cuyas primeras observaciones se presentan en la Tabla <a href="conceptos-básicos-en-encuestas-de-hogares.html#tab:tab-frameII">2.5</a>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb8-1" tabindex="-1"></a><span class="fu">head</span>(FrameII, <span class="dv">8</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb8-2" tabindex="-1"></a>  <span class="fu">select</span>(Stratum<span class="sc">:</span>Zone) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb8-3" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-frameII">Cuadro 2.5: </span><span id="tab:tab-frameII">Cuadro 2.6: </span>Muestra de UPMs con información del marco de muestreo (primeras 8 filas)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+Stratum
+</th>
+<th style="text-align:center;font-weight: bold;">
+NIh
+</th>
+<th style="text-align:center;font-weight: bold;">
+nIh
+</th>
+<th style="text-align:center;font-weight: bold;">
+dI
+</th>
+<th style="text-align:center;font-weight: bold;">
+HHID
+</th>
+<th style="text-align:center;font-weight: bold;">
+PersonID
+</th>
+<th style="text-align:center;font-weight: bold;">
+PSU
+</th>
+<th style="text-align:center;font-weight: bold;">
+Zone
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH00001
+</td>
+<td style="text-align:center;">
+idPer01
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH00001
+</td>
+<td style="text-align:center;">
+idPer02
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH00001
+</td>
+<td style="text-align:center;">
+idPer03
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH00001
+</td>
+<td style="text-align:center;">
+idPer04
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH00001
+</td>
+<td style="text-align:center;">
+idPer05
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH00002
+</td>
+<td style="text-align:center;">
+idPer01
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH00002
+</td>
+<td style="text-align:center;">
+idPer02
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH00002
+</td>
+<td style="text-align:center;">
+idPer03
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+</tbody>
+</table>
+<p>Luego de tener la información muestral de la primera etapa en la base FrameII se procede a calcular los tamaños de muestra dentro de cada UPM. En este caso, se tomará el 10% del tamaño de la UPM usando la función <code>ceiling</code> que aproxima al siguiente entero.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb9-1" tabindex="-1"></a>HHdb <span class="ot">&lt;-</span> FrameII <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb9-2" tabindex="-1"></a>        <span class="fu">group_by</span>(PSU) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb9-3" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">Ni =</span> <span class="fu">n_distinct</span>(HHID))</span>
+<span id="cb9-4"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb9-4" tabindex="-1"></a>        </span>
+<span id="cb9-5"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb9-5" tabindex="-1"></a>Ni <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(HHdb<span class="sc">$</span>Ni)</span>
+<span id="cb9-6"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb9-6" tabindex="-1"></a>ni <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(Ni <span class="sc">*</span> <span class="fl">0.1</span>)</span>
+<span id="cb9-7"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb9-7" tabindex="-1"></a><span class="fu">sum</span>(ni)</span></code></pre></div>
+<pre><code>## [1] 706</code></pre>
+<p>Teniendo el vector de tamaños de muestra para cada UPM, se procede a realizar la selección mediante un diseño MAS con la función <code>S.SI</code> de la librería <code>TeachingSampling</code>. Se utilizará la función <code>map_dfr()</code> del paquete <code>purrr</code>, que permite aplicar la misma operación a cada UPM de forma eficiente, combinando automáticamente los resultados en un único conjunto de datos, como se presenta en la Tabla <a href="conceptos-básicos-en-encuestas-de-hogares.html#tab:tab-encuesta">2.7</a>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb11-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456</span>)</span>
+<span id="cb11-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb11-2" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(Ni), <span class="cf">function</span>(i) {</span>
+<span id="cb11-3"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb11-3" tabindex="-1"></a>     sam <span class="ot">&lt;-</span> <span class="fu">S.SI</span>(Ni[i], ni[i])</span>
+<span id="cb11-4"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb11-4" tabindex="-1"></a>     clusterII <span class="ot">&lt;-</span> FrameII <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PSU <span class="sc">==</span> HHdb<span class="sc">$</span>PSU[i])</span>
+<span id="cb11-5"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb11-5" tabindex="-1"></a>     clusterHH <span class="ot">&lt;-</span> clusterII <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb11-6" tabindex="-1"></a>                  <span class="fu">filter</span>(HHID <span class="sc">%in%</span> <span class="fu">unique</span>(clusterII<span class="sc">$</span>HHID)[sam]) <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb11-7" tabindex="-1"></a>                  <span class="fu">mutate</span>(<span class="at">dki =</span> Ni[i] <span class="sc">/</span> ni[i],</span>
+<span id="cb11-8"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb11-8" tabindex="-1"></a>                         <span class="at">dk =</span> dI <span class="sc">*</span> dki)</span>
+<span id="cb11-9"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb11-9" tabindex="-1"></a>     <span class="fu">return</span>(clusterHH)</span>
+<span id="cb11-10"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb11-10" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb12-1" tabindex="-1"></a><span class="fu">head</span>(encuesta, <span class="dv">8</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb12-2" tabindex="-1"></a>  <span class="fu">select</span>(Stratum<span class="sc">:</span>Zone) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb12-3" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-encuesta">Cuadro 2.7: </span><span id="tab:tab-encuesta">Cuadro 2.8: </span>Primeras observaciones de la muestra final seleccionada
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+Stratum
+</th>
+<th style="text-align:center;font-weight: bold;">
+NIh
+</th>
+<th style="text-align:center;font-weight: bold;">
+nIh
+</th>
+<th style="text-align:center;font-weight: bold;">
+dI
+</th>
+<th style="text-align:center;font-weight: bold;">
+HHID
+</th>
+<th style="text-align:center;font-weight: bold;">
+PersonID
+</th>
+<th style="text-align:center;font-weight: bold;">
+PSU
+</th>
+<th style="text-align:center;font-weight: bold;">
+Zone
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH00008
+</td>
+<td style="text-align:center;">
+idPer01
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH00008
+</td>
+<td style="text-align:center;">
+idPer02
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH00008
+</td>
+<td style="text-align:center;">
+idPer03
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH00008
+</td>
+<td style="text-align:center;">
+idPer04
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH00008
+</td>
+<td style="text-align:center;">
+idPer05
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH00008
+</td>
+<td style="text-align:center;">
+idPer06
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH20650
+</td>
+<td style="text-align:center;">
+idPer01
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+idStrt001
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+idHH20650
+</td>
+<td style="text-align:center;">
+idPer02
+</td>
+<td style="text-align:center;">
+PSU0001
+</td>
+<td style="text-align:center;">
+Rural
+</td>
+</tr>
+</tbody>
+</table>
+<p>Una vez seleccionada la muestra, el siguiente paso consiste en definir el objeto <code>R</code> que contiene el diseño muestral, el cual se utilizará en el proceso de estimación. Para ello, se emplea el paquete <code>srvyr</code>.</p>
+<p>En este ejemplo, el diseño muestral es probabilístico estratificado multietápico, donde los estratos están definidos por la variable <em>Stratum</em>, las unidades primarias de muestreo (UPM) por <em>PSU</em>, y los factores de expansión por la variable <em>dk</em>. Además, se especifica que las UPM se encuentran anidadas dentro de los estratos mediante el argumento <em>nest = TRUE</em>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb13-1" tabindex="-1"></a>diseno <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb13-2" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(</span>
+<span id="cb13-3"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb13-3" tabindex="-1"></a>    <span class="at">strata =</span> Stratum,</span>
+<span id="cb13-4"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb13-4" tabindex="-1"></a>    <span class="at">ids =</span> PSU,</span>
+<span id="cb13-5"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb13-5" tabindex="-1"></a>    <span class="at">weights =</span> dk,</span>
+<span id="cb13-6"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb13-6" tabindex="-1"></a>    <span class="at">nest =</span> T</span>
+<span id="cb13-7"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb13-7" tabindex="-1"></a>  )</span></code></pre></div>
+<p>Ya definido el diseño de muestreo como un objeto de <code>R</code> se puede empezar a extraer información del mismo. Por ejemplo, se pueden extraer los pesos de muestreo de dicho diseño con la función <code>weights</code> y luego sumarlos para revisar hasta cuánto me está expandiendo mi muestra. El código es el siguiente:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb14-1" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">weights</span>(diseno))</span></code></pre></div>
+<pre><code>## [1] 150812.8</code></pre>
+<p>Como se puede observar, el tamaño poblacional estimado utilizando el diseño propuesto es 150.812,8. Sin embargo, el tamaño poblacional real en la base BigCity es de <span class="math inline">\(150.266\)</span>. Esta diferencia es habitual, ya que los factores de expansión derivados del diseño pueden no coincidir exactamente con el total poblacional. Cuando se dispone de información poblacional confiable desde el marco o por fuentes oficiales, los factores de expansión deben ajustarse para que su suma reproduzca el total de la población. Este ajuste se realiza mediante la calibración de los pesos de muestreo, proceso que se abordará en la siguiente sección.</p>
+</div>
+<div id="calibrando-con-r" class="section level2 hasAnchor" number="2.11">
+<h2><span class="header-section-number">2.11</span> Calibrando con <code>R</code><a href="conceptos-básicos-en-encuestas-de-hogares.html#calibrando-con-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La calibración es un procedimiento de ajuste aplicado a los pesos de muestreo con el propósito de que las estimaciones ponderadas para algunas variables de control reproduzcan exactamente los totales poblacionales conocidos para esas mismas variables <span class="citation">(<a href="#ref-sarndal2003model">Särndal et al., 2003</a>)</span>. Este principio de consistencia entre los resultados de la encuesta y la información auxiliar externa constituye una propiedad altamente deseable en cualquier sistema de ponderación.</p>
+<p>En los estudios por muestreo, y especialmente en las encuestas de hogares, la no respuesta es una fuente recurrente de sesgo. En tales casos, la calibración permite compensar las diferencias entre la muestra efectiva y la población de referencia, conservando la validez inferencial del diseño.</p>
+<p>Desde una perspectiva metodológica, es deseable que la estructura inferencial que sustenta el sistema de ponderación cumpla con las siguientes propiedades:</p>
+<ul>
+<li><p><em>Sesgo pequeño o nulo</em>, garantizando así una estimación insesgada con respecto al diseño de muestreo.</p></li>
+<li><p><em>Errores estándar reducidos</em>, lo que refleja una mayor precisión en las estimaciones.</p></li>
+<li><p><em>Reproducir fielmente la información auxiliar disponible</em>, asegurando la coherencia entre los resultados de la encuesta y los totales poblacionales conocidos por fuentes administrativas.</p></li>
+<li><p><em>Eficiencia en la estimación de diferentes características de interés</em>, especialmente en encuestas de carácter multipropósito, donde se analizan múltiples variables bajo un mismo sistema de ponderación.</p></li>
+</ul>
+<p>En conjunto, estas propiedades refuerzan la calidad estadística de las encuestas y consolidan la calibración como una herramienta esencial para lograr una inferencia robusta.</p>
+<p>La calibración suele ser el último paso en el proceso de ajuste de los ponderadores, y tiene como propósito incorporar información auxiliar externa que contribuya a reducir la varianza de las estimaciones y a corregir posibles problemas de cobertura que no pudieron abordarse en las etapas previas del diseño o la estimación.</p>
+<p>Dado que el estimador de calibración depende exclusivamente de la información auxiliar disponible, dicha información puede presentarse en distintas formas:</p>
+<ol style="list-style-type: decimal">
+<li><p>Directamente en el marco muestral, cuando las variables auxiliares se encuentran registradas para cada unidad: <span class="math display">\[x_k  (\forall k \in U)\]</span></p></li>
+<li><p>Como totales poblacionales conocidos, provenientes de censos o registros administrativos: <span class="math display">\[t_x = \sum_U x_k\]</span></p></li>
+<li><p>Como estimaciones confiables de los totales poblacionales, derivadas de la propia encuesta o de otras fuentes:</p></li>
+</ol>
+<p><span class="math display">\[\hat{t}_x = \sum_s w_kx_k\]</span></p>
+<p>En las encuestas de hogares, es común disponer de conteos de personas por edad, sexo, raza o zona geográfica, los cuales pueden emplearse como información auxiliar para la calibración. Estos conteos, obtenidos a partir de censos o proyecciones demográficas, permiten ajustar los pesos muestrales de modo que las estimaciones reflejen de manera más precisa la estructura real de la población.</p>
+<p>La necesidad de calibrar surge porque, en la práctica, no todos los grupos poblacionales tienen la cobertura apropiada en la muestra, incluso cuando el diseño muestral es probabilístico. Las estimaciones directas del número de personas en ciertos subgrupos pueden resultar inferiores a las proyecciones oficiales, evidenciando problemas de subcobertura. Al ajustar los pesos para que las sumas ponderadas coincidan exactamente con los totales censales, se logra reducir el sesgo de subcobertura y mejorar la precisión de los resultados.</p>
+<p>A continuación, se presenta un ejemplo práctico en <code>R</code> que ilustra la implementación del estimador de calibración utilizando la función <code>calibrate</code> del paquete <code>survey</code>. El primer paso consiste en construir la información poblacional de referencia con la cual se desea calibrar. En este caso, se realizará la calibración a nivel de zona y sexo, y los totales poblacionales correspondientes se obtienen de la siguiente forma:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb16-1" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb16-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb16-2" tabindex="-1"></a>(totales <span class="ot">&lt;-</span> <span class="fu">colSums</span>(</span>
+<span id="cb16-3"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb16-3" tabindex="-1"></a>  <span class="fu">model.matrix</span>(<span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> Zone<span class="sc">:</span>Sex, BigCity))) </span></code></pre></div>
+<pre><code>## ZoneRural:SexFemale ZoneUrban:SexFemale   ZoneRural:SexMale   ZoneUrban:SexMale 
+##               37238               41952               34864               36212</code></pre>
+<p>La salida anterior muestra, por ejemplo, que en la zona rural se registran 37.238 mujeres, mientras que en la zona urbana hay 41.952. De manera análoga, se pueden interpretar los conteos correspondientes a los hombres.</p>
+<p>Con estos totales definidos, se aplica la calibración de los pesos de muestreo utilizando la función <code>calibrate()</code> del paquete <code>survey</code>:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb18-1" tabindex="-1"></a>diseno_cal <span class="ot">&lt;-</span> <span class="fu">calibrate</span>(<span class="at">design =</span> diseno, </span>
+<span id="cb18-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb18-2" tabindex="-1"></a>                        <span class="at">formula =</span> <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> Zone<span class="sc">:</span>Sex, </span>
+<span id="cb18-3"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb18-3" tabindex="-1"></a>                        <span class="at">population =</span> totales, </span>
+<span id="cb18-4"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb18-4" tabindex="-1"></a>                        <span class="at">calfun =</span> <span class="st">&quot;linear&quot;</span>)  </span></code></pre></div>
+<p>Después de la calibración, los pesos ajustados se asignan a la encuesta y reproducen exactamente los totales poblacionales establecidos en el vector totales. Esto puede verificarse sumando los pesos calibrados, como se muestra en la Tabla <a href="conceptos-básicos-en-encuestas-de-hogares.html#tab:tab-cal-totales">2.9</a>:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb19-1" tabindex="-1"></a>encuesta<span class="sc">$</span>wk <span class="ot">&lt;-</span> <span class="fu">weights</span>(diseno_cal)</span>
+<span id="cb19-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb19-2" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb19-3" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb19-4" tabindex="-1"></a>  <span class="fu">group_by</span>(Zone, Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb19-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">pob_rep =</span> <span class="fu">sum</span>(wk)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-6"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb19-6" tabindex="-1"></a>  <span class="fu">adorn_totals</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb19-7"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb19-7" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-cal-totales">Cuadro 2.9: </span><span id="tab:tab-cal-totales">Cuadro 2.10: </span>Población representada por zona y sexo tras la calibración
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+Zone
+</th>
+<th style="text-align:center;font-weight: bold;">
+Sex
+</th>
+<th style="text-align:center;font-weight: bold;">
+pob_rep
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Rural
+</td>
+<td style="text-align:center;">
+Female
+</td>
+<td style="text-align:center;">
+37238
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rural
+</td>
+<td style="text-align:center;">
+Male
+</td>
+<td style="text-align:center;">
+34864
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Urban
+</td>
+<td style="text-align:center;">
+Female
+</td>
+<td style="text-align:center;">
+41952
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Urban
+</td>
+<td style="text-align:center;">
+Male
+</td>
+<td style="text-align:center;">
+36212
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:center;">
+<ul>
+<li></td>
+<td style="text-align:center;">
+150266
+</td>
+</tr>
+</tbody>
+</table>
+Una vez calibrados los pesos, es recomendable evaluar visualmente la relación entre los pesos originales y los calibrados. Este tipo de diagnóstico permite identificar si la calibración produjo ajustes excesivos o atípicos en algunas observaciones. Para examinar este comportamiento, se puede comparar la distribución de los pesos originales y calibrados en la Figura <a href="conceptos-básicos-en-encuestas-de-hogares.html#fig:fig-hist-pesos">2.1</a>, lo cual permite evaluar la estabilidad y consistencia del ajuste.</li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-1" tabindex="-1"></a>pesos_long <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-2" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">original =</span> dk, </span>
+<span id="cb20-3"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-3" tabindex="-1"></a>                     <span class="at">calibrado =</span> wk) <span class="sc">%&gt;%</span></span>
+<span id="cb20-4"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-4" tabindex="-1"></a>              <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb20-5"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-5" tabindex="-1"></a>                           <span class="at">names_to =</span> <span class="st">&quot;Tipo&quot;</span>,</span>
+<span id="cb20-6"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-6" tabindex="-1"></a>                           <span class="at">values_to =</span> <span class="st">&quot;Peso&quot;</span>)</span>
+<span id="cb20-7"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-7" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-8" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pesos_long, <span class="fu">aes</span>(<span class="at">x =</span> Peso, <span class="at">fill =</span> Tipo)) <span class="sc">+</span></span>
+<span id="cb20-9"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-9" tabindex="-1"></a>      <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">bins =</span> <span class="dv">10</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb20-10"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-10" tabindex="-1"></a>      <span class="fu">facet_wrap</span>(<span class="sc">~</span>Tipo, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-11" tabindex="-1"></a>      <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#1f77b4&quot;</span>, <span class="st">&quot;#2ca02c&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb20-12"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-12" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Peso de muestreo&quot;</span>,</span>
+<span id="cb20-13"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-13" tabindex="-1"></a>           <span class="at">y =</span> <span class="st">&quot;Frecuencia&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-14"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-14" tabindex="-1"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb20-15"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-15" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span>
+<span id="cb20-16"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb20-16" tabindex="-1"></a>p1</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-hist-pesos"></span>
+<img src="02-Conceptos_files/figure-html/fig-hist-pesos-1.png" alt="Distribución de los pesos de muestreo originales y calibrados" width="100%" />
+<p class="caption">
+Figura 2.1: Distribución de los pesos de muestreo originales y calibrados
+</p>
+</div>
+<p>Asimismo, un diagrama de dispersión en el que cada punto representa una unidad de muestreo, ubicando en el eje horizontal los pesos originales y en el eje vertical los pesos calibrados, de este modo, se espera que los puntos estén sobre la diagonal (<span class="math inline">\(wk = dk\)</span>), lo que indica que los nuevos pesos mantienen una relación proporcional con los iniciales y no se han introducido distorsiones significativas en el esquema de inferencia, como se puede verificar en la Figura <a href="conceptos-básicos-en-encuestas-de-hogares.html#fig:fig-disp-pesos">2.2</a>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb21-1" tabindex="-1"></a><span class="fu">ggplot</span>(encuesta, <span class="fu">aes</span>(<span class="at">x =</span> dk, <span class="at">y =</span> wk)) <span class="sc">+</span></span>
+<span id="cb21-2"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb21-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">&quot;#1f77b4&quot;</span>, <span class="at">size =</span> <span class="fl">1.8</span>) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb21-3" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, </span>
+<span id="cb21-4"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb21-4" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;#d62728&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb21-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Peso original (dk)&quot;</span>,</span>
+<span id="cb21-6"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb21-6" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Peso calibrado (wk)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-7"><a href="conceptos-básicos-en-encuestas-de-hogares.html#cb21-7" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-disp-pesos"></span>
+<img src="02-Conceptos_files/figure-html/fig-disp-pesos-1.png" alt="Relación entre los pesos de muestreo originales y calibrados" width="70%" />
+<p class="caption">
+Figura 2.2: Relación entre los pesos de muestreo originales y calibrados
+</p>
+</div>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-cochran1977sampling" class="csl-entry">
+Cochran, W. G. (1977). <em>Sampling techniques</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-gambino2009sampling" class="csl-entry">
+Gambino, J. G., &amp; Nascimento Silva, P. L. do. (2009). Sampling and estimation in household surveys. En <em>Handbook of Statistics</em> (Vol. 29, pp. 407-439). Elsevier.
+</div>
+<div id="ref-Gutierrez2016" class="csl-entry">
+Gutiérrez, H. A. (2016). <em>Estrategias de muestreo: diseño de encuestas y estimación de parámetros</em> (Segunda edición). Ediciones de la U.
+</div>
+<div id="ref-GutierrezBabativa2023" class="csl-entry">
+Gutiérrez, H. A., &amp; Babativa-Márquez, G. (2023). <em>Efectos de diseño para indicadores sociales en Am<span>é</span>rica Latina: función generalizada de varianza para estimadores directos provenientes de encuestas de hogares</em> (LC/TS.2023/95 106). Comisi<span>ó</span>n Econ<span>ó</span>mica para Am<span>é</span>rica Latina y el Caribe (CEPAL), Naciones Unidas. <a href="https://repositorio.cepal.org/server/api/core/bitstreams/feb8c8be-6434-41f2-8fd9-f12f71a0739a/content">https://repositorio.cepal.org/server/api/core/bitstreams/feb8c8be-6434-41f2-8fd9-f12f71a0739a/content</a>
+</div>
+<div id="ref-hansen1956control" class="csl-entry">
+Hansen, M. H., &amp; Steinberg, J. (1956). Control of errors in surveys. <em>Biometrics</em>, <em>12</em>(4), 462-474.
+</div>
+<div id="ref-kalton2003weighting" class="csl-entry">
+Kalton, G., &amp; Flores-Cervantes, I. (2003). Weighting methods. <em>Journal of official statistics</em>, <em>19</em>(2), 81.
+</div>
+<div id="ref-kish1965survey" class="csl-entry">
+Kish, L. (1965). <em>Survey sampling.</em>
+</div>
+<div id="ref-korn1995analysis" class="csl-entry">
+Korn, E. L., &amp; Graubard, B. I. (1995). Analysis of large health surveys: accounting for the sampling design. <em>Journal of the Royal Statistical Society: Series A (Statistics in Society)</em>, <em>158</em>(2), 263-295.
+</div>
+<div id="ref-ONUDeff" class="csl-entry">
+Naciones Unidas. (2009). <em>Diseño de Muestras para Encuestas de Hogares: Directrices Prácticas.</em> Naciones Unidas. <a href="https://unstats.un.org/unsd/publication/seriesf/seriesf_98s.pdf">https://unstats.un.org/unsd/publication/seriesf/seriesf_98s.pdf</a>
+</div>
+<div id="ref-Park2003Design" class="csl-entry">
+Park, I., Winglee, M., Clark, J., Rust, K., Sedlak, A., &amp; Morganstein, D. (2003). Design Effects and Survey Planning. <em>Proceedings of the Section on Survey Research Methods</em>, 3179-3186. <a href="https://www.asasrms.org/Proceedings/y2003/Files/JSM2003-000156.pdf">https://www.asasrms.org/Proceedings/y2003/Files/JSM2003-000156.pdf</a>
+</div>
+<div id="ref-sarndal2005nonresponse" class="csl-entry">
+Särndal, C.-E., &amp; Lundström, S. (2005). <em>Estimation in surveys with nonresponse</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-sarndal2003model" class="csl-entry">
+Särndal, C.-E., Swensson, B., &amp; Wretman, J. (2003). <em>Model assisted survey sampling</em>. Springer Science &amp; Business Media.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introducción.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
