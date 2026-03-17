@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4.6 Pruebas para la comparación de grupos | Análisis de encuestas con R</title>
+  <meta name="description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4.6 Pruebas para la comparación de grupos | Análisis de encuestas con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="github-repo" content="psirusteam/2021ASDA" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4.6 Pruebas para la comparación de grupos | Análisis de encuestas con R" />
+  
+  <meta name="twitter:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  
+
+<meta name="author" content="Andrés Gutiérrez,Stalyn Guerrero, Cristian Téllez, Giovany Babativa" />
+
+
+<meta name="date" content="2025-11-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="análisis-de-la-relación-entre-dos-variable-continuas.html"/>
+<link rel="next" href="estimando-razones-en-encuestas-de-hogares.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análisis de encuestas con R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="universo-de-estudio-y-población-objetivo.html"><a href="universo-de-estudio-y-población-objetivo.html"><i class="fa fa-check"></i><b>2.1</b> Universo de estudio y población objetivo</a></li>
+<li class="chapter" data-level="2.2" data-path="unidades-de-análisis.html"><a href="unidades-de-análisis.html"><i class="fa fa-check"></i><b>2.2</b> Unidades de análisis</a></li>
+<li class="chapter" data-level="2.3" data-path="unidades-de-muestreo.html"><a href="unidades-de-muestreo.html"><i class="fa fa-check"></i><b>2.3</b> Unidades de muestreo</a></li>
+<li class="chapter" data-level="2.4" data-path="marcos-de-muestreo.html"><a href="marcos-de-muestreo.html"><i class="fa fa-check"></i><b>2.4</b> Marcos de muestreo</a></li>
+<li class="chapter" data-level="2.5" data-path="sec-motivacion.html"><a href="sec-motivacion.html"><i class="fa fa-check"></i><b>2.5</b> Motivación</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="sec-motivacion.html"><a href="sec-motivacion.html#la-importancia-de-considerar-el-diseño-muestral"><i class="fa fa-check"></i><b>2.5.1</b> La importancia de considerar el diseño muestral</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html"><i class="fa fa-check"></i><b>2.6</b> Parámetros y estimadores</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#ajustes-adicionales-de-los-pesos"><i class="fa fa-check"></i><b>2.6.1</b> Ajustes adicionales de los pesos</a></li>
+<li class="chapter" data-level="2.6.2" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#importancia-de-los-ajustes"><i class="fa fa-check"></i><b>2.6.2</b> Importancia de los ajustes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html"><i class="fa fa-check"></i><b>2.7</b> Estimación de totales</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html#ejemplo-ilustrativo-1"><i class="fa fa-check"></i><b>2.7.1</b> Ejemplo ilustrativo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="efecto-del-diseño-deff.html"><a href="efecto-del-diseño-deff.html"><i class="fa fa-check"></i><b>2.8</b> Efecto del diseño (DEFF)</a></li>
+<li class="chapter" data-level="2.9" data-path="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><a href="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><i class="fa fa-check"></i><b>2.9</b> Muestreo estratificado aleatorio simple con dos etapas</a></li>
+<li class="chapter" data-level="2.10" data-path="práctica-en-r.html"><a href="práctica-en-r.html"><i class="fa fa-check"></i><b>2.10</b> Práctica en <code>R</code></a></li>
+<li class="chapter" data-level="2.11" data-path="calibrando-con-r.html"><a href="calibrando-con-r.html"><i class="fa fa-check"></i><b>2.11</b> Calibrando con <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><i class="fa fa-check"></i><b>3</b> Del manejo de datos al análisis de encuestas complejas en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="fundamentos-básicos-de-r-y-rstudio.html"><a href="fundamentos-básicos-de-r-y-rstudio.html"><i class="fa fa-check"></i><b>3.1</b> Fundamentos básicos de R y Rstudio</a></li>
+<li class="chapter" data-level="3.2" data-path="paquetes-para-el-análisis-de-encuestas.html"><a href="paquetes-para-el-análisis-de-encuestas.html"><i class="fa fa-check"></i><b>3.2</b> Paquetes para el análisis de encuestas</a></li>
+<li class="chapter" data-level="3.3" data-path="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><a href="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><i class="fa fa-check"></i><b>3.3</b> Paquetes complementarios para la manipulación y visualización de datos</a></li>
+<li class="chapter" data-level="3.4" data-path="creación-de-proyectos-en-r.html"><a href="creación-de-proyectos-en-r.html"><i class="fa fa-check"></i><b>3.4</b> Creación de proyectos en <code>R</code></a></li>
+<li class="chapter" data-level="3.5" data-path="lectura-de-bases-de-datos-y-manipulación.html"><a href="lectura-de-bases-de-datos-y-manipulación.html"><i class="fa fa-check"></i><b>3.5</b> Lectura de bases de datos y manipulación</a></li>
+<li class="chapter" data-level="3.6" data-path="el-operador-pipe.html"><a href="el-operador-pipe.html"><i class="fa fa-check"></i><b>3.6</b> El operador <code>pipe</code></a></li>
+<li class="chapter" data-level="3.7" data-path="transformación-y-resumen-de-datos.html"><a href="transformación-y-resumen-de-datos.html"><i class="fa fa-check"></i><b>3.7</b> Transformación y resumen de datos</a></li>
+<li class="chapter" data-level="3.8" data-path="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><i class="fa fa-check"></i><b>3.8</b> Diferencias entre el análisis tradicional y el análisis de encuestas complejas</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="análisis-de-las-variables-continuas-en-encuestas-de-hogares.html"><a href="análisis-de-las-variables-continuas-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>4</b> Análisis de las variables continuas en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="lectura-de-bases-de-datos-y-definición-del-diseño-muestral.html"><a href="lectura-de-bases-de-datos-y-definición-del-diseño-muestral.html"><i class="fa fa-check"></i><b>4.1</b> Lectura de bases de datos y definición del diseño muestral</a></li>
+<li class="chapter" data-level="4.2" data-path="estimación-de-totales-medias-y-razones.html"><a href="estimación-de-totales-medias-y-razones.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de totales, medias y razones</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="estimación-de-totales-medias-y-razones.html"><a href="estimación-de-totales-medias-y-razones.html#estimación-puntual"><i class="fa fa-check"></i><b>4.2.1</b> Estimación puntual</a></li>
+<li class="chapter" data-level="4.2.2" data-path="estimación-de-totales-medias-y-razones.html"><a href="estimación-de-totales-medias-y-razones.html#estimación-de-totales-1"><i class="fa fa-check"></i><b>4.2.2</b> Estimación de totales</a></li>
+<li class="chapter" data-level="4.2.3" data-path="estimación-de-totales-medias-y-razones.html"><a href="estimación-de-totales-medias-y-razones.html#estimación-de-la-media-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.2.3</b> Estimación de la media e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.2.4" data-path="estimación-de-totales-medias-y-razones.html"><a href="estimación-de-totales-medias-y-razones.html#estimación-de-medidas-de-localización-y-dispersión"><i class="fa fa-check"></i><b>4.2.4</b> Estimación de medidas de localización y dispersión</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="estimación-del-coeficiente-de-gini-en-encuestas-de-hogares.html"><a href="estimación-del-coeficiente-de-gini-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>4.3</b> Estimación del coeficiente de Gini en encuestas de hogares</a></li>
+<li class="chapter" data-level="4.4" data-path="análisis-de-correlación-en-encuestas-de-hogares.html"><a href="análisis-de-correlación-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>4.4</b> Análisis de correlación en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="análisis-de-correlación-en-encuestas-de-hogares.html"><a href="análisis-de-correlación-en-encuestas-de-hogares.html#ajuste-al-diseño-muestral"><i class="fa fa-check"></i><b>4.4.1</b> Ajuste al diseño muestral</a></li>
+<li class="chapter" data-level="4.4.2" data-path="análisis-de-correlación-en-encuestas-de-hogares.html"><a href="análisis-de-correlación-en-encuestas-de-hogares.html#expresión-formal"><i class="fa fa-check"></i><b>4.4.2</b> Expresión formal</a></li>
+<li class="chapter" data-level="4.4.3" data-path="análisis-de-correlación-en-encuestas-de-hogares.html"><a href="análisis-de-correlación-en-encuestas-de-hogares.html#implementación-en-r"><i class="fa fa-check"></i><b>4.4.3</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="análisis-de-la-relación-entre-dos-variable-continuas.html"><a href="análisis-de-la-relación-entre-dos-variable-continuas.html"><i class="fa fa-check"></i><b>4.5</b> Análisis de la relación entre dos variable continuas</a></li>
+<li class="chapter" data-level="4.6" data-path="pruebas-para-la-comparación-de-grupos.html"><a href="pruebas-para-la-comparación-de-grupos.html"><i class="fa fa-check"></i><b>4.6</b> Pruebas para la comparación de grupos</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="pruebas-para-la-comparación-de-grupos.html"><a href="pruebas-para-la-comparación-de-grupos.html#planteamiento-general-de-hipótesis"><i class="fa fa-check"></i><b>4.6.1</b> Planteamiento general de hipótesis</a></li>
+<li class="chapter" data-level="4.6.2" data-path="pruebas-para-la-comparación-de-grupos.html"><a href="pruebas-para-la-comparación-de-grupos.html#diferencia-de-medias-poblacionales"><i class="fa fa-check"></i><b>4.6.2</b> Diferencia de medias poblacionales</a></li>
+<li class="chapter" data-level="4.6.3" data-path="pruebas-para-la-comparación-de-grupos.html"><a href="pruebas-para-la-comparación-de-grupos.html#estadístico-de-prueba-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.6.3</b> Estadístico de prueba e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.6.4" data-path="pruebas-para-la-comparación-de-grupos.html"><a href="pruebas-para-la-comparación-de-grupos.html#ejemplo-aplicado-en-r"><i class="fa fa-check"></i><b>4.6.4</b> Ejemplo aplicado en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="estimando-razones-en-encuestas-de-hogares.html"><a href="estimando-razones-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>4.7</b> Estimando razones en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimando-razones-en-encuestas-de-hogares.html"><a href="estimando-razones-en-encuestas-de-hogares.html#implementación-computacional-en-r"><i class="fa fa-check"></i>Implementación computacional en <code>R</code></a></li>
+<li class="chapter" data-level="" data-path="estimando-razones-en-encuestas-de-hogares.html"><a href="estimando-razones-en-encuestas-de-hogares.html#interpretación-aplicada"><i class="fa fa-check"></i>Interpretación aplicada</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="estimando-contrastes-en-encuestas-de-hogares.html"><a href="estimando-contrastes-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>4.8</b> Estimando contrastes en encuestas de hogares</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a Análisis de encuestas con R </a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis de encuestas con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pruebas-para-la-comparación-de-grupos" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Pruebas para la comparación de grupos<a href="pruebas-para-la-comparación-de-grupos.html#pruebas-para-la-comparación-de-grupos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El análisis de diferencias entre grupos es un objetivo frecuente en las encuestas de hogares. Un ejemplo clásico es la pregunta: <em>¿Existen diferencias estadísticamente significativas en el ingreso medio entre hogares dirigidos por hombres y aquellos dirigidos por mujeres?</em></p>
+<p>Para responder a este tipo de interrogantes se aplican <strong>pruebas de hipótesis</strong>, procedimientos estadísticos que contrastan afirmaciones sobre parámetros poblacionales a partir de evidencia muestral. En el contexto de encuestas, estas pruebas deben ajustarse al diseño de muestreo (estratificación, conglomerados y ponderación) para garantizar inferencias válidas.</p>
+<div id="planteamiento-general-de-hipótesis" class="section level3 hasAnchor" number="4.6.1">
+<h3><span class="header-section-number">4.6.1</span> Planteamiento general de hipótesis<a href="pruebas-para-la-comparación-de-grupos.html#planteamiento-general-de-hipótesis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Una prueba de hipótesis parte de dos proposiciones antagónicas:</p>
+<p><span class="math display">\[
+\begin{cases}
+H_{0}: &amp; \theta = \theta_0 \quad \text{(hipótesis nula)} \\
+H_{1}: &amp; \theta \neq \theta_0 \quad \text{(hipótesis alternativa, bilateral)}
+\end{cases}
+\]</span></p>
+<p>Dependiendo del contexto, <span class="math inline">\(H_1\)</span> puede plantearse de manera unilateral (<span class="math inline">\(\theta &gt; \theta_0\)</span> o <span class="math inline">\(\theta &lt; \theta_0\)</span>). El proceso consiste en evaluar si la evidencia contenida en la muestra es suficiente para rechazar <span class="math inline">\(H_0\)</span> en favor de <span class="math inline">\(H_1\)</span>.</p>
+<p>En muchos casos, los parámetros de interés (medias, proporciones, totales o razones) pueden expresarse como <strong>combinaciones lineales de estadísticas descriptivas</strong>:</p>
+<p><span class="math display">\[
+f(\theta_1,\ldots,\theta_J) = \sum_{j=1}^J a_j \theta_j
+\]</span></p>
+<p>con estimador:</p>
+<p><span class="math display">\[
+\hat{f} = \sum_{j=1}^J a_j \hat{\theta}_j
+\]</span></p>
+<p>y varianza:</p>
+<p><span class="math display">\[
+Var(\hat{f}) = \sum_{j=1}^J a_j^2 Var(\hat{\theta}_j) \;+\; 2\sum_{j=1}^{J-1}\sum_{k&gt;j}^J a_j a_k \, Cov(\hat{\theta}_j,\hat{\theta}_k).
+\]</span></p>
+<p>Este marco general abarca, entre otros casos, la <strong>diferencia entre medias poblacionales</strong>.</p>
+</div>
+<div id="diferencia-de-medias-poblacionales" class="section level3 hasAnchor" number="4.6.2">
+<h3><span class="header-section-number">4.6.2</span> Diferencia de medias poblacionales<a href="pruebas-para-la-comparación-de-grupos.html#diferencia-de-medias-poblacionales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Sea <span class="math inline">\(\mu_{(y,d)}\)</span> la media poblacional del dominio <span class="math inline">\(d\)</span>, con <span class="math inline">\(d=1,2\)</span>. El parámetro de interés es:</p>
+<p><span class="math display">\[
+\Delta = \mu_{(y,1)} - \mu_{(y,2)}.
+\]</span></p>
+<p>Por ejemplo, <span class="math inline">\(\mu_{(y,1)}\)</span> podría ser el ingreso medio en hogares con jefatura masculina y <span class="math inline">\(\mu_{(y,2)}\)</span> el ingreso medio en hogares con jefatura femenina.</p>
+<p>El estimador de la diferencia es:</p>
+<p><span class="math display">\[
+\hat{\Delta} = \hat{\bar{Y}}_1 - \hat{\bar{Y}}_2,
+\]</span></p>
+<p>cuyo error estándar se calcula como:</p>
+<p><span class="math display">\[
+\hat{se}(\hat{\Delta}) = \sqrt{ \hat{Var}(\hat{\bar{Y}}_1) + \hat{Var}(\hat{\bar{Y}}_2) - 2 \hat{Cov}(\hat{\bar{Y}}_1, \hat{\bar{Y}}_2)}.
+\]</span></p>
+</div>
+<div id="estadístico-de-prueba-e-intervalo-de-confianza" class="section level3 hasAnchor" number="4.6.3">
+<h3><span class="header-section-number">4.6.3</span> Estadístico de prueba e intervalo de confianza<a href="pruebas-para-la-comparación-de-grupos.html#estadístico-de-prueba-e-intervalo-de-confianza" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El contraste se realiza con el estadístico:</p>
+<p><span class="math display">\[
+t = \frac{\hat{\Delta}}{\hat{se}(\hat{\Delta})}, \quad t \sim t_{(df)},
+\]</span></p>
+<p>donde los grados de libertad se aproximan como <span class="math inline">\(df = n - H\)</span> (número de UPMs menos número de estratos).</p>
+<p>El intervalo de confianza para <span class="math inline">\(\Delta\)</span> al nivel <span class="math inline">\((1-\alpha)\)</span> se define como:</p>
+<p><span class="math display">\[
+\hat{\Delta} \;\pm\; t_{(1-\alpha/2,df)} \, \hat{se}(\hat{\Delta}).
+\]</span></p>
+</div>
+<div id="ejemplo-aplicado-en-r" class="section level3 hasAnchor" number="4.6.4">
+<h3><span class="header-section-number">4.6.4</span> Ejemplo aplicado en <code>R</code><a href="pruebas-para-la-comparación-de-grupos.html#ejemplo-aplicado-en-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En encuestas complejas, estas pruebas se implementan con la función <code>svyttest()</code> del paquete survey, que incorpora automáticamente los ajustes del diseño.</p>
+<p><strong>Ejemplo 1. Diferencia de ingresos por sexo (población total):</strong></p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="pruebas-para-la-comparación-de-grupos.html#cb92-1" tabindex="-1"></a><span class="fu">svyttest</span>(Income <span class="sc">~</span> Sex, <span class="at">design =</span> diseno, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>## 
+##  Design-based t-test
+## 
+## data:  Income ~ Sex
+## t = 1, df = 118, p-value = 0.2
+## alternative hypothesis: true difference in mean is not equal to 0
+## 95 percent confidence interval:
+##  -10.9  67.5
+## sample estimates:
+## difference in mean 
+##               28.3</code></pre>
+<p><strong>Resultados (ejemplo ficticio):</strong></p>
+<ul>
+<li>Estadístico t = -1.48</li>
+<li>p-valor = 0.14</li>
+<li>Intervalo de confianza (95%): (-77.35 , 11.41)</li>
+</ul>
+<p>Interpretación: con un 95% de confianza no existe evidencia estadística suficiente para afirmar que los ingresos medios difieren por sexo.</p>
+<p><strong>Ejemplo 2. Diferencia de ingresos por sexo en zona urbana:</strong></p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="pruebas-para-la-comparación-de-grupos.html#cb94-1" tabindex="-1"></a>sub_Urbano <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span>  <span class="fu">filter</span>(Zone <span class="sc">==</span> <span class="st">&quot;Urban&quot;</span>)</span>
+<span id="cb94-2"><a href="pruebas-para-la-comparación-de-grupos.html#cb94-2" tabindex="-1"></a><span class="fu">svyttest</span>(Income <span class="sc">~</span> Sex, <span class="at">design =</span> sub_Urbano, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>## 
+##  Design-based t-test
+## 
+## data:  Income ~ Sex
+## t = 2, df = 63, p-value = 0.1
+## alternative hypothesis: true difference in mean is not equal to 0
+## 95 percent confidence interval:
+##  -8.69 98.11
+## sample estimates:
+## difference in mean 
+##               44.7</code></pre>
+<p>Resultado: nuevamente no se rechaza <span class="math inline">\(H_0\)</span>, lo que indica ausencia de diferencias significativas en el ingreso medio por sexo en la zona urbana.</p>
+<p><strong>Ejemplo 3. Diferencia de ingresos por sexo, restringido a mayores de 18 años:</strong></p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="pruebas-para-la-comparación-de-grupos.html#cb96-1" tabindex="-1"></a><span class="fu">svyttest</span>(Income <span class="sc">~</span> Sex,</span>
+<span id="cb96-2"><a href="pruebas-para-la-comparación-de-grupos.html#cb96-2" tabindex="-1"></a>         <span class="at">design =</span> diseno <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Age <span class="sc">&gt;</span> <span class="dv">18</span>),</span>
+<span id="cb96-3"><a href="pruebas-para-la-comparación-de-grupos.html#cb96-3" tabindex="-1"></a>         <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>## 
+##  Design-based t-test
+## 
+## data:  Income ~ Sex
+## t = 2, df = 118, p-value = 0.1
+## alternative hypothesis: true difference in mean is not equal to 0
+## 95 percent confidence interval:
+##  -8.69 80.82
+## sample estimates:
+## difference in mean 
+##               36.1</code></pre>
+<p>Conclusión: tampoco se rechaza <span class="math inline">\(H_0\)</span>. Es decir, no se observa evidencia estadística de diferencias en los ingresos medios entre hombres y mujeres mayores de 18 años.</p>
+<p>El procedimiento descrito no se limita a las medias, sino que también puede aplicarse a proporciones, totales, razones o cualquier función diferenciable de totales. En todos los casos, el contraste se fundamenta en la estimación puntual, su varianza (incluyendo covarianzas cuando corresponde) y la comparación con la distribución t ajustada al diseño muestral.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="análisis-de-la-relación-entre-dos-variable-continuas.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="estimando-razones-en-encuestas-de-hogares.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/psirusteam/2021ASDA/04-Continuas.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Análisis de encuestas con R.pdf", "Análisis de encuestas con R.epub", "Análisis de encuestas con R.mobi"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "tconfig": null
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

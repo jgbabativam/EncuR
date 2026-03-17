@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2.5 Motivación | Análisis de encuestas con R</title>
+  <meta name="description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2.5 Motivación | Análisis de encuestas con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="github-repo" content="psirusteam/2021ASDA" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2.5 Motivación | Análisis de encuestas con R" />
+  
+  <meta name="twitter:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  
+
+<meta name="author" content="Andrés Gutiérrez, Stalyn Guerrero, Cristian Téllez, Giovany Babativa-Márquez" />
+
+
+<meta name="date" content="2026-03-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="marcos-de-muestreo.html"/>
+<link rel="next" href="parámetros-y-estimadores.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análisis de encuestas con R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="universo-de-estudio-y-población-objetivo.html"><a href="universo-de-estudio-y-población-objetivo.html"><i class="fa fa-check"></i><b>2.1</b> Universo de estudio y población objetivo</a></li>
+<li class="chapter" data-level="2.2" data-path="unidades-de-análisis.html"><a href="unidades-de-análisis.html"><i class="fa fa-check"></i><b>2.2</b> Unidades de análisis</a></li>
+<li class="chapter" data-level="2.3" data-path="unidades-de-muestreo.html"><a href="unidades-de-muestreo.html"><i class="fa fa-check"></i><b>2.3</b> Unidades de muestreo</a></li>
+<li class="chapter" data-level="2.4" data-path="marcos-de-muestreo.html"><a href="marcos-de-muestreo.html"><i class="fa fa-check"></i><b>2.4</b> Marcos de muestreo</a></li>
+<li class="chapter" data-level="2.5" data-path="sec-motivacion.html"><a href="sec-motivacion.html"><i class="fa fa-check"></i><b>2.5</b> Motivación</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="sec-motivacion.html"><a href="sec-motivacion.html#la-importancia-de-considerar-el-diseño-muestral"><i class="fa fa-check"></i><b>2.5.1</b> La importancia de considerar el diseño muestral</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html"><i class="fa fa-check"></i><b>2.6</b> Parámetros y estimadores</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#ajustes-adicionales-de-los-pesos"><i class="fa fa-check"></i><b>2.6.1</b> Ajustes adicionales de los pesos</a></li>
+<li class="chapter" data-level="2.6.2" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#importancia-de-los-ajustes"><i class="fa fa-check"></i><b>2.6.2</b> Importancia de los ajustes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html"><i class="fa fa-check"></i><b>2.7</b> Estimación de totales</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html#ejemplo-ilustrativo-1"><i class="fa fa-check"></i><b>2.7.1</b> Ejemplo ilustrativo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="efecto-del-diseño-deff.html"><a href="efecto-del-diseño-deff.html"><i class="fa fa-check"></i><b>2.8</b> Efecto del diseño (DEFF)</a></li>
+<li class="chapter" data-level="2.9" data-path="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><a href="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><i class="fa fa-check"></i><b>2.9</b> Muestreo estratificado aleatorio simple con dos etapas</a></li>
+<li class="chapter" data-level="2.10" data-path="práctica-en-r.html"><a href="práctica-en-r.html"><i class="fa fa-check"></i><b>2.10</b> Práctica en <code>R</code></a></li>
+<li class="chapter" data-level="2.11" data-path="calibrando-con-r.html"><a href="calibrando-con-r.html"><i class="fa fa-check"></i><b>2.11</b> Calibrando con <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><i class="fa fa-check"></i><b>3</b> Del manejo de datos al análisis de encuestas complejas en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="fundamentos-básicos-de-r-y-rstudio.html"><a href="fundamentos-básicos-de-r-y-rstudio.html"><i class="fa fa-check"></i><b>3.1</b> Fundamentos básicos de R y Rstudio</a></li>
+<li class="chapter" data-level="3.2" data-path="paquetes-para-el-análisis-de-encuestas.html"><a href="paquetes-para-el-análisis-de-encuestas.html"><i class="fa fa-check"></i><b>3.2</b> Paquetes para el análisis de encuestas</a></li>
+<li class="chapter" data-level="3.3" data-path="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><a href="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><i class="fa fa-check"></i><b>3.3</b> Paquetes complementarios para la manipulación y visualización de datos</a></li>
+<li class="chapter" data-level="3.4" data-path="creación-de-proyectos-en-r.html"><a href="creación-de-proyectos-en-r.html"><i class="fa fa-check"></i><b>3.4</b> Creación de proyectos en <code>R</code></a></li>
+<li class="chapter" data-level="3.5" data-path="lectura-de-bases-de-datos-y-manipulación.html"><a href="lectura-de-bases-de-datos-y-manipulación.html"><i class="fa fa-check"></i><b>3.5</b> Lectura de bases de datos y manipulación</a></li>
+<li class="chapter" data-level="3.6" data-path="el-operador-pipe.html"><a href="el-operador-pipe.html"><i class="fa fa-check"></i><b>3.6</b> El operador <code>pipe</code></a></li>
+<li class="chapter" data-level="3.7" data-path="transformación-y-resumen-de-datos.html"><a href="transformación-y-resumen-de-datos.html"><i class="fa fa-check"></i><b>3.7</b> Transformación y resumen de datos</a></li>
+<li class="chapter" data-level="3.8" data-path="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><i class="fa fa-check"></i><b>3.8</b> Diferencias entre el análisis tradicional y el análisis de encuestas complejas</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de las variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="definición-del-objeto-de-diseño.html"><a href="definición-del-objeto-de-diseño.html"><i class="fa fa-check"></i><b>4.1</b> Definición del objeto de diseño</a></li>
+<li class="chapter" data-level="4.2" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de totales y medias</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-puntual"><i class="fa fa-check"></i><b>4.2.1</b> Estimación puntual</a></li>
+<li class="chapter" data-level="4.2.2" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-totales-1"><i class="fa fa-check"></i><b>4.2.2</b> Estimación de totales</a></li>
+<li class="chapter" data-level="4.2.3" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-la-media-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.2.3</b> Estimación de la media e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.2.4" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-medidas-de-localización-y-dispersión"><i class="fa fa-check"></i><b>4.2.4</b> Estimación de medidas de localización y dispersión</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html"><i class="fa fa-check"></i><b>4.3</b> Estimación de razones</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html#implementación-computacional-en-r"><i class="fa fa-check"></i>Implementación computacional en <code>R</code></a></li>
+<li class="chapter" data-level="" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html#interpretación-aplicada"><i class="fa fa-check"></i>Interpretación aplicada</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="estimación-del-coeficiente-de-gini.html"><a href="estimación-del-coeficiente-de-gini.html"><i class="fa fa-check"></i><b>4.4</b> Estimación del coeficiente de Gini</a></li>
+<li class="chapter" data-level="4.5" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html"><i class="fa fa-check"></i><b>4.5</b> Análisis de correlación</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#ajuste-al-diseño-muestral"><i class="fa fa-check"></i><b>4.5.1</b> Ajuste al diseño muestral</a></li>
+<li class="chapter" data-level="4.5.2" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#expresión-formal"><i class="fa fa-check"></i><b>4.5.2</b> Expresión formal</a></li>
+<li class="chapter" data-level="4.5.3" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#implementación-en-r"><i class="fa fa-check"></i><b>4.5.3</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html"><i class="fa fa-check"></i><b>4.6</b> Pruebas de hipótesis</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#planteamiento-general"><i class="fa fa-check"></i><b>4.6.1</b> Planteamiento general</a></li>
+<li class="chapter" data-level="4.6.2" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#prueba-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.6.2</b> Prueba para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.6.3" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#estadístico-de-prueba-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.6.3</b> Estadístico de prueba e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.6.4" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#ejemplo-aplicado-en-r"><i class="fa fa-check"></i><b>4.6.4</b> Ejemplo aplicado en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="estimación-de-contrastes.html"><a href="estimación-de-contrastes.html"><i class="fa fa-check"></i><b>4.7</b> Estimación de contrastes</a></li>
+<li class="chapter" data-level="4.8" data-path="viz-continuas.html"><a href="viz-continuas.html"><i class="fa fa-check"></i><b>4.8</b> Visualización de variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="viz-continuas.html"><a href="viz-continuas.html#histogramas"><i class="fa fa-check"></i><b>4.8.1</b> Histogramas</a></li>
+<li class="chapter" data-level="4.8.2" data-path="viz-continuas.html"><a href="viz-continuas.html#densidades-y-boxplots"><i class="fa fa-check"></i><b>4.8.2</b> Densidades y Boxplots</a></li>
+<li class="chapter" data-level="4.8.3" data-path="viz-continuas.html"><a href="viz-continuas.html#diagramas-de-dispersión"><i class="fa fa-check"></i><b>4.8.3</b> Diagramas de dispersión</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html"><i class="fa fa-check"></i><b>5</b> Análisis de variables categóricas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="estimación-del-tamaño-poblacional.html"><a href="estimación-del-tamaño-poblacional.html"><i class="fa fa-check"></i><b>5.1</b> Estimación del tamaño poblacional</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimación-del-tamaño-poblacional.html"><a href="estimación-del-tamaño-poblacional.html#estimación-de-totales-en-r"><i class="fa fa-check"></i>Estimación de totales en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="estimación-de-proporciones.html"><a href="estimación-de-proporciones.html"><i class="fa fa-check"></i><b>5.2</b> Estimación de proporciones</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="estimación-de-proporciones.html"><a href="estimación-de-proporciones.html#estimación-de-proporciones-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Estimación de proporciones en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html"><i class="fa fa-check"></i><b>5.3</b> Tablas cruzadas</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#definición-y-notación"><i class="fa fa-check"></i><b>5.3.1</b> Definición y notación</a></li>
+<li class="chapter" data-level="5.3.2" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#tablas-de-doble-entrada"><i class="fa fa-check"></i><b>5.3.2</b> Tablas de doble entrada</a></li>
+<li class="chapter" data-level="5.3.3" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#proporciones-para-variables-binarias"><i class="fa fa-check"></i><b>5.3.3</b> Proporciones para variables binarias</a></li>
+<li class="chapter" data-level="5.3.4" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#proporciones-para-variables-multinomiales"><i class="fa fa-check"></i><b>5.3.4</b> Proporciones para variables multinomiales</a></li>
+<li class="chapter" data-level="5.3.5" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#tablas-cruzadas-o-de-contingencia"><i class="fa fa-check"></i><b>5.3.5</b> Tablas cruzadas o de contingencia</a></li>
+<li class="chapter" data-level="5.3.6" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#prueba-de-independencia-chi2"><i class="fa fa-check"></i><b>5.3.6</b> Prueba de independencia <span class="math inline">\(\chi^{2}\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="viz-categoricas.html"><a href="viz-categoricas.html"><i class="fa fa-check"></i><b>5.4</b> Visualización de variables categóricas</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="viz-categoricas.html"><a href="viz-categoricas.html#gráficos-de-barras"><i class="fa fa-check"></i><b>5.4.1</b> Gráficos de barras</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="viz-mapas.html"><a href="viz-mapas.html"><i class="fa fa-check"></i><b>5.5</b> Visualización de variables categóricas en mapas</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="viz-mapas.html"><a href="viz-mapas.html#carga-del-shapefile-y-mapa-base"><i class="fa fa-check"></i><b>5.5.1</b> Carga del shapefile y mapa base</a></li>
+<li class="chapter" data-level="5.5.2" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-coroplético-de-pobreza-masculina-por-región"><i class="fa fa-check"></i><b>5.5.2</b> Mapa coroplético de pobreza masculina por región</a></li>
+<li class="chapter" data-level="5.5.3" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-del-coeficiente-de-variación-del-ingreso-medio"><i class="fa fa-check"></i><b>5.5.3</b> Mapa del coeficiente de variación del ingreso medio</a></li>
+<li class="chapter" data-level="5.5.4" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-bivariante-con-ggplot2"><i class="fa fa-check"></i><b>5.5.4</b> Mapa bivariante con <code>ggplot2</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cap6.html"><a href="cap6.html"><i class="fa fa-check"></i><b>6</b> Modelos de regresión</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="antecedentes-históricos-y-desarrollos-metodológicos.html"><a href="antecedentes-históricos-y-desarrollos-metodológicos.html"><i class="fa fa-check"></i><b>6.1</b> Antecedentes históricos y desarrollos metodológicos</a></li>
+<li class="chapter" data-level="6.2" data-path="relevancia-práctica.html"><a href="relevancia-práctica.html"><i class="fa fa-check"></i><b>6.2</b> Relevancia práctica</a></li>
+<li class="chapter" data-level="6.3" data-path="uso-de-ponderaciones.html"><a href="uso-de-ponderaciones.html"><i class="fa fa-check"></i><b>6.3</b> Uso de ponderaciones</a></li>
+<li class="chapter" data-level="6.4" data-path="enfoques-inferenciales-para-el-análisis-de-datos.html"><a href="enfoques-inferenciales-para-el-análisis-de-datos.html"><i class="fa fa-check"></i><b>6.4</b> Enfoques inferenciales para el análisis de datos</a></li>
+<li class="chapter" data-level="6.5" data-path="estimación-de-los-parámetros.html"><a href="estimación-de-los-parámetros.html"><i class="fa fa-check"></i><b>6.5</b> Estimación de los parámetros</a></li>
+<li class="chapter" data-level="6.6" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html"><i class="fa fa-check"></i><b>6.6</b> Diagnóstico del modelo</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#coeficiente-de-determinación"><i class="fa fa-check"></i><b>6.6.1</b> Coeficiente de determinación</a></li>
+<li class="chapter" data-level="6.6.2" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#diagnóstico-de-los-residuales"><i class="fa fa-check"></i><b>6.6.2</b> Diagnóstico de los residuales</a></li>
+<li class="chapter" data-level="6.6.3" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#observaciones-influyentes"><i class="fa fa-check"></i><b>6.6.3</b> Observaciones influyentes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="inferencia-sobre-los-parámetros-del-modelo.html"><a href="inferencia-sobre-los-parámetros-del-modelo.html"><i class="fa fa-check"></i><b>6.7</b> Inferencia sobre los parámetros del modelo</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="inferencia-sobre-los-parámetros-del-modelo.html"><a href="inferencia-sobre-los-parámetros-del-modelo.html#estimación-puntual-e-intervalo-de-predicción"><i class="fa fa-check"></i><b>6.7.1</b> Estimación puntual e intervalo de predicción</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a Análisis de encuestas con R </a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis de encuestas con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sec-motivacion" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Motivación<a href="sec-motivacion.html#sec-motivacion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<blockquote>
+<p>Desde que se popularizaron las encuestas de hogares en 1940, se han hecho evidentes algunas tendencias vinculadas a los avances tecnológicos tanto en las agencias estadísticas como en la sociedad, las cuales se han acelerado con la introducción del computador.
+<em><span class="citation">Gambino &amp; Nascimento Silva (<a href="#ref-gambino2009sampling">2009</a>)</span></em></p>
+</blockquote>
+<p>El muestreo surge como respuesta a la necesidad de obtener información estadística precisa sobre una población objetivo, sin recurrir a un censo completo. Como señala <span class="citation">Gutiérrez (<a href="#ref-Gutierrez2016">2016</a>)</span>, el muestreo consiste en investigaciones parciales sobre la población que permiten inferir resultados al conjunto total. En las últimas décadas, esta metodología se ha consolidado en distintos campos —especialmente en el sector gubernamental, con la producción de estadísticas oficiales que facilitan el seguimiento de políticas públicas y de los Objetivos de Desarrollo Sostenible—, pero también en el ámbito académico, privado y de comunicaciones.</p>
+<p>En el marco de este libro, el foco se centra en el análisis de encuestas de hogares. Para que el lector disponga de ejemplos prácticos, en este capítulo se empleará la base de datos <em>BigCity</em>, que contiene información socioeconómica de 150.266 personas de una ciudad en un año específico. Entre sus variables se encuentran:</p>
+<ul>
+<li><em>HHID:</em> Identificador del hogar.</li>
+<li><em>PersonID:</em> Identificador de la persona dentro del hogar.</li>
+<li><em>Stratum:</em> Estrato geográfico (119 en total).</li>
+<li><em>PSU:</em> Unidades primarias de muestreo (1664 en total).</li>
+<li><em>Zone:</em> Zona urbana o rural.</li>
+<li><em>Sex:</em> Sexo del entrevistado.</li>
+<li><em>Income:</em> Ingreso mensual per cápita.</li>
+<li><em>Expenditure:</em> Gasto mensual per cápita.</li>
+<li><em>Employment:</em> Situación laboral.</li>
+<li><em>Poverty:</em> Condición de pobreza según ingresos.</li>
+</ul>
+<div id="la-importancia-de-considerar-el-diseño-muestral" class="section level3 hasAnchor" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> La importancia de considerar el diseño muestral<a href="sec-motivacion.html#la-importancia-de-considerar-el-diseño-muestral" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Al analizar datos provenientes de encuestas de hogares, ignorar el diseño muestral compromete la representatividad, la precisión y la validez de los resultados. Este descuido puede traducirse en inferencias sesgadas y en decisiones basadas en conclusiones erróneas.</p>
+<p>Como lo muestran <span class="citation">Korn &amp; Graubard (<a href="#ref-korn1995analysis">1995</a>)</span>, las estimaciones ponderadas y no ponderadas pueden diferir sustancialmente, lo que evidencia la importancia de aplicar siempre métodos consistentes con el diseño de la encuesta. Así que, considerar adecuadamente los pesos, la estratificación y las unidades de muestreo no es una opción técnica secundaria, sino un requisito fundamental para garantizar la credibilidad y validez de los resultados.</p>
+<p>Como se mencionó, las encuestas de hogares se caracterizan por:</p>
+<ul>
+<li>Diseños de muestreo complejos (estratificación, conglomeración y probabilidades desiguales de selección), que buscan mejorar la eficiencia y la precisión.</li>
+<li>Pesos de muestreo para cada unidad, que permiten representar adecuadamente a la población.</li>
+</ul>
+<div id="ejemplo-ilustrativo" class="section level4 hasAnchor" number="2.5.1.1">
+<h4><span class="header-section-number">2.5.1.1</span> Ejemplo ilustrativo<a href="sec-motivacion.html#ejemplo-ilustrativo" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Suponga un país con dos regiones: la Región A (100 habitantes, ingreso promedio de $10.000) y la Región B (900 habitantes, ingreso promedio de $2.000). El ingreso promedio verdadero es:</p>
+<p><span class="math display">\[
+\theta = \frac{(100 \times 10.000) + (900 \times 2.000)}{100 + 900} = 2.800
+\]</span></p>
+<p>Si se encuesta a 50 personas en cada región y se ignora el diseño de muestreo, asignando el mismo peso a todas las observaciones, se obtiene:</p>
+<p><span class="math display">\[
+\hat{\theta} = \frac{(50 \times 10.000) + (50 \times 2.000)}{100} = 6.000
+\]</span></p>
+<p>El sesgo es evidente: se sobreestima el ingreso nacional, pues la Región A (10% de la población) influye tanto como la Región B (90%).</p>
+<p>En cambio, si se aplican <em>pesos proporcionales al tamaño poblacional</em> (2 para la Región A y 18 para la Región B), la estimación corregida es:</p>
+<p><span class="math display">\[
+\hat{\theta} = \frac{(2 \times 50 \times 10.000) + (18 \times 50 \times 2.000)}{(2 \times 50) + (18 \times 50)} = 2.800
+\]</span></p>
+<p>Lo que reproduce el valor verdadero y elimina el sesgo.</p>
+</div>
+<div id="conglomeración-y-precisión" class="section level4 hasAnchor" number="2.5.1.2">
+<h4><span class="header-section-number">2.5.1.2</span> Conglomeración y precisión<a href="sec-motivacion.html#conglomeración-y-precisión" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Otra característica crítica es la <em>conglomeración</em>. La mayoría de encuestas selecciona unidades primarias de muestreo (UPM) como sectores censales o áreas de enumeración, y dentro de ellas, submuestras de hogares. Este diseño reduce costos, pero afecta la precisión: si los hogares dentro de un conglomerado son muy similares, la información adicional que aporta cada uno disminuye.</p>
+<p>Por ejemplo, suponga que una encuesta selecciona 100 conglomerados y, dentro de cada uno, 10 hogares, obteniendo así una muestra total de 1.000 hogares. Si todos los hogares dentro de un mismo conglomerado comparten una característica común —por ejemplo, el acceso a electricidad—, la información adicional aportada por los hogares del mismo conglomerado es mínima. En la práctica, la muestra ofrecería una precisión equivalente a la de una muestra aleatoria simple de solo 100 hogares.</p>
+<p>Analizar estos 1.000 hogares como si fueran observaciones independientes, ignorando la estructura por conglomerados, conduce a una subestimación sustancial de los errores estándar, generando intervalos de confianza excesivamente estrechos y conclusiones potencialmente erróneas sobre la significancia estadística de los resultados.</p>
+</div>
+<div id="recomendaciones-prácticas" class="section level4 hasAnchor" number="2.5.1.3">
+<h4><span class="header-section-number">2.5.1.3</span> Recomendaciones prácticas<a href="sec-motivacion.html#recomendaciones-prácticas" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Para un análisis adecuado es indispensable que las bases de datos de encuestas incluyan:</p>
+<ul>
+<li>Identificadores de <em>estratos</em> y de las <em>unidades del muestreo</em>.</li>
+<li>Pesos de muestreo a nivel de hogar o persona.</li>
+</ul>
+<p>Cuando no se dispone de esta información, se recomienda que al menos se proporcionen <em>pesos replicados</em>, junto con instrucciones claras para calcular estimaciones y errores estándar.</p>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-gambino2009sampling" class="csl-entry">
+Gambino, J. G., &amp; Nascimento Silva, P. L. do. (2009). Sampling and estimation in household surveys. En <em>Handbook of Statistics</em> (Vol. 29, pp. 407-439). Elsevier.
+</div>
+<div id="ref-Gutierrez2016" class="csl-entry">
+Gutiérrez, H. A. (2016). <em>Estrategias de muestreo: diseño de encuestas y estimación de parámetros</em> (Segunda edición). Ediciones de la U.
+</div>
+<div id="ref-korn1995analysis" class="csl-entry">
+Korn, E. L., &amp; Graubard, B. I. (1995). Analysis of large health surveys: accounting for the sampling design. <em>Journal of the Royal Statistical Society: Series A (Statistics in Society)</em>, <em>158</em>(2), 263-295.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="marcos-de-muestreo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="parámetros-y-estimadores.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/psirusteam/2021ASDA/02-Conceptos.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Análisis de encuestas con R.pdf", "Análisis de encuestas con R.epub", "Análisis de encuestas con R.mobi"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "tconfig": null
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

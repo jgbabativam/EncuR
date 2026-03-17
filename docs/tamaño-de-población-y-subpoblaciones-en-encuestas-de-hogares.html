@@ -1,0 +1,2378 @@
+<!DOCTYPE html>
+<html lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5.1 Tamaño de población y subpoblaciones en encuestas de hogares | Análisis de encuestas con R</title>
+  <meta name="description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5.1 Tamaño de población y subpoblaciones en encuestas de hogares | Análisis de encuestas con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="github-repo" content="psirusteam/2021ASDA" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5.1 Tamaño de población y subpoblaciones en encuestas de hogares | Análisis de encuestas con R" />
+  
+  <meta name="twitter:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  
+
+<meta name="author" content="Andrés Gutiérrez,Stalyn Guerrero, Cristian Téllez, Giovany Babativa" />
+
+
+<meta name="date" content="2025-11-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="análisis-de-variables-categóricas-en-encuestas-de-hogares.html"/>
+<link rel="next" href="estimación-de-proporciones.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análisis de encuestas con R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="universo-de-estudio-y-población-objetivo.html"><a href="universo-de-estudio-y-población-objetivo.html"><i class="fa fa-check"></i><b>2.1</b> Universo de estudio y población objetivo</a></li>
+<li class="chapter" data-level="2.2" data-path="unidades-de-análisis.html"><a href="unidades-de-análisis.html"><i class="fa fa-check"></i><b>2.2</b> Unidades de análisis</a></li>
+<li class="chapter" data-level="2.3" data-path="unidades-de-muestreo.html"><a href="unidades-de-muestreo.html"><i class="fa fa-check"></i><b>2.3</b> Unidades de muestreo</a></li>
+<li class="chapter" data-level="2.4" data-path="marcos-de-muestreo.html"><a href="marcos-de-muestreo.html"><i class="fa fa-check"></i><b>2.4</b> Marcos de muestreo</a></li>
+<li class="chapter" data-level="2.5" data-path="sec-motivacion.html"><a href="sec-motivacion.html"><i class="fa fa-check"></i><b>2.5</b> Motivación</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="sec-motivacion.html"><a href="sec-motivacion.html#la-importancia-de-considerar-el-diseño-muestral"><i class="fa fa-check"></i><b>2.5.1</b> La importancia de considerar el diseño muestral</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html"><i class="fa fa-check"></i><b>2.6</b> Parámetros y estimadores</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#ajustes-adicionales-de-los-pesos"><i class="fa fa-check"></i><b>2.6.1</b> Ajustes adicionales de los pesos</a></li>
+<li class="chapter" data-level="2.6.2" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#importancia-de-los-ajustes"><i class="fa fa-check"></i><b>2.6.2</b> Importancia de los ajustes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html"><i class="fa fa-check"></i><b>2.7</b> Estimación de totales</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html#ejemplo-ilustrativo-1"><i class="fa fa-check"></i><b>2.7.1</b> Ejemplo ilustrativo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="efecto-del-diseño-deff.html"><a href="efecto-del-diseño-deff.html"><i class="fa fa-check"></i><b>2.8</b> Efecto del diseño (DEFF)</a></li>
+<li class="chapter" data-level="2.9" data-path="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><a href="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><i class="fa fa-check"></i><b>2.9</b> Muestreo estratificado aleatorio simple con dos etapas</a></li>
+<li class="chapter" data-level="2.10" data-path="práctica-en-r.html"><a href="práctica-en-r.html"><i class="fa fa-check"></i><b>2.10</b> Práctica en <code>R</code></a></li>
+<li class="chapter" data-level="2.11" data-path="calibrando-con-r.html"><a href="calibrando-con-r.html"><i class="fa fa-check"></i><b>2.11</b> Calibrando con <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><i class="fa fa-check"></i><b>3</b> Del manejo de datos al análisis de encuestas complejas en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="fundamentos-básicos-de-r-y-rstudio.html"><a href="fundamentos-básicos-de-r-y-rstudio.html"><i class="fa fa-check"></i><b>3.1</b> Fundamentos básicos de R y Rstudio</a></li>
+<li class="chapter" data-level="3.2" data-path="paquetes-para-el-análisis-de-encuestas.html"><a href="paquetes-para-el-análisis-de-encuestas.html"><i class="fa fa-check"></i><b>3.2</b> Paquetes para el análisis de encuestas</a></li>
+<li class="chapter" data-level="3.3" data-path="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><a href="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><i class="fa fa-check"></i><b>3.3</b> Paquetes complementarios para la manipulación y visualización de datos</a></li>
+<li class="chapter" data-level="3.4" data-path="creación-de-proyectos-en-r.html"><a href="creación-de-proyectos-en-r.html"><i class="fa fa-check"></i><b>3.4</b> Creación de proyectos en <code>R</code></a></li>
+<li class="chapter" data-level="3.5" data-path="lectura-de-bases-de-datos-y-manipulación.html"><a href="lectura-de-bases-de-datos-y-manipulación.html"><i class="fa fa-check"></i><b>3.5</b> Lectura de bases de datos y manipulación</a></li>
+<li class="chapter" data-level="3.6" data-path="el-operador-pipe.html"><a href="el-operador-pipe.html"><i class="fa fa-check"></i><b>3.6</b> El operador <code>pipe</code></a></li>
+<li class="chapter" data-level="3.7" data-path="transformación-y-resumen-de-datos.html"><a href="transformación-y-resumen-de-datos.html"><i class="fa fa-check"></i><b>3.7</b> Transformación y resumen de datos</a></li>
+<li class="chapter" data-level="3.8" data-path="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><i class="fa fa-check"></i><b>3.8</b> Diferencias entre el análisis tradicional y el análisis de encuestas complejas</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de las variables continuas en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="lectura-de-bases-de-datos-y-definición-del-diseño-muestral.html"><a href="lectura-de-bases-de-datos-y-definición-del-diseño-muestral.html"><i class="fa fa-check"></i><b>4.1</b> Lectura de bases de datos y definición del diseño muestral</a></li>
+<li class="chapter" data-level="4.2" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de totales y medias</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-puntual"><i class="fa fa-check"></i><b>4.2.1</b> Estimación puntual</a></li>
+<li class="chapter" data-level="4.2.2" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-totales-1"><i class="fa fa-check"></i><b>4.2.2</b> Estimación de totales</a></li>
+<li class="chapter" data-level="4.2.3" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-la-media-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.2.3</b> Estimación de la media e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.2.4" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-medidas-de-localización-y-dispersión"><i class="fa fa-check"></i><b>4.2.4</b> Estimación de medidas de localización y dispersión</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="estimación-del-coeficiente-de-gini-en-encuestas-de-hogares.html"><a href="estimación-del-coeficiente-de-gini-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>4.3</b> Estimación del coeficiente de Gini en encuestas de hogares</a></li>
+<li class="chapter" data-level="4.4" data-path="análisis-de-correlación-en-encuestas-de-hogares.html"><a href="análisis-de-correlación-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>4.4</b> Análisis de correlación en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="análisis-de-correlación-en-encuestas-de-hogares.html"><a href="análisis-de-correlación-en-encuestas-de-hogares.html#ajuste-al-diseño-muestral"><i class="fa fa-check"></i><b>4.4.1</b> Ajuste al diseño muestral</a></li>
+<li class="chapter" data-level="4.4.2" data-path="análisis-de-correlación-en-encuestas-de-hogares.html"><a href="análisis-de-correlación-en-encuestas-de-hogares.html#expresión-formal"><i class="fa fa-check"></i><b>4.4.2</b> Expresión formal</a></li>
+<li class="chapter" data-level="4.4.3" data-path="análisis-de-correlación-en-encuestas-de-hogares.html"><a href="análisis-de-correlación-en-encuestas-de-hogares.html#implementación-en-r"><i class="fa fa-check"></i><b>4.4.3</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html"><i class="fa fa-check"></i><b>4.5</b> Pruebas de hipótesis</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#planteamiento-general"><i class="fa fa-check"></i><b>4.5.1</b> Planteamiento general</a></li>
+<li class="chapter" data-level="4.5.2" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#prueba-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.5.2</b> Prueba para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.5.3" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#estadístico-de-prueba-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.5.3</b> Estadístico de prueba e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.5.4" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#ejemplo-aplicado-en-r"><i class="fa fa-check"></i><b>4.5.4</b> Ejemplo aplicado en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html"><i class="fa fa-check"></i><b>4.6</b> Estimación de razones</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html#implementación-computacional-en-r"><i class="fa fa-check"></i>Implementación computacional en <code>R</code></a></li>
+<li class="chapter" data-level="" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html#interpretación-aplicada"><i class="fa fa-check"></i>Interpretación aplicada</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="estimación-de-contrastes.html"><a href="estimación-de-contrastes.html"><i class="fa fa-check"></i><b>4.7</b> Estimación de contrastes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="análisis-de-variables-categóricas-en-encuestas-de-hogares.html"><a href="análisis-de-variables-categóricas-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>5</b> Análisis de variables categóricas en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>5.1</b> Tamaño de población y subpoblaciones en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="" data-path="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#estimaciones-de-totales-en-r"><i class="fa fa-check"></i>Estimaciones de totales en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="estimación-de-proporciones.html"><a href="estimación-de-proporciones.html"><i class="fa fa-check"></i><b>5.2</b> Estimación de proporciones</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="estimación-de-proporciones.html"><a href="estimación-de-proporciones.html#estimación-de-proporciones-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Estimación de proporciones en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html"><i class="fa fa-check"></i><b>5.3</b> Tablas cruzadas</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#definición-y-notación"><i class="fa fa-check"></i><b>5.3.1</b> Definición y notación</a></li>
+<li class="chapter" data-level="5.3.2" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#tablas-de-doble-entrada"><i class="fa fa-check"></i><b>5.3.2</b> Tablas de doble entrada</a></li>
+<li class="chapter" data-level="5.3.3" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#extensiones-y-aplicaciones"><i class="fa fa-check"></i><b>5.3.3</b> Extensiones y aplicaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="estimación-de-proporciones-y-tablas-cruzadas.html"><a href="estimación-de-proporciones-y-tablas-cruzadas.html"><i class="fa fa-check"></i><b>5.4</b> Estimación de proporciones y tablas cruzadas</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="estimación-de-proporciones-y-tablas-cruzadas.html"><a href="estimación-de-proporciones-y-tablas-cruzadas.html#proporciones-para-variables-binarias"><i class="fa fa-check"></i><b>5.4.1</b> Proporciones para variables binarias</a></li>
+<li class="chapter" data-level="5.4.2" data-path="estimación-de-proporciones-y-tablas-cruzadas.html"><a href="estimación-de-proporciones-y-tablas-cruzadas.html#proporciones-para-variables-multinomiales"><i class="fa fa-check"></i><b>5.4.2</b> Proporciones para variables multinomiales</a></li>
+<li class="chapter" data-level="5.4.3" data-path="estimación-de-proporciones-y-tablas-cruzadas.html"><a href="estimación-de-proporciones-y-tablas-cruzadas.html#tablas-cruzadas-o-de-contingencia"><i class="fa fa-check"></i><b>5.4.3</b> Tablas cruzadas o de contingencia</a></li>
+<li class="chapter" data-level="5.4.4" data-path="estimación-de-proporciones-y-tablas-cruzadas.html"><a href="estimación-de-proporciones-y-tablas-cruzadas.html#prueba-de-independencia-chi2"><i class="fa fa-check"></i><b>5.4.4</b> Prueba de independencia <span class="math inline">\(\chi^{2}\)</span></a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a Análisis de encuestas con R </a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis de encuestas con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Tamaño de población y subpoblaciones en encuestas de hogares<a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En el análisis de encuestas de hogares, es fundamental estimar el tamaño de las subpoblaciones, entendido como el número de personas u hogares que pertenecen a categorías específicas y la proporción que representan dentro del total poblacional. Estas estimaciones, basadas en variables categóricas, permiten caracterizar el perfil demográfico y socioeconómico de la población, información clave para orientar la asignación de recursos, diseñar políticas públicas y formular programas sociales.</p>
+<p>Conocer cuántas personas se encuentran por debajo de la línea de pobreza, cuántas están desempleadas o cuántas alcanzaron determinado nivel educativo es esencial para identificar brechas y evaluar condiciones de bienestar. El análisis de cómo se distribuyen los individuos entre distintas categorías aporta evidencia para avanzar hacia un desarrollo más equitativo.</p>
+<p>La estimación del tamaño de una población o subpoblación se realiza a partir de variables categóricas, que segmentan a la población en grupos mutuamente excluyentes. Estas categorías pueden corresponder, por ejemplo, a quintiles de ingreso, estados de ocupación o niveles educativos alcanzados. El tamaño poblacional hace referencia al número total de individuos u hogares que, en la base de datos de la encuesta, pertenecen a una categoría determinada. Para obtener estas estimaciones, se combinan las respuestas de los encuestados con los pesos muestrales, que indican cuántas personas u hogares representa cada unidad de la muestra dentro de la población total.</p>
+<p>El estimador del tamaño de la población se define como:</p>
+<p><span class="math display">\[\hat{N} = \sum_{h=1}^{H} \sum_{i \in s_{1h}} \sum_{k \in s_{hi}} w_{hik},\]</span></p>
+<p>donde <span class="math inline">\(s_{hi}\)</span> corresponde a la muestra de hogares o individuos en la UPM <span class="math inline">\(i\)</span> del estrato <span class="math inline">\(h\)</span>; <span class="math inline">\(s_{1h}\)</span> representa la muestra de UPM seleccionadas en el estrato <span class="math inline">\(h\)</span>; y <span class="math inline">\(w_{hik}\)</span> es el peso o factor de expansión de la unidad <span class="math inline">\(k\)</span> en la UPM <span class="math inline">\(i\)</span> del estrato <span class="math inline">\(h\)</span>.</p>
+<p>La estimación del tamaño de una subpoblación sigue el mismo principio que el cálculo del tamaño poblacional total, pero se enfoca en un subconjunto definido por una característica específica. Para determinar cuántas personas pertenecen a una categoría particular, se identifica dicho grupo en la base de datos y se suman sus pesos muestrales. Esto permite cuantificar grupos de interés específicos y conocer su tamaño dentro de la población:</p>
+<p><span class="math display">\[\hat{N}_d = \sum_{h=1}^{H} \sum_{i \in s_{1h}} \sum_{k \in s_{hi}} w_{hik} I(y_{hik}=d),\]</span></p>
+<p>donde <span class="math inline">\(I(y_{hik}=d)\)</span> es una variable binaria que toma el valor de 1 si la unidad <span class="math inline">\(k\)</span> de la UPM <span class="math inline">\(i\)</span> en el estrato <span class="math inline">\(h\)</span> pertenece a la categoría <span class="math inline">\(d\)</span> de la variable discreta <span class="math inline">\(y\)</span>, y 0 en caso contrario. Si <span class="math inline">\(d\)</span> fue utilizada en la calibración de los pesos, el valor de <span class="math inline">\(\hat{N}_d\)</span> coincidirá con el control externo aplicado.</p>
+<div id="estimaciones-de-totales-en-r" class="section level3 unnumbered hasAnchor">
+<h3>Estimaciones de totales en <code>R</code><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#estimaciones-de-totales-en-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En esta sección se presentan los procedimientos para estimar tamaños de población y subpoblaciones usando <em>R</em>, con el diseño muestral definido previamente. Por ejemplo, para estimar el tamaño de la población por zona:</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb121-1" tabindex="-1"></a>diseno <span class="sc">%&gt;%</span> </span>
+<span id="cb121-2"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb121-2" tabindex="-1"></a>     <span class="fu">group_by</span>(Zone) <span class="sc">%&gt;%</span> </span>
+<span id="cb121-3"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb121-3" tabindex="-1"></a>     <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">unweighted</span>(<span class="fu">n</span>()), </span>
+<span id="cb121-4"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb121-4" tabindex="-1"></a>               <span class="at">Nd =</span> <span class="fu">survey_total</span>(<span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>,<span class="st">&quot;ci&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb121-5"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb121-5" tabindex="-1"></a>     <span class="fu">gt</span>()  </span></code></pre></div>
+<div id="mxwfbdxegf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mxwfbdxegf table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#mxwfbdxegf thead, #mxwfbdxegf tbody, #mxwfbdxegf tfoot, #mxwfbdxegf tr, #mxwfbdxegf td, #mxwfbdxegf th {
+  border-style: none;
+}
+
+#mxwfbdxegf p {
+  margin: 0;
+  padding: 0;
+}
+
+#mxwfbdxegf .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#mxwfbdxegf .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#mxwfbdxegf .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#mxwfbdxegf .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#mxwfbdxegf .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mxwfbdxegf .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mxwfbdxegf .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mxwfbdxegf .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#mxwfbdxegf .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#mxwfbdxegf .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#mxwfbdxegf .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#mxwfbdxegf .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#mxwfbdxegf .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#mxwfbdxegf .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#mxwfbdxegf .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#mxwfbdxegf .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#mxwfbdxegf .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#mxwfbdxegf .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#mxwfbdxegf .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mxwfbdxegf .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#mxwfbdxegf .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#mxwfbdxegf .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#mxwfbdxegf .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mxwfbdxegf .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#mxwfbdxegf .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#mxwfbdxegf .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mxwfbdxegf .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mxwfbdxegf .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#mxwfbdxegf .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mxwfbdxegf .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#mxwfbdxegf .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mxwfbdxegf .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mxwfbdxegf .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mxwfbdxegf .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mxwfbdxegf .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mxwfbdxegf .gt_left {
+  text-align: left;
+}
+
+#mxwfbdxegf .gt_center {
+  text-align: center;
+}
+
+#mxwfbdxegf .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#mxwfbdxegf .gt_font_normal {
+  font-weight: normal;
+}
+
+#mxwfbdxegf .gt_font_bold {
+  font-weight: bold;
+}
+
+#mxwfbdxegf .gt_font_italic {
+  font-style: italic;
+}
+
+#mxwfbdxegf .gt_super {
+  font-size: 65%;
+}
+
+#mxwfbdxegf .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#mxwfbdxegf .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#mxwfbdxegf .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#mxwfbdxegf .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#mxwfbdxegf .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#mxwfbdxegf .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#mxwfbdxegf .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#mxwfbdxegf .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#mxwfbdxegf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Zone">Zone</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="n">n</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd">Nd</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd_se">Nd_se</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd_low">Nd_low</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd_upp">Nd_upp</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="Zone" class="gt_row gt_left">Rural</td>
+<td headers="n" class="gt_row gt_right">1297</td>
+<td headers="Nd" class="gt_row gt_right">72102</td>
+<td headers="Nd_se" class="gt_row gt_right">3062.204</td>
+<td headers="Nd_low" class="gt_row gt_right">66038.53</td>
+<td headers="Nd_upp" class="gt_row gt_right">78165.47</td></tr>
+    <tr><td headers="Zone" class="gt_row gt_left">Urban</td>
+<td headers="n" class="gt_row gt_right">1308</td>
+<td headers="Nd" class="gt_row gt_right">78164</td>
+<td headers="Nd_se" class="gt_row gt_right">2847.221</td>
+<td headers="Nd_low" class="gt_row gt_right">72526.22</td>
+<td headers="Nd_upp" class="gt_row gt_right">83801.78</td></tr>
+  </tbody>
+  
+</table>
+</div>
+<p>En la tabla resultante, <em>n</em> indica el número de observaciones en la muestra por zona y <em>Nd</em> representa la estimación del total de la subpoblación. La función <code>unweighted()</code> calcula resúmenes no ponderados a partir de los datos muestrales.</p>
+<p>Por ejemplo, el tamaño de muestra en la zona rural fue de 1297 personas y en la urbana de 1308. Esto permitió estimar una población de 72,102 (desviación estándar 3,062) en la zona rural y 78,164 (desviación estándar 2,847) en la zona urbana. Con un nivel de confianza del 95%, los intervalos de confianza fueron:</p>
+<ul>
+<li><strong>Zona rural</strong>: (66,038.5, 78,165.4)</li>
+<li><strong>Zona urbana</strong>: (72,526.2, 83,801.7)</li>
+</ul>
+<p>De manera análoga, es posible estimar el número de personas en cada nivel de pobreza:</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb122-1" tabindex="-1"></a>diseno <span class="sc">%&gt;%</span> </span>
+<span id="cb122-2"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb122-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Poverty) <span class="sc">%&gt;%</span> </span>
+<span id="cb122-3"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb122-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Nd =</span> <span class="fu">survey_total</span>(<span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>,<span class="st">&quot;ci&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb122-4"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb122-4" tabindex="-1"></a>  <span class="fu">gt</span>()</span></code></pre></div>
+<div id="dxeuakpkud" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dxeuakpkud table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#dxeuakpkud thead, #dxeuakpkud tbody, #dxeuakpkud tfoot, #dxeuakpkud tr, #dxeuakpkud td, #dxeuakpkud th {
+  border-style: none;
+}
+
+#dxeuakpkud p {
+  margin: 0;
+  padding: 0;
+}
+
+#dxeuakpkud .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#dxeuakpkud .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#dxeuakpkud .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#dxeuakpkud .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#dxeuakpkud .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dxeuakpkud .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dxeuakpkud .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dxeuakpkud .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#dxeuakpkud .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#dxeuakpkud .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#dxeuakpkud .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#dxeuakpkud .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#dxeuakpkud .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#dxeuakpkud .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#dxeuakpkud .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#dxeuakpkud .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#dxeuakpkud .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#dxeuakpkud .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#dxeuakpkud .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dxeuakpkud .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#dxeuakpkud .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#dxeuakpkud .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#dxeuakpkud .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dxeuakpkud .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#dxeuakpkud .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#dxeuakpkud .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dxeuakpkud .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dxeuakpkud .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#dxeuakpkud .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dxeuakpkud .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#dxeuakpkud .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dxeuakpkud .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dxeuakpkud .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dxeuakpkud .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dxeuakpkud .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dxeuakpkud .gt_left {
+  text-align: left;
+}
+
+#dxeuakpkud .gt_center {
+  text-align: center;
+}
+
+#dxeuakpkud .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dxeuakpkud .gt_font_normal {
+  font-weight: normal;
+}
+
+#dxeuakpkud .gt_font_bold {
+  font-weight: bold;
+}
+
+#dxeuakpkud .gt_font_italic {
+  font-style: italic;
+}
+
+#dxeuakpkud .gt_super {
+  font-size: 65%;
+}
+
+#dxeuakpkud .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#dxeuakpkud .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#dxeuakpkud .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#dxeuakpkud .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#dxeuakpkud .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#dxeuakpkud .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#dxeuakpkud .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#dxeuakpkud .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#dxeuakpkud div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Poverty">Poverty</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd">Nd</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd_se">Nd_se</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd_low">Nd_low</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd_upp">Nd_upp</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="Poverty" class="gt_row gt_center">NotPoor</td>
+<td headers="Nd" class="gt_row gt_right">91398.33</td>
+<td headers="Nd_se" class="gt_row gt_right">4394.855</td>
+<td headers="Nd_low" class="gt_row gt_right">82696.08</td>
+<td headers="Nd_upp" class="gt_row gt_right">100100.58</td></tr>
+    <tr><td headers="Poverty" class="gt_row gt_center">Extreme</td>
+<td headers="Nd" class="gt_row gt_right">21518.77</td>
+<td headers="Nd_se" class="gt_row gt_right">4949.354</td>
+<td headers="Nd_low" class="gt_row gt_right">11718.55</td>
+<td headers="Nd_upp" class="gt_row gt_right">31318.98</td></tr>
+    <tr><td headers="Poverty" class="gt_row gt_center">Relative</td>
+<td headers="Nd" class="gt_row gt_right">37348.90</td>
+<td headers="Nd_se" class="gt_row gt_right">3695.399</td>
+<td headers="Nd_low" class="gt_row gt_right">30031.64</td>
+<td headers="Nd_upp" class="gt_row gt_right">44666.16</td></tr>
+  </tbody>
+  
+</table>
+</div>
+<p>Estos cálculos permiten obtener estimaciones precisas y sus intervalos de confianza para cada subpoblación, facilitando el análisis socioeconómico y la toma de decisiones basadas en evidencia.</p>
+<p>Otra variable categórica relevante en encuestas de hogares es el estado de ocupación. A continuación se presenta el código correspondiente:</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb123-1" tabindex="-1"></a>diseno <span class="sc">%&gt;%</span> </span>
+<span id="cb123-2"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb123-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Employment)) <span class="sc">%&gt;%</span></span>
+<span id="cb123-3"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb123-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Employment) <span class="sc">%&gt;%</span> </span>
+<span id="cb123-4"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb123-4" tabindex="-1"></a>  <span class="fu">summarise</span>( <span class="at">Nd =</span> <span class="fu">survey_total</span>(<span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>,<span class="st">&quot;ci&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb123-5"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb123-5" tabindex="-1"></a>  <span class="fu">gt</span>()</span></code></pre></div>
+<div id="nfijsrxccf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nfijsrxccf table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#nfijsrxccf thead, #nfijsrxccf tbody, #nfijsrxccf tfoot, #nfijsrxccf tr, #nfijsrxccf td, #nfijsrxccf th {
+  border-style: none;
+}
+
+#nfijsrxccf p {
+  margin: 0;
+  padding: 0;
+}
+
+#nfijsrxccf .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#nfijsrxccf .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#nfijsrxccf .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#nfijsrxccf .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#nfijsrxccf .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nfijsrxccf .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nfijsrxccf .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nfijsrxccf .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#nfijsrxccf .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#nfijsrxccf .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#nfijsrxccf .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#nfijsrxccf .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#nfijsrxccf .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#nfijsrxccf .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#nfijsrxccf .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#nfijsrxccf .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#nfijsrxccf .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#nfijsrxccf .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#nfijsrxccf .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nfijsrxccf .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#nfijsrxccf .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#nfijsrxccf .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#nfijsrxccf .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nfijsrxccf .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#nfijsrxccf .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#nfijsrxccf .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nfijsrxccf .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nfijsrxccf .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#nfijsrxccf .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nfijsrxccf .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#nfijsrxccf .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nfijsrxccf .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nfijsrxccf .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nfijsrxccf .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nfijsrxccf .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nfijsrxccf .gt_left {
+  text-align: left;
+}
+
+#nfijsrxccf .gt_center {
+  text-align: center;
+}
+
+#nfijsrxccf .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#nfijsrxccf .gt_font_normal {
+  font-weight: normal;
+}
+
+#nfijsrxccf .gt_font_bold {
+  font-weight: bold;
+}
+
+#nfijsrxccf .gt_font_italic {
+  font-style: italic;
+}
+
+#nfijsrxccf .gt_super {
+  font-size: 65%;
+}
+
+#nfijsrxccf .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#nfijsrxccf .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#nfijsrxccf .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#nfijsrxccf .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#nfijsrxccf .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#nfijsrxccf .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#nfijsrxccf .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#nfijsrxccf .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#nfijsrxccf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Employment">Employment</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd">Nd</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd_se">Nd_se</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd_low">Nd_low</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd_upp">Nd_upp</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="Employment" class="gt_row gt_center">Unemployed</td>
+<td headers="Nd" class="gt_row gt_right">4634.807</td>
+<td headers="Nd_se" class="gt_row gt_right">760.6242</td>
+<td headers="Nd_low" class="gt_row gt_right">3128.695</td>
+<td headers="Nd_upp" class="gt_row gt_right">6140.919</td></tr>
+    <tr><td headers="Employment" class="gt_row gt_center">Inactive</td>
+<td headers="Nd" class="gt_row gt_right">41465.248</td>
+<td headers="Nd_se" class="gt_row gt_right">2162.8040</td>
+<td headers="Nd_low" class="gt_row gt_right">37182.680</td>
+<td headers="Nd_upp" class="gt_row gt_right">45747.816</td></tr>
+    <tr><td headers="Employment" class="gt_row gt_center">Employed</td>
+<td headers="Nd" class="gt_row gt_right">61877.020</td>
+<td headers="Nd_se" class="gt_row gt_right">2540.0762</td>
+<td headers="Nd_low" class="gt_row gt_right">56847.415</td>
+<td headers="Nd_upp" class="gt_row gt_right">66906.624</td></tr>
+  </tbody>
+  
+</table>
+</div>
+<p>De los resultados de la estimación se puede concluir que, 4,634.8 personas están desempleadas con un intervalo de confianza de (3,128.6, 6,140.9). 41,465.2 personas están inactivas con un intervalo de confianza de (37,182.6, 45,747.8) y por último, 61,877.0 personas empleadas con intervalos de confianza (36,784.2, 47,793.5).</p>
+<p>Finalmente, utilizando <code>group_by</code> es posible desagregar las estimaciones en niveles más detallados. Por ejemplo, estado ocupacional por nivel de pobreza:</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb124-1" tabindex="-1"></a>diseno <span class="sc">%&gt;%</span> </span>
+<span id="cb124-2"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb124-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Employment)) <span class="sc">%&gt;%</span></span>
+<span id="cb124-3"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb124-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Employment, Poverty) <span class="sc">%&gt;%</span> </span>
+<span id="cb124-4"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb124-4" tabindex="-1"></a>  <span class="fu">cascade</span>( <span class="at">Nd =</span> <span class="fu">survey_total</span>(<span class="at">vartype =</span><span class="fu">c</span>(<span class="st">&quot;se&quot;</span>,<span class="st">&quot;ci&quot;</span>)), </span>
+<span id="cb124-5"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb124-5" tabindex="-1"></a>           <span class="at">.fill =</span> <span class="st">&quot;Total&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb124-6"><a href="tamaño-de-población-y-subpoblaciones-en-encuestas-de-hogares.html#cb124-6" tabindex="-1"></a>  <span class="fu">gt</span>()</span></code></pre></div>
+<div id="hsyirzvtek" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hsyirzvtek table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#hsyirzvtek thead, #hsyirzvtek tbody, #hsyirzvtek tfoot, #hsyirzvtek tr, #hsyirzvtek td, #hsyirzvtek th {
+  border-style: none;
+}
+
+#hsyirzvtek p {
+  margin: 0;
+  padding: 0;
+}
+
+#hsyirzvtek .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#hsyirzvtek .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#hsyirzvtek .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#hsyirzvtek .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#hsyirzvtek .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#hsyirzvtek .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hsyirzvtek .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#hsyirzvtek .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#hsyirzvtek .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#hsyirzvtek .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#hsyirzvtek .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#hsyirzvtek .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#hsyirzvtek .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#hsyirzvtek .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#hsyirzvtek .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#hsyirzvtek .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#hsyirzvtek .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#hsyirzvtek .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#hsyirzvtek .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hsyirzvtek .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#hsyirzvtek .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#hsyirzvtek .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#hsyirzvtek .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hsyirzvtek .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#hsyirzvtek .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#hsyirzvtek .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hsyirzvtek .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hsyirzvtek .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#hsyirzvtek .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hsyirzvtek .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#hsyirzvtek .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hsyirzvtek .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#hsyirzvtek .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hsyirzvtek .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#hsyirzvtek .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hsyirzvtek .gt_left {
+  text-align: left;
+}
+
+#hsyirzvtek .gt_center {
+  text-align: center;
+}
+
+#hsyirzvtek .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#hsyirzvtek .gt_font_normal {
+  font-weight: normal;
+}
+
+#hsyirzvtek .gt_font_bold {
+  font-weight: bold;
+}
+
+#hsyirzvtek .gt_font_italic {
+  font-style: italic;
+}
+
+#hsyirzvtek .gt_super {
+  font-size: 65%;
+}
+
+#hsyirzvtek .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#hsyirzvtek .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#hsyirzvtek .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#hsyirzvtek .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#hsyirzvtek .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#hsyirzvtek .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#hsyirzvtek .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#hsyirzvtek .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#hsyirzvtek div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Poverty">Poverty</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd">Nd</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd_se">Nd_se</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd_low">Nd_low</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nd_upp">Nd_upp</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr class="gt_group_heading_row">
+      <th colspan="5" class="gt_group_heading" scope="colgroup" id="Unemployed">Unemployed</th>
+    </tr>
+    <tr class="gt_row_group_first"><td headers="Unemployed  Poverty" class="gt_row gt_center">NotPoor</td>
+<td headers="Unemployed  Nd" class="gt_row gt_right">1768.375</td>
+<td headers="Unemployed  Nd_se" class="gt_row gt_right">405.3765</td>
+<td headers="Unemployed  Nd_low" class="gt_row gt_right">965.6891</td>
+<td headers="Unemployed  Nd_upp" class="gt_row gt_right">2571.061</td></tr>
+    <tr><td headers="Unemployed  Poverty" class="gt_row gt_center">Extreme</td>
+<td headers="Unemployed  Nd" class="gt_row gt_right">1169.201</td>
+<td headers="Unemployed  Nd_se" class="gt_row gt_right">348.1340</td>
+<td headers="Unemployed  Nd_low" class="gt_row gt_right">479.8603</td>
+<td headers="Unemployed  Nd_upp" class="gt_row gt_right">1858.541</td></tr>
+    <tr><td headers="Unemployed  Poverty" class="gt_row gt_center">Relative</td>
+<td headers="Unemployed  Nd" class="gt_row gt_right">1697.231</td>
+<td headers="Unemployed  Nd_se" class="gt_row gt_right">457.8077</td>
+<td headers="Unemployed  Nd_low" class="gt_row gt_right">790.7262</td>
+<td headers="Unemployed  Nd_upp" class="gt_row gt_right">2603.736</td></tr>
+    <tr><td headers="Unemployed  Poverty" class="gt_row gt_center">Total</td>
+<td headers="Unemployed  Nd" class="gt_row gt_right">4634.807</td>
+<td headers="Unemployed  Nd_se" class="gt_row gt_right">760.6242</td>
+<td headers="Unemployed  Nd_low" class="gt_row gt_right">3128.6948</td>
+<td headers="Unemployed  Nd_upp" class="gt_row gt_right">6140.919</td></tr>
+    <tr class="gt_group_heading_row">
+      <th colspan="5" class="gt_group_heading" scope="colgroup" id="Inactive">Inactive</th>
+    </tr>
+    <tr class="gt_row_group_first"><td headers="Inactive  Poverty" class="gt_row gt_center">NotPoor</td>
+<td headers="Inactive  Nd" class="gt_row gt_right">24346.008</td>
+<td headers="Inactive  Nd_se" class="gt_row gt_right">1736.2770</td>
+<td headers="Inactive  Nd_low" class="gt_row gt_right">20908.0064</td>
+<td headers="Inactive  Nd_upp" class="gt_row gt_right">27784.010</td></tr>
+    <tr><td headers="Inactive  Poverty" class="gt_row gt_center">Extreme</td>
+<td headers="Inactive  Nd" class="gt_row gt_right">6421.825</td>
+<td headers="Inactive  Nd_se" class="gt_row gt_right">1320.7349</td>
+<td headers="Inactive  Nd_low" class="gt_row gt_right">3806.6383</td>
+<td headers="Inactive  Nd_upp" class="gt_row gt_right">9037.012</td></tr>
+    <tr><td headers="Inactive  Poverty" class="gt_row gt_center">Relative</td>
+<td headers="Inactive  Nd" class="gt_row gt_right">10697.414</td>
+<td headers="Inactive  Nd_se" class="gt_row gt_right">1460.2792</td>
+<td headers="Inactive  Nd_low" class="gt_row gt_right">7805.9155</td>
+<td headers="Inactive  Nd_upp" class="gt_row gt_right">13588.913</td></tr>
+    <tr><td headers="Inactive  Poverty" class="gt_row gt_center">Total</td>
+<td headers="Inactive  Nd" class="gt_row gt_right">41465.248</td>
+<td headers="Inactive  Nd_se" class="gt_row gt_right">2162.8040</td>
+<td headers="Inactive  Nd_low" class="gt_row gt_right">37182.6798</td>
+<td headers="Inactive  Nd_upp" class="gt_row gt_right">45747.816</td></tr>
+    <tr class="gt_group_heading_row">
+      <th colspan="5" class="gt_group_heading" scope="colgroup" id="Employed">Employed</th>
+    </tr>
+    <tr class="gt_row_group_first"><td headers="Employed  Poverty" class="gt_row gt_center">NotPoor</td>
+<td headers="Employed  Nd" class="gt_row gt_right">44600.347</td>
+<td headers="Employed  Nd_se" class="gt_row gt_right">2596.1915</td>
+<td headers="Employed  Nd_low" class="gt_row gt_right">39459.6282</td>
+<td headers="Employed  Nd_upp" class="gt_row gt_right">49741.065</td></tr>
+    <tr><td headers="Employed  Poverty" class="gt_row gt_center">Extreme</td>
+<td headers="Employed  Nd" class="gt_row gt_right">5127.531</td>
+<td headers="Employed  Nd_se" class="gt_row gt_right">1121.6461</td>
+<td headers="Employed  Nd_low" class="gt_row gt_right">2906.5601</td>
+<td headers="Employed  Nd_upp" class="gt_row gt_right">7348.503</td></tr>
+    <tr><td headers="Employed  Poverty" class="gt_row gt_center">Relative</td>
+<td headers="Employed  Nd" class="gt_row gt_right">12149.142</td>
+<td headers="Employed  Nd_se" class="gt_row gt_right">1346.6159</td>
+<td headers="Employed  Nd_low" class="gt_row gt_right">9482.7078</td>
+<td headers="Employed  Nd_upp" class="gt_row gt_right">14815.576</td></tr>
+    <tr><td headers="Employed  Poverty" class="gt_row gt_center">Total</td>
+<td headers="Employed  Nd" class="gt_row gt_right">61877.020</td>
+<td headers="Employed  Nd_se" class="gt_row gt_right">2540.0762</td>
+<td headers="Employed  Nd_low" class="gt_row gt_right">56847.4153</td>
+<td headers="Employed  Nd_upp" class="gt_row gt_right">66906.624</td></tr>
+    <tr class="gt_group_heading_row">
+      <th colspan="5" class="gt_group_heading" scope="colgroup" id="Total">Total</th>
+    </tr>
+    <tr class="gt_row_group_first"><td headers="Total  Poverty" class="gt_row gt_center">Total</td>
+<td headers="Total  Nd" class="gt_row gt_right">107977.074</td>
+<td headers="Total  Nd_se" class="gt_row gt_right">3465.5685</td>
+<td headers="Total  Nd_low" class="gt_row gt_right">101114.9026</td>
+<td headers="Total  Nd_upp" class="gt_row gt_right">114839.246</td></tr>
+  </tbody>
+  
+</table>
+</div>
+<p>De lo cual se puede concluir, entre otros que, 44,600.3 personas que trabajan no son pobres con un intervalo de confianza (39,459.6, 49,741.0) y 6,421.8 inactivas están en pobreza extrema con un intervalo al 95% de confianza de (3,806.6, 9,037.0).</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="análisis-de-variables-categóricas-en-encuestas-de-hogares.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="estimación-de-proporciones.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/psirusteam/2021ASDA/05-Categóricas.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Análisis de encuestas con R.pdf", "Análisis de encuestas con R.epub", "Análisis de encuestas con R.mobi"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "tconfig": null
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3.8 Diferencias entre el análisis tradicional y el análisis de encuestas complejas | Análisis de encuestas con R</title>
+  <meta name="description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3.8 Diferencias entre el análisis tradicional y el análisis de encuestas complejas | Análisis de encuestas con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="github-repo" content="psirusteam/2021ASDA" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3.8 Diferencias entre el análisis tradicional y el análisis de encuestas complejas | Análisis de encuestas con R" />
+  
+  <meta name="twitter:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  
+
+<meta name="author" content="Andrés Gutiérrez, Stalyn Guerrero, Cristian Téllez, Giovany Babativa-Márquez" />
+
+
+<meta name="date" content="2026-03-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="transformación-y-resumen-de-datos.html"/>
+<link rel="next" href="cap4.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análisis de encuestas con R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="universo-de-estudio-y-población-objetivo.html"><a href="universo-de-estudio-y-población-objetivo.html"><i class="fa fa-check"></i><b>2.1</b> Universo de estudio y población objetivo</a></li>
+<li class="chapter" data-level="2.2" data-path="unidades-de-análisis.html"><a href="unidades-de-análisis.html"><i class="fa fa-check"></i><b>2.2</b> Unidades de análisis</a></li>
+<li class="chapter" data-level="2.3" data-path="unidades-de-muestreo.html"><a href="unidades-de-muestreo.html"><i class="fa fa-check"></i><b>2.3</b> Unidades de muestreo</a></li>
+<li class="chapter" data-level="2.4" data-path="marcos-de-muestreo.html"><a href="marcos-de-muestreo.html"><i class="fa fa-check"></i><b>2.4</b> Marcos de muestreo</a></li>
+<li class="chapter" data-level="2.5" data-path="sec-motivacion.html"><a href="sec-motivacion.html"><i class="fa fa-check"></i><b>2.5</b> Motivación</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="sec-motivacion.html"><a href="sec-motivacion.html#la-importancia-de-considerar-el-diseño-muestral"><i class="fa fa-check"></i><b>2.5.1</b> La importancia de considerar el diseño muestral</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html"><i class="fa fa-check"></i><b>2.6</b> Parámetros y estimadores</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#ajustes-adicionales-de-los-pesos"><i class="fa fa-check"></i><b>2.6.1</b> Ajustes adicionales de los pesos</a></li>
+<li class="chapter" data-level="2.6.2" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#importancia-de-los-ajustes"><i class="fa fa-check"></i><b>2.6.2</b> Importancia de los ajustes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html"><i class="fa fa-check"></i><b>2.7</b> Estimación de totales</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html#ejemplo-ilustrativo-1"><i class="fa fa-check"></i><b>2.7.1</b> Ejemplo ilustrativo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="efecto-del-diseño-deff.html"><a href="efecto-del-diseño-deff.html"><i class="fa fa-check"></i><b>2.8</b> Efecto del diseño (DEFF)</a></li>
+<li class="chapter" data-level="2.9" data-path="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><a href="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><i class="fa fa-check"></i><b>2.9</b> Muestreo estratificado aleatorio simple con dos etapas</a></li>
+<li class="chapter" data-level="2.10" data-path="práctica-en-r.html"><a href="práctica-en-r.html"><i class="fa fa-check"></i><b>2.10</b> Práctica en <code>R</code></a></li>
+<li class="chapter" data-level="2.11" data-path="calibrando-con-r.html"><a href="calibrando-con-r.html"><i class="fa fa-check"></i><b>2.11</b> Calibrando con <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><i class="fa fa-check"></i><b>3</b> Del manejo de datos al análisis de encuestas complejas en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="fundamentos-básicos-de-r-y-rstudio.html"><a href="fundamentos-básicos-de-r-y-rstudio.html"><i class="fa fa-check"></i><b>3.1</b> Fundamentos básicos de R y Rstudio</a></li>
+<li class="chapter" data-level="3.2" data-path="paquetes-para-el-análisis-de-encuestas.html"><a href="paquetes-para-el-análisis-de-encuestas.html"><i class="fa fa-check"></i><b>3.2</b> Paquetes para el análisis de encuestas</a></li>
+<li class="chapter" data-level="3.3" data-path="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><a href="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><i class="fa fa-check"></i><b>3.3</b> Paquetes complementarios para la manipulación y visualización de datos</a></li>
+<li class="chapter" data-level="3.4" data-path="creación-de-proyectos-en-r.html"><a href="creación-de-proyectos-en-r.html"><i class="fa fa-check"></i><b>3.4</b> Creación de proyectos en <code>R</code></a></li>
+<li class="chapter" data-level="3.5" data-path="lectura-de-bases-de-datos-y-manipulación.html"><a href="lectura-de-bases-de-datos-y-manipulación.html"><i class="fa fa-check"></i><b>3.5</b> Lectura de bases de datos y manipulación</a></li>
+<li class="chapter" data-level="3.6" data-path="el-operador-pipe.html"><a href="el-operador-pipe.html"><i class="fa fa-check"></i><b>3.6</b> El operador <code>pipe</code></a></li>
+<li class="chapter" data-level="3.7" data-path="transformación-y-resumen-de-datos.html"><a href="transformación-y-resumen-de-datos.html"><i class="fa fa-check"></i><b>3.7</b> Transformación y resumen de datos</a></li>
+<li class="chapter" data-level="3.8" data-path="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><i class="fa fa-check"></i><b>3.8</b> Diferencias entre el análisis tradicional y el análisis de encuestas complejas</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de las variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="definición-del-objeto-de-diseño.html"><a href="definición-del-objeto-de-diseño.html"><i class="fa fa-check"></i><b>4.1</b> Definición del objeto de diseño</a></li>
+<li class="chapter" data-level="4.2" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de totales y medias</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-puntual"><i class="fa fa-check"></i><b>4.2.1</b> Estimación puntual</a></li>
+<li class="chapter" data-level="4.2.2" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-totales-1"><i class="fa fa-check"></i><b>4.2.2</b> Estimación de totales</a></li>
+<li class="chapter" data-level="4.2.3" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-la-media-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.2.3</b> Estimación de la media e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.2.4" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-medidas-de-localización-y-dispersión"><i class="fa fa-check"></i><b>4.2.4</b> Estimación de medidas de localización y dispersión</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html"><i class="fa fa-check"></i><b>4.3</b> Estimación de razones</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html#implementación-computacional-en-r"><i class="fa fa-check"></i>Implementación computacional en <code>R</code></a></li>
+<li class="chapter" data-level="" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html#interpretación-aplicada"><i class="fa fa-check"></i>Interpretación aplicada</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="estimación-del-coeficiente-de-gini.html"><a href="estimación-del-coeficiente-de-gini.html"><i class="fa fa-check"></i><b>4.4</b> Estimación del coeficiente de Gini</a></li>
+<li class="chapter" data-level="4.5" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html"><i class="fa fa-check"></i><b>4.5</b> Análisis de correlación</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#ajuste-al-diseño-muestral"><i class="fa fa-check"></i><b>4.5.1</b> Ajuste al diseño muestral</a></li>
+<li class="chapter" data-level="4.5.2" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#expresión-formal"><i class="fa fa-check"></i><b>4.5.2</b> Expresión formal</a></li>
+<li class="chapter" data-level="4.5.3" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#implementación-en-r"><i class="fa fa-check"></i><b>4.5.3</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html"><i class="fa fa-check"></i><b>4.6</b> Pruebas de hipótesis</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#planteamiento-general"><i class="fa fa-check"></i><b>4.6.1</b> Planteamiento general</a></li>
+<li class="chapter" data-level="4.6.2" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#prueba-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.6.2</b> Prueba para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.6.3" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#estadístico-de-prueba-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.6.3</b> Estadístico de prueba e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.6.4" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#ejemplo-aplicado-en-r"><i class="fa fa-check"></i><b>4.6.4</b> Ejemplo aplicado en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="estimación-de-contrastes.html"><a href="estimación-de-contrastes.html"><i class="fa fa-check"></i><b>4.7</b> Estimación de contrastes</a></li>
+<li class="chapter" data-level="4.8" data-path="viz-continuas.html"><a href="viz-continuas.html"><i class="fa fa-check"></i><b>4.8</b> Visualización de variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="viz-continuas.html"><a href="viz-continuas.html#histogramas"><i class="fa fa-check"></i><b>4.8.1</b> Histogramas</a></li>
+<li class="chapter" data-level="4.8.2" data-path="viz-continuas.html"><a href="viz-continuas.html#densidades-y-boxplots"><i class="fa fa-check"></i><b>4.8.2</b> Densidades y Boxplots</a></li>
+<li class="chapter" data-level="4.8.3" data-path="viz-continuas.html"><a href="viz-continuas.html#diagramas-de-dispersión"><i class="fa fa-check"></i><b>4.8.3</b> Diagramas de dispersión</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html"><i class="fa fa-check"></i><b>5</b> Análisis de variables categóricas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="estimación-del-tamaño-poblacional.html"><a href="estimación-del-tamaño-poblacional.html"><i class="fa fa-check"></i><b>5.1</b> Estimación del tamaño poblacional</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimación-del-tamaño-poblacional.html"><a href="estimación-del-tamaño-poblacional.html#estimación-de-totales-en-r"><i class="fa fa-check"></i>Estimación de totales en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="estimación-de-proporciones.html"><a href="estimación-de-proporciones.html"><i class="fa fa-check"></i><b>5.2</b> Estimación de proporciones</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="estimación-de-proporciones.html"><a href="estimación-de-proporciones.html#estimación-de-proporciones-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Estimación de proporciones en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html"><i class="fa fa-check"></i><b>5.3</b> Tablas cruzadas</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#definición-y-notación"><i class="fa fa-check"></i><b>5.3.1</b> Definición y notación</a></li>
+<li class="chapter" data-level="5.3.2" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#tablas-de-doble-entrada"><i class="fa fa-check"></i><b>5.3.2</b> Tablas de doble entrada</a></li>
+<li class="chapter" data-level="5.3.3" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#proporciones-para-variables-binarias"><i class="fa fa-check"></i><b>5.3.3</b> Proporciones para variables binarias</a></li>
+<li class="chapter" data-level="5.3.4" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#proporciones-para-variables-multinomiales"><i class="fa fa-check"></i><b>5.3.4</b> Proporciones para variables multinomiales</a></li>
+<li class="chapter" data-level="5.3.5" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#tablas-cruzadas-o-de-contingencia"><i class="fa fa-check"></i><b>5.3.5</b> Tablas cruzadas o de contingencia</a></li>
+<li class="chapter" data-level="5.3.6" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#prueba-de-independencia-chi2"><i class="fa fa-check"></i><b>5.3.6</b> Prueba de independencia <span class="math inline">\(\chi^{2}\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="viz-categoricas.html"><a href="viz-categoricas.html"><i class="fa fa-check"></i><b>5.4</b> Visualización de variables categóricas</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="viz-categoricas.html"><a href="viz-categoricas.html#gráficos-de-barras"><i class="fa fa-check"></i><b>5.4.1</b> Gráficos de barras</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="viz-mapas.html"><a href="viz-mapas.html"><i class="fa fa-check"></i><b>5.5</b> Visualización de variables categóricas en mapas</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="viz-mapas.html"><a href="viz-mapas.html#carga-del-shapefile-y-mapa-base"><i class="fa fa-check"></i><b>5.5.1</b> Carga del shapefile y mapa base</a></li>
+<li class="chapter" data-level="5.5.2" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-coroplético-de-pobreza-masculina-por-región"><i class="fa fa-check"></i><b>5.5.2</b> Mapa coroplético de pobreza masculina por región</a></li>
+<li class="chapter" data-level="5.5.3" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-del-coeficiente-de-variación-del-ingreso-medio"><i class="fa fa-check"></i><b>5.5.3</b> Mapa del coeficiente de variación del ingreso medio</a></li>
+<li class="chapter" data-level="5.5.4" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-bivariante-con-ggplot2"><i class="fa fa-check"></i><b>5.5.4</b> Mapa bivariante con <code>ggplot2</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cap6.html"><a href="cap6.html"><i class="fa fa-check"></i><b>6</b> Modelos de regresión</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="antecedentes-históricos-y-desarrollos-metodológicos.html"><a href="antecedentes-históricos-y-desarrollos-metodológicos.html"><i class="fa fa-check"></i><b>6.1</b> Antecedentes históricos y desarrollos metodológicos</a></li>
+<li class="chapter" data-level="6.2" data-path="relevancia-práctica.html"><a href="relevancia-práctica.html"><i class="fa fa-check"></i><b>6.2</b> Relevancia práctica</a></li>
+<li class="chapter" data-level="6.3" data-path="uso-de-ponderaciones.html"><a href="uso-de-ponderaciones.html"><i class="fa fa-check"></i><b>6.3</b> Uso de ponderaciones</a></li>
+<li class="chapter" data-level="6.4" data-path="enfoques-inferenciales-para-el-análisis-de-datos.html"><a href="enfoques-inferenciales-para-el-análisis-de-datos.html"><i class="fa fa-check"></i><b>6.4</b> Enfoques inferenciales para el análisis de datos</a></li>
+<li class="chapter" data-level="6.5" data-path="estimación-de-los-parámetros.html"><a href="estimación-de-los-parámetros.html"><i class="fa fa-check"></i><b>6.5</b> Estimación de los parámetros</a></li>
+<li class="chapter" data-level="6.6" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html"><i class="fa fa-check"></i><b>6.6</b> Diagnóstico del modelo</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#coeficiente-de-determinación"><i class="fa fa-check"></i><b>6.6.1</b> Coeficiente de determinación</a></li>
+<li class="chapter" data-level="6.6.2" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#diagnóstico-de-los-residuales"><i class="fa fa-check"></i><b>6.6.2</b> Diagnóstico de los residuales</a></li>
+<li class="chapter" data-level="6.6.3" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#observaciones-influyentes"><i class="fa fa-check"></i><b>6.6.3</b> Observaciones influyentes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="inferencia-sobre-los-parámetros-del-modelo.html"><a href="inferencia-sobre-los-parámetros-del-modelo.html"><i class="fa fa-check"></i><b>6.7</b> Inferencia sobre los parámetros del modelo</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="inferencia-sobre-los-parámetros-del-modelo.html"><a href="inferencia-sobre-los-parámetros-del-modelo.html#estimación-puntual-e-intervalo-de-predicción"><i class="fa fa-check"></i><b>6.7.1</b> Estimación puntual e intervalo de predicción</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a Análisis de encuestas con R </a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis de encuestas con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas" class="section level2 hasAnchor" number="3.8">
+<h2><span class="header-section-number">3.8</span> Diferencias entre el análisis tradicional y el análisis de encuestas complejas<a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En el análisis de datos tradicional, las observaciones suelen considerarse independientes y con igual probabilidad de selección. Sin embargo, las encuestas de hogares y otras investigaciones por muestreo no siguen este supuesto, ya que provienen de diseños muestrales complejos, que pueden incluir estratos, conglomerados y ponderación desigual.
+Ignorar esta estructura puede conducir a estimaciones sesgadas y errores estándar incorrectos.</p>
+<p>En el ecosistema tidyverse, el paquete <code>dplyr</code> facilita la transformación, limpieza y resumen de los datos mediante una sintaxis intuitiva basada en verbos como <code>filter()</code>, <code>mutate()</code>, <code>summarise()</code> y el operador pipe (<code>%&gt;%</code>). Para extender esta lógica al análisis de encuestas, el paquete <code>srvyr</code> ofrece una interfaz moderna y coherente con <code>dplyr</code> sobre las funciones del paquete <code>survey</code>, que es la implementación más completa para el manejo de encuestas complejas en <code>R</code>.</p>
+<p>Con <code>srvyr</code>, es posible aplicar los mismos verbos de <code>dplyr</code> sobre un objeto de diseño de encuesta, lo que facilita la transición entre el análisis exploratorio y el análisis inferencial.</p>
+<p>El objeto de diseño es la base del análisis de una encuesta, ya que allí se especifican los elementos fundamentales del diseño muestral, como las unidades de muestreo, los estratos y los factores de expansión. Esta estructura permite que los análisis estadísticos incorporen adecuadamente la complejidad del muestreo y los errores asociados a la estimación.</p>
+<p>Antes de construir el objeto de diseño, es esencial revisar con detalle la documentación técnica de la encuesta, pues de ella depende identificar correctamente las variables necesarias y asegurar que los resultados obtenidos sean válidos para la población objetivo.</p>
+<p>Si bien es recomendable realizar un análisis exploratorio de los datos originales, tanto el análisis estadístico como la inferencia deben efectuarse utilizando los objetos de diseño de la encuesta. Esto garantiza que los cálculos reflejen adecuadamente la estructura poblacional basado en el diseño muestral, evitando conclusiones sesgadas derivadas del uso directo de los datos sin considerar su diseño.</p>
+<p>Para ilustrar este proceso, se utiliza como ejemplo la <em>Pesquisa Nacional por Amostra de Domicílios 2015</em> de Brasil. A partir de la base de datos <code>data2</code>, primero se renombran las variables que identifican las unidades primarias de muestreo, los estratos y los factores de expansión para que empiecen en un caracter que evite conflictos. Luego, se crea el objeto de diseño con la función <code>as_survey_design()</code> del paquete <code>srvyr</code>:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb53-1" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb53-2"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb53-2" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
+<span id="cb53-3"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb53-3" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb53-4" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> </span>
+<span id="cb53-5"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb53-5" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">upm =</span> <span class="st">`</span><span class="at">_upm</span><span class="st">`</span>, <span class="at">estrato =</span> <span class="st">`</span><span class="at">_estrato</span><span class="st">`</span>, <span class="at">fep =</span> <span class="st">`</span><span class="at">_fep</span><span class="st">`</span>) </span>
+<span id="cb53-6"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb53-6" tabindex="-1"></a></span>
+<span id="cb53-7"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb53-7" tabindex="-1"></a>encu_dis <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> </span>
+<span id="cb53-8"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb53-8" tabindex="-1"></a>             <span class="fu">as_survey_design</span>(<span class="at">ids =</span> <span class="fu">c</span>(upm, id_hogar, id_pers),</span>
+<span id="cb53-9"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb53-9" tabindex="-1"></a>                              <span class="at">strata =</span> estrato,</span>
+<span id="cb53-10"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb53-10" tabindex="-1"></a>                              <span class="at">weights =</span> fep,</span>
+<span id="cb53-11"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb53-11" tabindex="-1"></a>                              <span class="at">nest =</span> T)</span></code></pre></div>
+<p>En estadística, según <span class="citation">Tellez Piñerez &amp; Lemus Polanía (<a href="#ref-tellez2015estadistica">2015</a>)</span> las medidas descriptivas permiten la presentación y caracterización de un conjunto de datos con el fin de poder describir apropiadamente las diversas características presentes en la información de la muestra.
+Con <code>dplyr</code>, es posible calcular totales y promedios de manera simple, sin considerar ponderaciones, como se muestra en la Tabla <a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#tab:tab-total-media-dplyr">3.5</a>:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb54-1" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span></span>
+<span id="cb54-2"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb54-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_ing =</span> <span class="fu">sum</span>(ingcorte),</span>
+<span id="cb54-3"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb54-3" tabindex="-1"></a>            <span class="at">media_ing =</span> <span class="fu">mean</span>(ingcorte)) <span class="sc">%&gt;%</span></span>
+<span id="cb54-4"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb54-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-total-media-dplyr">Cuadro 3.5: </span>Total e ingreso promedio sin considerar ponderación (dplyr)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+total_ing
+</th>
+<th style="text-align:center;font-weight: bold;">
+media_ing
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+422286293
+</td>
+<td style="text-align:center;">
+1183.193
+</td>
+</tr>
+</tbody>
+</table>
+<p>También pueden obtenerse medias por grupos, por ejemplo, según el área de residencia, tal como se presenta en la Tabla <a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#tab:tab-media-area-dplyr">3.6</a>:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb55-1" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span></span>
+<span id="cb55-2"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb55-2" tabindex="-1"></a>  <span class="fu">group_by</span>(area_ee) <span class="sc">%&gt;%</span></span>
+<span id="cb55-3"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb55-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb55-4"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb55-4" tabindex="-1"></a>            <span class="at">media =</span> <span class="fu">mean</span>(ingcorte)) <span class="sc">%&gt;%</span></span>
+<span id="cb55-5"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb55-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-media-area-dplyr">Cuadro 3.6: </span>Ingreso promedio por área geográfica sin diseño muestral (dplyr)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+area_ee
+</th>
+<th style="text-align:center;font-weight: bold;">
+n
+</th>
+<th style="text-align:center;font-weight: bold;">
+media
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Area urbana
+</td>
+<td style="text-align:center;">
+304564
+</td>
+<td style="text-align:center;">
+1277.579
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Area rural
+</td>
+<td style="text-align:center;">
+52340
+</td>
+<td style="text-align:center;">
+633.967
+</td>
+</tr>
+</tbody>
+</table>
+<p>Estos resultados son útiles para una exploración preliminar, pero no representan adecuadamente a la población, ya que cada observación tiene el mismo peso. En una encuesta compleja, esto equivale a analizar solo la muestra, no la población que se desea inferir, para ello es necesario usar el paquete <code>survey</code> y <code>srvyr</code>.</p>
+<p>Una vez definido el objeto de diseño <code>encu_dis</code>, que incorpora las unidades primarias de muestreo (<code>upm</code>), los estratos (<code>estrato</code>) y los factores de expansión (<code>fep</code>), los mismos cálculos se pueden realizar de manera casi idéntica, pero ahora los resultados tienen en cuenta el diseño muestral, como se presenta en la Tabla <a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#tab:tab-total-media-srvyr">3.7</a>:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb56-1" tabindex="-1"></a>encu_dis <span class="sc">%&gt;%</span></span>
+<span id="cb56-2"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb56-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_ing =</span> <span class="fu">survey_total</span>(ingcorte, <span class="at">vartype =</span> <span class="st">&quot;ci&quot;</span>),</span>
+<span id="cb56-3"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb56-3" tabindex="-1"></a>            <span class="at">media_ing =</span> <span class="fu">survey_mean</span>(ingcorte, <span class="at">vartype =</span> <span class="st">&quot;ci&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb56-4"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb56-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-total-media-srvyr">Cuadro 3.7: </span>Total e ingreso promedio con diseño muestral (srvyr)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+total_ing
+</th>
+<th style="text-align:center;font-weight: bold;">
+total_ing_low
+</th>
+<th style="text-align:center;font-weight: bold;">
+total_ing_upp
+</th>
+<th style="text-align:center;font-weight: bold;">
+media_ing
+</th>
+<th style="text-align:center;font-weight: bold;">
+media_ing_low
+</th>
+<th style="text-align:center;font-weight: bold;">
+media_ing_upp
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2.45748e+11
+</td>
+<td style="text-align:center;">
+2.41371e+11
+</td>
+<td style="text-align:center;">
+250124925608
+</td>
+<td style="text-align:center;">
+1199.589
+</td>
+<td style="text-align:center;">
+1177.983
+</td>
+<td style="text-align:center;">
+1221.195
+</td>
+</tr>
+</tbody>
+</table>
+<p>De igual modo, la Tabla <a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#tab:tab-media-area-srvyr">3.8</a> presenta las medias por grupos considerando el diseño muestral:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb57-1" tabindex="-1"></a>encu_dis <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb57-2" tabindex="-1"></a>  <span class="fu">group_by</span>(area_ee) <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb57-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">survey_mean</span>(ingcorte, <span class="at">vartype =</span> <span class="st">&quot;ci&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb57-4"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb57-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-media-area-srvyr">Cuadro 3.8: </span>Ingreso promedio por área geográfica con diseño muestral (srvyr)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+area_ee
+</th>
+<th style="text-align:center;font-weight: bold;">
+media
+</th>
+<th style="text-align:center;font-weight: bold;">
+media_low
+</th>
+<th style="text-align:center;font-weight: bold;">
+media_upp
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Area urbana
+</td>
+<td style="text-align:center;">
+1301.066
+</td>
+<td style="text-align:center;">
+1275.694
+</td>
+<td style="text-align:center;">
+1326.438
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Area rural
+</td>
+<td style="text-align:center;">
+636.769
+</td>
+<td style="text-align:center;">
+616.144
+</td>
+<td style="text-align:center;">
+657.394
+</td>
+</tr>
+</tbody>
+</table>
+<p>Observe que la estructura es la misma, pero las funciones cambian:</p>
+<ul>
+<li><code>mean()</code> se reemplaza por <code>survey_mean()</code>,</li>
+<li><code>sum()</code> por <code>survey_total()</code>,</li>
+</ul>
+<p>Además, note que se pueden incluir errores estándar, intervalos de confianza o coeficientes de variación mediante el argumento <code>vartype</code>. En consecuencia, mientras <code>dplyr</code> describe los datos observados, <code>survey</code> y <code>srvyr</code> estiman parámetros poblacionales respetando el diseño muestral.</p>
+
+</div>
+<!-- </div> -->
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-tellez2015estadistica" class="csl-entry">
+Tellez Piñerez, C. F., &amp; Lemus Polanía, D. F. (2015). <em>Estadística Descriptiva y Probabilidad con aplicaciones en R</em>. Fundación Universitaria Los Libertadores.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="transformación-y-resumen-de-datos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cap4.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/psirusteam/2021ASDA/03-Basesdedatos.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Análisis de encuestas con R.pdf", "Análisis de encuestas con R.epub", "Análisis de encuestas con R.mobi"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "tconfig": null
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

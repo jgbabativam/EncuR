@@ -1,0 +1,3510 @@
+<!DOCTYPE html>
+<html lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5.3 Tablas cruzadas | Análisis de encuestas con R</title>
+  <meta name="description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5.3 Tablas cruzadas | Análisis de encuestas con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="github-repo" content="psirusteam/2021ASDA" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5.3 Tablas cruzadas | Análisis de encuestas con R" />
+  
+  <meta name="twitter:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  
+
+<meta name="author" content="Andrés Gutiérrez, Stalyn Guerrero, Cristian Téllez, Giovany Babativa-Márquez" />
+
+
+<meta name="date" content="2026-03-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="estimación-de-proporciones.html"/>
+<link rel="next" href="viz-categoricas.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análisis de encuestas con R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="universo-de-estudio-y-población-objetivo.html"><a href="universo-de-estudio-y-población-objetivo.html"><i class="fa fa-check"></i><b>2.1</b> Universo de estudio y población objetivo</a></li>
+<li class="chapter" data-level="2.2" data-path="unidades-de-análisis.html"><a href="unidades-de-análisis.html"><i class="fa fa-check"></i><b>2.2</b> Unidades de análisis</a></li>
+<li class="chapter" data-level="2.3" data-path="unidades-de-muestreo.html"><a href="unidades-de-muestreo.html"><i class="fa fa-check"></i><b>2.3</b> Unidades de muestreo</a></li>
+<li class="chapter" data-level="2.4" data-path="marcos-de-muestreo.html"><a href="marcos-de-muestreo.html"><i class="fa fa-check"></i><b>2.4</b> Marcos de muestreo</a></li>
+<li class="chapter" data-level="2.5" data-path="sec-motivacion.html"><a href="sec-motivacion.html"><i class="fa fa-check"></i><b>2.5</b> Motivación</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="sec-motivacion.html"><a href="sec-motivacion.html#la-importancia-de-considerar-el-diseño-muestral"><i class="fa fa-check"></i><b>2.5.1</b> La importancia de considerar el diseño muestral</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html"><i class="fa fa-check"></i><b>2.6</b> Parámetros y estimadores</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#ajustes-adicionales-de-los-pesos"><i class="fa fa-check"></i><b>2.6.1</b> Ajustes adicionales de los pesos</a></li>
+<li class="chapter" data-level="2.6.2" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#importancia-de-los-ajustes"><i class="fa fa-check"></i><b>2.6.2</b> Importancia de los ajustes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html"><i class="fa fa-check"></i><b>2.7</b> Estimación de totales</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html#ejemplo-ilustrativo-1"><i class="fa fa-check"></i><b>2.7.1</b> Ejemplo ilustrativo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="efecto-del-diseño-deff.html"><a href="efecto-del-diseño-deff.html"><i class="fa fa-check"></i><b>2.8</b> Efecto del diseño (DEFF)</a></li>
+<li class="chapter" data-level="2.9" data-path="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><a href="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><i class="fa fa-check"></i><b>2.9</b> Muestreo estratificado aleatorio simple con dos etapas</a></li>
+<li class="chapter" data-level="2.10" data-path="práctica-en-r.html"><a href="práctica-en-r.html"><i class="fa fa-check"></i><b>2.10</b> Práctica en <code>R</code></a></li>
+<li class="chapter" data-level="2.11" data-path="calibrando-con-r.html"><a href="calibrando-con-r.html"><i class="fa fa-check"></i><b>2.11</b> Calibrando con <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><i class="fa fa-check"></i><b>3</b> Del manejo de datos al análisis de encuestas complejas en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="fundamentos-básicos-de-r-y-rstudio.html"><a href="fundamentos-básicos-de-r-y-rstudio.html"><i class="fa fa-check"></i><b>3.1</b> Fundamentos básicos de R y Rstudio</a></li>
+<li class="chapter" data-level="3.2" data-path="paquetes-para-el-análisis-de-encuestas.html"><a href="paquetes-para-el-análisis-de-encuestas.html"><i class="fa fa-check"></i><b>3.2</b> Paquetes para el análisis de encuestas</a></li>
+<li class="chapter" data-level="3.3" data-path="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><a href="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><i class="fa fa-check"></i><b>3.3</b> Paquetes complementarios para la manipulación y visualización de datos</a></li>
+<li class="chapter" data-level="3.4" data-path="creación-de-proyectos-en-r.html"><a href="creación-de-proyectos-en-r.html"><i class="fa fa-check"></i><b>3.4</b> Creación de proyectos en <code>R</code></a></li>
+<li class="chapter" data-level="3.5" data-path="lectura-de-bases-de-datos-y-manipulación.html"><a href="lectura-de-bases-de-datos-y-manipulación.html"><i class="fa fa-check"></i><b>3.5</b> Lectura de bases de datos y manipulación</a></li>
+<li class="chapter" data-level="3.6" data-path="el-operador-pipe.html"><a href="el-operador-pipe.html"><i class="fa fa-check"></i><b>3.6</b> El operador <code>pipe</code></a></li>
+<li class="chapter" data-level="3.7" data-path="transformación-y-resumen-de-datos.html"><a href="transformación-y-resumen-de-datos.html"><i class="fa fa-check"></i><b>3.7</b> Transformación y resumen de datos</a></li>
+<li class="chapter" data-level="3.8" data-path="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><i class="fa fa-check"></i><b>3.8</b> Diferencias entre el análisis tradicional y el análisis de encuestas complejas</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de las variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="definición-del-objeto-de-diseño.html"><a href="definición-del-objeto-de-diseño.html"><i class="fa fa-check"></i><b>4.1</b> Definición del objeto de diseño</a></li>
+<li class="chapter" data-level="4.2" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de totales y medias</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-puntual"><i class="fa fa-check"></i><b>4.2.1</b> Estimación puntual</a></li>
+<li class="chapter" data-level="4.2.2" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-totales-1"><i class="fa fa-check"></i><b>4.2.2</b> Estimación de totales</a></li>
+<li class="chapter" data-level="4.2.3" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-la-media-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.2.3</b> Estimación de la media e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.2.4" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-medidas-de-localización-y-dispersión"><i class="fa fa-check"></i><b>4.2.4</b> Estimación de medidas de localización y dispersión</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html"><i class="fa fa-check"></i><b>4.3</b> Estimación de razones</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html#implementación-computacional-en-r"><i class="fa fa-check"></i>Implementación computacional en <code>R</code></a></li>
+<li class="chapter" data-level="" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html#interpretación-aplicada"><i class="fa fa-check"></i>Interpretación aplicada</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="estimación-del-coeficiente-de-gini.html"><a href="estimación-del-coeficiente-de-gini.html"><i class="fa fa-check"></i><b>4.4</b> Estimación del coeficiente de Gini</a></li>
+<li class="chapter" data-level="4.5" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html"><i class="fa fa-check"></i><b>4.5</b> Análisis de correlación</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#ajuste-al-diseño-muestral"><i class="fa fa-check"></i><b>4.5.1</b> Ajuste al diseño muestral</a></li>
+<li class="chapter" data-level="4.5.2" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#expresión-formal"><i class="fa fa-check"></i><b>4.5.2</b> Expresión formal</a></li>
+<li class="chapter" data-level="4.5.3" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#implementación-en-r"><i class="fa fa-check"></i><b>4.5.3</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html"><i class="fa fa-check"></i><b>4.6</b> Pruebas de hipótesis</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#planteamiento-general"><i class="fa fa-check"></i><b>4.6.1</b> Planteamiento general</a></li>
+<li class="chapter" data-level="4.6.2" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#prueba-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.6.2</b> Prueba para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.6.3" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#estadístico-de-prueba-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.6.3</b> Estadístico de prueba e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.6.4" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#ejemplo-aplicado-en-r"><i class="fa fa-check"></i><b>4.6.4</b> Ejemplo aplicado en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="estimación-de-contrastes.html"><a href="estimación-de-contrastes.html"><i class="fa fa-check"></i><b>4.7</b> Estimación de contrastes</a></li>
+<li class="chapter" data-level="4.8" data-path="viz-continuas.html"><a href="viz-continuas.html"><i class="fa fa-check"></i><b>4.8</b> Visualización de variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="viz-continuas.html"><a href="viz-continuas.html#histogramas"><i class="fa fa-check"></i><b>4.8.1</b> Histogramas</a></li>
+<li class="chapter" data-level="4.8.2" data-path="viz-continuas.html"><a href="viz-continuas.html#densidades-y-boxplots"><i class="fa fa-check"></i><b>4.8.2</b> Densidades y Boxplots</a></li>
+<li class="chapter" data-level="4.8.3" data-path="viz-continuas.html"><a href="viz-continuas.html#diagramas-de-dispersión"><i class="fa fa-check"></i><b>4.8.3</b> Diagramas de dispersión</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html"><i class="fa fa-check"></i><b>5</b> Análisis de variables categóricas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="estimación-del-tamaño-poblacional.html"><a href="estimación-del-tamaño-poblacional.html"><i class="fa fa-check"></i><b>5.1</b> Estimación del tamaño poblacional</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimación-del-tamaño-poblacional.html"><a href="estimación-del-tamaño-poblacional.html#estimación-de-totales-en-r"><i class="fa fa-check"></i>Estimación de totales en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="estimación-de-proporciones.html"><a href="estimación-de-proporciones.html"><i class="fa fa-check"></i><b>5.2</b> Estimación de proporciones</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="estimación-de-proporciones.html"><a href="estimación-de-proporciones.html#estimación-de-proporciones-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Estimación de proporciones en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html"><i class="fa fa-check"></i><b>5.3</b> Tablas cruzadas</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#definición-y-notación"><i class="fa fa-check"></i><b>5.3.1</b> Definición y notación</a></li>
+<li class="chapter" data-level="5.3.2" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#tablas-de-doble-entrada"><i class="fa fa-check"></i><b>5.3.2</b> Tablas de doble entrada</a></li>
+<li class="chapter" data-level="5.3.3" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#proporciones-para-variables-binarias"><i class="fa fa-check"></i><b>5.3.3</b> Proporciones para variables binarias</a></li>
+<li class="chapter" data-level="5.3.4" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#proporciones-para-variables-multinomiales"><i class="fa fa-check"></i><b>5.3.4</b> Proporciones para variables multinomiales</a></li>
+<li class="chapter" data-level="5.3.5" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#tablas-cruzadas-o-de-contingencia"><i class="fa fa-check"></i><b>5.3.5</b> Tablas cruzadas o de contingencia</a></li>
+<li class="chapter" data-level="5.3.6" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#prueba-de-independencia-chi2"><i class="fa fa-check"></i><b>5.3.6</b> Prueba de independencia <span class="math inline">\(\chi^{2}\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="viz-categoricas.html"><a href="viz-categoricas.html"><i class="fa fa-check"></i><b>5.4</b> Visualización de variables categóricas</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="viz-categoricas.html"><a href="viz-categoricas.html#gráficos-de-barras"><i class="fa fa-check"></i><b>5.4.1</b> Gráficos de barras</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="viz-mapas.html"><a href="viz-mapas.html"><i class="fa fa-check"></i><b>5.5</b> Visualización de variables categóricas en mapas</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="viz-mapas.html"><a href="viz-mapas.html#carga-del-shapefile-y-mapa-base"><i class="fa fa-check"></i><b>5.5.1</b> Carga del shapefile y mapa base</a></li>
+<li class="chapter" data-level="5.5.2" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-coroplético-de-pobreza-masculina-por-región"><i class="fa fa-check"></i><b>5.5.2</b> Mapa coroplético de pobreza masculina por región</a></li>
+<li class="chapter" data-level="5.5.3" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-del-coeficiente-de-variación-del-ingreso-medio"><i class="fa fa-check"></i><b>5.5.3</b> Mapa del coeficiente de variación del ingreso medio</a></li>
+<li class="chapter" data-level="5.5.4" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-bivariante-con-ggplot2"><i class="fa fa-check"></i><b>5.5.4</b> Mapa bivariante con <code>ggplot2</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cap6.html"><a href="cap6.html"><i class="fa fa-check"></i><b>6</b> Modelos de regresión</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="antecedentes-históricos-y-desarrollos-metodológicos.html"><a href="antecedentes-históricos-y-desarrollos-metodológicos.html"><i class="fa fa-check"></i><b>6.1</b> Antecedentes históricos y desarrollos metodológicos</a></li>
+<li class="chapter" data-level="6.2" data-path="relevancia-práctica.html"><a href="relevancia-práctica.html"><i class="fa fa-check"></i><b>6.2</b> Relevancia práctica</a></li>
+<li class="chapter" data-level="6.3" data-path="uso-de-ponderaciones.html"><a href="uso-de-ponderaciones.html"><i class="fa fa-check"></i><b>6.3</b> Uso de ponderaciones</a></li>
+<li class="chapter" data-level="6.4" data-path="enfoques-inferenciales-para-el-análisis-de-datos.html"><a href="enfoques-inferenciales-para-el-análisis-de-datos.html"><i class="fa fa-check"></i><b>6.4</b> Enfoques inferenciales para el análisis de datos</a></li>
+<li class="chapter" data-level="6.5" data-path="estimación-de-los-parámetros.html"><a href="estimación-de-los-parámetros.html"><i class="fa fa-check"></i><b>6.5</b> Estimación de los parámetros</a></li>
+<li class="chapter" data-level="6.6" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html"><i class="fa fa-check"></i><b>6.6</b> Diagnóstico del modelo</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#coeficiente-de-determinación"><i class="fa fa-check"></i><b>6.6.1</b> Coeficiente de determinación</a></li>
+<li class="chapter" data-level="6.6.2" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#diagnóstico-de-los-residuales"><i class="fa fa-check"></i><b>6.6.2</b> Diagnóstico de los residuales</a></li>
+<li class="chapter" data-level="6.6.3" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#observaciones-influyentes"><i class="fa fa-check"></i><b>6.6.3</b> Observaciones influyentes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="inferencia-sobre-los-parámetros-del-modelo.html"><a href="inferencia-sobre-los-parámetros-del-modelo.html"><i class="fa fa-check"></i><b>6.7</b> Inferencia sobre los parámetros del modelo</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="inferencia-sobre-los-parámetros-del-modelo.html"><a href="inferencia-sobre-los-parámetros-del-modelo.html#estimación-puntual-e-intervalo-de-predicción"><i class="fa fa-check"></i><b>6.7.1</b> Estimación puntual e intervalo de predicción</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a Análisis de encuestas con R </a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis de encuestas con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tablas-cruzadas" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Tablas cruzadas<a href="tablas-cruzadas.html#tablas-cruzadas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En los levantamientos de encuestas de hogares, es habitual recopilar información sobre variables categóricas, que permiten clasificar a la población en grupos mutuamente excluyentes. Ejemplos comunes son el estado laboral (<em>ocupado</em>, <em>desempleado</em>, <em>inactivo</em>), el nivel educativo alcanzado (<em>primaria</em>, <em>secundaria</em>, <em>terciaria</em>) o el acceso a determinados servicios (<em>sí</em>, <em>no</em>). Explorar si dos de estas variables están asociadas constituye un elemento central del análisis, ya que ofrece información valiosa en distintos ámbitos:</p>
+<ul>
+<li>En política pública, al relacionar educación y empleo para diseñar estrategias laborales.</li>
+<li>En evaluación de programas, al detectar variaciones en el acceso a salud según el nivel de ingresos.</li>
+<li>En investigación social, al estudiar vínculos entre factores demográficos y servicios para comprender dinámicas y tendencias sociales.</li>
+</ul>
+<div id="definición-y-notación" class="section level3 hasAnchor" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> Definición y notación<a href="tablas-cruzadas.html#definición-y-notación" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El estudio de la asociación entre dos variables categóricas implica verificar si la distribución de una depende de la otra. Para ello se comparan las frecuencias de todas las combinaciones posibles de categorías. Por ejemplo, puede contabilizarse cuántos individuos corresponden simultáneamente a cada nivel educativo y estado laboral. Estas frecuencias pueden transformarse en proporciones, que muestran la participación relativa de cada combinación en la población.</p>
+<p>La herramienta más común para organizar esta información es la tabla de contingencia, también conocida como tabla cruzada. En su forma más simple, corresponde a una matriz de doble entrada en la que las filas representan las categorías de una variable y las columnas las de otra. Cada celda contiene la frecuencia o proporción de casos que presentan simultáneamente la combinación <span class="math inline">\((r,c)\)</span>.</p>
+<p>Formalmente, sean <span class="math inline">\(x\)</span> y <span class="math inline">\(y\)</span> dos variables categóricas con <span class="math inline">\(R\)</span> y <span class="math inline">\(C\)</span> categorías respectivamente. Bajo un modelo de superpoblación, la distribución conjunta puede expresarse como:</p>
+<p><span class="math display">\[
+P_{rc} = Pr(X=r, Y=c), \quad r=1,\dots,R;\, c=1,\dots,C,
+\]</span></p>
+<p>con la restricción <span class="math inline">\(\sum_{r=1}^{R}\sum_{c=1}^{C} P_{rc}=1\)</span>.</p>
+<p>Si se dispusiera de un censo, el número de unidades en cada celda <span class="math inline">\((r,c)\)</span> se calcularía como:</p>
+<p><span class="math display">\[
+N_{rc} = \sum_{h=1}^{H} \sum_{i \in U_{1h}} \sum_{k \in U_{hi}} I(x_{hik}=r, y_{hik}=c),
+\]</span></p>
+<p>y las proporciones poblacionales se definirían como <span class="math inline">\(p_{rc} = N_{rc}/N_{(++)}\)</span>, donde <span class="math inline">\(N_{(++)}\)</span> es el tamaño total de la población. En la práctica, al trabajar con encuestas, estas proporciones se estiman mediante estimadores ponderados teniendo en cuenta el diseño.</p>
+</div>
+<div id="tablas-de-doble-entrada" class="section level3 hasAnchor" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> Tablas de doble entrada<a href="tablas-cruzadas.html#tablas-de-doble-entrada" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Una tabla de contingencia puede representarse en forma general como:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Variable 2</th>
+<th>Variable 1</th>
+<th>Marginal fila</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>0</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td><span class="math inline">\(n_{00}\)</span></td>
+<td><span class="math inline">\(n_{01}\)</span></td>
+<td><span class="math inline">\(n_{0+}\)</span></td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td><span class="math inline">\(n_{10}\)</span></td>
+<td><span class="math inline">\(n_{11}\)</span></td>
+<td><span class="math inline">\(n_{1+}\)</span></td>
+</tr>
+<tr class="even">
+<td>Marginal columna</td>
+<td><span class="math inline">\(n_{+0}\)</span></td>
+<td><span class="math inline">\(n_{+1}\)</span></td>
+<td><span class="math inline">\(n_{++}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Cuando se aplican los pesos muestrales, se obtienen las frecuencias ponderadas:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Variable 2</th>
+<th>Variable 1</th>
+<th>Marginal fila</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>0</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td><span class="math inline">\(\hat{N}_{00}\)</span></td>
+<td><span class="math inline">\(\hat{N}_{01}\)</span></td>
+<td><span class="math inline">\(\hat{N}_{0+}\)</span></td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td><span class="math inline">\(\hat{N}_{10}\)</span></td>
+<td><span class="math inline">\(\hat{N}_{11}\)</span></td>
+<td><span class="math inline">\(\hat{N}_{1+}\)</span></td>
+</tr>
+<tr class="even">
+<td>Marginal columna</td>
+<td><span class="math inline">\(\hat{N}_{+0}\)</span></td>
+<td><span class="math inline">\(\hat{N}_{+1}\)</span></td>
+<td><span class="math inline">\(\hat{N}_{++}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>donde, por ejemplo, la frecuencia ponderada en la celda <span class="math inline">\((0,1)\)</span> está dada por:</p>
+<p><span class="math display">\[
+\hat{N}_{01} = \sum_{h=1}^{H} \sum_{\alpha=1}^{a_{h}} \sum_{i \in (0,1)}^{n_{h\alpha}} \omega_{h\alpha i}
+\]</span></p>
+<p>y las proporciones estimadas se calculan como:</p>
+<p><span class="math display">\[
+\hat{p}_{rc}=\frac{\hat{N}_{rc}}{\hat{N}_{++}}.
+\]</span></p>
+<p>Las tablas de contingencia suelen representarse como arreglos bidimensionales (<span class="math inline">\(R \times C\)</span>), pero pueden ampliarse para incluir una tercera variable o más, formando así <span class="math inline">\(L\)</span> subtablas que permiten analizar relaciones más complejas. Gracias a su simplicidad y potencia descriptiva, las tablas cruzadas son ampliamente utilizadas en la investigación aplicada y en el diseño de políticas públicas, ya que permiten identificar patrones y asociaciones que no serían evidentes a simple vista. Su interpretación también puede reforzarse mediante representaciones gráficas, como los diagramas de barras apiladas, que facilitan la visualización de tendencias y diferencias.</p>
+</div>
+<div id="proporciones-para-variables-binarias" class="section level3 hasAnchor" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> Proporciones para variables binarias<a href="tablas-cruzadas.html#proporciones-para-variables-binarias" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La estimación de una sola proporción, <span class="math inline">\(\pi\)</span>, para una variable de respuesta binaria requiere únicamente una extensión directa del estimador de razón. Al recodificar las categorías de respuesta originales en una variable indicadora <span class="math inline">\(y_{i}\)</span> con valores <span class="math inline">\(1\)</span> (presencia) y <span class="math inline">\(0\)</span> (ausencia), el estimador de la media de la razón estima la proporción o prevalencia <span class="math inline">\(\pi\)</span> en la población de la siguiente manera <span class="citation">(<a href="#ref-heeringa2017applied">Heeringa et al., 2017</a>)</span>:</p>
+<p><span class="math display">\[
+\hat{p} = \frac{\sum_{h=1}^{H}\sum_{\alpha=1}^{\alpha_{h}}\sum_{i=1}^{n_{h\alpha}} \omega_{h\alpha i}I(y_{i}=1)}{\sum_{h=1}^{H}\sum_{\alpha=1}^{\alpha_{h}}\sum_{i=1}^{n_{h\alpha}} \omega_{h\alpha i}}
+= \frac{\hat{N}_{1}}{\hat{N}}.
+\]</span></p>
+<p>La varianza de este estimador puede aproximarse mediante la linealización de Taylor, así:</p>
+<p><span class="math display">\[
+v(\hat{p}) \dot{=} \frac{V(\hat{N}_{1})+\hat{p}^{2}V(\hat{N})-2\hat{p}\,cov(\hat{N}_{1},\hat{N})}{\hat{N}^{2}}.
+\]</span></p>
+<p>Cuando la proporción estimada se aproxima a 0 o 1, los intervalos de confianza estándar pueden producir límites fuera del rango <span class="math inline">\([0,1]\)</span>. Para solventar este problema, se proponen intervalos de confianza basados en transformaciones, como el <em>Wilson modificado</em> o el uso del <em>logit</em> de <span class="math inline">\(\hat{p}\)</span>, de la siguiente manera:</p>
+<p><span class="math display">\[
+IC[\text{logit}(\hat{p})] = \left\{ \ln\left(\frac{\hat{p}}{1-\hat{p}}\right) \pm \frac{t_{1-\alpha/2,gl}\,se(\hat{p})}{\hat{p}(1-\hat{p})}\right\},
+\]</span></p>
+<p>cuyo resultado puede transformarse de nuevo a la escala original de proporciones.</p>
+</div>
+<div id="proporciones-para-variables-multinomiales" class="section level3 hasAnchor" number="5.3.4">
+<h3><span class="header-section-number">5.3.4</span> Proporciones para variables multinomiales<a href="tablas-cruzadas.html#proporciones-para-variables-multinomiales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En encuestas, es común que las variables categóricas tengan más de dos categorías (multinomiales). En este caso, la estimación de la proporción para cada categoría <span class="math inline">\(k\)</span> sigue un esquema análogo:</p>
+<p><span class="math display">\[
+\hat{p}_{k} = \frac{\sum_{h=1}^{H}\sum_{\alpha=1}^{\alpha_{h}}\sum_{i=1}^{n_{h\alpha}} \omega_{h\alpha i}I(y_{i}=k)}{\sum_{h=1}^{H}\sum_{\alpha=1}^{\alpha_{h}}\sum_{i=1}^{n_{h\alpha}} \omega_{h\alpha i}}
+= \frac{\hat{N}_{k}}{\hat{N}}.
+\]</span></p>
+</div>
+<div id="tablas-cruzadas-o-de-contingencia" class="section level3 hasAnchor" number="5.3.5">
+<h3><span class="header-section-number">5.3.5</span> Tablas cruzadas o de contingencia<a href="tablas-cruzadas.html#tablas-cruzadas-o-de-contingencia" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Cuando se analizan dos variables categóricas de manera conjunta, el objetivo es estudiar si existe asociación entre ellas. Para ello, se construyen tablas cruzadas (o tablas de contingencia), que organizan los datos en una matriz de <span class="math inline">\(R \times C\)</span>, donde <span class="math inline">\(R\)</span> son las categorías de la variable <span class="math inline">\(x\)</span> y <span class="math inline">\(C\)</span> las de la variable <span class="math inline">\(y\)</span>.</p>
+<p>A diferencia de un simple conteo de casos, en encuestas se utilizan <strong>frecuencias ponderadas</strong> que reflejan la población total representada. Cada celda <span class="math inline">\((r,c)\)</span> contiene la frecuencia estimada:</p>
+<p><span class="math display">\[
+\hat{N}_{rc} = \sum_{h=1}^{H}\sum_{i \in s_{1h}}\sum_{k \in s_{hi}} w_{hik}\,I(x_{hik}=r; y_{hik}=c).
+\]</span></p>
+<p>Los totales marginales se obtienen como:</p>
+<p><span class="math display">\[
+\hat{N}_{(r+)} = \sum_{c} \hat{N}_{rc}, \quad \hat{N}_{(+c)} = \sum_{r} \hat{N}_{rc}, \quad \hat{N}_{(++)} = \sum_{r}\sum_{c} \hat{N}_{rc}.
+\]</span></p>
+<p>De estas frecuencias ponderadas se derivan <strong>proporciones conjuntas y marginales</strong>, que permiten analizar la distribución relativa de cada cruce:</p>
+<p><span class="math display">\[
+\hat{p}_{rc} = \frac{\hat{N}_{rc}}{\hat{N}_{++}}, \qquad
+\hat{p}_{r+} = \frac{\hat{N}_{r+}}{\hat{N}_{++}}, \qquad
+\hat{p}_{+c} = \frac{\hat{N}_{+c}}{\hat{N}_{++}}.
+\]</span></p>
+<p>Este enfoque ofrece una visión más completa de la relación entre categorías, ya que combina la estimación de proporciones simples con el análisis conjunto de distribuciones. Por ejemplo, se puede explorar cómo se distribuye el nivel educativo (filas) según la condición laboral (columnas), identificando patrones de desigualdad o brechas estructurales.</p>
+<p>A continuación, siguiendo con la base de ejemplo, se estima la proporción de hombres y mujeres en pobreza y no pobreza junto con su error estándar e intervalos de confianza, como se muestra en la Tabla <a href="tablas-cruzadas.html#tab:tab-contingencia-pobreza-sexo">5.1</a>.</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="tablas-cruzadas.html#cb134-1" tabindex="-1"></a>dsg <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span> </span>
+<span id="cb134-2"><a href="tablas-cruzadas.html#cb134-2" tabindex="-1"></a>       <span class="fu">mutate</span>(<span class="at">pobreza =</span> <span class="fu">factor</span>(pobreza, <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>,</span>
+<span id="cb134-3"><a href="tablas-cruzadas.html#cb134-3" tabindex="-1"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;No pobre&quot;</span>, <span class="st">&quot;Pobre&quot;</span>))) </span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="tablas-cruzadas.html#cb135-1" tabindex="-1"></a>dsg <span class="sc">%&gt;%</span></span>
+<span id="cb135-2"><a href="tablas-cruzadas.html#cb135-2" tabindex="-1"></a>  <span class="fu">group_by</span>(pobreza,Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb135-3"><a href="tablas-cruzadas.html#cb135-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">prop =</span> <span class="fu">survey_prop</span>(<span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb135-4"><a href="tablas-cruzadas.html#cb135-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-contingencia-pobreza-sexo">Cuadro 5.1: </span><span id="tab:tab-contingencia-pobreza-sexo">Cuadro 5.2: </span>Proporción de hombres y mujeres en condición de pobreza y no pobreza
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+pobreza
+</th>
+<th style="text-align:center;font-weight: bold;">
+Sex
+</th>
+<th style="text-align:center;font-weight: bold;">
+prop
+</th>
+<th style="text-align:center;font-weight: bold;">
+prop_se
+</th>
+<th style="text-align:center;font-weight: bold;">
+prop_low
+</th>
+<th style="text-align:center;font-weight: bold;">
+prop_upp
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+No pobre
+</td>
+<td style="text-align:center;">
+Female
+</td>
+<td style="text-align:center;">
+0.529
+</td>
+<td style="text-align:center;">
+0.012
+</td>
+<td style="text-align:center;">
+0.505
+</td>
+<td style="text-align:center;">
+0.554
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No pobre
+</td>
+<td style="text-align:center;">
+Male
+</td>
+<td style="text-align:center;">
+0.471
+</td>
+<td style="text-align:center;">
+0.012
+</td>
+<td style="text-align:center;">
+0.446
+</td>
+<td style="text-align:center;">
+0.495
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pobre
+</td>
+<td style="text-align:center;">
+Female
+</td>
+<td style="text-align:center;">
+0.524
+</td>
+<td style="text-align:center;">
+0.016
+</td>
+<td style="text-align:center;">
+0.492
+</td>
+<td style="text-align:center;">
+0.555
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pobre
+</td>
+<td style="text-align:center;">
+Male
+</td>
+<td style="text-align:center;">
+0.476
+</td>
+<td style="text-align:center;">
+0.016
+</td>
+<td style="text-align:center;">
+0.445
+</td>
+<td style="text-align:center;">
+0.508
+</td>
+</tr>
+</tbody>
+</table>
+<p>Como se puede observar, el 52.3% de las mujeres y el 47.6% son pobres. Generando intervalos de confianza al 95% de (49.2%, 55.5%) para las mujeres y (44.5%, 50.7%) para los hombres.</p>
+<p>En la librería survey existe una alternativa para estimar tablas de contingencias y es utilizando la función <code>svyby</code> como se muestra a continuación, presentada en la Tabla <a href="tablas-cruzadas.html#tab:tab-svyby-pobreza-sexo">5.3</a>:</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="tablas-cruzadas.html#cb136-1" tabindex="-1"></a>tab_Sex_Pobr <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span>Sex, <span class="at">by =</span>  <span class="sc">~</span>pobreza, <span class="at">design =</span> dsg, <span class="at">FUN =</span> svymean) </span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="tablas-cruzadas.html#cb137-1" tabindex="-1"></a>tab_Sex_Pobr <span class="sc">%&gt;%</span></span>
+<span id="cb137-2"><a href="tablas-cruzadas.html#cb137-2" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-svyby-pobreza-sexo">Cuadro 5.3: </span><span id="tab:tab-svyby-pobreza-sexo">Cuadro 5.4: </span>Proporción de hombres y mujeres por condición de pobreza (svyby)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+</th>
+<th style="text-align:left;font-weight: bold;">
+pobreza
+</th>
+<th style="text-align:center;font-weight: bold;">
+SexFemale
+</th>
+<th style="text-align:center;font-weight: bold;">
+SexMale
+</th>
+<th style="text-align:center;font-weight: bold;">
+se.SexFemale
+</th>
+<th style="text-align:center;font-weight: bold;">
+se.SexMale
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+No pobre
+</td>
+<td style="text-align:left;">
+No pobre
+</td>
+<td style="text-align:center;">
+0.529
+</td>
+<td style="text-align:center;">
+0.471
+</td>
+<td style="text-align:center;">
+0.012
+</td>
+<td style="text-align:center;">
+0.012
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pobre
+</td>
+<td style="text-align:left;">
+Pobre
+</td>
+<td style="text-align:center;">
+0.524
+</td>
+<td style="text-align:center;">
+0.476
+</td>
+<td style="text-align:center;">
+0.016
+</td>
+<td style="text-align:center;">
+0.016
+</td>
+</tr>
+</tbody>
+</table>
+<p>Como se pudo observar, los argumentos que requiere la función son definir la variable a la cual se desea estimar (formula), las categorías por la cual se desea estimar (by), el diseño muestral (desing) y el parámetro que se desea estimar (FUN). Para la estimación de los intervalos de confianza se utiliza la función <em>confint</em> como sigue:</p>
+<p>Para la estimación de los intervalos de confianza se utiliza la función <code>confint</code>, presentada en la Tabla <a href="#tab:tab-confint-sexo-pobreza"><strong>??</strong></a>:</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="tablas-cruzadas.html#cb138-1" tabindex="-1"></a><span class="fu">confint</span>(tab_Sex_Pobr) <span class="sc">%&gt;%</span> </span>
+<span id="cb138-2"><a href="tablas-cruzadas.html#cb138-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb138-3"><a href="tablas-cruzadas.html#cb138-3" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">&quot;Dominio&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb138-4"><a href="tablas-cruzadas.html#cb138-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div id="pkzmsvknki" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pkzmsvknki table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#pkzmsvknki thead, #pkzmsvknki tbody, #pkzmsvknki tfoot, #pkzmsvknki tr, #pkzmsvknki td, #pkzmsvknki th {
+  border-style: none;
+}
+
+#pkzmsvknki p {
+  margin: 0;
+  padding: 0;
+}
+
+#pkzmsvknki .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: 95%;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#pkzmsvknki .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#pkzmsvknki .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#pkzmsvknki .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#pkzmsvknki .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pkzmsvknki .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pkzmsvknki .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pkzmsvknki .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#pkzmsvknki .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#pkzmsvknki .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#pkzmsvknki .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#pkzmsvknki .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#pkzmsvknki .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#pkzmsvknki .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#pkzmsvknki .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pkzmsvknki .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#pkzmsvknki .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#pkzmsvknki .gt_row {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#pkzmsvknki .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pkzmsvknki .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#pkzmsvknki .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#pkzmsvknki .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#pkzmsvknki .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pkzmsvknki .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#pkzmsvknki .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#pkzmsvknki .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pkzmsvknki .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pkzmsvknki .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#pkzmsvknki .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pkzmsvknki .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#pkzmsvknki .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pkzmsvknki .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pkzmsvknki .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pkzmsvknki .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pkzmsvknki .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pkzmsvknki .gt_left {
+  text-align: left;
+}
+
+#pkzmsvknki .gt_center {
+  text-align: center;
+}
+
+#pkzmsvknki .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#pkzmsvknki .gt_font_normal {
+  font-weight: normal;
+}
+
+#pkzmsvknki .gt_font_bold {
+  font-weight: bold;
+}
+
+#pkzmsvknki .gt_font_italic {
+  font-style: italic;
+}
+
+#pkzmsvknki .gt_super {
+  font-size: 65%;
+}
+
+#pkzmsvknki .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#pkzmsvknki .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#pkzmsvknki .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#pkzmsvknki .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#pkzmsvknki .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#pkzmsvknki .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#pkzmsvknki .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#pkzmsvknki .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#pkzmsvknki div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Dominio">Dominio</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="a2.5-%">2.5 %</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="a97.5-%">97.5 %</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="Dominio" class="gt_row gt_left">No pobre:SexFemale</td>
+<td headers="2.5 %" class="gt_row gt_center">0.505</td>
+<td headers="97.5 %" class="gt_row gt_center">0.554</td></tr>
+    <tr><td headers="Dominio" class="gt_row gt_left">Pobre:SexFemale</td>
+<td headers="2.5 %" class="gt_row gt_center">0.493</td>
+<td headers="97.5 %" class="gt_row gt_center">0.555</td></tr>
+    <tr><td headers="Dominio" class="gt_row gt_left">No pobre:SexMale</td>
+<td headers="2.5 %" class="gt_row gt_center">0.446</td>
+<td headers="97.5 %" class="gt_row gt_center">0.495</td></tr>
+    <tr><td headers="Dominio" class="gt_row gt_left">Pobre:SexMale</td>
+<td headers="2.5 %" class="gt_row gt_center">0.445</td>
+<td headers="97.5 %" class="gt_row gt_center">0.507</td></tr>
+  </tbody>
+  
+</table>
+</div>
+<p>Los cuales coinciden con los generados anteriormente usando la función <code>group_by</code>.</p>
+<p>Otro análisis de interés relacionado con tablas de doble entrada en encuestas de hogares es estimar el porcentaje de desempleados por sexo, como se muestra en la Tabla <a href="tablas-cruzadas.html#tab:tab-svyby-empleo-sexo">5.5</a>.</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="tablas-cruzadas.html#cb139-1" tabindex="-1"></a>tab_Sex_Ocupa <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span>Sex, <span class="at">by =</span> <span class="sc">~</span>Employment,</span>
+<span id="cb139-2"><a href="tablas-cruzadas.html#cb139-2" tabindex="-1"></a>                       <span class="at">design =</span> diseno, <span class="at">FUN =</span> svymean)</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="tablas-cruzadas.html#cb140-1" tabindex="-1"></a>tab_Sex_Ocupa <span class="sc">%&gt;%</span></span>
+<span id="cb140-2"><a href="tablas-cruzadas.html#cb140-2" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-svyby-empleo-sexo">Cuadro 5.5: </span><span id="tab:tab-svyby-empleo-sexo">Cuadro 5.6: </span>Proporción de hombres y mujeres por estado de ocupación (svyby)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+</th>
+<th style="text-align:left;font-weight: bold;">
+Employment
+</th>
+<th style="text-align:center;font-weight: bold;">
+SexFemale
+</th>
+<th style="text-align:center;font-weight: bold;">
+SexMale
+</th>
+<th style="text-align:center;font-weight: bold;">
+se.SexFemale
+</th>
+<th style="text-align:center;font-weight: bold;">
+se.SexMale
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Unemployed
+</td>
+<td style="text-align:left;">
+Unemployed
+</td>
+<td style="text-align:center;">
+0.273
+</td>
+<td style="text-align:center;">
+0.727
+</td>
+<td style="text-align:center;">
+0.054
+</td>
+<td style="text-align:center;">
+0.054
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Inactive
+</td>
+<td style="text-align:left;">
+Inactive
+</td>
+<td style="text-align:center;">
+0.770
+</td>
+<td style="text-align:center;">
+0.230
+</td>
+<td style="text-align:center;">
+0.023
+</td>
+<td style="text-align:center;">
+0.023
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Employed
+</td>
+<td style="text-align:left;">
+Employed
+</td>
+<td style="text-align:center;">
+0.405
+</td>
+<td style="text-align:center;">
+0.595
+</td>
+<td style="text-align:center;">
+0.019
+</td>
+<td style="text-align:center;">
+0.019
+</td>
+</tr>
+</tbody>
+</table>
+<p>De la anterior salida se puede observar que, el 27.2% de las mujeres y el 72.7% de los hombres están desempleados con errores estándares para estas estimaciones de 5.3% para mujeres y hombres. cuyos intervalos de confianza se calculan a continuación, presentada en la Tabla <a href="#tab:tab-confint-empleo-sexo"><strong>??</strong></a>:</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="tablas-cruzadas.html#cb141-1" tabindex="-1"></a><span class="fu">confint</span>(tab_Sex_Ocupa) <span class="sc">%&gt;%</span> </span>
+<span id="cb141-2"><a href="tablas-cruzadas.html#cb141-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb141-3"><a href="tablas-cruzadas.html#cb141-3" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">&quot;Dominio&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb141-4"><a href="tablas-cruzadas.html#cb141-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div id="ygmifvmuaw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ygmifvmuaw table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ygmifvmuaw thead, #ygmifvmuaw tbody, #ygmifvmuaw tfoot, #ygmifvmuaw tr, #ygmifvmuaw td, #ygmifvmuaw th {
+  border-style: none;
+}
+
+#ygmifvmuaw p {
+  margin: 0;
+  padding: 0;
+}
+
+#ygmifvmuaw .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: 95%;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ygmifvmuaw .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ygmifvmuaw .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ygmifvmuaw .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ygmifvmuaw .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ygmifvmuaw .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ygmifvmuaw .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ygmifvmuaw .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ygmifvmuaw .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ygmifvmuaw .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ygmifvmuaw .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ygmifvmuaw .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ygmifvmuaw .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ygmifvmuaw .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ygmifvmuaw .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ygmifvmuaw .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ygmifvmuaw .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ygmifvmuaw .gt_row {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ygmifvmuaw .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ygmifvmuaw .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ygmifvmuaw .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ygmifvmuaw .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ygmifvmuaw .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ygmifvmuaw .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ygmifvmuaw .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ygmifvmuaw .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ygmifvmuaw .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ygmifvmuaw .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ygmifvmuaw .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ygmifvmuaw .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ygmifvmuaw .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ygmifvmuaw .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ygmifvmuaw .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ygmifvmuaw .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ygmifvmuaw .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ygmifvmuaw .gt_left {
+  text-align: left;
+}
+
+#ygmifvmuaw .gt_center {
+  text-align: center;
+}
+
+#ygmifvmuaw .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ygmifvmuaw .gt_font_normal {
+  font-weight: normal;
+}
+
+#ygmifvmuaw .gt_font_bold {
+  font-weight: bold;
+}
+
+#ygmifvmuaw .gt_font_italic {
+  font-style: italic;
+}
+
+#ygmifvmuaw .gt_super {
+  font-size: 65%;
+}
+
+#ygmifvmuaw .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ygmifvmuaw .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ygmifvmuaw .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ygmifvmuaw .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ygmifvmuaw .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ygmifvmuaw .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ygmifvmuaw .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#ygmifvmuaw .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#ygmifvmuaw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Dominio">Dominio</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="a2.5-%">2.5 %</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="a97.5-%">97.5 %</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="Dominio" class="gt_row gt_left">Unemployed:SexFemale</td>
+<td headers="2.5 %" class="gt_row gt_center">0.168</td>
+<td headers="97.5 %" class="gt_row gt_center">0.378</td></tr>
+    <tr><td headers="Dominio" class="gt_row gt_left">Inactive:SexFemale</td>
+<td headers="2.5 %" class="gt_row gt_center">0.724</td>
+<td headers="97.5 %" class="gt_row gt_center">0.816</td></tr>
+    <tr><td headers="Dominio" class="gt_row gt_left">Employed:SexFemale</td>
+<td headers="2.5 %" class="gt_row gt_center">0.369</td>
+<td headers="97.5 %" class="gt_row gt_center">0.441</td></tr>
+    <tr><td headers="Dominio" class="gt_row gt_left">Unemployed:SexMale</td>
+<td headers="2.5 %" class="gt_row gt_center">0.622</td>
+<td headers="97.5 %" class="gt_row gt_center">0.832</td></tr>
+    <tr><td headers="Dominio" class="gt_row gt_left">Inactive:SexMale</td>
+<td headers="2.5 %" class="gt_row gt_center">0.184</td>
+<td headers="97.5 %" class="gt_row gt_center">0.276</td></tr>
+    <tr><td headers="Dominio" class="gt_row gt_left">Employed:SexMale</td>
+<td headers="2.5 %" class="gt_row gt_center">0.559</td>
+<td headers="97.5 %" class="gt_row gt_center">0.631</td></tr>
+  </tbody>
+  
+</table>
+</div>
+<p>Si ahora el objetivo es estimar la pobreza, pero por las distintas regiones que se tienen en la base de datos. Primero, dado que la variable <em>pobreza</em> es de tipo numérica, es necesario convertirla en factor y luego realizar la estimación con la función <code>svyby</code>, como se muestra en la Tabla <a href="#tab:tab-svyby-region-pobreza"><strong>??</strong></a>.</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="tablas-cruzadas.html#cb142-1" tabindex="-1"></a>tab_region_pobreza <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span><span class="fu">as.factor</span>(pobreza),  <span class="at">by =</span> <span class="sc">~</span>Region, </span>
+<span id="cb142-2"><a href="tablas-cruzadas.html#cb142-2" tabindex="-1"></a></span>
+<span id="cb142-3"><a href="tablas-cruzadas.html#cb142-3" tabindex="-1"></a>                            <span class="at">design =</span>  diseno, <span class="at">FUN =</span> svymean)</span>
+<span id="cb142-4"><a href="tablas-cruzadas.html#cb142-4" tabindex="-1"></a>tab_region_pobreza <span class="sc">%&gt;%</span></span>
+<span id="cb142-5"><a href="tablas-cruzadas.html#cb142-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+</th>
+<th style="text-align:left;font-weight: bold;">
+Region
+</th>
+<th style="text-align:center;font-weight: bold;">
+as.factor(pobreza)0
+</th>
+<th style="text-align:center;font-weight: bold;">
+as.factor(pobreza)1
+</th>
+<th style="text-align:center;font-weight: bold;">
+se.as.factor(pobreza)0
+</th>
+<th style="text-align:center;font-weight: bold;">
+se.as.factor(pobreza)1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Norte
+</td>
+<td style="text-align:left;">
+Norte
+</td>
+<td style="text-align:center;">
+0.641
+</td>
+<td style="text-align:center;">
+0.359
+</td>
+<td style="text-align:center;">
+0.055
+</td>
+<td style="text-align:center;">
+0.055
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sur
+</td>
+<td style="text-align:left;">
+Sur
+</td>
+<td style="text-align:center;">
+0.656
+</td>
+<td style="text-align:center;">
+0.344
+</td>
+<td style="text-align:center;">
+0.043
+</td>
+<td style="text-align:center;">
+0.043
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Centro
+</td>
+<td style="text-align:left;">
+Centro
+</td>
+<td style="text-align:center;">
+0.635
+</td>
+<td style="text-align:center;">
+0.365
+</td>
+<td style="text-align:center;">
+0.079
+</td>
+<td style="text-align:center;">
+0.079
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Occidente
+</td>
+<td style="text-align:left;">
+Occidente
+</td>
+<td style="text-align:center;">
+0.599
+</td>
+<td style="text-align:center;">
+0.401
+</td>
+<td style="text-align:center;">
+0.047
+</td>
+<td style="text-align:center;">
+0.047
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Oriente
+</td>
+<td style="text-align:left;">
+Oriente
+</td>
+<td style="text-align:center;">
+0.548
+</td>
+<td style="text-align:center;">
+0.452
+</td>
+<td style="text-align:center;">
+0.088
+</td>
+<td style="text-align:center;">
+0.088
+</td>
+</tr>
+</tbody>
+</table>
+<p>De lo anterior se puede concluir que, en la región Norte, el 35% de las personas están en estado de pobreza mientras que en el sur es el 34%. La pobreza más alta se tiene en la región oriente con un 45% de pobres. Los errores estándares de las estimaciones.</p>
+</div>
+<div id="prueba-de-independencia-chi2" class="section level3 hasAnchor" number="5.3.6">
+<h3><span class="header-section-number">5.3.6</span> Prueba de independencia <span class="math inline">\(\chi^{2}\)</span><a href="tablas-cruzadas.html#prueba-de-independencia-chi2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Una <strong>prueba de hipótesis</strong> es un procedimiento estadístico que permite evaluar la validez de una afirmación sobre una población, comparando la evidencia empírica de una muestra con lo que se esperaría si dicha afirmación fuera cierta. En el caso de las <strong>pruebas de independencia</strong>, se plantea como hipótesis nula (<span class="math inline">\(H_{0}\)</span>) que dos variables categóricas son independientes, es decir, que la distribución de una no depende de las categorías de la otra. Matemáticamente, esta hipótesis puede expresarse como:</p>
+<p><span class="math display">\[
+H_0: P_{rc}^0 = P_{r+} \times P_{+c}, \quad \text{para todo } r = 1,\ldots,R \text{ y } c = 1,\ldots,C
+\]</span></p>
+<p>donde <span class="math inline">\(P_{rc}^0\)</span> representa la proporción esperada en la celda <span class="math inline">\((r,c)\)</span> bajo independencia, y <span class="math inline">\(P_{r+}\)</span> y <span class="math inline">\(P_{+c}\)</span> las proporciones marginales de las filas y columnas, respectivamente.</p>
+<p>En consecuencia, la prueba consiste en contrastar las proporciones estimadas <span class="math inline">\(\hat{p}*{rc}\)</span> con las esperadas <span class="math inline">\(P*{rc}^0\)</span>. Cuando las diferencias son pequeñas, los datos respaldan la hipótesis nula; en cambio, discrepancias significativas conducen al rechazo de <span class="math inline">\(H_0\)</span>.</p>
+<div id="prueba-chi2-clásica" class="section level4 hasAnchor" number="5.3.6.1">
+<h4><span class="header-section-number">5.3.6.1</span> Prueba <span class="math inline">\(\chi^{2}\)</span> clásica<a href="tablas-cruzadas.html#prueba-chi2-clásica" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Para una tabla de <span class="math inline">\(2 \times 2\)</span>, la estadística de Pearson se define como:</p>
+<p><span class="math display">\[
+\chi^{2}  =  n_{++}\sum_{r}\sum_{c}\frac{\left(p_{rc}-\hat{\pi}_{rc}\right)^{2}}{\hat{\pi}_{rc}}
+\]</span></p>
+<p>donde <span class="math inline">\(\hat{\pi}*{rc}=\frac{n*{r+}}{n_{++}} \cdot \frac{n_{+c}}{n_{++}}\)</span> corresponde a las proporciones esperadas bajo independencia.</p>
+<p>En términos prácticos, las <strong>tablas de contingencia ponderadas</strong> constituyen el insumo de la prueba, ya que cada celda <span class="math inline">\(\hat{N}_{rc}\)</span> estima el número de personas en la población en esa combinación de categorías. A partir de ellas se calculan frecuencias relativas y se evalúa la independencia de las variables.</p>
+</div>
+<div id="ajustes-para-encuestas-prueba-de-rao-scott" class="section level4 hasAnchor" number="5.3.6.2">
+<h4><span class="header-section-number">5.3.6.2</span> Ajustes para encuestas: prueba de Rao-Scott<a href="tablas-cruzadas.html#ajustes-para-encuestas-prueba-de-rao-scott" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>En encuestas de hogares, el análisis es más complejo porque el diseño muestral (estratificación, conglomerados y ponderación) altera la varianza de los estimadores. Por ello, la prueba <span class="math inline">\(\chi^{2}\)</span> debe ajustarse para reflejar estas particularidades.</p>
+<p>El <strong>ajuste de Rao-Scott</strong> <span class="citation">(<a href="#ref-rao1984chisquare">Rao &amp; Scott, 1984</a>; <a href="#ref-thomas1987chisquare">Thomas &amp; Rao, 1987</a>)</span> corrige la prueba clásica mediante el <strong>efecto de diseño generalizado (GDEFF)</strong>, lo que produce un estadístico robusto:</p>
+<p><span class="math display">\[
+X_{RS}^2 = \frac{n_{++}}{GDEFF} \sum_r \sum_c \frac{(\hat{p}_{rc} - \hat{P}_{rc}^0)^2}{\hat{P}_{rc}^0}
+\]</span></p>
+<p>Bajo <span class="math inline">\(H_0\)</span>, <span class="math inline">\(X_{RS}^2\)</span> sigue aproximadamente una distribución <span class="math inline">\(\chi^2\)</span> con <span class="math inline">\((R-1)(C-1)\)</span> grados de libertad. En casos de <strong>muestras pequeñas</strong>, es común aplicar ajustes basados en la distribución F, que mejoran la precisión de los resultados. Actualmente, las pruebas de Rao-Scott constituyen el estándar en el análisis de datos categóricos en encuestas complejas <span class="citation">(<a href="#ref-heeringa2017applied">Heeringa et al., 2017</a>)</span>.</p>
+</div>
+<div id="ejemplo-en-r" class="section level4 hasAnchor" number="5.3.6.3">
+<h4><span class="header-section-number">5.3.6.3</span> Ejemplo en R<a href="tablas-cruzadas.html#ejemplo-en-r" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>El paquete <strong><code>survey</code></strong> en R implementa estas pruebas a través de la función <code>svychisq()</code>, que aplica automáticamente las correcciones de Rao-Scott. A modo de ejemplo, para evaluar si la pobreza es independiente del sexo, se ejecuta:</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="tablas-cruzadas.html#cb143-1" tabindex="-1"></a><span class="fu">svychisq</span>(<span class="at">formula =</span> <span class="sc">~</span>Sex <span class="sc">+</span> pobreza, <span class="at">design =</span> diseno, <span class="at">statistic=</span><span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s X^2: Rao &amp; Scott adjustment
+## 
+## data:  NextMethod()
+## F = 0.056464, ndf = 1, ddf = 119, p-value = 0.8126</code></pre>
+<ul>
+<li>Si el <strong>p-valor</strong> es superior al 5%, no se rechaza <span class="math inline">\(H_0\)</span>, concluyendo que no existe evidencia de asociación entre pobreza y sexo.</li>
+<li>Si el <strong>p-valor</strong> es inferior al 5%, se rechaza <span class="math inline">\(H_0\)</span>, lo que sugiere dependencia entre las variables.</li>
+</ul>
+<p>De manera similar, se pueden evaluar otras relaciones, como desempleo y sexo o pobreza y región:</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="tablas-cruzadas.html#cb145-1" tabindex="-1"></a><span class="fu">svychisq</span>(<span class="at">formula =</span> <span class="sc">~</span>Sex <span class="sc">+</span> Employment, <span class="at">design =</span> diseno, <span class="at">statistic =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s X^2: Rao &amp; Scott adjustment
+## 
+## data:  NextMethod()
+## F = 62.251, ndf = 1.6865, ddf = 200.6978, p-value &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="tablas-cruzadas.html#cb147-1" tabindex="-1"></a><span class="fu">svychisq</span>(<span class="at">formula =</span> <span class="sc">~</span>Region <span class="sc">+</span> pobreza, <span class="at">design =</span> diseno, <span class="at">statistic =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s X^2: Rao &amp; Scott adjustment
+## 
+## data:  NextMethod()
+## F = 0.48794, ndf = 3.0082, ddf = 357.9731, p-value = 0.6914</code></pre>
+<p><strong>Razón de odds</strong></p>
+<p>La traducción más aproximada del término <em>odds</em> es “la ventaja”: en términos de probabilidades, expresa cuánto más probable es que ocurra un evento frente a que no ocurra. También se puede utilizar para cuantificar la asociación entre los niveles de una variable y un factor categórico <span class="citation">(<a href="#ref-heeringa2017applied">Heeringa et al., 2017</a>)</span>.</p>
+<p>Suponga que se desea calcular la siguiente razón de odds.</p>
+<p><span class="math display">\[
+\frac{\frac{P(Sex = Female \mid pobreza = 0 )}{P(Sex = Female \mid pobreza = 1 )}}{
+\frac{P(Sex = Male \mid pobreza = 1 )}{P(Sex = Male \mid pobreza = 0 )}
+}
+\]</span></p>
+<p>El procedimiento para realizarlo en <code>R</code> sería, primero estimar las proporciones de la tabla cruzada entre las variables sexo y pobreza, presentada en la Tabla <a href="tablas-cruzadas.html#tab:tab-interaccion-sexo-pobreza">5.7</a>:</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="tablas-cruzadas.html#cb149-1" tabindex="-1"></a>tab_Sex_Pobr <span class="ot">&lt;-</span> <span class="fu">svymean</span>(<span class="at">x =</span> <span class="sc">~</span><span class="fu">interaction</span> (Sex, pobreza), <span class="at">design =</span> diseno, </span>
+<span id="cb149-2"><a href="tablas-cruzadas.html#cb149-2" tabindex="-1"></a>                        <span class="at">se=</span>T, <span class="at">na.rm=</span>T, <span class="at">ci=</span>T, <span class="at">keep.vars=</span>T)</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="tablas-cruzadas.html#cb150-1" tabindex="-1"></a>tab_Sex_Pobr <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb150-2"><a href="tablas-cruzadas.html#cb150-2" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tab-interaccion-sexo-pobreza">Cuadro 5.7: </span><span id="tab:tab-interaccion-sexo-pobreza">Cuadro 5.8: </span>Proporciones conjuntas de sexo y condición de pobreza
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+</th>
+<th style="text-align:left;font-weight: bold;">
+mean
+</th>
+<th style="text-align:center;font-weight: bold;">
+SE
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+interaction(Sex, pobreza)Female.0
+</td>
+<td style="text-align:left;">
+0.322
+</td>
+<td style="text-align:center;">
+0.018
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+interaction(Sex, pobreza)Male.0
+</td>
+<td style="text-align:left;">
+0.286
+</td>
+<td style="text-align:center;">
+0.018
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+interaction(Sex, pobreza)Female.1
+</td>
+<td style="text-align:left;">
+0.205
+</td>
+<td style="text-align:center;">
+0.017
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+interaction(Sex, pobreza)Male.1
+</td>
+<td style="text-align:left;">
+0.187
+</td>
+<td style="text-align:center;">
+0.018
+</td>
+</tr>
+</tbody>
+</table>
+<p>Luego, se realiza el contraste dividiendo cada uno de los elementos de la expresión mostrada anteriormente:</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="tablas-cruzadas.html#cb151-1" tabindex="-1"></a><span class="fu">svycontrast</span>(<span class="at">stat =</span> tab_Sex_Pobr, </span>
+<span id="cb151-2"><a href="tablas-cruzadas.html#cb151-2" tabindex="-1"></a><span class="at">contrasts =</span> <span class="fu">quote</span>((<span class="st">`</span><span class="at">interaction(Sex, pobreza)Female.0</span><span class="st">`</span><span class="sc">/</span><span class="st">`</span><span class="at">interaction(Sex, pobreza)Female.1</span><span class="st">`</span>) <span class="sc">/</span>(<span class="st">`</span><span class="at">interaction(Sex, pobreza)Male.0</span><span class="st">`</span><span class="sc">/</span> <span class="st">`</span><span class="at">interaction(Sex, pobreza)Male.1</span><span class="st">`</span>)))</span></code></pre></div>
+<pre><code>##           nlcon     SE
+## contrast 1.0226 0.0961</code></pre>
+<p>Obteniendo que, se estima que el odds de las mujeres que no están en estado de pobreza es 1.02 comparándolo con el odds de los hombres. En otras palabras, se estima que las probabilidades de que las mujeres no estén en estado de pobreza sin tener en cuenta ninguna otra variable de la encuesta es cerca de 2% mayor que las probabilidades de los hombres.</p>
+<p><strong>Diferencia de proporciones en tablas de contingencias</strong></p>
+<p>Según <span class="citation">Heeringa et al. (<a href="#ref-heeringa2017applied">2017</a>)</span>, las estimaciones de las proporciones de las filas en las tablas de doble entrada son, de hecho, estimaciones de subpoblaciones en las que la subpoblación se define por los niveles de la variable factorial. Ahora bien, si el interés se centra en estimar diferencias de las proporciones de las categorías entre dos niveles de una variable factorial, se pueden usar contrastes.</p>
+<p>A manera de ejemplo, se requiere estimar ahora, el contraste de proporciones de mujeres en estado de pobreza versus los hombres en esta misma condición (<span class="math inline">\(\hat{p}_F - \hat{p}_M\)</span>). Para ellos, primero, estimemos la proporción de hombres y mujeres en estado de pobreza como se ha mostrado en capítulos anteriores, presentada en la Tabla <a href="#tab:tab-svyby-pobreza-sexo2"><strong>??</strong></a>:</p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="tablas-cruzadas.html#cb153-1" tabindex="-1"></a>tab_sex_pobreza <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span>pobreza, <span class="at">by =</span> <span class="sc">~</span>Sex, </span>
+<span id="cb153-2"><a href="tablas-cruzadas.html#cb153-2" tabindex="-1"></a></span>
+<span id="cb153-3"><a href="tablas-cruzadas.html#cb153-3" tabindex="-1"></a>                         <span class="at">design =</span> diseno, svymean, <span class="at">na.rm=</span>T,</span>
+<span id="cb153-4"><a href="tablas-cruzadas.html#cb153-4" tabindex="-1"></a>                         <span class="at">covmat =</span> <span class="cn">TRUE</span>, <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>))</span>
+<span id="cb153-5"><a href="tablas-cruzadas.html#cb153-5" tabindex="-1"></a>tab_sex_pobreza <span class="sc">%&gt;%</span></span>
+<span id="cb153-6"><a href="tablas-cruzadas.html#cb153-6" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+</th>
+<th style="text-align:left;font-weight: bold;">
+Sex
+</th>
+<th style="text-align:center;font-weight: bold;">
+pobreza
+</th>
+<th style="text-align:center;font-weight: bold;">
+se
+</th>
+<th style="text-align:center;font-weight: bold;">
+ci_l
+</th>
+<th style="text-align:center;font-weight: bold;">
+ci_u
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:center;">
+0.389
+</td>
+<td style="text-align:center;">
+0.032
+</td>
+<td style="text-align:center;">
+0.327
+</td>
+<td style="text-align:center;">
+0.451
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:center;">
+0.395
+</td>
+<td style="text-align:center;">
+0.037
+</td>
+<td style="text-align:center;">
+0.323
+</td>
+<td style="text-align:center;">
+0.466
+</td>
+</tr>
+</tbody>
+</table>
+<p>Ahora bien, para calcular la estimación de la diferencia de proporciones junto con sus errores estándares, se realizarán los siguientes pasos:</p>
+<ul>
+<li><em>Paso 1:</em> Calcular la diferencia de estimaciones</li>
+</ul>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="tablas-cruzadas.html#cb154-1" tabindex="-1"></a><span class="fl">0.3892</span> <span class="sc">-</span> <span class="fl">0.3946</span>          </span></code></pre></div>
+<pre><code>## [1] -0.0054</code></pre>
+<p>Con la función <code>vcov</code> se obtiene la matriz de covarianzas, presentada en la Tabla <a href="#tab:tab-vcov-sex-pobreza"><strong>??</strong></a>:</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="tablas-cruzadas.html#cb156-1" tabindex="-1"></a><span class="fu">vcov</span>(tab_sex_pobreza) <span class="sc">%&gt;%</span></span>
+<span id="cb156-2"><a href="tablas-cruzadas.html#cb156-2" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb156-3"><a href="tablas-cruzadas.html#cb156-3" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>(<span class="at">digits =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div id="gralssxvoc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gralssxvoc table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#gralssxvoc thead, #gralssxvoc tbody, #gralssxvoc tfoot, #gralssxvoc tr, #gralssxvoc td, #gralssxvoc th {
+  border-style: none;
+}
+
+#gralssxvoc p {
+  margin: 0;
+  padding: 0;
+}
+
+#gralssxvoc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: 95%;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#gralssxvoc .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#gralssxvoc .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#gralssxvoc .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#gralssxvoc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#gralssxvoc .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gralssxvoc .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#gralssxvoc .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#gralssxvoc .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#gralssxvoc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#gralssxvoc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#gralssxvoc .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#gralssxvoc .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#gralssxvoc .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#gralssxvoc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#gralssxvoc .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#gralssxvoc .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#gralssxvoc .gt_row {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#gralssxvoc .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gralssxvoc .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#gralssxvoc .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#gralssxvoc .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#gralssxvoc .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gralssxvoc .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#gralssxvoc .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#gralssxvoc .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gralssxvoc .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gralssxvoc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#gralssxvoc .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gralssxvoc .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#gralssxvoc .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gralssxvoc .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#gralssxvoc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gralssxvoc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#gralssxvoc .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gralssxvoc .gt_left {
+  text-align: left;
+}
+
+#gralssxvoc .gt_center {
+  text-align: center;
+}
+
+#gralssxvoc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#gralssxvoc .gt_font_normal {
+  font-weight: normal;
+}
+
+#gralssxvoc .gt_font_bold {
+  font-weight: bold;
+}
+
+#gralssxvoc .gt_font_italic {
+  font-style: italic;
+}
+
+#gralssxvoc .gt_super {
+  font-size: 65%;
+}
+
+#gralssxvoc .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#gralssxvoc .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#gralssxvoc .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#gralssxvoc .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#gralssxvoc .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#gralssxvoc .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#gralssxvoc .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#gralssxvoc .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#gralssxvoc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Female">Female</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Male">Male</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="Female" class="gt_row gt_left">0.0009982953</td>
+<td headers="Male" class="gt_row gt_center">0.0009182927</td></tr>
+    <tr><td headers="Female" class="gt_row gt_left">0.0009182927</td>
+<td headers="Male" class="gt_row gt_center">0.0013415823</td></tr>
+  </tbody>
+  
+</table>
+</div>
+<ul>
+<li><em>Paso 2:</em> El cálculo del error estándar es:</li>
+</ul>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="tablas-cruzadas.html#cb157-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.0009983</span> <span class="sc">+</span> <span class="fl">0.0013416</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="fl">0.0009183</span>)</span></code></pre></div>
+<pre><code>## [1] 0.02243435</code></pre>
+<p>Ahora bien, aplicando la función <code>svycontrast</code> se puede obtener la estimación de la diferencia de proporciones anterior:</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="tablas-cruzadas.html#cb159-1" tabindex="-1"></a><span class="fu">svycontrast</span>(tab_sex_pobreza,</span>
+<span id="cb159-2"><a href="tablas-cruzadas.html#cb159-2" tabindex="-1"></a>            <span class="fu">list</span>(<span class="at">diff_Sex =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb159-3"><a href="tablas-cruzadas.html#cb159-3" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span></code></pre></div>
+<pre><code>##              contrast   diff_Sex
+## diff_Sex -0.005322297 0.02243418</code></pre>
+<p>De lo que se concluye que, la diferencia entre las proporciones de mujeres y hombres en estado de pobreza es -0.005 (-0.5%) con una desviación estándar de 0.022.</p>
+<p>Otro ejercicio de interés en un análisis de encuestas de hogares es verificar la diferencia del desempleo por sexo. Al igual que el ejemplo anterior, se inicia con la estimación del porcentaje de desempleados por sexo, presentada en la Tabla <a href="#tab:tab-svyby-desempleo-sexo"><strong>??</strong></a>:</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="tablas-cruzadas.html#cb161-1" tabindex="-1"></a>tab_sex_desempleo <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span>desempleo, <span class="at">by =</span> <span class="sc">~</span>Sex, </span>
+<span id="cb161-2"><a href="tablas-cruzadas.html#cb161-2" tabindex="-1"></a></span>
+<span id="cb161-3"><a href="tablas-cruzadas.html#cb161-3" tabindex="-1"></a>                           <span class="at">design  =</span> diseno <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(desempleo)) , </span>
+<span id="cb161-4"><a href="tablas-cruzadas.html#cb161-4" tabindex="-1"></a>                           <span class="at">FUN     =</span> svymean, <span class="at">na.rm=</span>T, <span class="at">covmat =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb161-5"><a href="tablas-cruzadas.html#cb161-5" tabindex="-1"></a>                           <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>))</span>
+<span id="cb161-6"><a href="tablas-cruzadas.html#cb161-6" tabindex="-1"></a>tab_sex_desempleo <span class="sc">%&gt;%</span></span>
+<span id="cb161-7"><a href="tablas-cruzadas.html#cb161-7" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+</th>
+<th style="text-align:left;font-weight: bold;">
+Sex
+</th>
+<th style="text-align:center;font-weight: bold;">
+desempleo
+</th>
+<th style="text-align:center;font-weight: bold;">
+se
+</th>
+<th style="text-align:center;font-weight: bold;">
+ci_l
+</th>
+<th style="text-align:center;font-weight: bold;">
+ci_u
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:center;">
+0.022
+</td>
+<td style="text-align:center;">
+0.006
+</td>
+<td style="text-align:center;">
+0.011
+</td>
+<td style="text-align:center;">
+0.033
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:center;">
+0.068
+</td>
+<td style="text-align:center;">
+0.012
+</td>
+<td style="text-align:center;">
+0.044
+</td>
+<td style="text-align:center;">
+0.092
+</td>
+</tr>
+</tbody>
+</table>
+<p>Para calcular la estimación de la diferencia de proporciones junto con sus errores estándares, se realizarán los siguientes pasos:</p>
+<ul>
+<li><em>Paso 1</em>: Diferencia de las estimaciones</li>
+</ul>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="tablas-cruzadas.html#cb162-1" tabindex="-1"></a><span class="fl">0.02169</span> <span class="sc">-</span> <span class="fl">0.06783</span>   </span></code></pre></div>
+<pre><code>## [1] -0.04614</code></pre>
+<p>Estimación de la matriz de covarianza, presentada en la Tabla <a href="#tab:tab-vcov-sex-desempleo"><strong>??</strong></a>:</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="tablas-cruzadas.html#cb164-1" tabindex="-1"></a><span class="fu">vcov</span>(tab_sex_desempleo) <span class="sc">%&gt;%</span></span>
+<span id="cb164-2"><a href="tablas-cruzadas.html#cb164-2" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb164-3"><a href="tablas-cruzadas.html#cb164-3" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>(<span class="at">digits =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div id="kkkhuqdiym" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kkkhuqdiym table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#kkkhuqdiym thead, #kkkhuqdiym tbody, #kkkhuqdiym tfoot, #kkkhuqdiym tr, #kkkhuqdiym td, #kkkhuqdiym th {
+  border-style: none;
+}
+
+#kkkhuqdiym p {
+  margin: 0;
+  padding: 0;
+}
+
+#kkkhuqdiym .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: 95%;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#kkkhuqdiym .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#kkkhuqdiym .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#kkkhuqdiym .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#kkkhuqdiym .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kkkhuqdiym .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kkkhuqdiym .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kkkhuqdiym .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#kkkhuqdiym .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#kkkhuqdiym .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#kkkhuqdiym .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#kkkhuqdiym .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#kkkhuqdiym .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#kkkhuqdiym .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#kkkhuqdiym .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#kkkhuqdiym .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#kkkhuqdiym .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#kkkhuqdiym .gt_row {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#kkkhuqdiym .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kkkhuqdiym .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#kkkhuqdiym .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#kkkhuqdiym .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#kkkhuqdiym .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kkkhuqdiym .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#kkkhuqdiym .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#kkkhuqdiym .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kkkhuqdiym .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kkkhuqdiym .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#kkkhuqdiym .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kkkhuqdiym .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#kkkhuqdiym .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kkkhuqdiym .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kkkhuqdiym .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kkkhuqdiym .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kkkhuqdiym .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kkkhuqdiym .gt_left {
+  text-align: left;
+}
+
+#kkkhuqdiym .gt_center {
+  text-align: center;
+}
+
+#kkkhuqdiym .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#kkkhuqdiym .gt_font_normal {
+  font-weight: normal;
+}
+
+#kkkhuqdiym .gt_font_bold {
+  font-weight: bold;
+}
+
+#kkkhuqdiym .gt_font_italic {
+  font-style: italic;
+}
+
+#kkkhuqdiym .gt_super {
+  font-size: 65%;
+}
+
+#kkkhuqdiym .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#kkkhuqdiym .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#kkkhuqdiym .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#kkkhuqdiym .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#kkkhuqdiym .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#kkkhuqdiym .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#kkkhuqdiym .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#kkkhuqdiym .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#kkkhuqdiym div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Female">Female</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Male">Male</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="Female" class="gt_row gt_left">0.0000311369</td>
+<td headers="Male" class="gt_row gt_center">0.0000208130</td></tr>
+    <tr><td headers="Female" class="gt_row gt_left">0.0000208130</td>
+<td headers="Male" class="gt_row gt_center">0.0001478933</td></tr>
+  </tbody>
+  
+</table>
+</div>
+<ul>
+<li><em>Paso 2</em>: Estimación del error estándar.</li>
+</ul>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="tablas-cruzadas.html#cb165-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.00003114</span>  <span class="sc">+</span> <span class="fl">0.00014789</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="fl">0.00002081</span>)</span></code></pre></div>
+<pre><code>## [1] 0.0117222</code></pre>
+<p>Siguiendo el ejemplo anterior, utilizando la función <code>svycontrast</code> se tiene que:</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="tablas-cruzadas.html#cb167-1" tabindex="-1"></a><span class="fu">svycontrast</span>(tab_sex_desempleo,</span>
+<span id="cb167-2"><a href="tablas-cruzadas.html#cb167-2" tabindex="-1"></a>            <span class="fu">list</span>(<span class="at">diff_Sex =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb167-3"><a href="tablas-cruzadas.html#cb167-3" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span></code></pre></div>
+<pre><code>##            contrast   diff_Sex
+## diff_Sex 0.04613982 0.01172195</code></pre>
+<p>de lo que se concluye que, la estimación del contraste es 0.04 (4%) con un error estándar de 0.011.</p>
+<p>Otro ejercicio que se puede realizar en una encuesta de hogares es ahora estimar la proporción de desempleados por región. Para la realización de este ejercicio, se seguirán los pasos de los dos ejemplos anteriores, presentada en la Tabla <a href="#tab:tab-svyby-desempleo-region"><strong>??</strong></a>:</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="tablas-cruzadas.html#cb169-1" tabindex="-1"></a>tab_region_desempleo <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span>  <span class="sc">~</span>desempleo, <span class="at">by =</span> <span class="sc">~</span>Region, </span>
+<span id="cb169-2"><a href="tablas-cruzadas.html#cb169-2" tabindex="-1"></a></span>
+<span id="cb169-3"><a href="tablas-cruzadas.html#cb169-3" tabindex="-1"></a>                              <span class="at">design  =</span> diseno <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(desempleo)) , </span>
+<span id="cb169-4"><a href="tablas-cruzadas.html#cb169-4" tabindex="-1"></a>                              <span class="at">FUN     =</span> svymean, <span class="at">na.rm=</span>T, <span class="at">covmat =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb169-5"><a href="tablas-cruzadas.html#cb169-5" tabindex="-1"></a>                              <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>))</span>
+<span id="cb169-6"><a href="tablas-cruzadas.html#cb169-6" tabindex="-1"></a>tab_region_desempleo <span class="sc">%&gt;%</span></span>
+<span id="cb169-7"><a href="tablas-cruzadas.html#cb169-7" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+</th>
+<th style="text-align:left;font-weight: bold;">
+Region
+</th>
+<th style="text-align:center;font-weight: bold;">
+desempleo
+</th>
+<th style="text-align:center;font-weight: bold;">
+se
+</th>
+<th style="text-align:center;font-weight: bold;">
+ci_l
+</th>
+<th style="text-align:center;font-weight: bold;">
+ci_u
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Norte
+</td>
+<td style="text-align:left;">
+Norte
+</td>
+<td style="text-align:center;">
+0.049
+</td>
+<td style="text-align:center;">
+0.020
+</td>
+<td style="text-align:center;">
+0.010
+</td>
+<td style="text-align:center;">
+0.088
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sur
+</td>
+<td style="text-align:left;">
+Sur
+</td>
+<td style="text-align:center;">
+0.066
+</td>
+<td style="text-align:center;">
+0.024
+</td>
+<td style="text-align:center;">
+0.019
+</td>
+<td style="text-align:center;">
+0.112
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Centro
+</td>
+<td style="text-align:left;">
+Centro
+</td>
+<td style="text-align:center;">
+0.039
+</td>
+<td style="text-align:center;">
+0.012
+</td>
+<td style="text-align:center;">
+0.014
+</td>
+<td style="text-align:center;">
+0.063
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Occidente
+</td>
+<td style="text-align:left;">
+Occidente
+</td>
+<td style="text-align:center;">
+0.040
+</td>
+<td style="text-align:center;">
+0.012
+</td>
+<td style="text-align:center;">
+0.016
+</td>
+<td style="text-align:center;">
+0.064
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Oriente
+</td>
+<td style="text-align:left;">
+Oriente
+</td>
+<td style="text-align:center;">
+0.030
+</td>
+<td style="text-align:center;">
+0.013
+</td>
+<td style="text-align:center;">
+0.005
+</td>
+<td style="text-align:center;">
+0.054
+</td>
+</tr>
+</tbody>
+</table>
+<p>Ahora, el interés es realizar los contrastes siguientes para desempleo:</p>
+<p><span class="math inline">\(\hat{p}_{Norte} - \hat{p}_{Centro} = 0.01004\)</span>,
+<span class="math inline">\(\hat{p}_{Sur} - \hat{p}_{Centro} = 0.02691\)</span><br />
+<span class="math inline">\(\hat{p}_{Occidente} - \hat{p}_{Oriente} = 0.01046\)</span></p>
+<p>Escrita de forma matricial sería:</p>
+<p><span class="math display">\[
+\left[\begin{array}{ccccc}
+1 &amp; 0 &amp; -1 &amp; 0 &amp; 0\\
+0 &amp; 1 &amp; -1 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; -1
+\end{array}\right]
+\]</span></p>
+<p>La matriz de varianzas y covarianzas es:</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="tablas-cruzadas.html#cb170-1" tabindex="-1"></a><span class="fu">vcov</span>(tab_region_desempleo) <span class="sc">%&gt;%</span></span>
+<span id="cb170-2"><a href="tablas-cruzadas.html#cb170-2" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb170-3"><a href="tablas-cruzadas.html#cb170-3" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<p>Por tanto, la varianza estimada está dada por:</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="tablas-cruzadas.html#cb171-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.0002981</span> <span class="sc">+</span> <span class="fl">0.0002884</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="dv">0</span>)</span></code></pre></div>
+<pre><code>## [1] 0.02421776</code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="tablas-cruzadas.html#cb173-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.0001968</span> <span class="sc">+</span> <span class="fl">0.0002884</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="dv">0</span>)</span></code></pre></div>
+<pre><code>## [1] 0.02202726</code></pre>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="tablas-cruzadas.html#cb175-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.0001267</span> <span class="sc">+</span> <span class="fl">0.0004093</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="dv">0</span>)</span></code></pre></div>
+<pre><code>## [1] 0.02315167</code></pre>
+<p>Usando la función <code>svycontrast</code>, la estimación de los contrastes sería:</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="tablas-cruzadas.html#cb177-1" tabindex="-1"></a><span class="fu">svycontrast</span>(tab_region_desempleo, <span class="fu">list</span>(</span>
+<span id="cb177-2"><a href="tablas-cruzadas.html#cb177-2" tabindex="-1"></a>                             <span class="at">Norte_sur =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb177-3"><a href="tablas-cruzadas.html#cb177-3" tabindex="-1"></a>                             <span class="at">Sur_centro =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb177-4"><a href="tablas-cruzadas.html#cb177-4" tabindex="-1"></a>                             <span class="at">Occidente_Oriente =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()</span></code></pre></div>
+<pre><code>##                     contrast         SE
+## Norte_sur         0.01004463 0.02355327
+## Sur_centro        0.02690618 0.02679477
+## Occidente_Oriente 0.01046292 0.01758365</code></pre>
+<p>Por último, repitiendo el contraste anterior y los pasos para resolverlo, pero ahora utilizando la variable pobreza se tiene, presentada en la Tabla <a href="#tab:tab-svyby-pobreza-region"><strong>??</strong></a>:</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="tablas-cruzadas.html#cb179-1" tabindex="-1"></a>tab_region_pobreza <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span>pobreza, <span class="at">by =</span> <span class="sc">~</span>Region, </span>
+<span id="cb179-2"><a href="tablas-cruzadas.html#cb179-2" tabindex="-1"></a></span>
+<span id="cb179-3"><a href="tablas-cruzadas.html#cb179-3" tabindex="-1"></a>                            <span class="at">design =</span> diseno <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(desempleo)) , </span>
+<span id="cb179-4"><a href="tablas-cruzadas.html#cb179-4" tabindex="-1"></a>                            <span class="at">FUN =</span> svymean, <span class="at">na.rm=</span>T, <span class="at">covmat =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb179-5"><a href="tablas-cruzadas.html#cb179-5" tabindex="-1"></a>                            <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>))</span>
+<span id="cb179-6"><a href="tablas-cruzadas.html#cb179-6" tabindex="-1"></a>tab_region_pobreza <span class="sc">%&gt;%</span></span>
+<span id="cb179-7"><a href="tablas-cruzadas.html#cb179-7" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; color: black; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+</th>
+<th style="text-align:left;font-weight: bold;">
+Region
+</th>
+<th style="text-align:center;font-weight: bold;">
+pobreza
+</th>
+<th style="text-align:center;font-weight: bold;">
+se
+</th>
+<th style="text-align:center;font-weight: bold;">
+ci_l
+</th>
+<th style="text-align:center;font-weight: bold;">
+ci_u
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Norte
+</td>
+<td style="text-align:left;">
+Norte
+</td>
+<td style="text-align:center;">
+0.326
+</td>
+<td style="text-align:center;">
+0.048
+</td>
+<td style="text-align:center;">
+0.232
+</td>
+<td style="text-align:center;">
+0.420
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sur
+</td>
+<td style="text-align:left;">
+Sur
+</td>
+<td style="text-align:center;">
+0.295
+</td>
+<td style="text-align:center;">
+0.048
+</td>
+<td style="text-align:center;">
+0.201
+</td>
+<td style="text-align:center;">
+0.389
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Centro
+</td>
+<td style="text-align:left;">
+Centro
+</td>
+<td style="text-align:center;">
+0.323
+</td>
+<td style="text-align:center;">
+0.072
+</td>
+<td style="text-align:center;">
+0.182
+</td>
+<td style="text-align:center;">
+0.465
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Occidente
+</td>
+<td style="text-align:left;">
+Occidente
+</td>
+<td style="text-align:center;">
+0.367
+</td>
+<td style="text-align:center;">
+0.044
+</td>
+<td style="text-align:center;">
+0.281
+</td>
+<td style="text-align:center;">
+0.454
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Oriente
+</td>
+<td style="text-align:left;">
+Oriente
+</td>
+<td style="text-align:center;">
+0.387
+</td>
+<td style="text-align:center;">
+0.092
+</td>
+<td style="text-align:center;">
+0.208
+</td>
+<td style="text-align:center;">
+0.567
+</td>
+</tr>
+</tbody>
+</table>
+<p>El interés se centra en realizar los contrastes siguientes para pobreza:</p>
+<p><span class="math inline">\(\hat{p}_{Norte} - \hat{p}_{Centro}\)</span>,
+<span class="math inline">\(\hat{p}_{Sur}-\hat{p}_{Centro}\)</span><br />
+<span class="math inline">\(\hat{p}_{Occidente}-\hat{p}_{Oriente}\)</span></p>
+<p>Escrita de forma matricial es:</p>
+<p><span class="math display">\[
+\left[\begin{array}{ccccc}
+1 &amp; 0 &amp; -1 &amp; 0 &amp; 0\\
+0 &amp; 1 &amp; -1 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; -1
+\end{array}\right]
+\]</span></p>
+<p>Y, utilizando la función <code>svycontrast</code> se obtiene:</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="tablas-cruzadas.html#cb180-1" tabindex="-1"></a><span class="fu">svycontrast</span>(tab_region_pobreza, <span class="fu">list</span>(</span>
+<span id="cb180-2"><a href="tablas-cruzadas.html#cb180-2" tabindex="-1"></a>                <span class="at">Norte_sur =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb180-3"><a href="tablas-cruzadas.html#cb180-3" tabindex="-1"></a>                <span class="at">Sur_centro =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb180-4"><a href="tablas-cruzadas.html#cb180-4" tabindex="-1"></a>                <span class="at">Occidente_Oriente =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()</span></code></pre></div>
+<pre><code>##                       contrast         SE
+## Norte_sur          0.002888908 0.08663389
+## Sur_centro        -0.028718759 0.08660027
+## Occidente_Oriente -0.019734641 0.10162205</code></pre>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-heeringa2017applied" class="csl-entry">
+Heeringa, S. G., West, B. T., Heeringa, S. G., &amp; Berglund, P. A. (2017). <em>Applied survey data analysis</em>. chapman; hall/CRC.
+</div>
+<div id="ref-rao1984chisquare" class="csl-entry">
+Rao, J. N. K., &amp; Scott, A. J. (1984). On chi-squared tests for multiway contingency tables with cell proportions estimated from survey data. <em>The Annals of Statistics</em>, <em>12</em>(1), 46-60.
+</div>
+<div id="ref-thomas1987chisquare" class="csl-entry">
+Thomas, D. R., &amp; Rao, J. N. K. (1987). Small-sample comparisons of level and power for simple goodness-of-fit statistics under cluster sampling. <em>Journal of the American Statistical Association</em>, <em>82</em>(398), 630-636.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="estimación-de-proporciones.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="viz-categoricas.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/psirusteam/2021ASDA/05-Categóricas.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Análisis de encuestas con R.pdf", "Análisis de encuestas con R.epub", "Análisis de encuestas con R.mobi"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "tconfig": null
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

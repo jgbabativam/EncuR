@@ -23,15 +23,15 @@
 <meta name="author" content="Andrés Gutiérrez, Stalyn Guerrero, Cristian Téllez, Giovany Babativa-Márquez" />
 
 
-<meta name="date" content="2026-03-17" />
+<meta name="date" content="2026-03-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="conceptos-básicos-en-encuestas-de-hogares.html"/>
-<link rel="next" href="cap4.html"/>
+<link rel="prev" href="calibrando-con-r.html"/>
+<link rel="next" href="fundamentos-básicos-de-r-y-rstudio.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -148,6 +148,7 @@ div.csl-indent {
 }
 </style>
 
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
@@ -160,129 +161,135 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
+<li><a href="./">Análisis de encuestas con R</a></li>
+
+<li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
 <li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#universo-de-estudio-y-población-objetivo"><i class="fa fa-check"></i><b>2.1</b> Universo de estudio y población objetivo</a></li>
-<li class="chapter" data-level="2.2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#unidades-de-análisis"><i class="fa fa-check"></i><b>2.2</b> Unidades de análisis</a></li>
-<li class="chapter" data-level="2.3" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#unidades-de-muestreo"><i class="fa fa-check"></i><b>2.3</b> Unidades de muestreo</a></li>
-<li class="chapter" data-level="2.4" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#marcos-de-muestreo"><i class="fa fa-check"></i><b>2.4</b> Marcos de muestreo</a></li>
-<li class="chapter" data-level="2.5" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#sec-motivacion"><i class="fa fa-check"></i><b>2.5</b> Motivación</a>
+<li class="chapter" data-level="2.1" data-path="universo-de-estudio-y-población-objetivo.html"><a href="universo-de-estudio-y-población-objetivo.html"><i class="fa fa-check"></i><b>2.1</b> Universo de estudio y población objetivo</a></li>
+<li class="chapter" data-level="2.2" data-path="unidades-de-análisis.html"><a href="unidades-de-análisis.html"><i class="fa fa-check"></i><b>2.2</b> Unidades de análisis</a></li>
+<li class="chapter" data-level="2.3" data-path="unidades-de-muestreo.html"><a href="unidades-de-muestreo.html"><i class="fa fa-check"></i><b>2.3</b> Unidades de muestreo</a></li>
+<li class="chapter" data-level="2.4" data-path="marcos-de-muestreo.html"><a href="marcos-de-muestreo.html"><i class="fa fa-check"></i><b>2.4</b> Marcos de muestreo</a></li>
+<li class="chapter" data-level="2.5" data-path="sec-motivacion.html"><a href="sec-motivacion.html"><i class="fa fa-check"></i><b>2.5</b> Motivación</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#la-importancia-de-considerar-el-diseño-muestral"><i class="fa fa-check"></i><b>2.5.1</b> La importancia de considerar el diseño muestral</a></li>
+<li class="chapter" data-level="2.5.1" data-path="sec-motivacion.html"><a href="sec-motivacion.html#la-importancia-de-considerar-el-diseño-muestral"><i class="fa fa-check"></i><b>2.5.1</b> La importancia de considerar el diseño muestral</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#parámetros-y-estimadores"><i class="fa fa-check"></i><b>2.6</b> Parámetros y estimadores</a>
+<li class="chapter" data-level="2.6" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html"><i class="fa fa-check"></i><b>2.6</b> Parámetros y estimadores</a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#ajustes-adicionales-de-los-pesos"><i class="fa fa-check"></i><b>2.6.1</b> Ajustes adicionales de los pesos</a></li>
-<li class="chapter" data-level="2.6.2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#importancia-de-los-ajustes"><i class="fa fa-check"></i><b>2.6.2</b> Importancia de los ajustes</a></li>
+<li class="chapter" data-level="2.6.1" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#ajustes-adicionales-de-los-pesos"><i class="fa fa-check"></i><b>2.6.1</b> Ajustes adicionales de los pesos</a></li>
+<li class="chapter" data-level="2.6.2" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#importancia-de-los-ajustes"><i class="fa fa-check"></i><b>2.6.2</b> Importancia de los ajustes</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#estimación-de-totales"><i class="fa fa-check"></i><b>2.7</b> Estimación de totales</a>
+<li class="chapter" data-level="2.7" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html"><i class="fa fa-check"></i><b>2.7</b> Estimación de totales</a>
 <ul>
-<li class="chapter" data-level="2.7.1" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#ejemplo-ilustrativo-1"><i class="fa fa-check"></i><b>2.7.1</b> Ejemplo ilustrativo</a></li>
+<li class="chapter" data-level="2.7.1" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html#ejemplo-ilustrativo-1"><i class="fa fa-check"></i><b>2.7.1</b> Ejemplo ilustrativo</a></li>
 </ul></li>
-<li class="chapter" data-level="2.8" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#efecto-del-diseño-deff"><i class="fa fa-check"></i><b>2.8</b> Efecto del diseño (DEFF)</a></li>
-<li class="chapter" data-level="2.9" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#muestreo-estratificado-aleatorio-simple-con-dos-etapas"><i class="fa fa-check"></i><b>2.9</b> Muestreo estratificado aleatorio simple con dos etapas</a></li>
-<li class="chapter" data-level="2.10" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#práctica-en-r"><i class="fa fa-check"></i><b>2.10</b> Práctica en <code>R</code></a></li>
-<li class="chapter" data-level="2.11" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html#calibrando-con-r"><i class="fa fa-check"></i><b>2.11</b> Calibrando con <code>R</code></a></li>
+<li class="chapter" data-level="2.8" data-path="efecto-del-diseño-deff.html"><a href="efecto-del-diseño-deff.html"><i class="fa fa-check"></i><b>2.8</b> Efecto del diseño (DEFF)</a></li>
+<li class="chapter" data-level="2.9" data-path="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><a href="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><i class="fa fa-check"></i><b>2.9</b> Muestreo estratificado aleatorio simple con dos etapas</a></li>
+<li class="chapter" data-level="2.10" data-path="práctica-en-r.html"><a href="práctica-en-r.html"><i class="fa fa-check"></i><b>2.10</b> Práctica en <code>R</code></a></li>
+<li class="chapter" data-level="2.11" data-path="calibrando-con-r.html"><a href="calibrando-con-r.html"><i class="fa fa-check"></i><b>2.11</b> Calibrando con <code>R</code></a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><i class="fa fa-check"></i><b>3</b> Del manejo de datos al análisis de encuestas complejas en R</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#fundamentos-básicos-de-r-y-rstudio"><i class="fa fa-check"></i><b>3.1</b> Fundamentos básicos de R y Rstudio</a></li>
-<li class="chapter" data-level="3.2" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#paquetes-para-el-análisis-de-encuestas"><i class="fa fa-check"></i><b>3.2</b> Paquetes para el análisis de encuestas</a></li>
-<li class="chapter" data-level="3.3" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#paquetes-complementarios-para-la-manipulación-y-visualización-de-datos"><i class="fa fa-check"></i><b>3.3</b> Paquetes complementarios para la manipulación y visualización de datos</a></li>
-<li class="chapter" data-level="3.4" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#creación-de-proyectos-en-r"><i class="fa fa-check"></i><b>3.4</b> Creación de proyectos en <code>R</code></a></li>
-<li class="chapter" data-level="3.5" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#lectura-de-bases-de-datos-y-manipulación"><i class="fa fa-check"></i><b>3.5</b> Lectura de bases de datos y manipulación</a></li>
-<li class="chapter" data-level="3.6" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#el-operador-pipe"><i class="fa fa-check"></i><b>3.6</b> El operador <code>pipe</code></a></li>
-<li class="chapter" data-level="3.7" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#transformación-y-resumen-de-datos"><i class="fa fa-check"></i><b>3.7</b> Transformación y resumen de datos</a></li>
-<li class="chapter" data-level="3.8" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas"><i class="fa fa-check"></i><b>3.8</b> Diferencias entre el análisis tradicional y el análisis de encuestas complejas</a></li>
+<li class="chapter" data-level="3.1" data-path="fundamentos-básicos-de-r-y-rstudio.html"><a href="fundamentos-básicos-de-r-y-rstudio.html"><i class="fa fa-check"></i><b>3.1</b> Fundamentos básicos de R y Rstudio</a></li>
+<li class="chapter" data-level="3.2" data-path="paquetes-para-el-análisis-de-encuestas.html"><a href="paquetes-para-el-análisis-de-encuestas.html"><i class="fa fa-check"></i><b>3.2</b> Paquetes para el análisis de encuestas</a></li>
+<li class="chapter" data-level="3.3" data-path="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><a href="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><i class="fa fa-check"></i><b>3.3</b> Paquetes complementarios para la manipulación y visualización de datos</a></li>
+<li class="chapter" data-level="3.4" data-path="creación-de-proyectos-en-r.html"><a href="creación-de-proyectos-en-r.html"><i class="fa fa-check"></i><b>3.4</b> Creación de proyectos en <code>R</code></a></li>
+<li class="chapter" data-level="3.5" data-path="lectura-de-bases-de-datos-y-manipulación.html"><a href="lectura-de-bases-de-datos-y-manipulación.html"><i class="fa fa-check"></i><b>3.5</b> Lectura de bases de datos y manipulación</a></li>
+<li class="chapter" data-level="3.6" data-path="el-operador-pipe.html"><a href="el-operador-pipe.html"><i class="fa fa-check"></i><b>3.6</b> El operador <code>pipe</code></a></li>
+<li class="chapter" data-level="3.7" data-path="transformación-y-resumen-de-datos.html"><a href="transformación-y-resumen-de-datos.html"><i class="fa fa-check"></i><b>3.7</b> Transformación y resumen de datos</a></li>
+<li class="chapter" data-level="3.8" data-path="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><i class="fa fa-check"></i><b>3.8</b> Diferencias entre el análisis tradicional y el análisis de encuestas complejas</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de las variables continuas</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="cap4.html"><a href="cap4.html#definición-del-objeto-de-diseño"><i class="fa fa-check"></i><b>4.1</b> Definición del objeto de diseño</a></li>
-<li class="chapter" data-level="4.2" data-path="cap4.html"><a href="cap4.html#estimación-de-totales-y-medias"><i class="fa fa-check"></i><b>4.2</b> Estimación de totales y medias</a>
+<li class="chapter" data-level="4.1" data-path="definición-del-objeto-de-diseño.html"><a href="definición-del-objeto-de-diseño.html"><i class="fa fa-check"></i><b>4.1</b> Definición del objeto de diseño</a></li>
+<li class="chapter" data-level="4.2" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de totales y medias</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="cap4.html"><a href="cap4.html#estimación-puntual"><i class="fa fa-check"></i><b>4.2.1</b> Estimación puntual</a></li>
-<li class="chapter" data-level="4.2.2" data-path="cap4.html"><a href="cap4.html#estimación-de-totales-1"><i class="fa fa-check"></i><b>4.2.2</b> Estimación de totales</a></li>
-<li class="chapter" data-level="4.2.3" data-path="cap4.html"><a href="cap4.html#estimación-de-la-media-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.2.3</b> Estimación de la media e intervalo de confianza</a></li>
-<li class="chapter" data-level="4.2.4" data-path="cap4.html"><a href="cap4.html#estimación-de-medidas-de-localización-y-dispersión"><i class="fa fa-check"></i><b>4.2.4</b> Estimación de medidas de localización y dispersión</a></li>
+<li class="chapter" data-level="4.2.1" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-puntual"><i class="fa fa-check"></i><b>4.2.1</b> Estimación puntual</a></li>
+<li class="chapter" data-level="4.2.2" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-totales-1"><i class="fa fa-check"></i><b>4.2.2</b> Estimación de totales</a></li>
+<li class="chapter" data-level="4.2.3" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-la-media-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.2.3</b> Estimación de la media e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.2.4" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-medidas-de-localización-y-dispersión"><i class="fa fa-check"></i><b>4.2.4</b> Estimación de medidas de localización y dispersión</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="cap4.html"><a href="cap4.html#estimación-de-razones"><i class="fa fa-check"></i><b>4.3</b> Estimación de razones</a>
+<li class="chapter" data-level="4.3" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html"><i class="fa fa-check"></i><b>4.3</b> Estimación de razones</a>
 <ul>
-<li class="chapter" data-level="" data-path="cap4.html"><a href="cap4.html#implementación-computacional-en-r"><i class="fa fa-check"></i>Implementación computacional en <code>R</code></a></li>
-<li class="chapter" data-level="" data-path="cap4.html"><a href="cap4.html#interpretación-aplicada"><i class="fa fa-check"></i>Interpretación aplicada</a></li>
+<li class="chapter" data-level="" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html#implementación-computacional-en-r"><i class="fa fa-check"></i>Implementación computacional en <code>R</code></a></li>
+<li class="chapter" data-level="" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html#interpretación-aplicada"><i class="fa fa-check"></i>Interpretación aplicada</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="cap4.html"><a href="cap4.html#estimación-del-coeficiente-de-gini"><i class="fa fa-check"></i><b>4.4</b> Estimación del coeficiente de Gini</a></li>
-<li class="chapter" data-level="4.5" data-path="cap4.html"><a href="cap4.html#análisis-de-correlación"><i class="fa fa-check"></i><b>4.5</b> Análisis de correlación</a>
+<li class="chapter" data-level="4.4" data-path="estimación-del-coeficiente-de-gini.html"><a href="estimación-del-coeficiente-de-gini.html"><i class="fa fa-check"></i><b>4.4</b> Estimación del coeficiente de Gini</a></li>
+<li class="chapter" data-level="4.5" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html"><i class="fa fa-check"></i><b>4.5</b> Análisis de correlación</a>
 <ul>
-<li class="chapter" data-level="4.5.1" data-path="cap4.html"><a href="cap4.html#ajuste-al-diseño-muestral"><i class="fa fa-check"></i><b>4.5.1</b> Ajuste al diseño muestral</a></li>
-<li class="chapter" data-level="4.5.2" data-path="cap4.html"><a href="cap4.html#expresión-formal"><i class="fa fa-check"></i><b>4.5.2</b> Expresión formal</a></li>
-<li class="chapter" data-level="4.5.3" data-path="cap4.html"><a href="cap4.html#implementación-en-r"><i class="fa fa-check"></i><b>4.5.3</b> Implementación en R</a></li>
+<li class="chapter" data-level="4.5.1" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#ajuste-al-diseño-muestral"><i class="fa fa-check"></i><b>4.5.1</b> Ajuste al diseño muestral</a></li>
+<li class="chapter" data-level="4.5.2" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#expresión-formal"><i class="fa fa-check"></i><b>4.5.2</b> Expresión formal</a></li>
+<li class="chapter" data-level="4.5.3" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#implementación-en-r"><i class="fa fa-check"></i><b>4.5.3</b> Implementación en R</a></li>
 </ul></li>
-<li class="chapter" data-level="4.6" data-path="cap4.html"><a href="cap4.html#pruebas-de-hipótesis"><i class="fa fa-check"></i><b>4.6</b> Pruebas de hipótesis</a>
+<li class="chapter" data-level="4.6" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html"><i class="fa fa-check"></i><b>4.6</b> Pruebas de hipótesis</a>
 <ul>
-<li class="chapter" data-level="4.6.1" data-path="cap4.html"><a href="cap4.html#planteamiento-general"><i class="fa fa-check"></i><b>4.6.1</b> Planteamiento general</a></li>
-<li class="chapter" data-level="4.6.2" data-path="cap4.html"><a href="cap4.html#prueba-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.6.2</b> Prueba para la diferencia de medias</a></li>
-<li class="chapter" data-level="4.6.3" data-path="cap4.html"><a href="cap4.html#estadístico-de-prueba-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.6.3</b> Estadístico de prueba e intervalo de confianza</a></li>
-<li class="chapter" data-level="4.6.4" data-path="cap4.html"><a href="cap4.html#ejemplo-aplicado-en-r"><i class="fa fa-check"></i><b>4.6.4</b> Ejemplo aplicado en <code>R</code></a></li>
+<li class="chapter" data-level="4.6.1" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#planteamiento-general"><i class="fa fa-check"></i><b>4.6.1</b> Planteamiento general</a></li>
+<li class="chapter" data-level="4.6.2" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#prueba-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.6.2</b> Prueba para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.6.3" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#estadístico-de-prueba-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.6.3</b> Estadístico de prueba e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.6.4" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#ejemplo-aplicado-en-r"><i class="fa fa-check"></i><b>4.6.4</b> Ejemplo aplicado en <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="4.7" data-path="cap4.html"><a href="cap4.html#estimación-de-contrastes"><i class="fa fa-check"></i><b>4.7</b> Estimación de contrastes</a></li>
-<li class="chapter" data-level="4.8" data-path="cap4.html"><a href="cap4.html#viz-continuas"><i class="fa fa-check"></i><b>4.8</b> Visualización de variables continuas</a>
+<li class="chapter" data-level="4.7" data-path="estimación-de-contrastes.html"><a href="estimación-de-contrastes.html"><i class="fa fa-check"></i><b>4.7</b> Estimación de contrastes</a></li>
+<li class="chapter" data-level="4.8" data-path="viz-continuas.html"><a href="viz-continuas.html"><i class="fa fa-check"></i><b>4.8</b> Visualización de variables continuas</a>
 <ul>
-<li class="chapter" data-level="4.8.1" data-path="cap4.html"><a href="cap4.html#histogramas"><i class="fa fa-check"></i><b>4.8.1</b> Histogramas</a></li>
-<li class="chapter" data-level="4.8.2" data-path="cap4.html"><a href="cap4.html#densidades-y-boxplots"><i class="fa fa-check"></i><b>4.8.2</b> Densidades y Boxplots</a></li>
-<li class="chapter" data-level="4.8.3" data-path="cap4.html"><a href="cap4.html#diagramas-de-dispersión"><i class="fa fa-check"></i><b>4.8.3</b> Diagramas de dispersión</a></li>
+<li class="chapter" data-level="4.8.1" data-path="viz-continuas.html"><a href="viz-continuas.html#histogramas"><i class="fa fa-check"></i><b>4.8.1</b> Histogramas</a></li>
+<li class="chapter" data-level="4.8.2" data-path="viz-continuas.html"><a href="viz-continuas.html#densidades-y-boxplots"><i class="fa fa-check"></i><b>4.8.2</b> Densidades y Boxplots</a></li>
+<li class="chapter" data-level="4.8.3" data-path="viz-continuas.html"><a href="viz-continuas.html#diagramas-de-dispersión"><i class="fa fa-check"></i><b>4.8.3</b> Diagramas de dispersión</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html"><i class="fa fa-check"></i><b>5</b> Análisis de variables categóricas</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#estimación-del-tamaño-poblacional"><i class="fa fa-check"></i><b>5.1</b> Estimación del tamaño poblacional</a>
+<li class="chapter" data-level="5.1" data-path="estimación-del-tamaño-poblacional.html"><a href="estimación-del-tamaño-poblacional.html"><i class="fa fa-check"></i><b>5.1</b> Estimación del tamaño poblacional</a>
 <ul>
-<li class="chapter" data-level="" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#estimación-de-totales-en-r"><i class="fa fa-check"></i>Estimación de totales en <code>R</code></a></li>
+<li class="chapter" data-level="" data-path="estimación-del-tamaño-poblacional.html"><a href="estimación-del-tamaño-poblacional.html#estimación-de-totales-en-r"><i class="fa fa-check"></i>Estimación de totales en <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#estimación-de-proporciones"><i class="fa fa-check"></i><b>5.2</b> Estimación de proporciones</a>
+<li class="chapter" data-level="5.2" data-path="estimación-de-proporciones.html"><a href="estimación-de-proporciones.html"><i class="fa fa-check"></i><b>5.2</b> Estimación de proporciones</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#estimación-de-proporciones-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Estimación de proporciones en <code>R</code></a></li>
+<li class="chapter" data-level="5.2.1" data-path="estimación-de-proporciones.html"><a href="estimación-de-proporciones.html#estimación-de-proporciones-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Estimación de proporciones en <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#tablas-cruzadas"><i class="fa fa-check"></i><b>5.3</b> Tablas cruzadas</a>
+<li class="chapter" data-level="5.3" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html"><i class="fa fa-check"></i><b>5.3</b> Tablas cruzadas</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#definición-y-notación"><i class="fa fa-check"></i><b>5.3.1</b> Definición y notación</a></li>
-<li class="chapter" data-level="5.3.2" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#tablas-de-doble-entrada"><i class="fa fa-check"></i><b>5.3.2</b> Tablas de doble entrada</a></li>
-<li class="chapter" data-level="5.3.3" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#proporciones-para-variables-binarias"><i class="fa fa-check"></i><b>5.3.3</b> Proporciones para variables binarias</a></li>
-<li class="chapter" data-level="5.3.4" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#proporciones-para-variables-multinomiales"><i class="fa fa-check"></i><b>5.3.4</b> Proporciones para variables multinomiales</a></li>
-<li class="chapter" data-level="5.3.5" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#tablas-cruzadas-o-de-contingencia"><i class="fa fa-check"></i><b>5.3.5</b> Tablas cruzadas o de contingencia</a></li>
-<li class="chapter" data-level="5.3.6" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#prueba-de-independencia-chi2"><i class="fa fa-check"></i><b>5.3.6</b> Prueba de independencia <span class="math inline">\(\chi^{2}\)</span></a></li>
+<li class="chapter" data-level="5.3.1" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#definición-y-notación"><i class="fa fa-check"></i><b>5.3.1</b> Definición y notación</a></li>
+<li class="chapter" data-level="5.3.2" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#tablas-de-doble-entrada"><i class="fa fa-check"></i><b>5.3.2</b> Tablas de doble entrada</a></li>
+<li class="chapter" data-level="5.3.3" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#proporciones-para-variables-binarias"><i class="fa fa-check"></i><b>5.3.3</b> Proporciones para variables binarias</a></li>
+<li class="chapter" data-level="5.3.4" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#proporciones-para-variables-multinomiales"><i class="fa fa-check"></i><b>5.3.4</b> Proporciones para variables multinomiales</a></li>
+<li class="chapter" data-level="5.3.5" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#tablas-cruzadas-o-de-contingencia"><i class="fa fa-check"></i><b>5.3.5</b> Tablas cruzadas o de contingencia</a></li>
+<li class="chapter" data-level="5.3.6" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#prueba-de-independencia-chi2"><i class="fa fa-check"></i><b>5.3.6</b> Prueba de independencia <span class="math inline">\(\chi^{2}\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#viz-categoricas"><i class="fa fa-check"></i><b>5.4</b> Visualización de variables categóricas</a>
+<li class="chapter" data-level="5.4" data-path="viz-categoricas.html"><a href="viz-categoricas.html"><i class="fa fa-check"></i><b>5.4</b> Visualización de variables categóricas</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#gráficos-de-barras"><i class="fa fa-check"></i><b>5.4.1</b> Gráficos de barras</a></li>
+<li class="chapter" data-level="5.4.1" data-path="viz-categoricas.html"><a href="viz-categoricas.html#gráficos-de-barras"><i class="fa fa-check"></i><b>5.4.1</b> Gráficos de barras</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#viz-mapas"><i class="fa fa-check"></i><b>5.5</b> Visualización de variables categóricas en mapas</a>
+<li class="chapter" data-level="5.5" data-path="viz-mapas.html"><a href="viz-mapas.html"><i class="fa fa-check"></i><b>5.5</b> Visualización de variables categóricas en mapas</a>
 <ul>
-<li class="chapter" data-level="5.5.1" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#carga-del-shapefile-y-mapa-base"><i class="fa fa-check"></i><b>5.5.1</b> Carga del shapefile y mapa base</a></li>
-<li class="chapter" data-level="5.5.2" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#mapa-coroplético-de-pobreza-masculina-por-región"><i class="fa fa-check"></i><b>5.5.2</b> Mapa coroplético de pobreza masculina por región</a></li>
-<li class="chapter" data-level="5.5.3" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#mapa-del-coeficiente-de-variación-del-ingreso-medio"><i class="fa fa-check"></i><b>5.5.3</b> Mapa del coeficiente de variación del ingreso medio</a></li>
-<li class="chapter" data-level="5.5.4" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html#mapa-bivariante-con-ggplot2"><i class="fa fa-check"></i><b>5.5.4</b> Mapa bivariante con <code>ggplot2</code></a></li>
+<li class="chapter" data-level="5.5.1" data-path="viz-mapas.html"><a href="viz-mapas.html#carga-del-shapefile-y-mapa-base"><i class="fa fa-check"></i><b>5.5.1</b> Carga del shapefile y mapa base</a></li>
+<li class="chapter" data-level="5.5.2" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-coroplético-de-pobreza-masculina-por-región"><i class="fa fa-check"></i><b>5.5.2</b> Mapa coroplético de pobreza masculina por región</a></li>
+<li class="chapter" data-level="5.5.3" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-del-coeficiente-de-variación-del-ingreso-medio"><i class="fa fa-check"></i><b>5.5.3</b> Mapa del coeficiente de variación del ingreso medio</a></li>
+<li class="chapter" data-level="5.5.4" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-bivariante-con-ggplot2"><i class="fa fa-check"></i><b>5.5.4</b> Mapa bivariante con <code>ggplot2</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="cap6.html"><a href="cap6.html"><i class="fa fa-check"></i><b>6</b> Modelos de regresión</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="cap6.html"><a href="cap6.html#antecedentes-históricos-y-desarrollos-metodológicos"><i class="fa fa-check"></i><b>6.1</b> Antecedentes históricos y desarrollos metodológicos</a></li>
-<li class="chapter" data-level="6.2" data-path="cap6.html"><a href="cap6.html#relevancia-práctica"><i class="fa fa-check"></i><b>6.2</b> Relevancia práctica</a></li>
-<li class="chapter" data-level="6.3" data-path="cap6.html"><a href="cap6.html#uso-de-ponderaciones"><i class="fa fa-check"></i><b>6.3</b> Uso de ponderaciones</a></li>
-<li class="chapter" data-level="6.4" data-path="cap6.html"><a href="cap6.html#enfoques-inferenciales-para-el-análisis-de-datos"><i class="fa fa-check"></i><b>6.4</b> Enfoques inferenciales para el análisis de datos</a></li>
-<li class="chapter" data-level="6.5" data-path="cap6.html"><a href="cap6.html#estimación-de-los-parámetros"><i class="fa fa-check"></i><b>6.5</b> Estimación de los parámetros</a></li>
-<li class="chapter" data-level="6.6" data-path="cap6.html"><a href="cap6.html#diagnóstico-del-modelo"><i class="fa fa-check"></i><b>6.6</b> Diagnóstico del modelo</a>
+<li class="chapter" data-level="6.1" data-path="antecedentes-históricos-y-desarrollos-metodológicos.html"><a href="antecedentes-históricos-y-desarrollos-metodológicos.html"><i class="fa fa-check"></i><b>6.1</b> Antecedentes históricos y desarrollos metodológicos</a></li>
+<li class="chapter" data-level="6.2" data-path="relevancia-práctica.html"><a href="relevancia-práctica.html"><i class="fa fa-check"></i><b>6.2</b> Relevancia práctica</a></li>
+<li class="chapter" data-level="6.3" data-path="uso-de-ponderaciones.html"><a href="uso-de-ponderaciones.html"><i class="fa fa-check"></i><b>6.3</b> Uso de ponderaciones</a></li>
+<li class="chapter" data-level="6.4" data-path="enfoques-inferenciales-para-el-análisis-de-datos.html"><a href="enfoques-inferenciales-para-el-análisis-de-datos.html"><i class="fa fa-check"></i><b>6.4</b> Enfoques inferenciales para el análisis de datos</a></li>
+<li class="chapter" data-level="6.5" data-path="estimación-de-los-parámetros.html"><a href="estimación-de-los-parámetros.html"><i class="fa fa-check"></i><b>6.5</b> Estimación de los parámetros</a></li>
+<li class="chapter" data-level="6.6" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html"><i class="fa fa-check"></i><b>6.6</b> Diagnóstico del modelo</a>
 <ul>
-<li class="chapter" data-level="6.6.1" data-path="cap6.html"><a href="cap6.html#coeficiente-de-determinación"><i class="fa fa-check"></i><b>6.6.1</b> Coeficiente de determinación</a></li>
-<li class="chapter" data-level="6.6.2" data-path="cap6.html"><a href="cap6.html#diagnóstico-de-los-residuales"><i class="fa fa-check"></i><b>6.6.2</b> Diagnóstico de los residuales</a></li>
-<li class="chapter" data-level="6.6.3" data-path="cap6.html"><a href="cap6.html#observaciones-influyentes"><i class="fa fa-check"></i><b>6.6.3</b> Observaciones influyentes</a></li>
+<li class="chapter" data-level="6.6.1" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#coeficiente-de-determinación"><i class="fa fa-check"></i><b>6.6.1</b> Coeficiente de determinación</a></li>
+<li class="chapter" data-level="6.6.2" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#diagnóstico-de-los-residuales"><i class="fa fa-check"></i><b>6.6.2</b> Diagnóstico de los residuales</a></li>
+<li class="chapter" data-level="6.6.3" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#observaciones-influyentes"><i class="fa fa-check"></i><b>6.6.3</b> Observaciones influyentes</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="cap6.html"><a href="cap6.html#inferencia-sobre-los-parámetros-del-modelo"><i class="fa fa-check"></i><b>6.7</b> Inferencia sobre los parámetros del modelo</a>
+<li class="chapter" data-level="6.7" data-path="inferencia-sobre-los-parámetros-del-modelo.html"><a href="inferencia-sobre-los-parámetros-del-modelo.html"><i class="fa fa-check"></i><b>6.7</b> Inferencia sobre los parámetros del modelo</a>
 <ul>
-<li class="chapter" data-level="6.7.1" data-path="cap6.html"><a href="cap6.html#estimación-puntual-e-intervalo-de-predicción"><i class="fa fa-check"></i><b>6.7.1</b> Estimación puntual e intervalo de predicción</a></li>
+<li class="chapter" data-level="6.7.1" data-path="inferencia-sobre-los-parámetros-del-modelo.html"><a href="inferencia-sobre-los-parámetros-del-modelo.html#estimación-puntual-e-intervalo-de-predicción"><i class="fa fa-check"></i><b>6.7.1</b> Estimación puntual e intervalo de predicción</a></li>
 </ul></li>
 </ul></li>
+<li class="divider"></li>
+<li><a Análisis de encuestas con R </a></li>
+
 </ul>
 
       </nav>
@@ -307,1312 +314,14 @@ div.csl-indent {
 <p>Posteriormente, se introduce el paquete <code>srvyr</code>, que extiende la sintaxis de <code>dplyr</code> para trabajar con encuestas complejas a partir del paquete <code>survey</code>. Esta herramienta permite aplicar los mismos verbos y estructuras del ecosistema <code>tidyverse</code> sobre un objeto que contiene la información del diseño muestral, integrando los factores de expansión, estratos y unidades de muestreo en los cálculos estadísticos.</p>
 <p>Es importante resaltar que los ejemplos iniciales del capítulo se desarrollan únicamente con fines ilustrativos y no poseen interpretación poblacional, ya que no incorporan aún el diseño muestral ni los factores de expansión. No obstante, en la parte final se muestra cómo estos elementos pueden incluirse mediante la creación de un objeto de diseño y la obtención de estimaciones válidas desde la perspectiva de la inferencia estadística en encuestas complejas.</p>
 <p>Con esto se busca que el lector adquiera las habilidades básicas para transformar datos de encuestas en <code>R</code> y dar el paso hacia análisis más rigurosos que consideren la estructura del diseño muestral.</p>
-<div id="fundamentos-básicos-de-r-y-rstudio" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Fundamentos básicos de R y Rstudio<a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#fundamentos-básicos-de-r-y-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>R fue creado en 1992 en Nueva Zelanda por Ross Ihaka y Robert Gentleman con el propósito de ofrecer un entorno potente, flexible y gratuito para el análisis estadístico. Desde entonces, se ha consolidado como uno de los lenguajes más utilizados tanto en el ámbito académico como en el profesional, gracias a su capacidad para realizar desde análisis descriptivos hasta modelamientos complejos y a que no requiere de ninguna licencia, ya que puede descargarse de forma gratuita en <a href="https://www.r-project.org">https://www.r-project.org</a></p>
-<p>Como lo mencionan <span class="citation">Santana Sepúlveda &amp; Mateos Farfán (<a href="#ref-santana2014arte">2014</a>)</span>, R es un lenguaje de programación de libre distribución, bajo Licencia GNU, desarrollado para el cómputo estadístico y gráfico. A diferencia de otros programas que reúnen herramientas aisladas, R constituye un ambiente integral, diseñado para ejecutarse en diversos sistemas operativos (Windows, macOS y Linux). Su estructura ha permitido que la comunidad científica contribuya con miles de paquetes especializados, disponibles en el Comprehensive R Archive Network (CRAN), lo que ha impulsado su expansión y versatilidad.</p>
-<p>Ahora bien, al ser un lenguaje de programación, la interfaz de R puede resultar poco intuitiva para quienes se inician en su uso. Para facilitar la interacción con el lenguaje y potenciar sus capacidades, se desarrolló RStudio, un Entorno de Desarrollo Integrado (IDE) que proporciona una interfaz amigable, organizada y visualmente clara. RStudio integra en una misma ventana el editor de código, la consola, el entorno de objetos y los resultados gráficos, haciendo que la experiencia de programación y análisis sea más fluida y eficiente.</p>
-<p>El carácter libre y abierto de R ha promovido su adopción en el procesamiento y análisis de encuestas, convirtiéndolo en una herramienta clave. Su flexibilidad permite implementar los desarrollos metodológicos más recientes en inferencia estadística y en el análisis de datos provenientes de muestras tanto probabilísticas como no probabilísticas.</p>
-</div>
-<div id="paquetes-para-el-análisis-de-encuestas" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Paquetes para el análisis de encuestas<a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#paquetes-para-el-análisis-de-encuestas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>El poder de R reside en su ecosistema de paquetes colaborativos, desarrollados por investigadores y profesionales de todo el mundo. En el ámbito de las encuestas de hogares, existen paquetes especializados que cubren cada etapa del proceso analítico: desde el diseño muestral hasta la estimación y modelamiento estadístico.</p>
-<p>Entre los paquetes más relevantes se destacan:</p>
-<ul>
-<li><p><code>samplesize4surveys</code> <span class="citation">(<a href="#ref-Gutierrez2020">Gutiérrez, 2020a</a>)</span>: facilita el cálculo de tamaños de muestra para individuos y hogares, tanto en encuestas transversales como en paneles o diseños rotacionales.</p></li>
-<li><p><code>sampling</code> <span class="citation">(<a href="#ref-Tille2025">Tillé &amp; Matei, 2025</a>)</span> y <code>TeachingSampling</code> <span class="citation">(<a href="#ref-GutierrezT2020">Gutiérrez, 2020b</a>)</span>: proporcionan herramientas para la selección de muestras probabilísticas según diferentes diseños y algoritmos de muestreo.</p></li>
-<li><p><code>survey</code> <span class="citation">(<a href="#ref-Lumley2024">Lumley, 2024</a>)</span>: publicado desde el 2004 y desarrollado continuamente, permite especificar el diseño muestral mediante la función <code>svydesign()</code> y obtener estimaciones insesgadas de totales, medias, proporciones y errores estándar ajustados al diseño. Mientras que el paquete <code>srvyr</code> <span class="citation">(<a href="#ref-Freedman2024">Freedman Ellis &amp; Schneider, 2024</a>)</span> permite usar el paquete <code>survey</code> con el estilo de programación de <code>dplyr</code>.</p></li>
-<li><p><code>convey</code> <span class="citation">(<a href="#ref-covey2024">Jacob et al., 2024</a>)</span>: amplía las funcionalidades del paquete <code>survey</code>, incorporando medidas de desigualdad, bienestar y pobreza.</p></li>
-<li><p><code>svydiags</code> <span class="citation">(<a href="#ref-Valliant2024">Valliant, 2024</a>)</span>: ofrece herramientas de diagnóstico para modelos ajustados a datos complejos, como análisis de residuos, valores de apalancamiento, factores de inflación de varianza y pruebas de multicolinealidad.</p></li>
-<li><p><code>PracTools</code> <span class="citation">(<a href="#ref-Valliant2025">Valliant &amp; Zipf, 2025</a>)</span>: proporciona utilidades para el cálculo del tamaño de muestra, el diseño de muestreo, la estimación de efectos de diseño y el análisis de componentes de varianza en esquemas multietápicos.</p></li>
-</ul>
-<p>En conjunto, este ecosistema de paquetes convierte a R en un entorno sumamente robusto para el análisis de encuestas de hogares, desde la planificación del diseño hasta la inferencia estadística y la generación de indicadores complejos.</p>
-</div>
-<div id="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> Paquetes complementarios para la manipulación y visualización de datos<a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#paquetes-complementarios-para-la-manipulación-y-visualización-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>El análisis de encuestas no solo requiere herramientas estadísticas especializadas, sino también un entorno que facilite la limpieza, transformación, organización y visualización de los datos. En este sentido, uno de los mayores aportes al programa R ha sido el desarrollo del <code>tidyverse</code>, que contiene una colección de paquetes creados principalmente por Hadley Wickham y colaboradores, orientados a simplificar y estandarizar el flujo de trabajo <span class="citation">(<a href="#ref-Wickham2019">Wickham, 2019</a>; <a href="#ref-Wickham2023">Wickham et al., 2023</a>; <a href="#ref-WickhamGrolemund2017">Wickham &amp; Grolemund, 2017</a>)</span>.</p>
-<p>Entre los paquetes más relevantes del <code>tidyverse</code> se destacan:</p>
-<ul>
-<li><p><code>dplyr</code>, proporciona un conjunto de verbos intuitivos para transformar datos (como <code>filter()</code>, <code>mutate()</code>, <code>summarise()</code> y <code>group_by()</code>), optimizados para un procesamiento rápido incluso cuando las bases son grandes, como en el caso de censos de población.</p></li>
-<li><p><code>tidyr</code>: facilita la organización y depuración de los datos, permitiendo pasar de formatos anchos a largos o viceverza usando funciones como <code>pivot_longer()</code> o <code>pivot_wider()</code> y permite la gestión de datos faltantes o desestructurados.</p></li>
-<li><p><code>purrr</code>: extiende las capacidades de programación funcional dentro de R, reemplazando bucles con funciones como <code>map()</code> para aplicar operaciones repetitivas de manera más legible y segura.</p></li>
-<li><p><code>ggplot2</code>: implementa lo que se conoce como la <em>Gramática de los Gráficos</em>, un marco conceptual que permite construir visualizaciones complejas mediante la combinación de capas de datos, geometrías y temas, generando gráficos reproducibles y de alta calidad.</p></li>
-<li><p><code>haven</code>: facilita la importación de bases de datos provenientes de software estadísticos como SPSS, Stata y SAS, preservando etiquetas de variables y valores, formatos de fecha y metadatos.</p></li>
-<li><p><code>readr</code>, <code>stringr</code>, <code>forcats</code> y otros complementan el ecosistema al ofrecer funciones eficientes para importar datos, funciones para tratar textos, entre otros.</p></li>
-</ul>
-<p>De esta manera, <code>tidyverse</code> es un entorno de trabajo que facilita los flujos de trabajo reproducibles y replicables en un lenguaje fácil de entender, en el que cada paquete contribuye a una parte del proceso analítico, desde la importación de datos hasta la comunicación de resultados.</p>
-<p>R funciona como su teléfono móvil, antes de usar una aplicación, es necesario que sea instalada, en este caso los paquetes deben instalarse desde CRAN usando el comando <code>install.packages()</code>:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb22-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;survey&quot;</span>)</span>
-<span id="cb22-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb22-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;srvyr&quot;</span>)</span>
-<span id="cb22-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb22-3" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;TeachingSampling&quot;</span>)</span>
-<span id="cb22-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb22-4" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;samplesize4surveys&quot;</span>)</span>
-<span id="cb22-5"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb22-5" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
-<span id="cb22-6"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb22-6" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;haven&quot;</span>)</span></code></pre></div>
-<p>Una vez instalados los paquetes necesarios, el siguiente paso consiste en cargarlos en la sesión de trabajo. Esto se realiza mediante la función <code>library</code>, que indica a R que deseamos utilizar las herramientas y funciones contenidas en cada paquete.</p>
-<blockquote>
-<p><strong>Nota:</strong> antes de cargar un paquete, asegúrese de que haya sido instalado correctamente;<br />
-de lo contrario, R mostrará un mensaje de error indicando que el paquete no se encuentra disponible.</p>
-</blockquote>
-<p>A continuación, se muestra el bloque de código que limpia el entorno de trabajo y carga las principales librerías empleadas para este ejemplo:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb23-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
-<span id="cb23-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb23-2" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb23-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;survey&quot;</span>)</span>
-<span id="cb23-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb23-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;srvyr&quot;</span>)</span>
-<span id="cb23-5"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb23-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;TeachingSampling&quot;</span>)</span>
-<span id="cb23-6"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb23-6" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;samplesize4surveys&quot;</span>)</span>
-<span id="cb23-7"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb23-7" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
-<span id="cb23-8"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb23-8" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;haven&quot;</span>)</span></code></pre></div>
-<p>Es importante resaltar que el ecosistema <code>tidyverse</code> incluye por defecto los siguientes paquetes principales: <code>ggplot2</code>, <code>dplyr</code>, <code>tidyr</code>, <code>readr</code>, <code>tibble</code>, <code>stringr</code>, <code>forcats</code>, y <code>purrr</code>. Paquetes afines como <code>haven</code>, <code>lubridate</code>, <code>readxl</code>, o <code>DBI</code> forman parte del ecosistema <code>tidyverse</code>, pero no se cargan automáticamente con <code>library(tidyverse)</code> para mantener el entorno más liviano.</p>
-</div>
-<div id="creación-de-proyectos-en-r" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> Creación de proyectos en <code>R</code><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#creación-de-proyectos-en-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Una vez instaladas las librerías o paquetes necesarios en R, el siguiente paso consiste en organizar el entorno de trabajo mediante la creación de un proyecto.</p>
-<p>Un proyecto de R se define como un archivo que contiene que agrupa todos los archivos asociados a un mismo trabajo, como los códigos o scripts, bases de datos, gráficos, documentos y resultados. Además, almacena información que facilita la compilación de scripts, la integración con sistemas de control de versiones (como Git), y la gestión del directorio de trabajo de forma automática.</p>
-<p>Adoptar el uso de proyectos forma parte de las buenas prácticas de programación reproducible, ya que permite mantener en un solo lugar todos los elementos vinculados a un análisis, garantizando la trazabilidad, la portabilidad y la replicabilidad del trabajo.</p>
-<p>A continuación, se describen los pasos para crear un nuevo proyecto en <code>RStrudio</code>:</p>
-<ul>
-<li><p><strong>Paso 1:</strong> Abrir <code>RStudio</code>.</p></li>
-<li><p><strong>Paso 2:</strong> ir a la barra de menú, seleccionar File -&gt; New Project <img src="Imagenes/Cap%200/Proyecto1.png" width="450" alt="Paso 2: Crear el proyecto" /></p></li>
-<li><p><em>Paso 3:</em> Elegir el tipo de proyecto.</p></li>
-</ul>
-<p>Para este ejemplo, se selecciona la opción <em>New Directory</em></p>
-<div class="float">
-<img src="Imagenes/Cap%200/Proyecto2.png" width="450" alt="Tipos de proyectos" />
-<div class="figcaption"><em>Tipos de proyectos</em></div>
-</div>
-<p>En este paso, <code>RStudio</code> ofrece varias alternativas dependiendo las características del procesamiento que desea realizar el usuario. Ahora bien, si se cuenta con algunos códigos previamente desarrollados y se desea continuar con ese proyecto, se debe tomar la opción <em>Existing Directory</em> . Por último, Si se cuenta con cuenta en <em>Git</em> y se desea tener una copia de seguridad, se debe emplear la opción <em>Version Control</em>.</p>
-<ul>
-<li><em>Paso 4:</em> Seleccionar el tipo de proyecto a crear.</li>
-</ul>
-<div class="float">
-<img src="Imagenes/Cap%200/Proyecto3.png" width="450" alt="Seleccionar el tipo de proyecto" />
-<div class="figcaption"><em>Seleccionar el tipo de proyecto</em></div>
-</div>
-<ul>
-<li><em>Paso 5</em>: Asignar un nombre al proyecto y elegir la carpeta de destino donde se almacenará.</li>
-</ul>
-<div class="float">
-<img src="Imagenes/Cap%200/Proyecto4.png" width="450" alt="Nombre de proyecto" />
-<div class="figcaption"><em>Nombre de proyecto</em></div>
-</div>
-<p>Una vez completados estos pasos, <code>RStudio</code> crea automáticamente una carpeta de trabajo con la extensión .Rproj. A partir de ese momento, todas las rutas de acceso y los archivos creados quedarán anclados a la carpeta del proyecto, lo cual evita errores en las rutas relativas y facilita compartir o replicar el análisis en otros equipos.</p>
-</div>
-<div id="lectura-de-bases-de-datos-y-manipulación" class="section level2 hasAnchor" number="3.5">
-<h2><span class="header-section-number">3.5</span> Lectura de bases de datos y manipulación<a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#lectura-de-bases-de-datos-y-manipulación" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>En la mayoría de los proyectos desarrollados en <code>R</code> es necesario importar bases de datos que contienen la información sobre la cual se realizará el análisis estadístico. En Colombia, por ejemplo, en la <em>Encuesta de Calidad de Vida (ECV, por sus siglas)</em> es necesario, una vez se realiza el trabajo de campo, importar la información recolectada para poder ajustar los factores de expansión y posteriormente estimar los parámetros.</p>
-<p><code>R</code> ofrece gran flexibilidad en la importación de datos, ya que admite diversos formatos como .xlsx, .csv, .txt, .sav (SPSS), .sas7bdat (SAS) o .dta (Stata). Para facilitar esta tarea, el paquete <code>haven</code>, que hace parte del ecosistema <code>tidyverse</code>, permite leer y escribir archivos de múltiples formatos estadísticos de manera eficiente y con una codificación consistente de etiquetas, valores perdidos y metadatos <span class="citation">(<a href="#ref-Wickham2019">Wickham, 2019</a>; <a href="#ref-haven">Wickham et al., 2025</a>)</span>.</p>
-<p>A manera de ejemplo, se utilizará la base de datos de la <em>Pesquisa Nacional por Amostra de Domicílios 2015 </em> de Brasil, disponible en formato <code>.dta</code> (Stata). La lectura de este archivo se realiza con la función <code>read_dta()</code> del paquete <code>haven</code>. Posteriormente, se guardará en formato <code>.rds</code> mediante la función <code>saveRDS()</code>, ya que este formato es propio de <code>R</code> y permite un almacenamiento más rápido, compacto y eficiente. El proceso se desarrolla de la siguiente forma:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb24-1" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">&quot;Z:/BC/BRA_2015N.dta&quot;</span>)</span>
-<span id="cb24-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb24-2" tabindex="-1"></a><span class="fu">saveRDS</span>(data1, <span class="st">&quot;../Data/BRA_2015N.rds&quot;</span>)</span></code></pre></div>
-<p>Una vez guardada la base en nuestros archivos de trabajo, se procede a cargar la base a <code>R</code> con la función <code>readRDS</code> para poder utilizar toda la información que en ella se contiene.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb25-1" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Data/BRA_2015N.rds&quot;</span>)</span></code></pre></div>
-<p>Una vez cargada la base de datos en <code>R</code> ésta se puede empezar a manipular según las necesidades de cada investigador. En este sentido, una de las primeras revisiones que se realizan al cargar las bases de datos es revisar su dimensión, es decir, chequear la cantidad de filas y columnas que tenga la base. Lo anterior se puede hacer con la función <code>nrow</code>. Dicha función identifica el número de registros (unidades efectivamente medidas) en la base de datos y la función <code>ncol</code> muestra el número de variables en la base de datos. Los códigos computacionales son los siguientes:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb26-1" tabindex="-1"></a><span class="fu">nrow</span>(data2)</span></code></pre></div>
-<pre><code>## [1] 356904</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb28-1" tabindex="-1"></a><span class="fu">ncol</span>(data2)</span></code></pre></div>
-<pre><code>## [1] 109</code></pre>
-<p>Una forma resumida de revisar la cantidad de filas y columnas que tiene la base de datos es usar la función <code>dim</code>. Esta función nos devuelve un vector indicado en su primera componente la cantidad de fila y en su segundo la cantidad de columnas como se muestra a continuación:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb30-1" tabindex="-1"></a><span class="fu">dim</span>(data2)</span></code></pre></div>
-<pre><code>## [1] 356904    109</code></pre>
-<p>Es usual que en las encuestas de hogares las bases de datos sean muy extensas, es decir, contengan una cantidad importante de variables (columnas) y por lo general, el tamaño de la muestra de estos estudios es grande. Por ello, para visualizar su contenido de manera interactiva, <code>RStudio</code> ofrece el comando <code>View()</code> que abre la base de datos en una pestaña independiente, como se ilustra en la Figura <a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#fig:fig-view-data2">3.1</a>:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb32-1" tabindex="-1"></a><span class="fu">View</span>(data2)</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:fig-view-data2"></span>
-<img src="Imagenes/Cap%200/1.png" alt="Visor de bases de datos de RStudio (función View)" width="100%" />
-<p class="caption">
-Figura 3.1: Visor de bases de datos de RStudio (función View)
-</p>
-</div>
-<p>Otro paso fundamental tras la importación es revisar las variables disponibles en la base. Esto puede hacerse con la función <code>names</code>, que devuelve un vector con los nombres de las variables:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb33-1" tabindex="-1"></a><span class="fu">names</span>(data2)</span></code></pre></div>
-<p>No obstante, si se desea explorar la estructura interna de la base, tales como: tipos de datos, niveles de factores, longitud y primeros valores, la función <code>str()</code> resulta más completa y compacta:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb34-1" tabindex="-1"></a><span class="fu">str</span>(data2)</span></code></pre></div>
-<p>Por ejemplo, cuando el usuario compile la sentencia, observará que la variable <em>id_hogar</em> es de tipo <em>entero</em> al igual que <em>id_pers</em> mientras que <em>cotiza_ee</em> es un factor con 2 niveles. Este tipo de diagnóstico inicial es esencial para familiarizarse con la naturaleza de los datos y planificar adecuadamente los pasos siguientes del procesamiento, especialmente en encuestas de hogares, donde existen múltiples tipos de variables (numéricas, categóricas, binarias, ordinales, entre otras).</p>
-</div>
-<div id="el-operador-pipe" class="section level2 hasAnchor" number="3.6">
-<h2><span class="header-section-number">3.6</span> El operador <code>pipe</code><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#el-operador-pipe" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>El software estadístico <code>R</code> es un lenguaje de programación creado por estadísticos para estadísticos, que ha evolucionado hacia un ecosistema sumamente versátil para el análisis de datos. Una de las contribuciones más importantes de los últimos años es la introducción de los <code>pipelines</code> o flujos de trabajo encadenados, los cuales permiten escribir código de manera más legible y natural.</p>
-<p>El operador pipe, representado por <code>%&gt;%</code>, fue introducido por el paquete <code>magrittr</code> <span class="citation">(<a href="#ref-pipe">Bache &amp; Wickham, 2025</a>)</span> y hoy forma parte fundamental del ecosistema <code>tidyverse</code>, donde se carga automáticamente al activar <code>library(tidyverse)</code>.</p>
-<p>El objetivo principal del operador <code>%&gt;%</code> es ayudar a escribir código de una manera que sea más fácil de leer y entender. En lugar de anidar múltiples funciones dentro de otras, el operador <code>pipe</code> permite escribir los pasos de un análisis en una secuencia lógica, tal como se leería una receta o un procedimiento.</p>
-<p>A continuación, se ejemplifica su uso con la base de datos de Brasil, realizando un conteo del total de registros contenidos en la base mediante la función<code>count</code>.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb35-1" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span> <span class="fu">count</span>()</span></code></pre></div>
-<pre><code>##        n
-## 1 356904</code></pre>
-<p>El operador <code>%&gt;%</code> puede combinarse con una amplia variedad de funciones para la manipulación de datos, entre las cuales destacan:</p>
-<ul>
-<li><strong>filter()</strong>: selecciona filas que cumplen una condición.</li>
-<li><strong>select()</strong>: elige columnas específicas por nombre.</li>
-<li><strong>arrange()</strong>: ordena las filas según una o más variables.</li>
-<li><strong>mutate()</strong>: crea nuevas variables o transforma las existentes.</li>
-<li><strong>summarise()</strong>: resume la información en valores agregados.</li>
-<li><strong>group_by()</strong>: agrupa la base según una o más variables, permitiendo cálculos por grupo.</li>
-</ul>
-<p>Por ejemplo, en encuestas de hogares, una de las primeras tareas consiste en recodificar variables para facilitar su interpretación. En el siguiente ejemplo se generan los nombres completos de los estados de Brasil:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb37-1" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb37-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb37-2" tabindex="-1"></a>         <span class="fu">mutate</span>(<span class="at">estados =</span> <span class="fu">factor</span>(uf, </span>
-<span id="cb37-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb37-3" tabindex="-1"></a>                <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">11</span><span class="sc">:</span><span class="dv">17</span>, <span class="dv">21</span><span class="sc">:</span><span class="dv">29</span>, <span class="dv">31</span><span class="sc">:</span><span class="dv">33</span>, <span class="dv">35</span>, <span class="dv">41</span><span class="sc">:</span><span class="dv">43</span>, <span class="dv">50</span><span class="sc">:</span><span class="dv">53</span>), </span>
-<span id="cb37-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb37-4" tabindex="-1"></a>                <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Rondonia&quot;</span>, <span class="st">&quot;Acre&quot;</span>, <span class="st">&quot;Amazonas&quot;</span>, <span class="st">&quot;Roraima&quot;</span>, </span>
-<span id="cb37-5"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb37-5" tabindex="-1"></a>                           <span class="st">&quot;Para&quot;</span>, <span class="st">&quot;Amapa&quot;</span>, <span class="st">&quot;Tocantins&quot;</span>, <span class="st">&quot;Maranhao&quot;</span>, </span>
-<span id="cb37-6"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb37-6" tabindex="-1"></a>                           <span class="st">&quot;Piaui&quot;</span>, <span class="st">&quot;Ceara&quot;</span>, <span class="st">&quot;RioGrandeNorte&quot;</span>, <span class="st">&quot;Paraiba&quot;</span>,</span>
-<span id="cb37-7"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb37-7" tabindex="-1"></a>                           <span class="st">&quot;Pernambuco&quot;</span>, <span class="st">&quot;Alagoas&quot;</span>, <span class="st">&quot;Sergipe&quot;</span>, <span class="st">&quot;Bahia&quot;</span>, </span>
-<span id="cb37-8"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb37-8" tabindex="-1"></a>                           <span class="st">&quot;MinasGerais&quot;</span>, <span class="st">&quot;EspirituSanto&quot;</span>, <span class="st">&quot;RioJaneiro&quot;</span>, </span>
-<span id="cb37-9"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb37-9" tabindex="-1"></a>                           <span class="st">&quot;SaoPaulo&quot;</span>, <span class="st">&quot;Parana&quot;</span>, <span class="st">&quot;SantaCatarina&quot;</span>, </span>
-<span id="cb37-10"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb37-10" tabindex="-1"></a>                           <span class="st">&quot;RioGrandeSur&quot;</span>, <span class="st">&quot;MatoGrossoSur&quot;</span>, <span class="st">&quot;MatoGrosso&quot;</span>, </span>
-<span id="cb37-11"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb37-11" tabindex="-1"></a>                           <span class="st">&quot;Goias&quot;</span>, <span class="st">&quot;DistritoFederal&quot;</span>)))</span></code></pre></div>
-<p>De igual manera, para efectos de visualización en tablas y gráficos es conviene codificar los nombres de las variables. Para este ejemplo, se codificarán de la siguiente manera:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb38-1" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb38-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb38-2" tabindex="-1"></a>         <span class="fu">mutate</span>(<span class="at">deptos =</span> <span class="fu">factor</span>(uf, </span>
-<span id="cb38-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb38-3" tabindex="-1"></a>                <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">11</span><span class="sc">:</span><span class="dv">17</span>, <span class="dv">21</span><span class="sc">:</span><span class="dv">29</span>, <span class="dv">31</span><span class="sc">:</span><span class="dv">33</span>, <span class="dv">35</span>, <span class="dv">41</span><span class="sc">:</span><span class="dv">43</span>, <span class="dv">50</span><span class="sc">:</span><span class="dv">53</span>), </span>
-<span id="cb38-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb38-4" tabindex="-1"></a>                <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;RO&quot;</span>, <span class="st">&quot;AC&quot;</span>, <span class="st">&quot;AM&quot;</span>, <span class="st">&quot;RR&quot;</span>, <span class="st">&quot;PA&quot;</span>, </span>
-<span id="cb38-5"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb38-5" tabindex="-1"></a>                <span class="st">&quot;AP&quot;</span>, <span class="st">&quot;TO&quot;</span>, <span class="st">&quot;MA&quot;</span>, <span class="st">&quot;PI&quot;</span>, <span class="st">&quot;CE&quot;</span>, <span class="st">&quot;RN&quot;</span>, <span class="st">&quot;PB&quot;</span>, </span>
-<span id="cb38-6"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb38-6" tabindex="-1"></a>                <span class="st">&quot;PE&quot;</span>, <span class="st">&quot;AL&quot;</span>, <span class="st">&quot;SE&quot;</span>, <span class="st">&quot;BA&quot;</span>, <span class="st">&quot;MG&quot;</span>, <span class="st">&quot;ES&quot;</span>, <span class="st">&quot;RJ&quot;</span>, <span class="st">&quot;SP&quot;</span>,</span>
-<span id="cb38-7"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb38-7" tabindex="-1"></a>                <span class="st">&quot;PR&quot;</span>, <span class="st">&quot;SC&quot;</span>, <span class="st">&quot;RS&quot;</span>, <span class="st">&quot;MS&quot;</span>, <span class="st">&quot;MT&quot;</span>, <span class="st">&quot;GO&quot;</span>, <span class="st">&quot;DF&quot;</span>)))</span></code></pre></div>
-<p>Otro de los ejercicios que se hacen usualmente con las encuestas de hogares está relacionado con saber la cantidad de hogares que hay en el país de estudio. Una de las formas más sencillas de hacer esta revisión es usar la función <code>filter</code>. Las encuestas de hogares muchas veces recopilan información a nivel de viviendas, hogares y personas. Particularmente, las bases de datos que están disponibles en <code>BADEHOG</code> están a nivel de persona. Ahora bien, para conocer la cantidad de hogares que se encuestaron basta con filtrar por hogar porque sólo hay un jefe de hogar por hogar, como se muestra a continuación:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb39-1" tabindex="-1"></a>datahogar1 <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(parentco <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb39-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb39-2" tabindex="-1"></a>datahogar2 <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(paren_ee <span class="sc">==</span> <span class="st">&quot;Jefe&quot;</span>) </span></code></pre></div>
-<p>Por otro lado, si el interés ahora es filtrar la base de datos por la ubicación de la persona en el área rural y urbana se realiza de la siguiente manera:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb40-1" tabindex="-1"></a>dataurbano <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb40-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb40-2" tabindex="-1"></a>              <span class="fu">filter</span>(area_ee <span class="sc">==</span> <span class="st">&quot;Area urbana&quot;</span>)</span>
-<span id="cb40-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb40-3" tabindex="-1"></a>datarural <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb40-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb40-4" tabindex="-1"></a>             <span class="fu">filter</span>(area_ee <span class="sc">==</span> <span class="st">&quot;Area rural&quot;</span>) </span></code></pre></div>
-<p>En este mismo sentido, si el objetivo ahora es filtrar la base de datos por algunos ingresos particulares mensuales por personas, por ejemplo, altos o bajos, se realiza de la siguiente manera:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb41-1" tabindex="-1"></a>dataingreso1 <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb41-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb41-2" tabindex="-1"></a>                <span class="fu">filter</span>(ingcorte <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">100</span>))</span>
-<span id="cb41-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb41-3" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb41-4" tabindex="-1"></a>dataingreso2 <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb41-5"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb41-5" tabindex="-1"></a>                <span class="fu">filter</span>(ingcorte <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">2000</span>))</span></code></pre></div>
-<p>Otro verbo muy útil en el análisis en encuestas de hogares es la función <code>select()</code> la cual, como se mencionó anteriormente permite seleccionar un grupo de variables de interés a analizar. Si por ejemplo, se desea seleccionar de la base de ejemplo solo las variables identificación del hogar (<code>id_hogar</code>), unidades primarias de muestreo (<code>_upm</code>), factores de expansión (<code>_feh</code>) y estratos muestrales ( <code>_estrato</code>) se realiza de la siguiente manera:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb42-1" tabindex="-1"></a>datared <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb42-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb42-2" tabindex="-1"></a>           <span class="fu">select</span>(<span class="st">`</span><span class="at">id_hogar</span><span class="st">`</span>, <span class="st">`</span><span class="at">_upm</span><span class="st">`</span>, <span class="st">`</span><span class="at">_feh</span><span class="st">`</span>, <span class="st">`</span><span class="at">_estrato</span><span class="st">`</span>)</span>
-<span id="cb42-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb42-3" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb42-4" tabindex="-1"></a>datablue <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb42-5"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb42-5" tabindex="-1"></a>            <span class="fu">select</span>(id_pers, edad, sexo, ingcorte)</span></code></pre></div>
-<p>El verbo <code>select()</code> no solo sirve para seleccionar variables de una base de datos, también se puede utilizar para eliminar algunas variables de la base de datos que ya no son de interés para el análisis o que simplemente se generaron en la manipulación de la base de datos como variables puentes para realizar algunos cálculos de interés. Por ejemplo, si se desea eliminar de la base de datos de ejemplo las variables identificación del hogar (<code>id_hogar</code>) e identificación de las personas (<code>id_pers</code>) se realiza introduciendo un signo “menos” (-) delante del nombre de la variable como sigue:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb43-1" tabindex="-1"></a>datagrey <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb43-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb43-2" tabindex="-1"></a>            <span class="fu">select</span>(<span class="sc">-</span>id_hogar, <span class="sc">-</span>id_pers)</span></code></pre></div>
-<p>Por otro lado, si el objetivo ahora en análisis de las encuestas de hogares es ordenar las filas de la base por alguna variable en particular, se utiliza en <code>R</code> la función <code>arrange()</code> para realizar esta operación. A continuación, la Tabla <a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#tab:tab-arrange-ingreso">3.1</a> ejemplifica el uso de <code>arrange()</code> con la base de datos, ordenando de forma descendente por la variable <em>ingcorte</em>:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb44-1" tabindex="-1"></a>datadog <span class="ot">&lt;-</span> datablue <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>ingcorte)</span>
-<span id="cb44-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb44-2" tabindex="-1"></a>datadog <span class="sc">%&gt;%</span> <span class="fu">head</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb44-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb44-3" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
-<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
-<caption style="font-size: initial !important;">
-<span id="tab:tab-arrange-ingreso">Cuadro 3.1: </span><span id="tab:tab-arrange-ingreso">Cuadro 3.2: </span>Base de datos ordenada de forma descendente por ingreso
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-id_pers
-</th>
-<th style="text-align:center;font-weight: bold;">
-edad
-</th>
-<th style="text-align:center;font-weight: bold;">
-sexo
-</th>
-<th style="text-align:center;font-weight: bold;">
-ingcorte
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:center;">
-74
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-171000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:center;">
-65
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-121980
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:center;">
-66
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-121980
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:center;">
-79
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-81700
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:center;">
-49
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-81700
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-3
-</td>
-<td style="text-align:center;">
-13
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-81700
-</td>
-</tr>
-</tbody>
-</table>
-<p>Es posible utilizar la función <code>arrange()</code> para hacer ordenamientos más complicados. Por ejemplo, ordenar por más de una variable. A modo de ejemplo, la Tabla <a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#tab:tab-arrange-sexo-edad">3.3</a> muestra la base de datos <em>datablue</em> ordenada por las variables <em>sexo</em> y <em>edad</em>:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb45-1" tabindex="-1"></a>datablue <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(sexo, edad) <span class="sc">%&gt;%</span> <span class="fu">head</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb45-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb45-2" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
-<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
-<caption style="font-size: initial !important;">
-<span id="tab:tab-arrange-sexo-edad">Cuadro 3.3: </span><span id="tab:tab-arrange-sexo-edad">Cuadro 3.4: </span>Base de datos ordenada por sexo y edad
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-id_pers
-</th>
-<th style="text-align:center;font-weight: bold;">
-edad
-</th>
-<th style="text-align:center;font-weight: bold;">
-sexo
-</th>
-<th style="text-align:center;font-weight: bold;">
-ingcorte
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-6
-</td>
-<td style="text-align:center;">
-0
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-660.440
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-6
-</td>
-<td style="text-align:center;">
-0
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-162.500
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-3
-</td>
-<td style="text-align:center;">
-0
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-381.667
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-5
-</td>
-<td style="text-align:center;">
-0
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-320.000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-6
-</td>
-<td style="text-align:center;">
-0
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-375.000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-4
-</td>
-<td style="text-align:center;">
-0
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-1425.000
-</td>
-</tr>
-</tbody>
-</table>
-<p>También es posible utilizar la función <code>arrange()</code> junto con la opción <code>desc()</code> para que el ordenamiento sea descendente, como se ilustra en la Tabla <a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#tab:tab-arrange-edad-desc">3.5</a>.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb46-1" tabindex="-1"></a>datablue <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(edad)) <span class="sc">%&gt;%</span> <span class="fu">head</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb46-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb46-2" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
-<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
-<caption style="font-size: initial !important;">
-<span id="tab:tab-arrange-edad-desc">Cuadro 3.5: </span><span id="tab:tab-arrange-edad-desc">Cuadro 3.6: </span>Base de datos ordenada de forma descendente por edad
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-id_pers
-</th>
-<th style="text-align:center;font-weight: bold;">
-edad
-</th>
-<th style="text-align:center;font-weight: bold;">
-sexo
-</th>
-<th style="text-align:center;font-weight: bold;">
-ingcorte
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:center;">
-115
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-103.00
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-4
-</td>
-<td style="text-align:center;">
-110
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-1156.53
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:center;">
-107
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-415.59
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:center;">
-107
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-1754.46
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-3
-</td>
-<td style="text-align:center;">
-105
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-380.79
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:center;">
-105
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-898.32
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="transformación-y-resumen-de-datos" class="section level2 hasAnchor" number="3.7">
-<h2><span class="header-section-number">3.7</span> Transformación y resumen de datos<a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#transformación-y-resumen-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Las funciones <code>mutate()</code>, <code>summarise()</code> y <code>group_by()</code> forman parte del ecosistema <code>tidyverse</code>, y son herramientas fundamentales para la manipulación y análisis de datos provenientes de encuestas de hogares.</p>
-<p>La función <code>mutate()</code> permite crear nuevas variables o modificar las existentes dentro de una base de datos. En el contexto de las encuestas de hogares, es común generar variables nuevas variables que faciliten el análisis, como indicadores de pobreza, necesidades básicas, entre otros.</p>
-<p>Por ejemplo, la Tabla <a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#tab:tab-mutate-ingreso2">3.7</a> muestra la base <em>datablue</em> con la nueva variable <em>ingreso2</em>, que representa el doble del ingreso individual:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb47-1" tabindex="-1"></a>datablue2 <span class="ot">&lt;-</span> datablue <span class="sc">%&gt;%</span></span>
-<span id="cb47-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb47-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ingreso2 =</span> <span class="dv">2</span> <span class="sc">*</span> ingcorte)</span>
-<span id="cb47-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb47-3" tabindex="-1"></a>datablue2 <span class="sc">%&gt;%</span> <span class="fu">head</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb47-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb47-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
-<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
-<caption style="font-size: initial !important;">
-<span id="tab:tab-mutate-ingreso2">Cuadro 3.7: </span><span id="tab:tab-mutate-ingreso2">Cuadro 3.8: </span>Variable ingreso duplicado (ingreso2) creada con mutate()
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-id_pers
-</th>
-<th style="text-align:center;font-weight: bold;">
-edad
-</th>
-<th style="text-align:center;font-weight: bold;">
-sexo
-</th>
-<th style="text-align:center;font-weight: bold;">
-ingcorte
-</th>
-<th style="text-align:center;font-weight: bold;">
-ingreso2
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:center;">
-23
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-800.0
-</td>
-<td style="text-align:center;">
-1600.0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:center;">
-23
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-1150.0
-</td>
-<td style="text-align:center;">
-2300.0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:center;">
-35
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-904.4
-</td>
-<td style="text-align:center;">
-1808.8
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:center;">
-34
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-904.4
-</td>
-<td style="text-align:center;">
-1808.8
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-3
-</td>
-<td style="text-align:center;">
-11
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-904.4
-</td>
-<td style="text-align:center;">
-1808.8
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-4
-</td>
-<td style="text-align:center;">
-7
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-904.4
-</td>
-<td style="text-align:center;">
-1808.8
-</td>
-</tr>
-</tbody>
-</table>
-<p>Es posible crear varias variables simultáneamente, ya que <code>mutate()</code> reconoce de forma secuencial las variables que se van generando dentro de la misma instrucción. En el siguiente ejemplo se crean dos nuevas variables en la base de datos, como se presenta en la Tabla <a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#tab:tab-mutate-ingreso4">3.9</a>:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb48-1" tabindex="-1"></a>datacat <span class="ot">&lt;-</span> datablue <span class="sc">%&gt;%</span></span>
-<span id="cb48-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb48-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ingreso2 =</span> <span class="dv">2</span> <span class="sc">*</span> ingcorte,</span>
-<span id="cb48-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb48-3" tabindex="-1"></a>         <span class="at">ingreso4 =</span> <span class="dv">2</span> <span class="sc">*</span> ingreso2)</span>
-<span id="cb48-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb48-4" tabindex="-1"></a>datacat <span class="sc">%&gt;%</span> <span class="fu">head</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb48-5"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb48-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
-<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
-<caption style="font-size: initial !important;">
-<span id="tab:tab-mutate-ingreso4">Cuadro 3.9: </span><span id="tab:tab-mutate-ingreso4">Cuadro 3.10: </span>Creación simultánea de dos variables derivadas con mutate()
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-id_pers
-</th>
-<th style="text-align:center;font-weight: bold;">
-edad
-</th>
-<th style="text-align:center;font-weight: bold;">
-sexo
-</th>
-<th style="text-align:center;font-weight: bold;">
-ingcorte
-</th>
-<th style="text-align:center;font-weight: bold;">
-ingreso2
-</th>
-<th style="text-align:center;font-weight: bold;">
-ingreso4
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:center;">
-23
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-800.0
-</td>
-<td style="text-align:center;">
-1600.0
-</td>
-<td style="text-align:center;">
-3200.0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:center;">
-23
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-1150.0
-</td>
-<td style="text-align:center;">
-2300.0
-</td>
-<td style="text-align:center;">
-4600.0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:center;">
-35
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-904.4
-</td>
-<td style="text-align:center;">
-1808.8
-</td>
-<td style="text-align:center;">
-3617.6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:center;">
-34
-</td>
-<td style="text-align:center;">
-Hombre
-</td>
-<td style="text-align:center;">
-904.4
-</td>
-<td style="text-align:center;">
-1808.8
-</td>
-<td style="text-align:center;">
-3617.6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-3
-</td>
-<td style="text-align:center;">
-11
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-904.4
-</td>
-<td style="text-align:center;">
-1808.8
-</td>
-<td style="text-align:center;">
-3617.6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-4
-</td>
-<td style="text-align:center;">
-7
-</td>
-<td style="text-align:center;">
-Mujer
-</td>
-<td style="text-align:center;">
-904.4
-</td>
-<td style="text-align:center;">
-1808.8
-</td>
-<td style="text-align:center;">
-3617.6
-</td>
-</tr>
-</tbody>
-</table>
-<p>La función <code>summarise()</code> (o <code>summarize()</code>) se utiliza para resumir información. A diferencia de <code>mutate()</code>, que agrega nuevas columnas al conjunto de datos, <code>summarise()</code> colapsa filas y devuelve un nuevo conjunto de datos con resultados agregados, como promedios, totales o medidas de dispersión.</p>
-<p>Por ejemplo, podría usarse para calcular el ingreso promedio o el número de observaciones dentro de un grupo específico. Sin embargo, para que el resumen tenga un sentido analítico, suele combinarse con la función <code>group_by()</code>.</p>
-<p>La función <code>group_by()</code> permite definir grupos dentro del conjunto de datos en función de una o más variables categóricas, como región, sexo o área geográfica. Una vez definidos los grupos, es posible aplicar funciones de resumen como <code>summarise()</code> o de transformación como <code>mutate()</code> para obtener resultados por grupo.</p>
-<p>Por ejemplo, el siguiente código muestra cómo generar el número de encuestas efectivas realizadas en cada uno de los estados de Brasil, ordenadas de mayor a menor al usar <code>arrange()</code>, como se muestra en la Tabla <a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#tab:tab-estados-brasil">3.11</a>:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb49-1" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb49-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb49-2" tabindex="-1"></a>  <span class="fu">group_by</span>(estados) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb49-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb49-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-5"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb49-5" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb49-6"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb49-6" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
-<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
-<caption style="font-size: initial !important;">
-<span id="tab:tab-estados-brasil">Cuadro 3.11: </span><span id="tab:tab-estados-brasil">Cuadro 3.12: </span>Número de encuestas por estado de Brasil (primeros seis)
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-estados
-</th>
-<th style="text-align:center;font-weight: bold;">
-n
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-SaoPaulo
-</td>
-<td style="text-align:center;">
-40008
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-MinasGerais
-</td>
-<td style="text-align:center;">
-32933
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-RioGrandeSur
-</td>
-<td style="text-align:center;">
-26259
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Bahia
-</td>
-<td style="text-align:center;">
-26155
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-RioJaneiro
-</td>
-<td style="text-align:center;">
-25858
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Para
-</td>
-<td style="text-align:center;">
-22489
-</td>
-</tr>
-</tbody>
-</table>
-<p>De forma similar, la Tabla <a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#tab:tab-conteo-sexo">3.13</a> muestra el número de encuestas por sexo del respondiente:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb50-1" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb50-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb50-2" tabindex="-1"></a>  <span class="fu">group_by</span>(sexo) <span class="sc">%&gt;%</span> </span>
-<span id="cb50-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb50-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb50-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb50-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
-<span id="cb50-5"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb50-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
-<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
-<caption style="font-size: initial !important;">
-<span id="tab:tab-conteo-sexo">Cuadro 3.13: </span><span id="tab:tab-conteo-sexo">Cuadro 3.14: </span>Número de encuestas por sexo del respondiente
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-sexo
-</th>
-<th style="text-align:center;font-weight: bold;">
-n
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Mujer
-</td>
-<td style="text-align:center;">
-183681
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Hombre
-</td>
-<td style="text-align:center;">
-173223
-</td>
-</tr>
-</tbody>
-</table>
-<p>O en caso de necesitar la consulta del número de encuestas efectivas por área geográfica, los resultados se presentan en la Tabla <a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#tab:tab-conteo-area">3.15</a>:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb51-1" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb51-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb51-2" tabindex="-1"></a>  <span class="fu">group_by</span>(area_ee) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb51-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb51-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
-<span id="cb51-5"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb51-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
-<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
-<caption style="font-size: initial !important;">
-<span id="tab:tab-conteo-area">Cuadro 3.15: </span><span id="tab:tab-conteo-area">Cuadro 3.16: </span>Número de encuestas por área geográfica
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-area_ee
-</th>
-<th style="text-align:center;font-weight: bold;">
-n
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Area urbana
-</td>
-<td style="text-align:center;">
-304564
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Area rural
-</td>
-<td style="text-align:center;">
-52340
-</td>
-</tr>
-</tbody>
-</table>
-<p>Finalmente, la Tabla <a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#tab:tab-conteo-parentesco">3.17</a> muestra la distribución de las entrevistas según el parentesco con el jefe del hogar (jefe, cónyuge, hijos, etc.):</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb52-1" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb52-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb52-2" tabindex="-1"></a>  <span class="fu">group_by</span>(paren_ee) <span class="sc">%&gt;%</span> </span>
-<span id="cb52-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb52-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb52-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb52-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
-<span id="cb52-5"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb52-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
-<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
-<caption style="font-size: initial !important;">
-<span id="tab:tab-conteo-parentesco">Cuadro 3.17: </span><span id="tab:tab-conteo-parentesco">Cuadro 3.18: </span>Distribución de encuestas por parentesco con el jefe del hogar
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-paren_ee
-</th>
-<th style="text-align:center;font-weight: bold;">
-n
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Hijos
-</td>
-<td style="text-align:center;">
-126206
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Jefe
-</td>
-<td style="text-align:center;">
-117939
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Cónyuge
-</td>
-<td style="text-align:center;">
-73725
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Otros parientes
-</td>
-<td style="text-align:center;">
-36508
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Otros no parientes
-</td>
-<td style="text-align:center;">
-2342
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Servicio doméstico
-</td>
-<td style="text-align:center;">
-184
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas" class="section level2 hasAnchor" number="3.8">
-<h2><span class="header-section-number">3.8</span> Diferencias entre el análisis tradicional y el análisis de encuestas complejas<a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>En el análisis de datos tradicional, las observaciones suelen considerarse independientes y con igual probabilidad de selección. Sin embargo, las encuestas de hogares y otras investigaciones por muestreo no siguen este supuesto, ya que provienen de diseños muestrales complejos, que pueden incluir estratos, conglomerados y ponderación desigual.
-Ignorar esta estructura puede conducir a estimaciones sesgadas y errores estándar incorrectos.</p>
-<p>En el ecosistema tidyverse, el paquete <code>dplyr</code> facilita la transformación, limpieza y resumen de los datos mediante una sintaxis intuitiva basada en verbos como <code>filter()</code>, <code>mutate()</code>, <code>summarise()</code> y el operador pipe (<code>%&gt;%</code>). Para extender esta lógica al análisis de encuestas, el paquete <code>srvyr</code> ofrece una interfaz moderna y coherente con <code>dplyr</code> sobre las funciones del paquete <code>survey</code>, que es la implementación más completa para el manejo de encuestas complejas en <code>R</code>.</p>
-<p>Con <code>srvyr</code>, es posible aplicar los mismos verbos de <code>dplyr</code> sobre un objeto de diseño de encuesta, lo que facilita la transición entre el análisis exploratorio y el análisis inferencial.</p>
-<p>El objeto de diseño es la base del análisis de una encuesta, ya que allí se especifican los elementos fundamentales del diseño muestral, como las unidades de muestreo, los estratos y los factores de expansión. Esta estructura permite que los análisis estadísticos incorporen adecuadamente la complejidad del muestreo y los errores asociados a la estimación.</p>
-<p>Antes de construir el objeto de diseño, es esencial revisar con detalle la documentación técnica de la encuesta, pues de ella depende identificar correctamente las variables necesarias y asegurar que los resultados obtenidos sean válidos para la población objetivo.</p>
-<p>Si bien es recomendable realizar un análisis exploratorio de los datos originales, tanto el análisis estadístico como la inferencia deben efectuarse utilizando los objetos de diseño de la encuesta. Esto garantiza que los cálculos reflejen adecuadamente la estructura poblacional basado en el diseño muestral, evitando conclusiones sesgadas derivadas del uso directo de los datos sin considerar su diseño.</p>
-<p>Para ilustrar este proceso, se utiliza como ejemplo la <em>Pesquisa Nacional por Amostra de Domicílios 2015</em> de Brasil. A partir de la base de datos <code>data2</code>, primero se renombran las variables que identifican las unidades primarias de muestreo, los estratos y los factores de expansión para que empiecen en un caracter que evite conflictos. Luego, se crea el objeto de diseño con la función <code>as_survey_design()</code> del paquete <code>srvyr</code>:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb53-1" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
-<span id="cb53-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb53-2" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
-<span id="cb53-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb53-3" tabindex="-1"></a></span>
-<span id="cb53-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb53-4" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb53-5"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb53-5" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">upm =</span> <span class="st">`</span><span class="at">_upm</span><span class="st">`</span>, <span class="at">estrato =</span> <span class="st">`</span><span class="at">_estrato</span><span class="st">`</span>, <span class="at">fep =</span> <span class="st">`</span><span class="at">_fep</span><span class="st">`</span>) </span>
-<span id="cb53-6"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb53-6" tabindex="-1"></a></span>
-<span id="cb53-7"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb53-7" tabindex="-1"></a>encu_dis <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb53-8"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb53-8" tabindex="-1"></a>             <span class="fu">as_survey_design</span>(<span class="at">ids =</span> <span class="fu">c</span>(upm, id_hogar, id_pers),</span>
-<span id="cb53-9"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb53-9" tabindex="-1"></a>                              <span class="at">strata =</span> estrato,</span>
-<span id="cb53-10"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb53-10" tabindex="-1"></a>                              <span class="at">weights =</span> fep,</span>
-<span id="cb53-11"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb53-11" tabindex="-1"></a>                              <span class="at">nest =</span> T)</span></code></pre></div>
-<p>En estadística, según <span class="citation">Tellez Piñerez &amp; Lemus Polanía (<a href="#ref-tellez2015estadistica">2015</a>)</span> las medidas descriptivas permiten la presentación y caracterización de un conjunto de datos con el fin de poder describir apropiadamente las diversas características presentes en la información de la muestra.
-Con <code>dplyr</code>, es posible calcular totales y promedios de manera simple, sin considerar ponderaciones, como se muestra en la Tabla <a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#tab:tab-total-media-dplyr">3.19</a>:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb54-1" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span></span>
-<span id="cb54-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb54-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_ing =</span> <span class="fu">sum</span>(ingcorte),</span>
-<span id="cb54-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb54-3" tabindex="-1"></a>            <span class="at">media_ing =</span> <span class="fu">mean</span>(ingcorte)) <span class="sc">%&gt;%</span></span>
-<span id="cb54-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb54-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
-<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
-<caption style="font-size: initial !important;">
-<span id="tab:tab-total-media-dplyr">Cuadro 3.19: </span><span id="tab:tab-total-media-dplyr">Cuadro 3.20: </span>Total e ingreso promedio sin considerar ponderación (dplyr)
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-total_ing
-</th>
-<th style="text-align:center;font-weight: bold;">
-media_ing
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-422286293
-</td>
-<td style="text-align:center;">
-1183.193
-</td>
-</tr>
-</tbody>
-</table>
-<p>También pueden obtenerse medias por grupos, por ejemplo, según el área de residencia, tal como se presenta en la Tabla <a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#tab:tab-media-area-dplyr">3.21</a>:</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb55-1" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span></span>
-<span id="cb55-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb55-2" tabindex="-1"></a>  <span class="fu">group_by</span>(area_ee) <span class="sc">%&gt;%</span></span>
-<span id="cb55-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb55-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb55-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb55-4" tabindex="-1"></a>            <span class="at">media =</span> <span class="fu">mean</span>(ingcorte)) <span class="sc">%&gt;%</span></span>
-<span id="cb55-5"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb55-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
-<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
-<caption style="font-size: initial !important;">
-<span id="tab:tab-media-area-dplyr">Cuadro 3.21: </span><span id="tab:tab-media-area-dplyr">Cuadro 3.22: </span>Ingreso promedio por área geográfica sin diseño muestral (dplyr)
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-area_ee
-</th>
-<th style="text-align:center;font-weight: bold;">
-n
-</th>
-<th style="text-align:center;font-weight: bold;">
-media
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Area urbana
-</td>
-<td style="text-align:center;">
-304564
-</td>
-<td style="text-align:center;">
-1277.579
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Area rural
-</td>
-<td style="text-align:center;">
-52340
-</td>
-<td style="text-align:center;">
-633.967
-</td>
-</tr>
-</tbody>
-</table>
-<p>Estos resultados son útiles para una exploración preliminar, pero no representan adecuadamente a la población, ya que cada observación tiene el mismo peso. En una encuesta compleja, esto equivale a analizar solo la muestra, no la población que se desea inferir, para ello es necesario usar el paquete <code>survey</code> y <code>srvyr</code>.</p>
-<p>Una vez definido el objeto de diseño <code>encu_dis</code>, que incorpora las unidades primarias de muestreo (<code>upm</code>), los estratos (<code>estrato</code>) y los factores de expansión (<code>fep</code>), los mismos cálculos se pueden realizar de manera casi idéntica, pero ahora los resultados tienen en cuenta el diseño muestral, como se presenta en la Tabla <a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#tab:tab-total-media-srvyr">3.23</a>:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb56-1" tabindex="-1"></a>encu_dis <span class="sc">%&gt;%</span></span>
-<span id="cb56-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb56-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_ing =</span> <span class="fu">survey_total</span>(ingcorte, <span class="at">vartype =</span> <span class="st">&quot;ci&quot;</span>),</span>
-<span id="cb56-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb56-3" tabindex="-1"></a>            <span class="at">media_ing =</span> <span class="fu">survey_mean</span>(ingcorte, <span class="at">vartype =</span> <span class="st">&quot;ci&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb56-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb56-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
-<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
-<caption style="font-size: initial !important;">
-<span id="tab:tab-total-media-srvyr">Cuadro 3.23: </span><span id="tab:tab-total-media-srvyr">Cuadro 3.24: </span>Total e ingreso promedio con diseño muestral (srvyr)
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-total_ing
-</th>
-<th style="text-align:center;font-weight: bold;">
-total_ing_low
-</th>
-<th style="text-align:center;font-weight: bold;">
-total_ing_upp
-</th>
-<th style="text-align:center;font-weight: bold;">
-media_ing
-</th>
-<th style="text-align:center;font-weight: bold;">
-media_ing_low
-</th>
-<th style="text-align:center;font-weight: bold;">
-media_ing_upp
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-2.45748e+11
-</td>
-<td style="text-align:center;">
-2.41371e+11
-</td>
-<td style="text-align:center;">
-250124925608
-</td>
-<td style="text-align:center;">
-1199.589
-</td>
-<td style="text-align:center;">
-1177.983
-</td>
-<td style="text-align:center;">
-1221.195
-</td>
-</tr>
-</tbody>
-</table>
-<p>De igual modo, la Tabla <a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#tab:tab-media-area-srvyr">3.25</a> presenta las medias por grupos considerando el diseño muestral:</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb57-1" tabindex="-1"></a>encu_dis <span class="sc">%&gt;%</span></span>
-<span id="cb57-2"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb57-2" tabindex="-1"></a>  <span class="fu">group_by</span>(area_ee) <span class="sc">%&gt;%</span></span>
-<span id="cb57-3"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb57-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">survey_mean</span>(ingcorte, <span class="at">vartype =</span> <span class="st">&quot;ci&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb57-4"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html#cb57-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
-<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 13px; width: auto !important; margin-left: auto; margin-right: auto;">
-<caption style="font-size: initial !important;">
-<span id="tab:tab-media-area-srvyr">Cuadro 3.25: </span><span id="tab:tab-media-area-srvyr">Cuadro 3.26: </span>Ingreso promedio por área geográfica con diseño muestral (srvyr)
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;font-weight: bold;">
-area_ee
-</th>
-<th style="text-align:center;font-weight: bold;">
-media
-</th>
-<th style="text-align:center;font-weight: bold;">
-media_low
-</th>
-<th style="text-align:center;font-weight: bold;">
-media_upp
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Area urbana
-</td>
-<td style="text-align:center;">
-1301.066
-</td>
-<td style="text-align:center;">
-1275.694
-</td>
-<td style="text-align:center;">
-1326.438
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Area rural
-</td>
-<td style="text-align:center;">
-636.769
-</td>
-<td style="text-align:center;">
-616.144
-</td>
-<td style="text-align:center;">
-657.394
-</td>
-</tr>
-</tbody>
-</table>
-<p>Observe que la estructura es la misma, pero las funciones cambian:</p>
-<ul>
-<li><code>mean()</code> se reemplaza por <code>survey_mean()</code>,</li>
-<li><code>sum()</code> por <code>survey_total()</code>,</li>
-</ul>
-<p>Además, note que se pueden incluir errores estándar, intervalos de confianza o coeficientes de variación mediante el argumento <code>vartype</code>. En consecuencia, mientras <code>dplyr</code> describe los datos observados, <code>survey</code> y <code>srvyr</code> estiman parámetros poblacionales respetando el diseño muestral.</p>
-
-</div>
-</div>
-<h3>References</h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
-<div id="ref-pipe" class="csl-entry">
-Bache, S. M., &amp; Wickham, H. (2025). <em>magrittr: A Forward-Pipe Operator for R</em>. <a href="https://doi.org/10.32614/CRAN.package.magrittr">https://doi.org/10.32614/CRAN.package.magrittr</a>
-</div>
-<div id="ref-Freedman2024" class="csl-entry">
-Freedman Ellis, G., &amp; Schneider, B. (2024). <em>srvyr: ’dplyr’-Like Syntax for Summary Statistics of Survey Data</em>. <a href="https://doi.org/10.32614/CRAN.package.srvyr">https://doi.org/10.32614/CRAN.package.srvyr</a>
-</div>
-<div id="ref-Gutierrez2020" class="csl-entry">
-Gutiérrez, H. A. (2020a). <em>samplesize4surveys: Sample Size Calculations for Complex Surveys</em>. <a href="https://doi.org/10.32614/CRAN.package.samplesize4surveys">https://doi.org/10.32614/CRAN.package.samplesize4surveys</a>
-</div>
-<div id="ref-GutierrezT2020" class="csl-entry">
-Gutiérrez, H. A. (2020b). <em>TeachingSampling: Selection of Samples and Parameter Estimation in Finite Population</em>. <a href="https://doi.org/10.32614/CRAN.package.TeachingSampling">https://doi.org/10.32614/CRAN.package.TeachingSampling</a>
-</div>
-<div id="ref-covey2024" class="csl-entry">
-Jacob, G., Pessoa, D., &amp; Damico, A. (2024). <em>Poverty and Inequality with Complex Survey Data</em>. <a href="https://www.convey-r.org/">https://www.convey-r.org/</a>
-</div>
-<div id="ref-Lumley2024" class="csl-entry">
-Lumley, T. (2024). <em>survey: analysis of complex survey samples</em>.
-</div>
-<div id="ref-santana2014arte" class="csl-entry">
-Santana Sepúlveda, S., &amp; Mateos Farfán, E. (2014). <em>El arte de programar en R: un lenguaje para la estadística</em>. México: Instituto Mexicano de Tecnología del Agua. UNESCO. Comité Nacional Mexicano del Programa Hidrológico Internacional.
-</div>
-<div id="ref-tellez2015estadistica" class="csl-entry">
-Tellez Piñerez, C. F., &amp; Lemus Polanía, D. F. (2015). <em>Estadística Descriptiva y Probabilidad con aplicaciones en R</em>. Fundación Universitaria Los Libertadores.
-</div>
-<div id="ref-Tille2025" class="csl-entry">
-Tillé, Y., &amp; Matei, A. (2025). <em>sampling: Survey Sampling</em>. <a href="https://doi.org/10.32614/CRAN.package.sampling">https://doi.org/10.32614/CRAN.package.sampling</a>
-</div>
-<div id="ref-Valliant2024" class="csl-entry">
-Valliant, R. (2024). <em>svydiags: Regression Model Diagnostics for Survey Data</em>. <a href="https://doi.org/10.32614/CRAN.package.svydiags">https://doi.org/10.32614/CRAN.package.svydiags</a>
-</div>
-<div id="ref-Valliant2025" class="csl-entry">
-Valliant, R., &amp; Zipf, G. (2025). <em>PracTools: Designing and Weighting Survey Samples</em>. <a href="https://doi.org/10.32614/CRAN.package.PracTools">https://doi.org/10.32614/CRAN.package.PracTools</a>
-</div>
-<div id="ref-Wickham2019" class="csl-entry">
-Wickham, H. (2019). <em>Advanced R</em> (2.ª ed.). Chapman; Hall/CRC. <a href="https://adv-r.hadley.nz/">https://adv-r.hadley.nz/</a>
-</div>
-<div id="ref-WickhamGrolemund2017" class="csl-entry">
-Wickham, H., &amp; Grolemund, G. (2017). <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. O’Reilly Media. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>
-</div>
-<div id="ref-haven" class="csl-entry">
-Wickham, H., Miller, E., &amp; Smith, D. (2025). <em>haven: Import and Export ’SPSS’, ’Stata’ and ’SAS’ Files</em>. <a href="https://doi.org/10.32614/CRAN.package.haven">https://doi.org/10.32614/CRAN.package.haven</a>
-</div>
-<div id="ref-Wickham2023" class="csl-entry">
-Wickham, H., Navarro, D., &amp; Pedersen, T. L. (2023). <em>ggplot2: Elegant Graphics for Data Analysis</em> (3.ª ed.). Springer. <a href="https://doi.org/10.1007/978-3-319-24277-4">https://doi.org/10.1007/978-3-319-24277-4</a>
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="conceptos-básicos-en-encuestas-de-hogares.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="cap4.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="calibrando-con-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="fundamentos-básicos-de-r-y-rstudio.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -1627,8 +336,8 @@ Wickham, H., Navarro, D., &amp; Pedersen, T. L. (2023). <em>ggplot2: Elegant Gra
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
   "sharing": {
-    "github": false,
-    "facebook": true,
+    "github": true,
+    "facebook": false,
     "twitter": true,
     "linkedin": false,
     "weibo": false,
@@ -1643,8 +352,8 @@ gitbook.start({
     "size": 2
   },
   "edit": {
-    "link": null,
-    "text": null
+    "link": "https://github.com/psirusteam/2021ASDA/03-Basesdedatos.Rmd",
+    "text": "Edit"
   },
   "history": {
     "link": null,
@@ -1654,14 +363,15 @@ gitbook.start({
     "link": null,
     "text": null
   },
-  "download": null,
+  "download": ["Análisis de encuestas con R.pdf", "Análisis de encuestas con R.epub", "Análisis de encuestas con R.mobi"],
   "search": {
     "engine": "fuse",
     "options": null
   },
   "toc": {
-    "collapse": "subsection"
-  }
+    "collapse": "section"
+  },
+  "tconfig": null
 });
 });
 </script>
