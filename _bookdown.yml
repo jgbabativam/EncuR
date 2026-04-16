@@ -12,8 +12,8 @@ rmd_files: [
   "05-Categóricas.Rmd",
   "06-Regresión.Rmd",
   "07-GLM.Rmd",
-  # "10-Multinivel.Rmd",
-  # "11-Imputación.Rmd",
+  "08-Multinivel.Rmd",
+  "09-Imputacion.Rmd",
   # "99-Referencias.Rmd"
   ]
 

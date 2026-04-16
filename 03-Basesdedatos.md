@@ -1,0 +1,659 @@
+
+
+# Del manejo de datos al análisis de encuestas complejas en R
+
+El propósito de este capítulo es familiarizar al lector con las herramientas fundamentales para el manejo, exploración y transformación de datos en `R`, utilizando como referencia bases de datos de encuestas de hogares.
+
+A lo largo del capítulo se ilustran operaciones comunes como la importación de datos, la creación y recodificación de variables, así como ejemplos para filtrar observaciones, generar de resúmenes estadísticos y la organización de la información usando funciones del ecosistema `tidyverse`. Estas habilidades son esenciales para cualquier análisis posterior, especialmente cuando se trabaja con encuestas complejas.
+
+Posteriormente, se introduce el paquete `srvyr`, que extiende la sintaxis de `dplyr` para trabajar con encuestas complejas a partir del paquete `survey`. Esta herramienta permite aplicar los mismos verbos y estructuras del ecosistema `tidyverse` sobre un objeto que contiene la información del diseño muestral, integrando los factores de expansión, estratos y unidades de muestreo en los cálculos estadísticos.
+
+Es importante resaltar que los ejemplos iniciales del capítulo se desarrollan únicamente con fines ilustrativos y no poseen interpretación poblacional, ya que no incorporan aún el diseño muestral ni los factores de expansión. No obstante, en la parte final se muestra cómo estos elementos pueden incluirse mediante la creación de un objeto de diseño y la obtención de estimaciones válidas desde la perspectiva de la inferencia estadística en encuestas complejas.
+
+Con esto se busca que el lector adquiera las habilidades básicas para transformar datos de encuestas en `R` y dar el paso hacia análisis más rigurosos que consideren la estructura del diseño muestral.
+
+## Fundamentos básicos de R y Rstudio 
+
+R fue creado en 1992 en Nueva Zelanda por Ross Ihaka y Robert Gentleman con el propósito de ofrecer un entorno potente, flexible y gratuito para el análisis estadístico. Desde entonces, se ha consolidado como uno de los lenguajes más utilizados tanto en el ámbito académico como en el profesional, gracias a su capacidad para realizar desde análisis descriptivos hasta modelamientos complejos y a que no requiere de ninguna licencia, ya que puede descargarse de forma gratuita en [https://www.r-project.org](https://www.r-project.org)
+
+Como lo mencionan @santana2014arte, R es un lenguaje de programación de libre distribución, bajo Licencia GNU, desarrollado para el cómputo estadístico y gráfico. A diferencia de otros programas que reúnen herramientas aisladas, R constituye un ambiente integral, diseñado para ejecutarse en diversos sistemas operativos (Windows, macOS y Linux). Su estructura ha permitido que la comunidad científica contribuya con miles de paquetes especializados, disponibles en el Comprehensive R Archive Network (CRAN), lo que ha impulsado su expansión y versatilidad. 
+
+Ahora bien, al ser un lenguaje de programación, la interfaz de R puede resultar poco intuitiva para quienes se inician en su uso. Para facilitar la interacción con el lenguaje y potenciar sus capacidades, se desarrolló RStudio, un Entorno de Desarrollo Integrado (IDE) que proporciona una interfaz amigable, organizada y visualmente clara. RStudio integra en una misma ventana el editor de código, la consola, el entorno de objetos y los resultados gráficos, haciendo que la experiencia de programación y análisis sea más fluida y eficiente.
+
+El carácter libre y abierto de R ha promovido su adopción en el procesamiento y análisis de encuestas, convirtiéndolo en una herramienta clave. Su flexibilidad permite implementar los desarrollos metodológicos más recientes en inferencia estadística y en el análisis de datos provenientes de muestras tanto probabilísticas como no probabilísticas.
+
+## Paquetes para el análisis de encuestas
+
+El poder de R reside en su ecosistema de paquetes colaborativos, desarrollados por investigadores y profesionales de todo el mundo. En el ámbito de las encuestas de hogares, existen paquetes especializados que cubren cada etapa del proceso analítico: desde el diseño muestral hasta la estimación y modelamiento estadístico.
+
+Entre los paquetes más relevantes se destacan:
+
+* `samplesize4surveys` [@Gutierrez2020]: facilita el cálculo de tamaños de muestra para individuos y hogares, tanto en encuestas transversales como en paneles o diseños rotacionales.
+
+* `sampling` [@Tille2025] y `TeachingSampling` [@GutierrezT2020]: proporcionan herramientas para la selección de muestras probabilísticas según diferentes diseños y algoritmos de muestreo.
+
+* `survey` [@Lumley2024]: publicado desde el 2004 y desarrollado continuamente, permite especificar el diseño muestral mediante la función `svydesign()` y obtener estimaciones insesgadas de totales, medias, proporciones y errores estándar ajustados al diseño. Mientras que el paquete `srvyr` [@Freedman2024] permite usar el paquete `survey` con el estilo de programación de `dplyr`.
+
+* `convey` [@covey2024]: amplía las funcionalidades del paquete `survey`, incorporando medidas de desigualdad, bienestar y pobreza.
+
+* `svydiags` [@Valliant2024]: ofrece herramientas de diagnóstico para modelos ajustados a datos complejos, como análisis de residuos, valores de apalancamiento, factores de inflación de varianza y pruebas de multicolinealidad.
+
+* `PracTools` [@Valliant2025]: proporciona utilidades para el cálculo del tamaño de muestra, el diseño de muestreo, la estimación de efectos de diseño y el análisis de componentes de varianza en esquemas multietápicos.
+
+En conjunto, este ecosistema de paquetes convierte a R en un entorno sumamente robusto para el análisis de encuestas de hogares, desde la planificación del diseño hasta la inferencia estadística y la generación de indicadores complejos.
+
+## Paquetes complementarios para la manipulación y visualización de datos
+
+El análisis de encuestas no solo requiere herramientas estadísticas especializadas, sino también un entorno que facilite la limpieza, transformación, organización y visualización de los datos. En este sentido, uno de los mayores aportes al programa R ha sido el desarrollo del `tidyverse`, que contiene una colección de paquetes creados principalmente por Hadley Wickham y colaboradores, orientados a simplificar y estandarizar el flujo de trabajo [@Wickham2019; @Wickham2023; @WickhamGrolemund2017].
+
+Entre los paquetes más relevantes del `tidyverse` se destacan:
+
+-   `dplyr`, proporciona un conjunto de verbos intuitivos para transformar datos (como `filter()`, `mutate()`, `summarise()` y `group_by()`), optimizados para un procesamiento rápido incluso cuando las bases son grandes, como en el caso de censos de población.
+    
+- `tidyr`: facilita la organización y depuración de los datos, permitiendo pasar de formatos anchos a largos o viceverza usando funciones como `pivot_longer()` o `pivot_wider()` y permite la gestión de datos faltantes o desestructurados.
+
+- `purrr`: extiende las capacidades de programación funcional dentro de R, reemplazando bucles con funciones como `map()` para aplicar operaciones repetitivas de manera más legible y segura.
+
+- `ggplot2`:  implementa lo que se conoce como la *Gramática de los Gráficos*, un marco conceptual que permite construir visualizaciones complejas mediante la combinación de capas de datos, geometrías y temas, generando gráficos reproducibles y de alta calidad.
+
+- `haven`: facilita la importación de bases de datos provenientes de software estadísticos como SPSS, Stata y SAS, preservando etiquetas de variables y valores, formatos de fecha y metadatos.
+
+- `readr`, `stringr`, `forcats` y otros complementan el ecosistema al ofrecer funciones eficientes para importar datos, funciones para tratar textos, entre otros.
+
+De esta manera, `tidyverse` es un entorno de trabajo que facilita los flujos de trabajo reproducibles y replicables en un lenguaje fácil de entender, en el que cada paquete contribuye a una parte del proceso analítico, desde la importación de datos hasta la comunicación de resultados. 
+
+R funciona como su teléfono móvil, antes de usar una aplicación, es necesario que sea instalada, en este caso los paquetes deben instalarse desde CRAN usando el comando `install.packages()`:
+
+
+``` r
+install.packages("survey")
+install.packages("srvyr")
+install.packages("TeachingSampling")
+install.packages("samplesize4surveys")
+install.packages("tidyverse")
+install.packages("haven")
+```
+
+Una vez instalados los paquetes necesarios, el siguiente paso consiste en cargarlos en la sesión de trabajo. Esto se realiza mediante la función `library`, que indica a R que deseamos utilizar las herramientas y funciones contenidas en cada paquete.
+
+> **Nota:** antes de cargar un paquete, asegúrese de que haya sido instalado correctamente;  
+> de lo contrario, R mostrará un mensaje de error indicando que el paquete no se encuentra disponible.
+
+A continuación, se muestra el bloque de código que limpia el entorno de trabajo y carga las principales librerías empleadas para este ejemplo:
+
+
+``` r
+rm(list = ls())
+
+library("survey")
+library("srvyr")
+library("TeachingSampling")
+library("samplesize4surveys")
+library("tidyverse")
+library("haven")
+```
+
+Es importante resaltar que el ecosistema `tidyverse` incluye por defecto los siguientes paquetes principales: `ggplot2`, `dplyr`, `tidyr`, `readr`, `tibble`, `stringr`, `forcats`, y `purrr`. Paquetes afines como `haven`, `lubridate`, `readxl`, o `DBI` forman parte del ecosistema `tidyverse`, pero no se cargan automáticamente con `library(tidyverse)` para mantener el entorno más liviano.
+
+## Creación de proyectos en `R`
+
+Una vez instaladas las librerías o paquetes necesarios en R, el siguiente paso consiste en organizar el entorno de trabajo mediante la creación de un proyecto.
+
+Un proyecto de R se define como un archivo que contiene que agrupa todos los archivos asociados a un mismo trabajo, como los códigos o scripts, bases de datos, gráficos, documentos y resultados. Además, almacena información que facilita la compilación de scripts, la integración con sistemas de control de versiones (como Git), y la gestión del directorio de trabajo de forma automática. 
+
+Adoptar el uso de proyectos forma parte de las buenas prácticas de programación reproducible, ya que permite mantener en un solo lugar todos los elementos vinculados a un análisis, garantizando la trazabilidad, la portabilidad y la replicabilidad del trabajo.
+
+A continuación, se describen los pasos para crear un nuevo proyecto en `RStrudio`:
+
+-   **Paso 1:** Abrir `RStudio`.
+-   **Paso 2:** ir a la barra de menú, seleccionar File -\> New Project ![*Paso 2: Crear el proyecto*](Imagenes/Cap 0/Proyecto1.png){width="450"}
+
+-   *Paso 3:* Elegir el tipo de proyecto.
+
+Para este ejemplo, se selecciona la opción *New Directory* 
+
+![*Tipos de proyectos*](Imagenes/Cap 0/Proyecto2.png){width="450"}
+
+En este paso, `RStudio` ofrece varias alternativas dependiendo las características del procesamiento que desea realizar el usuario. Ahora bien, si se cuenta con algunos códigos previamente desarrollados y se desea continuar con ese proyecto, se debe tomar la opción *Existing Directory* . Por último, Si se cuenta con cuenta en *Git* y se desea tener una copia de seguridad, se debe emplear la opción *Version Control*. 
+
+-   *Paso 4:* Seleccionar el tipo de proyecto a crear.
+
+![*Seleccionar el tipo de proyecto*](Imagenes/Cap 0/Proyecto3.png){width="450"}
+
+-   *Paso 5*: Asignar un nombre al proyecto y elegir la carpeta de destino donde se almacenará.
+
+![*Nombre de proyecto*](Imagenes/Cap 0/Proyecto4.png){width="450"} 
+
+Una vez completados estos pasos, `RStudio` crea automáticamente una carpeta de trabajo con la extensión .Rproj. A partir de ese momento, todas las rutas de acceso y los archivos creados quedarán anclados a la carpeta del proyecto, lo cual evita errores en las rutas relativas y facilita compartir o replicar el análisis en otros equipos.
+
+
+## Lectura de bases de datos y manipulación
+
+En la mayoría de los proyectos desarrollados en `R` es necesario importar bases de datos que contienen la información sobre la cual se realizará el análisis estadístico. En Colombia, por ejemplo, en la *Encuesta de Calidad de Vida (ECV, por sus siglas)* es necesario, una vez se realiza el trabajo de campo, importar la información recolectada para poder ajustar los factores de expansión y posteriormente estimar los parámetros. 
+
+
+`R` ofrece gran flexibilidad en la importación de datos, ya que admite diversos formatos como .xlsx, .csv, .txt, .sav (SPSS), .sas7bdat (SAS) o .dta (Stata). Para facilitar esta tarea, el paquete `haven`, que hace parte del ecosistema `tidyverse`, permite leer y escribir archivos de múltiples formatos estadísticos de manera eficiente y con una codificación consistente de etiquetas, valores perdidos y metadatos [@Wickham2019; @haven].
+
+A manera de ejemplo, se utilizará la base de datos de la *Pesquisa Nacional por Amostra de Domicílios 2015 * de Brasil, disponible en formato `.dta` (Stata). La lectura de este archivo se realiza con la función `read_dta()` del paquete `haven`. Posteriormente, se guardará en formato `.rds` mediante la función `saveRDS()`, ya que este formato es propio de `R` y permite un almacenamiento más rápido, compacto y eficiente. El proceso se desarrolla de la siguiente forma:
+
+
+``` r
+data1 <- read_dta("Z:/BC/BRA_2015N.dta")
+saveRDS(data1, "../Data/BRA_2015N.rds")
+```
+
+Una vez guardada la base en nuestros archivos de trabajo, se procede a cargar la base a `R` con la función `readRDS` para poder utilizar toda la información que en ella se contiene.
+
+
+``` r
+data2 <- readRDS("Data/BRA_2015N.rds")
+```
+
+Una vez cargada la base de datos en `R` ésta se puede empezar a manipular según las necesidades de cada investigador. En este sentido, una de las primeras revisiones que se realizan al cargar las bases de datos es revisar su dimensión, es decir, chequear la cantidad de filas y columnas que tenga la base. Lo anterior se puede hacer con la función `nrow`. Dicha función identifica el número de registros (unidades efectivamente medidas) en la base de datos y la función `ncol` muestra el número de variables en la base de datos. Los códigos computacionales son los siguientes:
+
+
+
+``` r
+nrow(data2)
+```
+
+```
+## [1] 356904
+```
+
+``` r
+ncol(data2)
+```
+
+```
+## [1] 109
+```
+
+Una forma resumida de revisar la cantidad de filas y columnas que tiene la base de datos es usar la función `dim`. Esta función nos devuelve un vector indicado en su primera componente la cantidad de fila y en su segundo la cantidad de columnas como se muestra a continuación:
+
+
+``` r
+dim(data2)
+```
+
+```
+## [1] 356904    109
+```
+
+
+Es usual que en las encuestas de hogares las bases de datos sean muy extensas, es decir, contengan una cantidad importante de variables (columnas) y por lo general, el tamaño de la muestra de estos estudios es grande. Por ello, para visualizar su contenido de manera interactiva, `RStudio` ofrece el comando `View()` que abre la base de datos en una pestaña independiente, como se ilustra en la Figura \@ref(fig:fig-view-data2):
+
+
+``` r
+View(data2)
+```
+
+![(\#fig:fig-view-data2)Visor de bases de datos de RStudio (función View)](Imagenes/Cap 0/1.png){width=100%}
+
+Otro paso fundamental tras la importación es revisar las variables disponibles en la base. Esto puede hacerse con la función `names`, que devuelve un vector con los nombres de las variables:
+
+
+``` r
+names(data2)
+```
+
+No obstante, si se desea explorar la estructura interna de la base, tales como: tipos de datos, niveles de factores, longitud y primeros valores, la función `str()` resulta más completa y compacta:
+
+
+``` r
+str(data2)
+```
+
+Por ejemplo, cuando el usuario compile la sentencia, observará que la variable *id_hogar* es de tipo *entero* al igual que *id_pers* mientras que *cotiza_ee* es un factor con 2 niveles. Este tipo de diagnóstico inicial es esencial para familiarizarse con la naturaleza de los datos y planificar adecuadamente los pasos siguientes del procesamiento, especialmente en encuestas de hogares, donde existen múltiples tipos de variables (numéricas, categóricas, binarias, ordinales, entre otras).
+
+## El operador `pipe`
+
+El software estadístico `R` es un lenguaje de programación creado por estadísticos para estadísticos, que ha evolucionado hacia un ecosistema sumamente versátil para el análisis de datos. Una de las contribuciones más importantes de los últimos años es la introducción de los `pipelines` o flujos de trabajo encadenados, los cuales permiten escribir código de manera más legible y natural.
+
+El operador pipe, representado por `%>%`, fue introducido por el paquete `magrittr` [@pipe] y hoy forma parte fundamental del ecosistema `tidyverse`, donde se carga automáticamente al activar `library(tidyverse)`.
+
+El objetivo principal del operador `%>%` es ayudar a escribir código de una manera que sea más fácil de leer y entender. En lugar de anidar múltiples funciones dentro de otras, el operador `pipe` permite escribir los pasos de un análisis en una secuencia lógica, tal como se leería una receta o un procedimiento.
+
+A continuación, se ejemplifica su uso con la base de datos de Brasil, realizando un conteo del total de registros contenidos en la base mediante la función`count`.
+
+
+``` r
+data2 %>% count()
+```
+
+```
+##        n
+## 1 356904
+```
+
+El operador `%>%` puede combinarse con una amplia variedad de funciones para la manipulación de datos, entre las cuales destacan:
+
+- **filter()**: selecciona filas que cumplen una condición.
+- **select()**: elige columnas específicas por nombre.
+- **arrange()**: ordena las filas según una o más variables.
+- **mutate()**: crea nuevas variables o transforma las existentes.
+- **summarise()**: resume la información en valores agregados.
+- **group_by()**: agrupa la base según una o más variables, permitiendo cálculos por grupo.
+
+Por ejemplo, en encuestas de hogares, una de las primeras tareas consiste en recodificar variables para facilitar su interpretación. En el siguiente ejemplo se generan los nombres completos de los estados de Brasil:
+
+
+
+``` r
+data2 <- data2 %>% 
+         mutate(estados = factor(uf, 
+                levels = c(11:17, 21:29, 31:33, 35, 41:43, 50:53), 
+                labels = c("Rondonia", "Acre", "Amazonas", "Roraima", 
+                           "Para", "Amapa", "Tocantins", "Maranhao", 
+                           "Piaui", "Ceara", "RioGrandeNorte", "Paraiba",
+                           "Pernambuco", "Alagoas", "Sergipe", "Bahia", 
+                           "MinasGerais", "EspirituSanto", "RioJaneiro", 
+                           "SaoPaulo", "Parana", "SantaCatarina", 
+                           "RioGrandeSur", "MatoGrossoSur", "MatoGrosso", 
+                           "Goias", "DistritoFederal")))
+```
+
+De igual manera, para efectos de visualización en tablas y gráficos es conviene codificar los nombres de las variables. Para este ejemplo, se codificarán de la siguiente manera:
+
+
+``` r
+data2 <- data2 %>% 
+         mutate(deptos = factor(uf, 
+                levels = c(11:17, 21:29, 31:33, 35, 41:43, 50:53), 
+                labels = c("RO", "AC", "AM", "RR", "PA", 
+                "AP", "TO", "MA", "PI", "CE", "RN", "PB", 
+                "PE", "AL", "SE", "BA", "MG", "ES", "RJ", "SP",
+                "PR", "SC", "RS", "MS", "MT", "GO", "DF")))
+```
+
+
+Otro de los ejercicios que se hacen usualmente con las encuestas de hogares está relacionado con saber la cantidad de hogares que hay en el país de estudio. Una de las formas más sencillas de hacer esta revisión es usar la función `filter`. Las encuestas de hogares muchas veces recopilan información a nivel de viviendas, hogares y personas. Particularmente, las bases de datos que están disponibles en `BADEHOG` están a nivel de persona. Ahora bien, para conocer la cantidad de hogares que se encuestaron basta con filtrar por hogar porque sólo hay un jefe de hogar por hogar, como se muestra a continuación:
+
+
+
+``` r
+datahogar1 <- data2 %>% filter(parentco == 1)
+datahogar2 <- data2 %>% filter(paren_ee == "Jefe") 
+```
+
+
+Por otro lado, si el interés ahora es filtrar la base de datos por la ubicación de la persona en el área rural y urbana se realiza de la siguiente manera:
+
+
+``` r
+dataurbano <- data2 %>% 
+              filter(area_ee == "Area urbana")
+datarural <- data2 %>% 
+             filter(area_ee == "Area rural") 
+```
+
+
+En este mismo sentido, si el objetivo ahora es filtrar la base de datos por algunos ingresos particulares mensuales por personas, por ejemplo, altos o bajos, se realiza de la siguiente manera:
+
+
+``` r
+dataingreso1 <- data2 %>% 
+                filter(ingcorte %in% c(50, 100))
+
+dataingreso2 <- data2 %>% 
+                filter(ingcorte %in% c(1000, 2000))
+```
+
+Otro verbo muy útil en el análisis en encuestas de hogares es la función `select()` la cual, como se mencionó anteriormente permite seleccionar un grupo de variables de interés a analizar. Si por ejemplo, se desea seleccionar de la base de ejemplo solo las variables identificación del hogar (`id_hogar`), unidades primarias de muestreo (`_upm`), factores de expansión (`_feh`) y estratos muestrales ( `_estrato`) se realiza de la siguiente manera:
+
+
+``` r
+datared <- data2 %>% 
+           select(`id_hogar`, `_upm`, `_feh`, `_estrato`)
+
+datablue <- data2 %>% 
+            select(id_pers, edad, sexo, ingcorte)
+```
+
+
+El verbo `select()` no solo sirve para seleccionar variables de una base de datos, también se puede utilizar para eliminar algunas variables de la base de datos que ya no son de interés para el análisis o que simplemente se generaron en la manipulación de la base de datos como variables puentes para realizar algunos cálculos de interés. Por ejemplo, si se desea eliminar de la base de datos de ejemplo las variables identificación del hogar (`id_hogar`) e identificación de las personas (`id_pers`) se realiza introduciendo un signo "menos" (-) delante del nombre de la variable como sigue:
+
+
+``` r
+datagrey <- data2 %>% 
+            select(-id_hogar, -id_pers)
+```
+
+Por otro lado, si el objetivo ahora en análisis de las encuestas de hogares es ordenar las filas de la base por alguna variable en particular, se utiliza en `R` la función `arrange()` para realizar esta operación. A continuación, la Tabla \@ref(tab:tab-arrange-ingreso) ejemplifica el uso de `arrange()` con la base de datos, ordenando de forma descendente por la variable *ingcorte*:
+
+
+``` r
+datadog <- datablue %>% arrange(-ingcorte)
+datadog %>% head() %>%
+  tabla_fmt()
+```
+
+
+
+Table: (\#tab:tab-arrange-ingreso)Base de datos ordenada de forma descendente por ingreso
+
+|id_pers | edad |  sexo  | ingcorte |
+|:-------|:----:|:------:|:--------:|
+|1       |  74  | Hombre |  171000  |
+|1       |  65  | Mujer  |  121980  |
+|2       |  66  | Hombre |  121980  |
+|1       |  79  | Hombre |  81700   |
+|2       |  49  | Mujer  |  81700   |
+|3       |  13  | Hombre |  81700   |
+
+
+Es posible utilizar la función `arrange()` para hacer ordenamientos más complicados. Por ejemplo, ordenar por más de una variable. A modo de ejemplo, la Tabla \@ref(tab:tab-arrange-sexo-edad) muestra la base de datos *datablue* ordenada por las variables *sexo* y *edad*:
+
+
+``` r
+datablue %>% arrange(sexo, edad) %>% head() %>%
+  tabla_fmt()
+```
+
+
+
+Table: (\#tab:tab-arrange-sexo-edad)Base de datos ordenada por sexo y edad
+
+|id_pers | edad |  sexo  | ingcorte |
+|:-------|:----:|:------:|:--------:|
+|6       |  0   | Hombre | 660.440  |
+|6       |  0   | Hombre | 162.500  |
+|3       |  0   | Hombre | 381.667  |
+|5       |  0   | Hombre | 320.000  |
+|6       |  0   | Hombre | 375.000  |
+|4       |  0   | Hombre | 1425.000 |
+
+
+También es posible utilizar la función `arrange()` junto con la opción `desc()` para que el ordenamiento sea descendente, como se ilustra en la Tabla \@ref(tab:tab-arrange-edad-desc).
+
+
+``` r
+datablue %>% arrange(desc(edad)) %>% head() %>%
+  tabla_fmt()
+```
+
+
+
+Table: (\#tab:tab-arrange-edad-desc)Base de datos ordenada de forma descendente por edad
+
+|id_pers | edad |  sexo  | ingcorte |
+|:-------|:----:|:------:|:--------:|
+|2       | 115  | Mujer  |  103.00  |
+|4       | 110  | Mujer  | 1156.53  |
+|2       | 107  | Hombre |  415.59  |
+|1       | 107  | Mujer  | 1754.46  |
+|3       | 105  | Mujer  |  380.79  |
+|2       | 105  | Mujer  |  898.32  |
+
+
+## Transformación y resumen de datos
+
+Las funciones `mutate()`, `summarise()` y `group_by()` forman parte del ecosistema `tidyverse`, y son herramientas fundamentales para la manipulación y análisis de datos provenientes de encuestas de hogares. 
+
+La función `mutate()` permite crear nuevas variables o modificar las existentes dentro de una base de datos. En el contexto de las encuestas de hogares, es común generar variables nuevas variables que faciliten el análisis, como indicadores de pobreza, necesidades básicas, entre otros.
+
+Por ejemplo, la Tabla \@ref(tab:tab-mutate-ingreso2) muestra la base *datablue* con la nueva variable *ingreso2*, que representa el doble del ingreso individual:
+
+
+``` r
+datablue2 <- datablue %>%
+  mutate(ingreso2 = 2 * ingcorte)
+datablue2 %>% head() %>%
+  tabla_fmt()
+```
+
+
+
+Table: (\#tab:tab-mutate-ingreso2)Variable ingreso duplicado (ingreso2) creada con mutate()
+
+|id_pers | edad |  sexo  | ingcorte | ingreso2 |
+|:-------|:----:|:------:|:--------:|:--------:|
+|1       |  23  | Hombre |  800.0   |  1600.0  |
+|1       |  23  | Mujer  |  1150.0  |  2300.0  |
+|1       |  35  | Mujer  |  904.4   |  1808.8  |
+|2       |  34  | Hombre |  904.4   |  1808.8  |
+|3       |  11  | Mujer  |  904.4   |  1808.8  |
+|4       |  7   | Mujer  |  904.4   |  1808.8  |
+
+Es posible crear varias variables simultáneamente, ya que `mutate()` reconoce de forma secuencial las variables que se van generando dentro de la misma instrucción. En el siguiente ejemplo se crean dos nuevas variables en la base de datos, como se presenta en la Tabla \@ref(tab:tab-mutate-ingreso4):
+
+
+``` r
+datacat <- datablue %>%
+  mutate(ingreso2 = 2 * ingcorte,
+         ingreso4 = 2 * ingreso2)
+datacat %>% head() %>%
+  tabla_fmt()
+```
+
+
+
+Table: (\#tab:tab-mutate-ingreso4)Creación simultánea de dos variables derivadas con mutate()
+
+|id_pers | edad |  sexo  | ingcorte | ingreso2 | ingreso4 |
+|:-------|:----:|:------:|:--------:|:--------:|:--------:|
+|1       |  23  | Hombre |  800.0   |  1600.0  |  3200.0  |
+|1       |  23  | Mujer  |  1150.0  |  2300.0  |  4600.0  |
+|1       |  35  | Mujer  |  904.4   |  1808.8  |  3617.6  |
+|2       |  34  | Hombre |  904.4   |  1808.8  |  3617.6  |
+|3       |  11  | Mujer  |  904.4   |  1808.8  |  3617.6  |
+|4       |  7   | Mujer  |  904.4   |  1808.8  |  3617.6  |
+
+
+La función `summarise()` (o `summarize()`) se utiliza para resumir información. A diferencia de `mutate()`, que agrega nuevas columnas al conjunto de datos, `summarise()` colapsa filas y devuelve un nuevo conjunto de datos con resultados agregados, como promedios, totales o medidas de dispersión.
+
+Por ejemplo, podría usarse para calcular el ingreso promedio o el número de observaciones dentro de un grupo específico. Sin embargo, para que el resumen tenga un sentido analítico, suele combinarse con la función `group_by()`.
+
+La función `group_by()` permite definir grupos dentro del conjunto de datos en función de una o más variables categóricas, como región, sexo o área geográfica. Una vez definidos los grupos, es posible aplicar funciones de resumen como `summarise()` o de transformación como `mutate()` para obtener resultados por grupo.
+
+Por ejemplo, el siguiente código muestra cómo generar el número de encuestas efectivas realizadas en cada uno de los estados de Brasil, ordenadas de mayor a menor al usar `arrange()`, como se muestra en la Tabla \@ref(tab:tab-estados-brasil):
+
+
+``` r
+data2 %>% 
+  group_by(estados) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(n)) %>% 
+  head() %>%
+  tabla_fmt()
+```
+
+
+
+Table: (\#tab:tab-estados-brasil)Número de encuestas por estado de Brasil (primeros seis)
+
+|estados      |   n   |
+|:------------|:-----:|
+|SaoPaulo     | 40008 |
+|MinasGerais  | 32933 |
+|RioGrandeSur | 26259 |
+|Bahia        | 26155 |
+|RioJaneiro   | 25858 |
+|Para         | 22489 |
+
+De forma similar, la Tabla \@ref(tab:tab-conteo-sexo) muestra el número de encuestas por sexo del respondiente:
+
+
+``` r
+data2 %>% 
+  group_by(sexo) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(n)) %>%
+  tabla_fmt()
+```
+
+
+
+Table: (\#tab:tab-conteo-sexo)Número de encuestas por sexo del respondiente
+
+|sexo   |   n    |
+|:------|:------:|
+|Mujer  | 183681 |
+|Hombre | 173223 |
+
+O en caso de necesitar la consulta del número de encuestas efectivas por área geográfica, los resultados se presentan en la Tabla \@ref(tab:tab-conteo-area):
+
+
+``` r
+data2 %>% 
+  group_by(area_ee) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(n)) %>%
+  tabla_fmt()
+```
+
+
+
+Table: (\#tab:tab-conteo-area)Número de encuestas por área geográfica
+
+|area_ee     |   n    |
+|:-----------|:------:|
+|Area urbana | 304564 |
+|Area rural  | 52340  |
+
+
+Finalmente, la Tabla \@ref(tab:tab-conteo-parentesco) muestra la distribución de las entrevistas según el parentesco con el jefe del hogar (jefe, cónyuge, hijos, etc.):
+
+
+``` r
+data2 %>% 
+  group_by(paren_ee) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(n)) %>%
+  tabla_fmt()
+```
+
+
+
+Table: (\#tab:tab-conteo-parentesco)Distribución de encuestas por parentesco con el jefe del hogar
+
+|paren_ee           |   n    |
+|:------------------|:------:|
+|Hijos              | 126206 |
+|Jefe               | 117939 |
+|Cónyuge            | 73725  |
+|Otros parientes    | 36508  |
+|Otros no parientes |  2342  |
+|Servicio doméstico |  184   |
+
+## Diferencias entre el análisis tradicional y el análisis de encuestas complejas
+
+En el análisis de datos tradicional, las observaciones suelen considerarse independientes y con igual probabilidad de selección. Sin embargo, las encuestas de hogares y otras investigaciones por muestreo no siguen este supuesto, ya que provienen de diseños muestrales complejos, que pueden incluir estratos, conglomerados y ponderación desigual.
+Ignorar esta estructura puede conducir a estimaciones sesgadas y errores estándar incorrectos.
+
+En el ecosistema tidyverse, el paquete `dplyr` facilita la transformación, limpieza y resumen de los datos mediante una sintaxis intuitiva basada en verbos como `filter()`, `mutate()`, `summarise()` y el operador pipe (`%>%`). Para extender esta lógica al análisis de encuestas, el paquete `srvyr` ofrece una interfaz moderna y coherente con `dplyr` sobre las funciones del paquete `survey`, que es la implementación más completa para el manejo de encuestas complejas en `R`.
+
+Con `srvyr`, es posible aplicar los mismos verbos de `dplyr` sobre un objeto de diseño de encuesta, lo que facilita la transición entre el análisis exploratorio y el análisis inferencial.
+
+El objeto de diseño es la base del análisis de una encuesta, ya que allí se especifican los elementos fundamentales del diseño muestral, como las unidades de muestreo, los estratos y los factores de expansión. Esta estructura permite que los análisis estadísticos incorporen adecuadamente la complejidad del muestreo y los errores asociados a la estimación. 
+
+Antes de construir el objeto de diseño, es esencial revisar con detalle la documentación técnica de la encuesta, pues de ella depende identificar correctamente las variables necesarias y asegurar que los resultados obtenidos sean válidos para la población objetivo.
+
+Si bien es recomendable realizar un análisis exploratorio de los datos originales, tanto el análisis estadístico como la inferencia deben efectuarse utilizando los objetos de diseño de la encuesta. Esto garantiza que los cálculos reflejen adecuadamente la estructura poblacional basado en el diseño muestral, evitando conclusiones sesgadas derivadas del uso directo de los datos sin considerar su diseño.
+
+Para ilustrar este proceso, se utiliza como ejemplo la *Pesquisa Nacional por Amostra de Domicílios 2015* de Brasil. A partir de la base de datos `data2`, primero se renombran las variables que identifican las unidades primarias de muestreo, los estratos y los factores de expansión para que empiecen en un caracter que evite conflictos. Luego, se crea el objeto de diseño con la función `as_survey_design()` del paquete `srvyr`:
+
+
+
+
+``` r
+library(survey)
+library(srvyr)
+
+data2 <- data2 %>% 
+  rename(upm = `_upm`, estrato = `_estrato`, fep = `_fep`) 
+
+encu_dis <- data2 %>% 
+             as_survey_design(ids = c(upm, id_hogar, id_pers),
+                              strata = estrato,
+                              weights = fep,
+                              nest = T)
+```
+
+
+
+En estadística, según @tellez2015estadistica las medidas descriptivas permiten la presentación y caracterización de un conjunto de datos con el fin de poder describir apropiadamente las diversas características presentes en la información de la muestra.
+Con `dplyr`, es posible calcular totales y promedios de manera simple, sin considerar ponderaciones, como se muestra en la Tabla \@ref(tab:tab-total-media-dplyr):
+
+
+``` r
+data2 %>%
+  summarise(total_ing = sum(ingcorte),
+            media_ing = mean(ingcorte)) %>%
+  tabla_fmt()
+```
+
+
+
+Table: (\#tab:tab-total-media-dplyr)Total e ingreso promedio sin considerar ponderación (dplyr)
+
+|total_ing | media_ing |
+|:---------|:---------:|
+|422286293 | 1183.193  |
+
+También pueden obtenerse medias por grupos, por ejemplo, según el área de residencia, tal como se presenta en la Tabla \@ref(tab:tab-media-area-dplyr):
+
+
+``` r
+data2 %>%
+  group_by(area_ee) %>%
+  summarise(n = n(),
+            media = mean(ingcorte)) %>%
+  tabla_fmt()
+```
+
+
+
+Table: (\#tab:tab-media-area-dplyr)Ingreso promedio por área geográfica sin diseño muestral (dplyr)
+
+|area_ee     |   n    |  media   |
+|:-----------|:------:|:--------:|
+|Area urbana | 304564 | 1277.579 |
+|Area rural  | 52340  | 633.967  |
+
+Estos resultados son útiles para una exploración preliminar, pero no representan adecuadamente a la población, ya que cada observación tiene el mismo peso. En una encuesta compleja, esto equivale a analizar solo la muestra, no la población que se desea inferir, para ello es necesario usar el paquete `survey` y `srvyr`.
+
+Una vez definido el objeto de diseño `encu_dis`, que incorpora las unidades primarias de muestreo (`upm`), los estratos (`estrato`) y los factores de expansión (`fep`), los mismos cálculos se pueden realizar de manera casi idéntica, pero ahora los resultados tienen en cuenta el diseño muestral, como se presenta en la Tabla \@ref(tab:tab-total-media-srvyr):
+
+
+``` r
+encu_dis %>%
+  summarise(total_ing = survey_total(ingcorte, vartype = "ci"),
+            media_ing = survey_mean(ingcorte, vartype = "ci")) %>%
+  tabla_fmt()
+```
+
+
+
+Table: (\#tab:tab-total-media-srvyr)Total e ingreso promedio con diseño muestral (srvyr)
+
+|total_ing   | total_ing_low | total_ing_upp | media_ing | media_ing_low | media_ing_upp |
+|:-----------|:-------------:|:-------------:|:---------:|:-------------:|:-------------:|
+|2.45748e+11 |  2.41371e+11  | 250124925608  | 1199.589  |   1177.983    |   1221.195    |
+
+De igual modo, la Tabla \@ref(tab:tab-media-area-srvyr) presenta las medias por grupos considerando el diseño muestral:
+
+
+``` r
+encu_dis %>%
+  group_by(area_ee) %>%
+  summarise(media = survey_mean(ingcorte, vartype = "ci")) %>%
+  tabla_fmt()
+```
+
+
+
+Table: (\#tab:tab-media-area-srvyr)Ingreso promedio por área geográfica con diseño muestral (srvyr)
+
+|area_ee     |  media   | media_low | media_upp |
+|:-----------|:--------:|:---------:|:---------:|
+|Area urbana | 1301.066 | 1275.694  | 1326.438  |
+|Area rural  | 636.769  |  616.144  |  657.394  |
+
+Observe que la estructura es la misma, pero las funciones cambian:
+
+- `mean()` se reemplaza por `survey_mean()`,
+- `sum()` por `survey_total()`,
+
+Además, note que se pueden incluir errores estándar, intervalos de confianza o coeficientes de variación mediante el argumento `vartype`. En consecuencia, mientras `dplyr` describe los datos observados, `survey` y `srvyr` estiman parámetros poblacionales respetando el diseño muestral.
+

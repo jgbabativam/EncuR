@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9.7 Imputación por hot-deck y cold-deck | Análisis de encuestas con R</title>
+  <meta name="description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9.7 Imputación por hot-deck y cold-deck | Análisis de encuestas con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="github-repo" content="psirusteam/2021ASDA" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9.7 Imputación por hot-deck y cold-deck | Análisis de encuestas con R" />
+  
+  <meta name="twitter:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  
+
+<meta name="author" content="Andrés Gutiérrez, Stalyn Guerrero, Cristian Téllez, Giovany Babativa-Márquez" />
+
+
+<meta name="date" content="2026-04-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="sec-media-condicional.html"/>
+<link rel="next" href="sec-regresion.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análisis de encuestas con R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="universo-de-estudio-y-población-objetivo.html"><a href="universo-de-estudio-y-población-objetivo.html"><i class="fa fa-check"></i><b>2.1</b> Universo de estudio y población objetivo</a></li>
+<li class="chapter" data-level="2.2" data-path="unidades-de-análisis.html"><a href="unidades-de-análisis.html"><i class="fa fa-check"></i><b>2.2</b> Unidades de análisis</a></li>
+<li class="chapter" data-level="2.3" data-path="unidades-de-muestreo.html"><a href="unidades-de-muestreo.html"><i class="fa fa-check"></i><b>2.3</b> Unidades de muestreo</a></li>
+<li class="chapter" data-level="2.4" data-path="marcos-de-muestreo.html"><a href="marcos-de-muestreo.html"><i class="fa fa-check"></i><b>2.4</b> Marcos de muestreo</a></li>
+<li class="chapter" data-level="2.5" data-path="sec-motivacion.html"><a href="sec-motivacion.html"><i class="fa fa-check"></i><b>2.5</b> Motivación</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="sec-motivacion.html"><a href="sec-motivacion.html#la-importancia-de-considerar-el-diseño-muestral"><i class="fa fa-check"></i><b>2.5.1</b> La importancia de considerar el diseño muestral</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html"><i class="fa fa-check"></i><b>2.6</b> Parámetros y estimadores</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#ajustes-adicionales-de-los-pesos"><i class="fa fa-check"></i><b>2.6.1</b> Ajustes adicionales de los pesos</a></li>
+<li class="chapter" data-level="2.6.2" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#importancia-de-los-ajustes"><i class="fa fa-check"></i><b>2.6.2</b> Importancia de los ajustes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html"><i class="fa fa-check"></i><b>2.7</b> Estimación de totales</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html#ejemplo-ilustrativo-1"><i class="fa fa-check"></i><b>2.7.1</b> Ejemplo ilustrativo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="efecto-del-diseño-deff.html"><a href="efecto-del-diseño-deff.html"><i class="fa fa-check"></i><b>2.8</b> Efecto del diseño (DEFF)</a></li>
+<li class="chapter" data-level="2.9" data-path="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><a href="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><i class="fa fa-check"></i><b>2.9</b> Muestreo estratificado aleatorio simple con dos etapas</a></li>
+<li class="chapter" data-level="2.10" data-path="práctica-en-r.html"><a href="práctica-en-r.html"><i class="fa fa-check"></i><b>2.10</b> Práctica en <code>R</code></a></li>
+<li class="chapter" data-level="2.11" data-path="calibrando-con-r.html"><a href="calibrando-con-r.html"><i class="fa fa-check"></i><b>2.11</b> Calibrando con <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><i class="fa fa-check"></i><b>3</b> Del manejo de datos al análisis de encuestas complejas en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="fundamentos-básicos-de-r-y-rstudio.html"><a href="fundamentos-básicos-de-r-y-rstudio.html"><i class="fa fa-check"></i><b>3.1</b> Fundamentos básicos de R y Rstudio</a></li>
+<li class="chapter" data-level="3.2" data-path="paquetes-para-el-análisis-de-encuestas.html"><a href="paquetes-para-el-análisis-de-encuestas.html"><i class="fa fa-check"></i><b>3.2</b> Paquetes para el análisis de encuestas</a></li>
+<li class="chapter" data-level="3.3" data-path="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><a href="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><i class="fa fa-check"></i><b>3.3</b> Paquetes complementarios para la manipulación y visualización de datos</a></li>
+<li class="chapter" data-level="3.4" data-path="creación-de-proyectos-en-r.html"><a href="creación-de-proyectos-en-r.html"><i class="fa fa-check"></i><b>3.4</b> Creación de proyectos en <code>R</code></a></li>
+<li class="chapter" data-level="3.5" data-path="lectura-de-bases-de-datos-y-manipulación.html"><a href="lectura-de-bases-de-datos-y-manipulación.html"><i class="fa fa-check"></i><b>3.5</b> Lectura de bases de datos y manipulación</a></li>
+<li class="chapter" data-level="3.6" data-path="el-operador-pipe.html"><a href="el-operador-pipe.html"><i class="fa fa-check"></i><b>3.6</b> El operador <code>pipe</code></a></li>
+<li class="chapter" data-level="3.7" data-path="transformación-y-resumen-de-datos.html"><a href="transformación-y-resumen-de-datos.html"><i class="fa fa-check"></i><b>3.7</b> Transformación y resumen de datos</a></li>
+<li class="chapter" data-level="3.8" data-path="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><i class="fa fa-check"></i><b>3.8</b> Diferencias entre el análisis tradicional y el análisis de encuestas complejas</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de las variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="definición-del-objeto-de-diseño.html"><a href="definición-del-objeto-de-diseño.html"><i class="fa fa-check"></i><b>4.1</b> Definición del objeto de diseño</a></li>
+<li class="chapter" data-level="4.2" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de totales y medias</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-puntual"><i class="fa fa-check"></i><b>4.2.1</b> Estimación puntual</a></li>
+<li class="chapter" data-level="4.2.2" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-totales-1"><i class="fa fa-check"></i><b>4.2.2</b> Estimación de totales</a></li>
+<li class="chapter" data-level="4.2.3" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-la-media-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.2.3</b> Estimación de la media e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.2.4" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-medidas-de-localización-y-dispersión"><i class="fa fa-check"></i><b>4.2.4</b> Estimación de medidas de localización y dispersión</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html"><i class="fa fa-check"></i><b>4.3</b> Estimación de razones</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html#implementación-computacional-en-r"><i class="fa fa-check"></i>Implementación computacional en <code>R</code></a></li>
+<li class="chapter" data-level="" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html#interpretación-aplicada"><i class="fa fa-check"></i>Interpretación aplicada</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="estimación-del-coeficiente-de-gini.html"><a href="estimación-del-coeficiente-de-gini.html"><i class="fa fa-check"></i><b>4.4</b> Estimación del coeficiente de Gini</a></li>
+<li class="chapter" data-level="4.5" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html"><i class="fa fa-check"></i><b>4.5</b> Análisis de correlación</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#ajuste-al-diseño-muestral"><i class="fa fa-check"></i><b>4.5.1</b> Ajuste al diseño muestral</a></li>
+<li class="chapter" data-level="4.5.2" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#expresión-formal"><i class="fa fa-check"></i><b>4.5.2</b> Expresión formal</a></li>
+<li class="chapter" data-level="4.5.3" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#implementación-en-r"><i class="fa fa-check"></i><b>4.5.3</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html"><i class="fa fa-check"></i><b>4.6</b> Pruebas de hipótesis</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#planteamiento-general"><i class="fa fa-check"></i><b>4.6.1</b> Planteamiento general</a></li>
+<li class="chapter" data-level="4.6.2" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#prueba-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.6.2</b> Prueba para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.6.3" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#estadístico-de-prueba-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.6.3</b> Estadístico de prueba e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.6.4" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#ejemplo-aplicado-en-r"><i class="fa fa-check"></i><b>4.6.4</b> Ejemplo aplicado en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="estimación-de-contrastes.html"><a href="estimación-de-contrastes.html"><i class="fa fa-check"></i><b>4.7</b> Estimación de contrastes</a></li>
+<li class="chapter" data-level="4.8" data-path="viz-continuas.html"><a href="viz-continuas.html"><i class="fa fa-check"></i><b>4.8</b> Visualización de variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="viz-continuas.html"><a href="viz-continuas.html#histogramas"><i class="fa fa-check"></i><b>4.8.1</b> Histogramas</a></li>
+<li class="chapter" data-level="4.8.2" data-path="viz-continuas.html"><a href="viz-continuas.html#densidades-y-boxplots"><i class="fa fa-check"></i><b>4.8.2</b> Densidades y Boxplots</a></li>
+<li class="chapter" data-level="4.8.3" data-path="viz-continuas.html"><a href="viz-continuas.html#diagramas-de-dispersión"><i class="fa fa-check"></i><b>4.8.3</b> Diagramas de dispersión</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html"><i class="fa fa-check"></i><b>5</b> Análisis de variables categóricas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="estimación-del-tamaño-poblacional.html"><a href="estimación-del-tamaño-poblacional.html"><i class="fa fa-check"></i><b>5.1</b> Estimación del tamaño poblacional</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimación-del-tamaño-poblacional.html"><a href="estimación-del-tamaño-poblacional.html#estimación-de-totales-en-r"><i class="fa fa-check"></i>Estimación de totales en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="estimación-de-proporciones.html"><a href="estimación-de-proporciones.html"><i class="fa fa-check"></i><b>5.2</b> Estimación de proporciones</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="estimación-de-proporciones.html"><a href="estimación-de-proporciones.html#estimación-de-proporciones-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Estimación de proporciones en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html"><i class="fa fa-check"></i><b>5.3</b> Tablas cruzadas</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#definición-y-notación"><i class="fa fa-check"></i><b>5.3.1</b> Definición y notación</a></li>
+<li class="chapter" data-level="5.3.2" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#tablas-de-doble-entrada"><i class="fa fa-check"></i><b>5.3.2</b> Tablas de doble entrada</a></li>
+<li class="chapter" data-level="5.3.3" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#proporciones-para-variables-binarias"><i class="fa fa-check"></i><b>5.3.3</b> Proporciones para variables binarias</a></li>
+<li class="chapter" data-level="5.3.4" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#proporciones-para-variables-multinomiales"><i class="fa fa-check"></i><b>5.3.4</b> Proporciones para variables multinomiales</a></li>
+<li class="chapter" data-level="5.3.5" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#tablas-cruzadas-o-de-contingencia"><i class="fa fa-check"></i><b>5.3.5</b> Tablas cruzadas o de contingencia</a></li>
+<li class="chapter" data-level="5.3.6" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#prueba-de-independencia-chi2"><i class="fa fa-check"></i><b>5.3.6</b> Prueba de independencia <span class="math inline">\(\chi^{2}\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="viz-categoricas.html"><a href="viz-categoricas.html"><i class="fa fa-check"></i><b>5.4</b> Visualización de variables categóricas</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="viz-categoricas.html"><a href="viz-categoricas.html#gráficos-de-barras"><i class="fa fa-check"></i><b>5.4.1</b> Gráficos de barras</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="viz-mapas.html"><a href="viz-mapas.html"><i class="fa fa-check"></i><b>5.5</b> Visualización de variables categóricas en mapas</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="viz-mapas.html"><a href="viz-mapas.html#carga-del-shapefile-y-mapa-base"><i class="fa fa-check"></i><b>5.5.1</b> Carga del shapefile y mapa base</a></li>
+<li class="chapter" data-level="5.5.2" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-coroplético-de-pobreza-masculina-por-región"><i class="fa fa-check"></i><b>5.5.2</b> Mapa coroplético de pobreza masculina por región</a></li>
+<li class="chapter" data-level="5.5.3" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-del-coeficiente-de-variación-del-ingreso-medio"><i class="fa fa-check"></i><b>5.5.3</b> Mapa del coeficiente de variación del ingreso medio</a></li>
+<li class="chapter" data-level="5.5.4" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-bivariante-con-ggplot2"><i class="fa fa-check"></i><b>5.5.4</b> Mapa bivariante con <code>ggplot2</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cap6.html"><a href="cap6.html"><i class="fa fa-check"></i><b>6</b> Modelos de regresión</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="antecedentes-históricos-y-desarrollos-metodológicos.html"><a href="antecedentes-históricos-y-desarrollos-metodológicos.html"><i class="fa fa-check"></i><b>6.1</b> Antecedentes históricos y desarrollos metodológicos</a></li>
+<li class="chapter" data-level="6.2" data-path="relevancia-práctica.html"><a href="relevancia-práctica.html"><i class="fa fa-check"></i><b>6.2</b> Relevancia práctica</a></li>
+<li class="chapter" data-level="6.3" data-path="uso-de-ponderaciones.html"><a href="uso-de-ponderaciones.html"><i class="fa fa-check"></i><b>6.3</b> Uso de ponderaciones</a></li>
+<li class="chapter" data-level="6.4" data-path="enfoques-inferenciales.html"><a href="enfoques-inferenciales.html"><i class="fa fa-check"></i><b>6.4</b> Enfoques inferenciales</a></li>
+<li class="chapter" data-level="6.5" data-path="estimación-de-los-parámetros.html"><a href="estimación-de-los-parámetros.html"><i class="fa fa-check"></i><b>6.5</b> Estimación de los parámetros</a></li>
+<li class="chapter" data-level="6.6" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html"><i class="fa fa-check"></i><b>6.6</b> Diagnóstico del modelo</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#coeficiente-de-determinación"><i class="fa fa-check"></i><b>6.6.1</b> Coeficiente de determinación</a></li>
+<li class="chapter" data-level="6.6.2" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#diagnóstico-de-los-residuales"><i class="fa fa-check"></i><b>6.6.2</b> Diagnóstico de los residuales</a></li>
+<li class="chapter" data-level="6.6.3" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#observaciones-influyentes"><i class="fa fa-check"></i><b>6.6.3</b> Observaciones influyentes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="inferencia-sobre-los-parámetros-del-modelo.html"><a href="inferencia-sobre-los-parámetros-del-modelo.html"><i class="fa fa-check"></i><b>6.7</b> Inferencia sobre los parámetros del modelo</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="inferencia-sobre-los-parámetros-del-modelo.html"><a href="inferencia-sobre-los-parámetros-del-modelo.html#estimación-puntual-e-intervalo-de-predicción"><i class="fa fa-check"></i><b>6.7.1</b> Estimación puntual e intervalo de predicción</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="cap-glm.html"><a href="cap-glm.html"><i class="fa fa-check"></i><b>7</b> Modelos lineales generalizados</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="sec-mpv.html"><a href="sec-mpv.html"><i class="fa fa-check"></i><b>7.1</b> Inferencia en poblaciones finitas</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="sec-mpv.html"><a href="sec-mpv.html#sec-mv"><i class="fa fa-check"></i><b>7.1.1</b> Método de la máxima verosimilitud</a></li>
+<li class="chapter" data-level="7.1.2" data-path="sec-mpv.html"><a href="sec-mpv.html#sec-mpv-formal"><i class="fa fa-check"></i><b>7.1.2</b> Método de máxima pseudo-verosimilitud</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="configuración-del-diseño-muestral.html"><a href="configuración-del-diseño-muestral.html"><i class="fa fa-check"></i><b>7.2</b> Configuración del diseño muestral</a></li>
+<li class="chapter" data-level="7.3" data-path="sec-independencia.html"><a href="sec-independencia.html"><i class="fa fa-check"></i><b>7.3</b> Tablas de contingencia y pruebas de independencia</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="sec-independencia.html"><a href="sec-independencia.html#sec-rao-scott"><i class="fa fa-check"></i><b>7.3.1</b> Prueba de Rao-Scott</a></li>
+<li class="chapter" data-level="7.3.2" data-path="sec-independencia.html"><a href="sec-independencia.html#sec-wald"><i class="fa fa-check"></i><b>7.3.2</b> Estadístico de Wald</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="sec-loglineal.html"><a href="sec-loglineal.html"><i class="fa fa-check"></i><b>7.4</b> Modelo log-lineal para tablas de contingencia</a></li>
+<li class="chapter" data-level="7.5" data-path="sec-logistica.html"><a href="sec-logistica.html"><i class="fa fa-check"></i><b>7.5</b> Modelo de regresión logística</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="sec-logistica.html"><a href="sec-logistica.html#modelo-sin-interacciones"><i class="fa fa-check"></i><b>7.5.1</b> Modelo sin interacciones</a></li>
+<li class="chapter" data-level="7.5.2" data-path="sec-logistica.html"><a href="sec-logistica.html#modelo-con-interacciones"><i class="fa fa-check"></i><b>7.5.2</b> Modelo con interacciones</a></li>
+<li class="chapter" data-level="7.5.3" data-path="sec-logistica.html"><a href="sec-logistica.html#modelo-con-pesos-q-weighted"><i class="fa fa-check"></i><b>7.5.3</b> Modelo con pesos q-weighted</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="sec-gamma.html"><a href="sec-gamma.html"><i class="fa fa-check"></i><b>7.6</b> Modelo de regresión Gamma</a></li>
+<li class="chapter" data-level="7.7" data-path="sec-multinomial.html"><a href="sec-multinomial.html"><i class="fa fa-check"></i><b>7.7</b> Modelo de regresión multinomial</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="sec-multinomial.html"><a href="sec-multinomial.html#ajuste-usando-svyvgam"><i class="fa fa-check"></i><b>7.7.1</b> Ajuste usando <code>svyVGAM</code></a></li>
+<li class="chapter" data-level="7.7.2" data-path="sec-multinomial.html"><a href="sec-multinomial.html#ajuste-usando-svymultinom"><i class="fa fa-check"></i><b>7.7.2</b> Ajuste usando <code>svymultinom</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="cap-multinivel.html"><a href="cap-multinivel.html"><i class="fa fa-check"></i><b>8</b> Modelos multinivel</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="sec-motivacionMult.html"><a href="sec-motivacionMult.html"><i class="fa fa-check"></i><b>8.1</b> Motivación: de la regresión clásica al modelo multinivel</a></li>
+<li class="chapter" data-level="8.2" data-path="sec-multinivel-muestras-complejas.html"><a href="sec-multinivel-muestras-complejas.html"><i class="fa fa-check"></i><b>8.2</b> Modelos multinivel en muestras complejas</a></li>
+<li class="chapter" data-level="8.3" data-path="sec-mpv-multinivel.html"><a href="sec-mpv-multinivel.html"><i class="fa fa-check"></i><b>8.3</b> Estimación de pseudo-máxima verosimilitud</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="sec-mpv-multinivel.html"><a href="sec-mpv-multinivel.html#pesos-de-muestreo-para-modelos-multinivel"><i class="fa fa-check"></i><b>8.3.1</b> Pesos de muestreo para modelos multinivel</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="sec-modelo-nulo.html"><a href="sec-modelo-nulo.html"><i class="fa fa-check"></i><b>8.4</b> Modelo nulo</a></li>
+<li class="chapter" data-level="8.5" data-path="sec-intercepto-aleatorio.html"><a href="sec-intercepto-aleatorio.html"><i class="fa fa-check"></i><b>8.5</b> Modelo con intercepto aleatorio</a></li>
+<li class="chapter" data-level="8.6" data-path="sec-intercepto-pendiente-aleatorios.html"><a href="sec-intercepto-pendiente-aleatorios.html"><i class="fa fa-check"></i><b>8.6</b> Modelo con intercepto y pendiente aleatoria</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="sec-intercepto-pendiente-aleatorios.html"><a href="sec-intercepto-pendiente-aleatorios.html#sec-modelo-con-zona"><i class="fa fa-check"></i><b>8.6.1</b> Extensión con variable zona</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="sec-logistica-multinivel.html"><a href="sec-logistica-multinivel.html"><i class="fa fa-check"></i><b>8.7</b> Modelos logísticos multinivel</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="sec-logistica-multinivel.html"><a href="sec-logistica-multinivel.html#modelo-nulo-logístico"><i class="fa fa-check"></i><b>8.7.1</b> Modelo nulo logístico</a></li>
+<li class="chapter" data-level="8.7.2" data-path="sec-logistica-multinivel.html"><a href="sec-logistica-multinivel.html#modelo-logístico-con-intercepto-aleatorio"><i class="fa fa-check"></i><b>8.7.2</b> Modelo logístico con intercepto aleatorio</a></li>
+<li class="chapter" data-level="8.7.3" data-path="sec-logistica-multinivel.html"><a href="sec-logistica-multinivel.html#modelo-logístico-con-intercepto-y-pendiente-aleatoria"><i class="fa fa-check"></i><b>8.7.3</b> Modelo logístico con intercepto y pendiente aleatoria</a></li>
+<li class="chapter" data-level="8.7.4" data-path="sec-logistica-multinivel.html"><a href="sec-logistica-multinivel.html#extensión-con-variable-zona"><i class="fa fa-check"></i><b>8.7.4</b> Extensión con variable zona</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="cap-imputacion.html"><a href="cap-imputacion.html"><i class="fa fa-check"></i><b>9</b> Procedimientos de imputación</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="sec-mecanismos.html"><a href="sec-mecanismos.html"><i class="fa fa-check"></i><b>9.1</b> Mecanismos de datos faltantes</a></li>
+<li class="chapter" data-level="9.2" data-path="sec-configuracion.html"><a href="sec-configuracion.html"><i class="fa fa-check"></i><b>9.2</b> Configuración de los datos de ejemplo</a></li>
+<li class="chapter" data-level="9.3" data-path="sec-simulacion.html"><a href="sec-simulacion.html"><i class="fa fa-check"></i><b>9.3</b> Simulación de esquemas de datos faltantes</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="sec-simulacion.html"><a href="sec-simulacion.html#esquema-mcar"><i class="fa fa-check"></i><b>9.3.1</b> Esquema MCAR</a></li>
+<li class="chapter" data-level="9.3.2" data-path="sec-simulacion.html"><a href="sec-simulacion.html#esquema-mar"><i class="fa fa-check"></i><b>9.3.2</b> Esquema MAR</a></li>
+<li class="chapter" data-level="9.3.3" data-path="sec-simulacion.html"><a href="sec-simulacion.html#esquema-mnar"><i class="fa fa-check"></i><b>9.3.3</b> Esquema MNAR</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="sec-construccion-base.html"><a href="sec-construccion-base.html"><i class="fa fa-check"></i><b>9.4</b> Construcción de la base con datos faltantes</a></li>
+<li class="chapter" data-level="9.5" data-path="sec-media-incondicional.html"><a href="sec-media-incondicional.html"><i class="fa fa-check"></i><b>9.5</b> Imputación por la media no condicional</a></li>
+<li class="chapter" data-level="9.6" data-path="sec-media-condicional.html"><a href="sec-media-condicional.html"><i class="fa fa-check"></i><b>9.6</b> Imputación por la media condicional</a></li>
+<li class="chapter" data-level="9.7" data-path="sec-hotdeck.html"><a href="sec-hotdeck.html"><i class="fa fa-check"></i><b>9.7</b> Imputación por hot-deck y cold-deck</a>
+<ul>
+<li class="chapter" data-level="9.7.1" data-path="sec-hotdeck.html"><a href="sec-hotdeck.html#imputación-hot-deck-para-el-ingreso"><i class="fa fa-check"></i><b>9.7.1</b> Imputación hot-deck para el ingreso</a></li>
+<li class="chapter" data-level="9.7.2" data-path="sec-hotdeck.html"><a href="sec-hotdeck.html#imputación-hot-deck-para-la-variable-empleo"><i class="fa fa-check"></i><b>9.7.2</b> Imputación hot-deck para la variable empleo</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="sec-regresion.html"><a href="sec-regresion.html"><i class="fa fa-check"></i><b>9.8</b> Imputación por regresión</a></li>
+<li class="chapter" data-level="9.9" data-path="sec-knn.html"><a href="sec-knn.html"><i class="fa fa-check"></i><b>9.9</b> Imputación por el vecino más cercano</a></li>
+<li class="chapter" data-level="9.10" data-path="sec-knn-regresion.html"><a href="sec-knn-regresion.html"><i class="fa fa-check"></i><b>9.10</b> Imputación por el vecino más cercano con regresión</a></li>
+<li class="chapter" data-level="9.11" data-path="sec-im.html"><a href="sec-im.html"><i class="fa fa-check"></i><b>9.11</b> Imputación múltiple</a>
+<ul>
+<li class="chapter" data-level="9.11.1" data-path="sec-im.html"><a href="sec-im.html#estimadores-de-la-imputación-múltiple"><i class="fa fa-check"></i><b>9.11.1</b> Estimadores de la imputación múltiple</a></li>
+<li class="chapter" data-level="9.11.2" data-path="sec-im.html"><a href="sec-im.html#implementación-mediante-bootstrap"><i class="fa fa-check"></i><b>9.11.2</b> Implementación mediante bootstrap</a></li>
+<li class="chapter" data-level="9.11.3" data-path="sec-im.html"><a href="sec-im.html#imputación-múltiple-para-la-encuesta-de-hogares"><i class="fa fa-check"></i><b>9.11.3</b> Imputación múltiple para la encuesta de hogares</a></li>
+<li class="chapter" data-level="9.11.4" data-path="sec-im.html"><a href="sec-im.html#estimación-del-ingreso-medio-mediante-imputación-múltiple"><i class="fa fa-check"></i><b>9.11.4</b> Estimación del ingreso medio mediante imputación múltiple</a></li>
+<li class="chapter" data-level="9.11.5" data-path="sec-im.html"><a href="sec-im.html#estimación-de-la-varianza-del-ingreso"><i class="fa fa-check"></i><b>9.11.5</b> Estimación de la varianza del ingreso</a></li>
+<li class="chapter" data-level="9.11.6" data-path="sec-im.html"><a href="sec-im.html#estimación-de-proporciones-de-empleo"><i class="fa fa-check"></i><b>9.11.6</b> Estimación de proporciones de empleo</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a Análisis de encuestas con R </a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis de encuestas con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sec-hotdeck" class="section level2 hasAnchor" number="9.7">
+<h2><span class="header-section-number">9.7</span> Imputación por hot-deck y cold-deck<a href="sec-hotdeck.html#sec-hotdeck" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La imputación por <strong>hot-deck</strong> consiste en reemplazar el valor faltante de una observación receptora por el valor observado en una observación donante que comparte características similares, extraída de la misma muestra. El término proviene de los primeros sistemas de procesamiento de datos, donde las tarjetas perforadas activas se denominaban “hot deck”. La técnica es efectiva cuando se cuenta con observaciones suficientemente similares en la muestra, aunque puede ser menos precisa en conjuntos de datos grandes o con estructuras complejas.</p>
+<p>La imputación por <strong>cold-deck</strong> es análoga, pero la fuente donante es externa a la muestra en estudio, como registros administrativos o datos históricos. Su aplicación está condicionada a la disponibilidad y representatividad de esa fuente externa.</p>
+<div id="imputación-hot-deck-para-el-ingreso" class="section level3 hasAnchor" number="9.7.1">
+<h3><span class="header-section-number">9.7.1</span> Imputación hot-deck para el ingreso<a href="sec-hotdeck.html#imputación-hot-deck-para-el-ingreso" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="sec-hotdeck.html#cb387-1" tabindex="-1"></a>donante  <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(encuesta<span class="sc">$</span>Income_missin))</span>
+<span id="cb387-2"><a href="sec-hotdeck.html#cb387-2" tabindex="-1"></a>receptor <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">is.na</span>(encuesta<span class="sc">$</span>Income_missin))</span>
+<span id="cb387-3"><a href="sec-hotdeck.html#cb387-3" tabindex="-1"></a>encuesta<span class="sc">$</span>Income_imp <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Income_missin</span>
+<span id="cb387-4"><a href="sec-hotdeck.html#cb387-4" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb387-5"><a href="sec-hotdeck.html#cb387-5" tabindex="-1"></a><span class="cf">for</span> (ii <span class="cf">in</span> receptor) {</span>
+<span id="cb387-6"><a href="sec-hotdeck.html#cb387-6" tabindex="-1"></a>  don_ii <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> donante, <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb387-7"><a href="sec-hotdeck.html#cb387-7" tabindex="-1"></a>  encuesta<span class="sc">$</span>Income_imp[ii] <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Income_missin[don_ii]</span>
+<span id="cb387-8"><a href="sec-hotdeck.html#cb387-8" tabindex="-1"></a>}</span></code></pre></div>
+<p>La Tabla <a href="sec-hotdeck.html#tab:tab-sesgo-hotdeck-global">9.8</a> compara los estadísticos globales. El sesgo relativo de la media es de 2.3%:</p>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="sec-hotdeck.html#cb388-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb388-2"><a href="sec-hotdeck.html#cb388-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb388-3"><a href="sec-hotdeck.html#cb388-3" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb388-4"><a href="sec-hotdeck.html#cb388-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb388-5"><a href="sec-hotdeck.html#cb388-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
+<span id="cb388-6"><a href="sec-hotdeck.html#cb388-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
+<span id="cb388-7"><a href="sec-hotdeck.html#cb388-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table>
+<caption><span id="tab:tab-sesgo-hotdeck-global">Cuadro 9.8: </span>Comparación global entre ingreso original e imputado por hot-deck</caption>
+<thead>
+<tr class="header">
+<th align="left">Media original</th>
+<th align="center">DS original</th>
+<th align="center">Media imputada</th>
+<th align="center">DS imputada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">604.2</td>
+<td align="center">513.1</td>
+<td align="center">618.3</td>
+<td align="center">528.2</td>
+</tr>
+</tbody>
+</table>
+<p>La Tabla <a href="sec-hotdeck.html#tab:tab-sesgo-hotdeck-zona">9.9</a> presenta los resultados por zona. El sesgo relativo es de 7.4% en la zona rural y de 0.7% en la urbana, lo que sugiere mayor variabilidad en el proceso de donación en zonas con menor tamaño muestral:</p>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="sec-hotdeck.html#cb389-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb389-2"><a href="sec-hotdeck.html#cb389-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Zona =</span> Zone) <span class="sc">%&gt;%</span></span>
+<span id="cb389-3"><a href="sec-hotdeck.html#cb389-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb389-4"><a href="sec-hotdeck.html#cb389-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb389-5"><a href="sec-hotdeck.html#cb389-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb389-6"><a href="sec-hotdeck.html#cb389-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
+<span id="cb389-7"><a href="sec-hotdeck.html#cb389-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
+<span id="cb389-8"><a href="sec-hotdeck.html#cb389-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table>
+<caption><span id="tab:tab-sesgo-hotdeck-zona">Cuadro 9.9: </span>Comparación entre ingreso original e imputado por hot-deck, por zona</caption>
+<thead>
+<tr class="header">
+<th align="left">Zona</th>
+<th align="center">Media original</th>
+<th align="center">DS original</th>
+<th align="center">Media imputada</th>
+<th align="center">DS imputada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Rural</td>
+<td align="center">469.1</td>
+<td align="center">336.6</td>
+<td align="center">503.7</td>
+<td align="center">368.9</td>
+</tr>
+<tr class="even">
+<td align="left">Urban</td>
+<td align="center">730.9</td>
+<td align="center">609.0</td>
+<td align="center">725.7</td>
+<td align="center">624.0</td>
+</tr>
+</tbody>
+</table>
+<p>La Tabla <a href="sec-hotdeck.html#tab:tab-sesgo-hotdeck-sexo">9.10</a> presenta los resultados por sexo:</p>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="sec-hotdeck.html#cb390-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb390-2"><a href="sec-hotdeck.html#cb390-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Sexo =</span> Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb390-3"><a href="sec-hotdeck.html#cb390-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb390-4"><a href="sec-hotdeck.html#cb390-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb390-5"><a href="sec-hotdeck.html#cb390-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb390-6"><a href="sec-hotdeck.html#cb390-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
+<span id="cb390-7"><a href="sec-hotdeck.html#cb390-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
+<span id="cb390-8"><a href="sec-hotdeck.html#cb390-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table>
+<caption><span id="tab:tab-sesgo-hotdeck-sexo">Cuadro 9.10: </span>Comparación entre ingreso original e imputado por hot-deck, por sexo</caption>
+<thead>
+<tr class="header">
+<th align="left">Sexo</th>
+<th align="center">Media original</th>
+<th align="center">DS original</th>
+<th align="center">Media imputada</th>
+<th align="center">DS imputada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Female</td>
+<td align="center">589.2</td>
+<td align="center">504.3</td>
+<td align="center">602.8</td>
+<td align="center">503.1</td>
+</tr>
+<tr class="even">
+<td align="left">Male</td>
+<td align="center">621.8</td>
+<td align="center">522.9</td>
+<td align="center">636.4</td>
+<td align="center">555.9</td>
+</tr>
+</tbody>
+</table>
+<p>Las Figuras <a href="#fig:fig-hotdeck-densidad"><strong>??</strong></a> y <a href="sec-hotdeck.html#fig:fig-hotdeck-boxplot">9.8</a> muestran que la distribución imputada es similar a la original, con diferencias algo mayores que en el método de media condicional:</p>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="sec-hotdeck.html#cb391-1" tabindex="-1"></a>dat_plot6 <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(</span>
+<span id="cb391-2"><a href="sec-hotdeck.html#cb391-2" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Zone, Sex, Income, Income_imp),</span>
+<span id="cb391-3"><a href="sec-hotdeck.html#cb391-3" tabindex="-1"></a>  <span class="at">key =</span> <span class="st">&quot;Caso&quot;</span>, <span class="at">value =</span> <span class="st">&quot;Income2&quot;</span>, <span class="sc">-</span>Zone, <span class="sc">-</span>Sex</span>
+<span id="cb391-4"><a href="sec-hotdeck.html#cb391-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="sec-hotdeck.html#cb392-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot6, <span class="fu">aes</span>(<span class="at">x =</span> Income2, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb392-2"><a href="sec-hotdeck.html#cb392-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb392-3"><a href="sec-hotdeck.html#cb392-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb392-4"><a href="sec-hotdeck.html#cb392-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income),     <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb392-5"><a href="sec-hotdeck.html#cb392-5" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income_imp), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="09-Imputacion_files/figure-html/fig-hotdeck-densidad,%20hot_deck_1-1.svg" alt="Densidad del ingreso original versus imputado por hot-deck" width="70%" />
+<p class="caption">
+(#fig:fig-hotdeck-densidad, hot_deck_1)Densidad del ingreso original versus imputado por hot-deck
+</p>
+</div>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="sec-hotdeck.html#cb393-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot6, <span class="fu">aes</span>(<span class="at">x =</span> Caso, <span class="at">y =</span> Income2)) <span class="sc">+</span></span>
+<span id="cb393-2"><a href="sec-hotdeck.html#cb393-2" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb393-3"><a href="sec-hotdeck.html#cb393-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb393-4"><a href="sec-hotdeck.html#cb393-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Zone <span class="sc">~</span> Sex) <span class="sc">+</span></span>
+<span id="cb393-5"><a href="sec-hotdeck.html#cb393-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-hotdeck-boxplot"></span>
+<img src="09-Imputacion_files/figure-html/fig-hotdeck-boxplot-1.svg" alt="Boxplots del ingreso original e imputado por hot-deck, por zona y sexo" width="70%" />
+<p class="caption">
+Figura 9.8: Boxplots del ingreso original e imputado por hot-deck, por zona y sexo
+</p>
+</div>
+</div>
+<div id="imputación-hot-deck-para-la-variable-empleo" class="section level3 hasAnchor" number="9.7.2">
+<h3><span class="header-section-number">9.7.2</span> Imputación hot-deck para la variable empleo<a href="sec-hotdeck.html#imputación-hot-deck-para-la-variable-empleo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para la variable categórica empleo, el método consiste en seleccionar un donante aleatorio y asignar su categoría al receptor. La probabilidad de selección de cada categoría es proporcional a su frecuencia observada:</p>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="sec-hotdeck.html#cb394-1" tabindex="-1"></a>donante  <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(encuesta<span class="sc">$</span>Income_missin))</span>
+<span id="cb394-2"><a href="sec-hotdeck.html#cb394-2" tabindex="-1"></a>receptor <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">is.na</span>(encuesta<span class="sc">$</span>Income_missin))</span>
+<span id="cb394-3"><a href="sec-hotdeck.html#cb394-3" tabindex="-1"></a>encuesta<span class="sc">$</span>Employment_imp <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Employment_missin</span>
+<span id="cb394-4"><a href="sec-hotdeck.html#cb394-4" tabindex="-1"></a>prop <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(<span class="fu">table</span>(<span class="fu">na.omit</span>(encuesta<span class="sc">$</span>Employment_missin)))</span>
+<span id="cb394-5"><a href="sec-hotdeck.html#cb394-5" tabindex="-1"></a></span>
+<span id="cb394-6"><a href="sec-hotdeck.html#cb394-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb394-7"><a href="sec-hotdeck.html#cb394-7" tabindex="-1"></a>imp <span class="ot">&lt;-</span> <span class="fu">sample</span>(</span>
+<span id="cb394-8"><a href="sec-hotdeck.html#cb394-8" tabindex="-1"></a>  <span class="at">x       =</span> <span class="fu">c</span>(<span class="st">&quot;Unemployed&quot;</span>, <span class="st">&quot;Inactive&quot;</span>, <span class="st">&quot;Employed&quot;</span>),</span>
+<span id="cb394-9"><a href="sec-hotdeck.html#cb394-9" tabindex="-1"></a>  <span class="at">size    =</span> <span class="fu">length</span>(receptor),</span>
+<span id="cb394-10"><a href="sec-hotdeck.html#cb394-10" tabindex="-1"></a>  <span class="at">prob    =</span> prop,</span>
+<span id="cb394-11"><a href="sec-hotdeck.html#cb394-11" tabindex="-1"></a>  <span class="at">replace =</span> <span class="cn">TRUE</span></span>
+<span id="cb394-12"><a href="sec-hotdeck.html#cb394-12" tabindex="-1"></a>)</span>
+<span id="cb394-13"><a href="sec-hotdeck.html#cb394-13" tabindex="-1"></a>encuesta<span class="sc">$</span>Employment_imp[receptor] <span class="ot">&lt;-</span> imp</span></code></pre></div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sec-media-condicional.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sec-regresion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/psirusteam/2021ASDA/09-Imputacion.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Análisis de encuestas con R.pdf", "Análisis de encuestas con R.epub", "Análisis de encuestas con R.mobi"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "tconfig": null
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

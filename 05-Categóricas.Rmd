@@ -444,13 +444,25 @@ dsg <- diseno %>%
                           labels = c("No pobre", "Pobre"))) 
 ```
 
-```{r tab-contingencia-pobreza-sexo, tab.cap="Proporción de hombres y mujeres en condición de pobreza y no pobreza"}
+```{r, eval=FALSE}
 dsg %>%
   group_by(pobreza,Sex) %>%
-  summarise(prop = survey_prop(vartype = c("se", "ci"))) %>%
+  summarise(prop = survey_prop(vartype = c("se", "ci")))
+```
+
+```{r, echo=FALSE}
+res <- dsg %>%
+  group_by(pobreza,Sex) %>%
+  summarise(prop = survey_prop(vartype = c("se", "ci")))
+
+```
+
+```{r tab-contingencia-pobreza-sexo, tab.cap="Proporción de hombres y mujeres en condición de pobreza y no pobreza", echo=FALSE}
+res %>%
   tabla_fmt()
 
 ```
+
 Como se puede observar, el 52.3% de las mujeres y el 47.6% son pobres. Generando intervalos de confianza al 95% de  (49.2%,	55.5%) para las mujeres y (44.5%,	50.7%) para los hombres.
 
 En la librería survey existe una alternativa para estimar tablas de contingencias y es utilizando la función `svyby` como se muestra a continuación, presentada en la Tabla \@ref(tab:tab-svyby-pobreza-sexo):

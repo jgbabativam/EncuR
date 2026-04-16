@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9.11 Imputación múltiple | Análisis de encuestas con R</title>
+  <meta name="description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9.11 Imputación múltiple | Análisis de encuestas con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  <meta name="github-repo" content="psirusteam/2021ASDA" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9.11 Imputación múltiple | Análisis de encuestas con R" />
+  
+  <meta name="twitter:description" content="Este es el repositorio del libro Análisis de encuestas con R." />
+  
+
+<meta name="author" content="Andrés Gutiérrez, Stalyn Guerrero, Cristian Téllez, Giovany Babativa-Márquez" />
+
+
+<meta name="date" content="2026-04-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="sec-knn-regresion.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análisis de encuestas con R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="universo-de-estudio-y-población-objetivo.html"><a href="universo-de-estudio-y-población-objetivo.html"><i class="fa fa-check"></i><b>2.1</b> Universo de estudio y población objetivo</a></li>
+<li class="chapter" data-level="2.2" data-path="unidades-de-análisis.html"><a href="unidades-de-análisis.html"><i class="fa fa-check"></i><b>2.2</b> Unidades de análisis</a></li>
+<li class="chapter" data-level="2.3" data-path="unidades-de-muestreo.html"><a href="unidades-de-muestreo.html"><i class="fa fa-check"></i><b>2.3</b> Unidades de muestreo</a></li>
+<li class="chapter" data-level="2.4" data-path="marcos-de-muestreo.html"><a href="marcos-de-muestreo.html"><i class="fa fa-check"></i><b>2.4</b> Marcos de muestreo</a></li>
+<li class="chapter" data-level="2.5" data-path="sec-motivacion.html"><a href="sec-motivacion.html"><i class="fa fa-check"></i><b>2.5</b> Motivación</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="sec-motivacion.html"><a href="sec-motivacion.html#la-importancia-de-considerar-el-diseño-muestral"><i class="fa fa-check"></i><b>2.5.1</b> La importancia de considerar el diseño muestral</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html"><i class="fa fa-check"></i><b>2.6</b> Parámetros y estimadores</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#ajustes-adicionales-de-los-pesos"><i class="fa fa-check"></i><b>2.6.1</b> Ajustes adicionales de los pesos</a></li>
+<li class="chapter" data-level="2.6.2" data-path="parámetros-y-estimadores.html"><a href="parámetros-y-estimadores.html#importancia-de-los-ajustes"><i class="fa fa-check"></i><b>2.6.2</b> Importancia de los ajustes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html"><i class="fa fa-check"></i><b>2.7</b> Estimación de totales</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="estimación-de-totales.html"><a href="estimación-de-totales.html#ejemplo-ilustrativo-1"><i class="fa fa-check"></i><b>2.7.1</b> Ejemplo ilustrativo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="efecto-del-diseño-deff.html"><a href="efecto-del-diseño-deff.html"><i class="fa fa-check"></i><b>2.8</b> Efecto del diseño (DEFF)</a></li>
+<li class="chapter" data-level="2.9" data-path="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><a href="muestreo-estratificado-aleatorio-simple-con-dos-etapas.html"><i class="fa fa-check"></i><b>2.9</b> Muestreo estratificado aleatorio simple con dos etapas</a></li>
+<li class="chapter" data-level="2.10" data-path="práctica-en-r.html"><a href="práctica-en-r.html"><i class="fa fa-check"></i><b>2.10</b> Práctica en <code>R</code></a></li>
+<li class="chapter" data-level="2.11" data-path="calibrando-con-r.html"><a href="calibrando-con-r.html"><i class="fa fa-check"></i><b>2.11</b> Calibrando con <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><a href="del-manejo-de-datos-al-análisis-de-encuestas-complejas-en-r.html"><i class="fa fa-check"></i><b>3</b> Del manejo de datos al análisis de encuestas complejas en R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="fundamentos-básicos-de-r-y-rstudio.html"><a href="fundamentos-básicos-de-r-y-rstudio.html"><i class="fa fa-check"></i><b>3.1</b> Fundamentos básicos de R y Rstudio</a></li>
+<li class="chapter" data-level="3.2" data-path="paquetes-para-el-análisis-de-encuestas.html"><a href="paquetes-para-el-análisis-de-encuestas.html"><i class="fa fa-check"></i><b>3.2</b> Paquetes para el análisis de encuestas</a></li>
+<li class="chapter" data-level="3.3" data-path="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><a href="paquetes-complementarios-para-la-manipulación-y-visualización-de-datos.html"><i class="fa fa-check"></i><b>3.3</b> Paquetes complementarios para la manipulación y visualización de datos</a></li>
+<li class="chapter" data-level="3.4" data-path="creación-de-proyectos-en-r.html"><a href="creación-de-proyectos-en-r.html"><i class="fa fa-check"></i><b>3.4</b> Creación de proyectos en <code>R</code></a></li>
+<li class="chapter" data-level="3.5" data-path="lectura-de-bases-de-datos-y-manipulación.html"><a href="lectura-de-bases-de-datos-y-manipulación.html"><i class="fa fa-check"></i><b>3.5</b> Lectura de bases de datos y manipulación</a></li>
+<li class="chapter" data-level="3.6" data-path="el-operador-pipe.html"><a href="el-operador-pipe.html"><i class="fa fa-check"></i><b>3.6</b> El operador <code>pipe</code></a></li>
+<li class="chapter" data-level="3.7" data-path="transformación-y-resumen-de-datos.html"><a href="transformación-y-resumen-de-datos.html"><i class="fa fa-check"></i><b>3.7</b> Transformación y resumen de datos</a></li>
+<li class="chapter" data-level="3.8" data-path="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html"><i class="fa fa-check"></i><b>3.8</b> Diferencias entre el análisis tradicional y el análisis de encuestas complejas</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cap4.html"><a href="cap4.html"><i class="fa fa-check"></i><b>4</b> Análisis de las variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="definición-del-objeto-de-diseño.html"><a href="definición-del-objeto-de-diseño.html"><i class="fa fa-check"></i><b>4.1</b> Definición del objeto de diseño</a></li>
+<li class="chapter" data-level="4.2" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html"><i class="fa fa-check"></i><b>4.2</b> Estimación de totales y medias</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-puntual"><i class="fa fa-check"></i><b>4.2.1</b> Estimación puntual</a></li>
+<li class="chapter" data-level="4.2.2" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-totales-1"><i class="fa fa-check"></i><b>4.2.2</b> Estimación de totales</a></li>
+<li class="chapter" data-level="4.2.3" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-la-media-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.2.3</b> Estimación de la media e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.2.4" data-path="estimación-de-totales-y-medias.html"><a href="estimación-de-totales-y-medias.html#estimación-de-medidas-de-localización-y-dispersión"><i class="fa fa-check"></i><b>4.2.4</b> Estimación de medidas de localización y dispersión</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html"><i class="fa fa-check"></i><b>4.3</b> Estimación de razones</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html#implementación-computacional-en-r"><i class="fa fa-check"></i>Implementación computacional en <code>R</code></a></li>
+<li class="chapter" data-level="" data-path="estimación-de-razones.html"><a href="estimación-de-razones.html#interpretación-aplicada"><i class="fa fa-check"></i>Interpretación aplicada</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="estimación-del-coeficiente-de-gini.html"><a href="estimación-del-coeficiente-de-gini.html"><i class="fa fa-check"></i><b>4.4</b> Estimación del coeficiente de Gini</a></li>
+<li class="chapter" data-level="4.5" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html"><i class="fa fa-check"></i><b>4.5</b> Análisis de correlación</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#ajuste-al-diseño-muestral"><i class="fa fa-check"></i><b>4.5.1</b> Ajuste al diseño muestral</a></li>
+<li class="chapter" data-level="4.5.2" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#expresión-formal"><i class="fa fa-check"></i><b>4.5.2</b> Expresión formal</a></li>
+<li class="chapter" data-level="4.5.3" data-path="análisis-de-correlación.html"><a href="análisis-de-correlación.html#implementación-en-r"><i class="fa fa-check"></i><b>4.5.3</b> Implementación en R</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html"><i class="fa fa-check"></i><b>4.6</b> Pruebas de hipótesis</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#planteamiento-general"><i class="fa fa-check"></i><b>4.6.1</b> Planteamiento general</a></li>
+<li class="chapter" data-level="4.6.2" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#prueba-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.6.2</b> Prueba para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.6.3" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#estadístico-de-prueba-e-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.6.3</b> Estadístico de prueba e intervalo de confianza</a></li>
+<li class="chapter" data-level="4.6.4" data-path="pruebas-de-hipótesis.html"><a href="pruebas-de-hipótesis.html#ejemplo-aplicado-en-r"><i class="fa fa-check"></i><b>4.6.4</b> Ejemplo aplicado en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="estimación-de-contrastes.html"><a href="estimación-de-contrastes.html"><i class="fa fa-check"></i><b>4.7</b> Estimación de contrastes</a></li>
+<li class="chapter" data-level="4.8" data-path="viz-continuas.html"><a href="viz-continuas.html"><i class="fa fa-check"></i><b>4.8</b> Visualización de variables continuas</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="viz-continuas.html"><a href="viz-continuas.html#histogramas"><i class="fa fa-check"></i><b>4.8.1</b> Histogramas</a></li>
+<li class="chapter" data-level="4.8.2" data-path="viz-continuas.html"><a href="viz-continuas.html#densidades-y-boxplots"><i class="fa fa-check"></i><b>4.8.2</b> Densidades y Boxplots</a></li>
+<li class="chapter" data-level="4.8.3" data-path="viz-continuas.html"><a href="viz-continuas.html#diagramas-de-dispersión"><i class="fa fa-check"></i><b>4.8.3</b> Diagramas de dispersión</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="análisis-de-variables-categóricas.html"><a href="análisis-de-variables-categóricas.html"><i class="fa fa-check"></i><b>5</b> Análisis de variables categóricas</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="estimación-del-tamaño-poblacional.html"><a href="estimación-del-tamaño-poblacional.html"><i class="fa fa-check"></i><b>5.1</b> Estimación del tamaño poblacional</a>
+<ul>
+<li class="chapter" data-level="" data-path="estimación-del-tamaño-poblacional.html"><a href="estimación-del-tamaño-poblacional.html#estimación-de-totales-en-r"><i class="fa fa-check"></i>Estimación de totales en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="estimación-de-proporciones.html"><a href="estimación-de-proporciones.html"><i class="fa fa-check"></i><b>5.2</b> Estimación de proporciones</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="estimación-de-proporciones.html"><a href="estimación-de-proporciones.html#estimación-de-proporciones-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Estimación de proporciones en <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html"><i class="fa fa-check"></i><b>5.3</b> Tablas cruzadas</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#definición-y-notación"><i class="fa fa-check"></i><b>5.3.1</b> Definición y notación</a></li>
+<li class="chapter" data-level="5.3.2" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#tablas-de-doble-entrada"><i class="fa fa-check"></i><b>5.3.2</b> Tablas de doble entrada</a></li>
+<li class="chapter" data-level="5.3.3" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#proporciones-para-variables-binarias"><i class="fa fa-check"></i><b>5.3.3</b> Proporciones para variables binarias</a></li>
+<li class="chapter" data-level="5.3.4" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#proporciones-para-variables-multinomiales"><i class="fa fa-check"></i><b>5.3.4</b> Proporciones para variables multinomiales</a></li>
+<li class="chapter" data-level="5.3.5" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#tablas-cruzadas-o-de-contingencia"><i class="fa fa-check"></i><b>5.3.5</b> Tablas cruzadas o de contingencia</a></li>
+<li class="chapter" data-level="5.3.6" data-path="tablas-cruzadas.html"><a href="tablas-cruzadas.html#prueba-de-independencia-chi2"><i class="fa fa-check"></i><b>5.3.6</b> Prueba de independencia <span class="math inline">\(\chi^{2}\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="viz-categoricas.html"><a href="viz-categoricas.html"><i class="fa fa-check"></i><b>5.4</b> Visualización de variables categóricas</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="viz-categoricas.html"><a href="viz-categoricas.html#gráficos-de-barras"><i class="fa fa-check"></i><b>5.4.1</b> Gráficos de barras</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="viz-mapas.html"><a href="viz-mapas.html"><i class="fa fa-check"></i><b>5.5</b> Visualización de variables categóricas en mapas</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="viz-mapas.html"><a href="viz-mapas.html#carga-del-shapefile-y-mapa-base"><i class="fa fa-check"></i><b>5.5.1</b> Carga del shapefile y mapa base</a></li>
+<li class="chapter" data-level="5.5.2" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-coroplético-de-pobreza-masculina-por-región"><i class="fa fa-check"></i><b>5.5.2</b> Mapa coroplético de pobreza masculina por región</a></li>
+<li class="chapter" data-level="5.5.3" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-del-coeficiente-de-variación-del-ingreso-medio"><i class="fa fa-check"></i><b>5.5.3</b> Mapa del coeficiente de variación del ingreso medio</a></li>
+<li class="chapter" data-level="5.5.4" data-path="viz-mapas.html"><a href="viz-mapas.html#mapa-bivariante-con-ggplot2"><i class="fa fa-check"></i><b>5.5.4</b> Mapa bivariante con <code>ggplot2</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cap6.html"><a href="cap6.html"><i class="fa fa-check"></i><b>6</b> Modelos de regresión</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="antecedentes-históricos-y-desarrollos-metodológicos.html"><a href="antecedentes-históricos-y-desarrollos-metodológicos.html"><i class="fa fa-check"></i><b>6.1</b> Antecedentes históricos y desarrollos metodológicos</a></li>
+<li class="chapter" data-level="6.2" data-path="relevancia-práctica.html"><a href="relevancia-práctica.html"><i class="fa fa-check"></i><b>6.2</b> Relevancia práctica</a></li>
+<li class="chapter" data-level="6.3" data-path="uso-de-ponderaciones.html"><a href="uso-de-ponderaciones.html"><i class="fa fa-check"></i><b>6.3</b> Uso de ponderaciones</a></li>
+<li class="chapter" data-level="6.4" data-path="enfoques-inferenciales.html"><a href="enfoques-inferenciales.html"><i class="fa fa-check"></i><b>6.4</b> Enfoques inferenciales</a></li>
+<li class="chapter" data-level="6.5" data-path="estimación-de-los-parámetros.html"><a href="estimación-de-los-parámetros.html"><i class="fa fa-check"></i><b>6.5</b> Estimación de los parámetros</a></li>
+<li class="chapter" data-level="6.6" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html"><i class="fa fa-check"></i><b>6.6</b> Diagnóstico del modelo</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#coeficiente-de-determinación"><i class="fa fa-check"></i><b>6.6.1</b> Coeficiente de determinación</a></li>
+<li class="chapter" data-level="6.6.2" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#diagnóstico-de-los-residuales"><i class="fa fa-check"></i><b>6.6.2</b> Diagnóstico de los residuales</a></li>
+<li class="chapter" data-level="6.6.3" data-path="diagnóstico-del-modelo.html"><a href="diagnóstico-del-modelo.html#observaciones-influyentes"><i class="fa fa-check"></i><b>6.6.3</b> Observaciones influyentes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="inferencia-sobre-los-parámetros-del-modelo.html"><a href="inferencia-sobre-los-parámetros-del-modelo.html"><i class="fa fa-check"></i><b>6.7</b> Inferencia sobre los parámetros del modelo</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="inferencia-sobre-los-parámetros-del-modelo.html"><a href="inferencia-sobre-los-parámetros-del-modelo.html#estimación-puntual-e-intervalo-de-predicción"><i class="fa fa-check"></i><b>6.7.1</b> Estimación puntual e intervalo de predicción</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="cap-glm.html"><a href="cap-glm.html"><i class="fa fa-check"></i><b>7</b> Modelos lineales generalizados</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="sec-mpv.html"><a href="sec-mpv.html"><i class="fa fa-check"></i><b>7.1</b> Inferencia en poblaciones finitas</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="sec-mpv.html"><a href="sec-mpv.html#sec-mv"><i class="fa fa-check"></i><b>7.1.1</b> Método de la máxima verosimilitud</a></li>
+<li class="chapter" data-level="7.1.2" data-path="sec-mpv.html"><a href="sec-mpv.html#sec-mpv-formal"><i class="fa fa-check"></i><b>7.1.2</b> Método de máxima pseudo-verosimilitud</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="configuración-del-diseño-muestral.html"><a href="configuración-del-diseño-muestral.html"><i class="fa fa-check"></i><b>7.2</b> Configuración del diseño muestral</a></li>
+<li class="chapter" data-level="7.3" data-path="sec-independencia.html"><a href="sec-independencia.html"><i class="fa fa-check"></i><b>7.3</b> Tablas de contingencia y pruebas de independencia</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="sec-independencia.html"><a href="sec-independencia.html#sec-rao-scott"><i class="fa fa-check"></i><b>7.3.1</b> Prueba de Rao-Scott</a></li>
+<li class="chapter" data-level="7.3.2" data-path="sec-independencia.html"><a href="sec-independencia.html#sec-wald"><i class="fa fa-check"></i><b>7.3.2</b> Estadístico de Wald</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="sec-loglineal.html"><a href="sec-loglineal.html"><i class="fa fa-check"></i><b>7.4</b> Modelo log-lineal para tablas de contingencia</a></li>
+<li class="chapter" data-level="7.5" data-path="sec-logistica.html"><a href="sec-logistica.html"><i class="fa fa-check"></i><b>7.5</b> Modelo de regresión logística</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="sec-logistica.html"><a href="sec-logistica.html#modelo-sin-interacciones"><i class="fa fa-check"></i><b>7.5.1</b> Modelo sin interacciones</a></li>
+<li class="chapter" data-level="7.5.2" data-path="sec-logistica.html"><a href="sec-logistica.html#modelo-con-interacciones"><i class="fa fa-check"></i><b>7.5.2</b> Modelo con interacciones</a></li>
+<li class="chapter" data-level="7.5.3" data-path="sec-logistica.html"><a href="sec-logistica.html#modelo-con-pesos-q-weighted"><i class="fa fa-check"></i><b>7.5.3</b> Modelo con pesos q-weighted</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="sec-gamma.html"><a href="sec-gamma.html"><i class="fa fa-check"></i><b>7.6</b> Modelo de regresión Gamma</a></li>
+<li class="chapter" data-level="7.7" data-path="sec-multinomial.html"><a href="sec-multinomial.html"><i class="fa fa-check"></i><b>7.7</b> Modelo de regresión multinomial</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="sec-multinomial.html"><a href="sec-multinomial.html#ajuste-usando-svyvgam"><i class="fa fa-check"></i><b>7.7.1</b> Ajuste usando <code>svyVGAM</code></a></li>
+<li class="chapter" data-level="7.7.2" data-path="sec-multinomial.html"><a href="sec-multinomial.html#ajuste-usando-svymultinom"><i class="fa fa-check"></i><b>7.7.2</b> Ajuste usando <code>svymultinom</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="cap-multinivel.html"><a href="cap-multinivel.html"><i class="fa fa-check"></i><b>8</b> Modelos multinivel</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="sec-motivacionMult.html"><a href="sec-motivacionMult.html"><i class="fa fa-check"></i><b>8.1</b> Motivación: de la regresión clásica al modelo multinivel</a></li>
+<li class="chapter" data-level="8.2" data-path="sec-multinivel-muestras-complejas.html"><a href="sec-multinivel-muestras-complejas.html"><i class="fa fa-check"></i><b>8.2</b> Modelos multinivel en muestras complejas</a></li>
+<li class="chapter" data-level="8.3" data-path="sec-mpv-multinivel.html"><a href="sec-mpv-multinivel.html"><i class="fa fa-check"></i><b>8.3</b> Estimación de pseudo-máxima verosimilitud</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="sec-mpv-multinivel.html"><a href="sec-mpv-multinivel.html#pesos-de-muestreo-para-modelos-multinivel"><i class="fa fa-check"></i><b>8.3.1</b> Pesos de muestreo para modelos multinivel</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="sec-modelo-nulo.html"><a href="sec-modelo-nulo.html"><i class="fa fa-check"></i><b>8.4</b> Modelo nulo</a></li>
+<li class="chapter" data-level="8.5" data-path="sec-intercepto-aleatorio.html"><a href="sec-intercepto-aleatorio.html"><i class="fa fa-check"></i><b>8.5</b> Modelo con intercepto aleatorio</a></li>
+<li class="chapter" data-level="8.6" data-path="sec-intercepto-pendiente-aleatorios.html"><a href="sec-intercepto-pendiente-aleatorios.html"><i class="fa fa-check"></i><b>8.6</b> Modelo con intercepto y pendiente aleatoria</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="sec-intercepto-pendiente-aleatorios.html"><a href="sec-intercepto-pendiente-aleatorios.html#sec-modelo-con-zona"><i class="fa fa-check"></i><b>8.6.1</b> Extensión con variable zona</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="sec-logistica-multinivel.html"><a href="sec-logistica-multinivel.html"><i class="fa fa-check"></i><b>8.7</b> Modelos logísticos multinivel</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="sec-logistica-multinivel.html"><a href="sec-logistica-multinivel.html#modelo-nulo-logístico"><i class="fa fa-check"></i><b>8.7.1</b> Modelo nulo logístico</a></li>
+<li class="chapter" data-level="8.7.2" data-path="sec-logistica-multinivel.html"><a href="sec-logistica-multinivel.html#modelo-logístico-con-intercepto-aleatorio"><i class="fa fa-check"></i><b>8.7.2</b> Modelo logístico con intercepto aleatorio</a></li>
+<li class="chapter" data-level="8.7.3" data-path="sec-logistica-multinivel.html"><a href="sec-logistica-multinivel.html#modelo-logístico-con-intercepto-y-pendiente-aleatoria"><i class="fa fa-check"></i><b>8.7.3</b> Modelo logístico con intercepto y pendiente aleatoria</a></li>
+<li class="chapter" data-level="8.7.4" data-path="sec-logistica-multinivel.html"><a href="sec-logistica-multinivel.html#extensión-con-variable-zona"><i class="fa fa-check"></i><b>8.7.4</b> Extensión con variable zona</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="cap-imputacion.html"><a href="cap-imputacion.html"><i class="fa fa-check"></i><b>9</b> Procedimientos de imputación</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="sec-mecanismos.html"><a href="sec-mecanismos.html"><i class="fa fa-check"></i><b>9.1</b> Mecanismos de datos faltantes</a></li>
+<li class="chapter" data-level="9.2" data-path="sec-configuracion.html"><a href="sec-configuracion.html"><i class="fa fa-check"></i><b>9.2</b> Configuración de los datos de ejemplo</a></li>
+<li class="chapter" data-level="9.3" data-path="sec-simulacion.html"><a href="sec-simulacion.html"><i class="fa fa-check"></i><b>9.3</b> Simulación de esquemas de datos faltantes</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="sec-simulacion.html"><a href="sec-simulacion.html#esquema-mcar"><i class="fa fa-check"></i><b>9.3.1</b> Esquema MCAR</a></li>
+<li class="chapter" data-level="9.3.2" data-path="sec-simulacion.html"><a href="sec-simulacion.html#esquema-mar"><i class="fa fa-check"></i><b>9.3.2</b> Esquema MAR</a></li>
+<li class="chapter" data-level="9.3.3" data-path="sec-simulacion.html"><a href="sec-simulacion.html#esquema-mnar"><i class="fa fa-check"></i><b>9.3.3</b> Esquema MNAR</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="sec-construccion-base.html"><a href="sec-construccion-base.html"><i class="fa fa-check"></i><b>9.4</b> Construcción de la base con datos faltantes</a></li>
+<li class="chapter" data-level="9.5" data-path="sec-media-incondicional.html"><a href="sec-media-incondicional.html"><i class="fa fa-check"></i><b>9.5</b> Imputación por la media no condicional</a></li>
+<li class="chapter" data-level="9.6" data-path="sec-media-condicional.html"><a href="sec-media-condicional.html"><i class="fa fa-check"></i><b>9.6</b> Imputación por la media condicional</a></li>
+<li class="chapter" data-level="9.7" data-path="sec-hotdeck.html"><a href="sec-hotdeck.html"><i class="fa fa-check"></i><b>9.7</b> Imputación por hot-deck y cold-deck</a>
+<ul>
+<li class="chapter" data-level="9.7.1" data-path="sec-hotdeck.html"><a href="sec-hotdeck.html#imputación-hot-deck-para-el-ingreso"><i class="fa fa-check"></i><b>9.7.1</b> Imputación hot-deck para el ingreso</a></li>
+<li class="chapter" data-level="9.7.2" data-path="sec-hotdeck.html"><a href="sec-hotdeck.html#imputación-hot-deck-para-la-variable-empleo"><i class="fa fa-check"></i><b>9.7.2</b> Imputación hot-deck para la variable empleo</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="sec-regresion.html"><a href="sec-regresion.html"><i class="fa fa-check"></i><b>9.8</b> Imputación por regresión</a></li>
+<li class="chapter" data-level="9.9" data-path="sec-knn.html"><a href="sec-knn.html"><i class="fa fa-check"></i><b>9.9</b> Imputación por el vecino más cercano</a></li>
+<li class="chapter" data-level="9.10" data-path="sec-knn-regresion.html"><a href="sec-knn-regresion.html"><i class="fa fa-check"></i><b>9.10</b> Imputación por el vecino más cercano con regresión</a></li>
+<li class="chapter" data-level="9.11" data-path="sec-im.html"><a href="sec-im.html"><i class="fa fa-check"></i><b>9.11</b> Imputación múltiple</a>
+<ul>
+<li class="chapter" data-level="9.11.1" data-path="sec-im.html"><a href="sec-im.html#estimadores-de-la-imputación-múltiple"><i class="fa fa-check"></i><b>9.11.1</b> Estimadores de la imputación múltiple</a></li>
+<li class="chapter" data-level="9.11.2" data-path="sec-im.html"><a href="sec-im.html#implementación-mediante-bootstrap"><i class="fa fa-check"></i><b>9.11.2</b> Implementación mediante bootstrap</a></li>
+<li class="chapter" data-level="9.11.3" data-path="sec-im.html"><a href="sec-im.html#imputación-múltiple-para-la-encuesta-de-hogares"><i class="fa fa-check"></i><b>9.11.3</b> Imputación múltiple para la encuesta de hogares</a></li>
+<li class="chapter" data-level="9.11.4" data-path="sec-im.html"><a href="sec-im.html#estimación-del-ingreso-medio-mediante-imputación-múltiple"><i class="fa fa-check"></i><b>9.11.4</b> Estimación del ingreso medio mediante imputación múltiple</a></li>
+<li class="chapter" data-level="9.11.5" data-path="sec-im.html"><a href="sec-im.html#estimación-de-la-varianza-del-ingreso"><i class="fa fa-check"></i><b>9.11.5</b> Estimación de la varianza del ingreso</a></li>
+<li class="chapter" data-level="9.11.6" data-path="sec-im.html"><a href="sec-im.html#estimación-de-proporciones-de-empleo"><i class="fa fa-check"></i><b>9.11.6</b> Estimación de proporciones de empleo</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a Análisis de encuestas con R </a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análisis de encuestas con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sec-im" class="section level2 hasAnchor" number="9.11">
+<h2><span class="header-section-number">9.11</span> Imputación múltiple<a href="sec-im.html#sec-im" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La imputación múltiple <span class="citation">(<a href="#ref-rubin1987multiple">Rubin, 1987</a>)</span> aborda el problema de los datos faltantes generando <span class="math inline">\(M &gt; 1\)</span> conjuntos de valores plausibles para las observaciones no observadas. Cada conjunto corresponde a una realización del modelo de imputación, de modo que la incertidumbre asociada a los valores faltantes queda explícitamente representada en la variabilidad entre imputaciones.</p>
+<p>Suponga que existe un conjunto de <span class="math inline">\(n\)</span> observaciones que relaciona las variables <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> mediante el siguiente modelo de regresión sin intercepto:</p>
+<p><span class="math display">\[y_i = \beta x_i + \varepsilon_i\]</span></p>
+<p>para <span class="math inline">\(i = 1, \ldots, n\)</span>, con <span class="math inline">\(\varepsilon_i \sim N(0, \sigma^2)\)</span>.</p>
+<blockquote>
+<p><strong>⚠ Nota Giovany:</strong> El modelo se especifica sin intercepto (<span class="math inline">\(\beta x_i\)</span>, no <span class="math inline">\(\beta_0 + \beta_1 x_i\)</span>), lo que es coherente con el código de simulación y estimación que utiliza <code>lm(y ~ 0 + x)</code>. Se recomienda verificar que esta es la especificación deseada, ya que en la mayoría de contextos aplicados se incluye un intercepto.</p>
+</blockquote>
+<p>Sea <span class="math inline">\(Y_{Obs}\)</span> el subconjunto de <span class="math inline">\(n_1\)</span> valores observados de <span class="math inline">\(Y\)</span>, y <span class="math inline">\(Y_{NoObs}\)</span> el subconjunto de <span class="math inline">\(n_0 = n - n_1\)</span> valores no observados. Se asume que la covariable <span class="math inline">\(X\)</span> es completamente observada.</p>
+<div id="estimadores-de-la-imputación-múltiple" class="section level3 hasAnchor" number="9.11.1">
+<h3><span class="header-section-number">9.11.1</span> Estimadores de la imputación múltiple<a href="sec-im.html#estimadores-de-la-imputación-múltiple" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para el parámetro de interés <span class="math inline">\(\beta\)</span>, la estimación combinada sobre las <span class="math inline">\(M\)</span> imputaciones es:</p>
+<p><span class="math display">\[\bar{\hat{\beta}} = \frac{1}{M} \sum_{m=1}^{M} \hat{\beta}_m\]</span></p>
+<p>La varianza total estimada combina la varianza dentro de las imputaciones (<span class="math inline">\(\bar{U}\)</span>) y la varianza entre imputaciones (<span class="math inline">\(B\)</span>), con una corrección por el número finito de imputaciones:</p>
+<p><span class="math display">\[\hat{V}(\hat{\beta} \mid Y_{obs}) = \bar{U} + \left(1 + \frac{1}{M}\right) B\]</span></p>
+<p>donde:</p>
+<p><span class="math display">\[\bar{U} = \frac{1}{M} \sum_{m=1}^{M} \widehat{Var}(\hat{\beta}_m)\]</span></p>
+<p><span class="math display">\[B = \frac{1}{M-1} \sum_{m=1}^{M} \left(\hat{\beta}_m - \bar{\hat{\beta}}\right)^2\]</span></p>
+<blockquote>
+<p><strong>⚠ Ajuste de Giovany:</strong> En el documento original, <span class="math inline">\(B\)</span> estaba escrito sin el cuadrado: <span class="math inline">\(B = \frac{1}{M-1}\sum(\hat{\beta}_m - \bar{\hat{\beta}})\)</span>. Esto es dimensionalmente inconsistente, ya que <span class="math inline">\(B\)</span> debe ser una varianza para que pueda sumarse con <span class="math inline">\(\bar{U}\)</span> en la expresión de <span class="math inline">\(\hat{V}\)</span>.</p>
+</blockquote>
+</div>
+<div id="implementación-mediante-bootstrap" class="section level3 hasAnchor" number="9.11.2">
+<h3><span class="header-section-number">9.11.2</span> Implementación mediante bootstrap<a href="sec-im.html#implementación-mediante-bootstrap" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para ilustrar la metodología, se simula un conjunto de datos con <span class="math inline">\(n = 500\)</span> observaciones y <span class="math inline">\(n_0 = 200\)</span> valores faltantes, con pendiente <span class="math inline">\(\beta = 10\)</span> y desviación estándar <span class="math inline">\(\sigma = 2\)</span>, presentada en la Tabla <a href="sec-im.html#tab:tab-datos-simulados">9.38</a>::</p>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="sec-im.html#cb436-1" tabindex="-1"></a>generar <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">n_0 =</span> <span class="dv">200</span>, <span class="at">beta =</span> <span class="dv">10</span>, <span class="at">sigma =</span> <span class="dv">2</span>) {</span>
+<span id="cb436-2"><a href="sec-im.html#cb436-2" tabindex="-1"></a>  x       <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb436-3"><a href="sec-im.html#cb436-3" tabindex="-1"></a>  mu      <span class="ot">&lt;-</span> beta <span class="sc">*</span> x</span>
+<span id="cb436-4"><a href="sec-im.html#cb436-4" tabindex="-1"></a>  y       <span class="ot">&lt;-</span> mu <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
+<span id="cb436-5"><a href="sec-im.html#cb436-5" tabindex="-1"></a>  datos   <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb436-6"><a href="sec-im.html#cb436-6" tabindex="-1"></a>  faltantes <span class="ot">&lt;-</span> <span class="fu">sample</span>(n, n_0)</span>
+<span id="cb436-7"><a href="sec-im.html#cb436-7" tabindex="-1"></a>  datos<span class="sc">$</span>faltantes       <span class="ot">&lt;-</span> <span class="st">&quot;No&quot;</span></span>
+<span id="cb436-8"><a href="sec-im.html#cb436-8" tabindex="-1"></a>  datos<span class="sc">$</span>faltantes[faltantes] <span class="ot">&lt;-</span> <span class="st">&quot;Si&quot;</span></span>
+<span id="cb436-9"><a href="sec-im.html#cb436-9" tabindex="-1"></a>  datos<span class="sc">$</span>y.per           <span class="ot">&lt;-</span> y</span>
+<span id="cb436-10"><a href="sec-im.html#cb436-10" tabindex="-1"></a>  datos<span class="sc">$</span>y.per[faltantes] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb436-11"><a href="sec-im.html#cb436-11" tabindex="-1"></a>  <span class="fu">return</span>(datos)</span>
+<span id="cb436-12"><a href="sec-im.html#cb436-12" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="sec-im.html#cb437-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb437-2"><a href="sec-im.html#cb437-2" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">generar</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="sec-im.html#cb438-1" tabindex="-1"></a><span class="fu">head</span>(datos, <span class="dv">12</span>) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table>
+<caption><span id="tab:tab-datos-simulados">Cuadro 9.38: </span>Primeras 12 observaciones del conjunto de datos simulado con valores faltantes</caption>
+<thead>
+<tr class="header">
+<th align="left">x</th>
+<th align="center">y</th>
+<th align="center">faltantes</th>
+<th align="center">y.per</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0.114</td>
+<td align="center">2.011</td>
+<td align="center">No</td>
+<td align="center">2.011</td>
+</tr>
+<tr class="even">
+<td align="left">0.622</td>
+<td align="center">8.343</td>
+<td align="center">No</td>
+<td align="center">8.343</td>
+</tr>
+<tr class="odd">
+<td align="left">0.609</td>
+<td align="center">6.997</td>
+<td align="center">No</td>
+<td align="center">6.997</td>
+</tr>
+<tr class="even">
+<td align="left">0.623</td>
+<td align="center">7.560</td>
+<td align="center">Si</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">0.861</td>
+<td align="center">6.336</td>
+<td align="center">No</td>
+<td align="center">6.336</td>
+</tr>
+<tr class="even">
+<td align="left">0.640</td>
+<td align="center">5.662</td>
+<td align="center">No</td>
+<td align="center">5.662</td>
+</tr>
+<tr class="odd">
+<td align="left">0.009</td>
+<td align="center">3.049</td>
+<td align="center">No</td>
+<td align="center">3.049</td>
+</tr>
+<tr class="even">
+<td align="left">0.233</td>
+<td align="center">-0.122</td>
+<td align="center">Si</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">0.666</td>
+<td align="center">7.177</td>
+<td align="center">Si</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td align="left">0.514</td>
+<td align="center">5.953</td>
+<td align="center">No</td>
+<td align="center">5.953</td>
+</tr>
+<tr class="odd">
+<td align="left">0.694</td>
+<td align="center">8.888</td>
+<td align="center">No</td>
+<td align="center">8.888</td>
+</tr>
+<tr class="even">
+<td align="left">0.545</td>
+<td align="center">4.752</td>
+<td align="center">No</td>
+<td align="center">4.752</td>
+</tr>
+</tbody>
+</table>
+<p>La Figura <a href="sec-im.html#fig:fig-datos-sim-completos">9.12</a> compara la relación entre <span class="math inline">\(x\)</span> e <span class="math inline">\(y\)</span> para los datos completos y para los datos con valores faltantes. Las distribuciones son muy similares, lo que indica que los faltantes se introdujeron de forma aproximadamente aleatoria:</p>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="sec-im.html#cb439-1" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb439-2"><a href="sec-im.html#cb439-2" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> datos, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb439-3"><a href="sec-im.html#cb439-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb439-4"><a href="sec-im.html#cb439-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb439-5"><a href="sec-im.html#cb439-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Datos completos&quot;</span>)</span>
+<span id="cb439-6"><a href="sec-im.html#cb439-6" tabindex="-1"></a></span>
+<span id="cb439-7"><a href="sec-im.html#cb439-7" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> datos, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y.per)) <span class="sc">+</span></span>
+<span id="cb439-8"><a href="sec-im.html#cb439-8" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb439-9"><a href="sec-im.html#cb439-9" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb439-10"><a href="sec-im.html#cb439-10" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Con valores faltantes&quot;</span>)</span>
+<span id="cb439-11"><a href="sec-im.html#cb439-11" tabindex="-1"></a></span>
+<span id="cb439-12"><a href="sec-im.html#cb439-12" tabindex="-1"></a>p1 <span class="sc">|</span> p2</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-datos-sim-completos"></span>
+<img src="09-Imputacion_files/figure-html/fig-datos-sim-completos-1.svg" alt="Relación entre x e y: datos completos (izquierda) y datos con valores faltantes (derecha)" width="70%" />
+<p class="caption">
+Figura 9.12: Relación entre x e y: datos completos (izquierda) y datos con valores faltantes (derecha)
+</p>
+</div>
+<p>La función de imputación por bootstrap genera <span class="math inline">\(M\)</span> conjuntos de valores plausibles y devuelve el estimador combinado de <span class="math inline">\(\beta\)</span> junto con su error estándar:</p>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="sec-im.html#cb440-1" tabindex="-1"></a>im.bootstrap <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, <span class="at">M =</span> <span class="dv">15</span>) {</span>
+<span id="cb440-2"><a href="sec-im.html#cb440-2" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
+<span id="cb440-3"><a href="sec-im.html#cb440-3" tabindex="-1"></a>  n     <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos)</span>
+<span id="cb440-4"><a href="sec-im.html#cb440-4" tabindex="-1"></a>  datos1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(datos)</span>
+<span id="cb440-5"><a href="sec-im.html#cb440-5" tabindex="-1"></a>  n1    <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos1)</span>
+<span id="cb440-6"><a href="sec-im.html#cb440-6" tabindex="-1"></a>  n0    <span class="ot">&lt;-</span> n <span class="sc">-</span> n1</span>
+<span id="cb440-7"><a href="sec-im.html#cb440-7" tabindex="-1"></a>  Ind   <span class="ot">&lt;-</span> <span class="fu">is.na</span>(datos<span class="sc">$</span>y.per)</span>
+<span id="cb440-8"><a href="sec-im.html#cb440-8" tabindex="-1"></a>  beta1 <span class="ot">&lt;-</span> sigma1 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb440-9"><a href="sec-im.html#cb440-9" tabindex="-1"></a></span>
+<span id="cb440-10"><a href="sec-im.html#cb440-10" tabindex="-1"></a>  <span class="cf">for</span> (m <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>M) {</span>
+<span id="cb440-11"><a href="sec-im.html#cb440-11" tabindex="-1"></a>    datos.m      <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">sample_n</span>(datos1, n1, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb440-12"><a href="sec-im.html#cb440-12" tabindex="-1"></a>    model1       <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> x, <span class="at">data =</span> datos.m)</span>
+<span id="cb440-13"><a href="sec-im.html#cb440-13" tabindex="-1"></a>    beta         <span class="ot">&lt;-</span> model1<span class="sc">$</span>coeff</span>
+<span id="cb440-14"><a href="sec-im.html#cb440-14" tabindex="-1"></a>    sigma        <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">anova</span>(model1)[[<span class="st">&quot;Mean Sq&quot;</span>]][<span class="dv">2</span>])</span>
+<span id="cb440-15"><a href="sec-im.html#cb440-15" tabindex="-1"></a>    faltantes.bt <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n0, datos<span class="sc">$</span>x[Ind] <span class="sc">*</span> beta, <span class="at">sd =</span> sigma)</span>
+<span id="cb440-16"><a href="sec-im.html#cb440-16" tabindex="-1"></a>    datos<span class="sc">$</span>y.per[Ind] <span class="ot">&lt;-</span> faltantes.bt</span>
+<span id="cb440-17"><a href="sec-im.html#cb440-17" tabindex="-1"></a>    model.input  <span class="ot">&lt;-</span> <span class="fu">lm</span>(y.per <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> x, <span class="at">data =</span> datos)</span>
+<span id="cb440-18"><a href="sec-im.html#cb440-18" tabindex="-1"></a>    beta1[m]     <span class="ot">&lt;-</span> model.input<span class="sc">$</span>coeff</span>
+<span id="cb440-19"><a href="sec-im.html#cb440-19" tabindex="-1"></a>    sigma1[m]    <span class="ot">&lt;-</span> <span class="fu">summary</span>(model.input)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
+<span id="cb440-20"><a href="sec-im.html#cb440-20" tabindex="-1"></a>  }</span>
+<span id="cb440-21"><a href="sec-im.html#cb440-21" tabindex="-1"></a></span>
+<span id="cb440-22"><a href="sec-im.html#cb440-22" tabindex="-1"></a>  beta.input <span class="ot">&lt;-</span> <span class="fu">mean</span>(beta1)</span>
+<span id="cb440-23"><a href="sec-im.html#cb440-23" tabindex="-1"></a>  u.bar      <span class="ot">&lt;-</span> <span class="fu">mean</span>(sigma1<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb440-24"><a href="sec-im.html#cb440-24" tabindex="-1"></a>  B          <span class="ot">&lt;-</span> <span class="fu">var</span>(beta1)</span>
+<span id="cb440-25"><a href="sec-im.html#cb440-25" tabindex="-1"></a>  beta.sd    <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(u.bar <span class="sc">+</span> B <span class="sc">+</span> B <span class="sc">/</span> M)</span>
+<span id="cb440-26"><a href="sec-im.html#cb440-26" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">new =</span> datos, <span class="at">beta =</span> beta.input, <span class="at">sd =</span> beta.sd)</span>
+<span id="cb440-27"><a href="sec-im.html#cb440-27" tabindex="-1"></a>}</span></code></pre></div>
+<p>La Tabla <a href="sec-im.html#tab:tab-im-bootstrap-result">9.39</a> presenta los resultados de la imputación por bootstrap:</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="sec-im.html#cb441-1" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">generar</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="sec-im.html#cb442-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb442-2"><a href="sec-im.html#cb442-2" tabindex="-1"></a>  <span class="st">`</span><span class="at">Estimación de beta</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">im.bootstrap</span>(datos)<span class="sc">$</span>beta, <span class="dv">1</span>),</span>
+<span id="cb442-3"><a href="sec-im.html#cb442-3" tabindex="-1"></a>  <span class="st">`</span><span class="at">Error estándar</span><span class="st">`</span>      <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">im.bootstrap</span>(datos)<span class="sc">$</span>sd, <span class="dv">4</span>)</span>
+<span id="cb442-4"><a href="sec-im.html#cb442-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table>
+<caption><span id="tab:tab-im-bootstrap-result">Cuadro 9.39: </span>Estimación de la pendiente y su error estándar mediante imputación múltiple por bootstrap</caption>
+<thead>
+<tr class="header">
+<th align="left">Estimación.de.beta</th>
+<th align="center">Error.estándar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">10.3</td>
+<td align="center">0.222</td>
+</tr>
+</tbody>
+</table>
+<p>La Figura <a href="sec-im.html#fig:fig-im-bootstrap-dispersion">9.13</a> visualiza la distribución de los valores imputados diferenciados según si eran faltantes o no, confirmando que los valores plausibles presentan una dispersión coherente con el modelo:</p>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="sec-im.html#cb443-1" tabindex="-1"></a>nuevos <span class="ot">&lt;-</span> <span class="fu">im.bootstrap</span>(datos)<span class="sc">$</span>new</span>
+<span id="cb443-2"><a href="sec-im.html#cb443-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nuevos, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y.per, <span class="at">color =</span> faltantes)) <span class="sc">+</span></span>
+<span id="cb443-3"><a href="sec-im.html#cb443-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb443-4"><a href="sec-im.html#cb443-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;x&quot;</span>, <span class="at">y =</span> <span class="st">&quot;y (con imputación)&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Era faltante&quot;</span>) <span class="sc">+</span></span>
+<span id="cb443-5"><a href="sec-im.html#cb443-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-im-bootstrap-dispersion"></span>
+<img src="09-Imputacion_files/figure-html/fig-im-bootstrap-dispersion-1.svg" alt="Dispersión de los valores imputados por bootstrap: faltantes (Si) versus observados (No)" width="70%" />
+<p class="caption">
+Figura 9.13: Dispersión de los valores imputados por bootstrap: faltantes (Si) versus observados (No)
+</p>
+</div>
+</div>
+<div id="imputación-múltiple-para-la-encuesta-de-hogares" class="section level3 hasAnchor" number="9.11.3">
+<h3><span class="header-section-number">9.11.3</span> Imputación múltiple para la encuesta de hogares<a href="sec-im.html#imputación-múltiple-para-la-encuesta-de-hogares" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A continuación, se aplica la imputación múltiple a la encuesta de hogares. Se generan <span class="math inline">\(M = 10\)</span> valores plausibles para el ingreso y el empleo, ajustando en cada iteración un modelo lineal y uno multinomial a una muestra bootstrap de los datos observados:</p>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="sec-im.html#cb444-1" tabindex="-1"></a>encuesta<span class="sc">$</span>Income_imp     <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Income_missin</span>
+<span id="cb444-2"><a href="sec-im.html#cb444-2" tabindex="-1"></a>encuesta<span class="sc">$</span>Employment_imp <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Employment_missin</span>
+<span id="cb444-3"><a href="sec-im.html#cb444-3" tabindex="-1"></a>encuesta_obs    <span class="ot">&lt;-</span> <span class="fu">filter</span>(encuesta, <span class="sc">!</span><span class="fu">is.na</span>(Income_missin))</span>
+<span id="cb444-4"><a href="sec-im.html#cb444-4" tabindex="-1"></a>encuesta_no_obs <span class="ot">&lt;-</span> <span class="fu">filter</span>(encuesta, <span class="fu">is.na</span>(Income_missin))</span>
+<span id="cb444-5"><a href="sec-im.html#cb444-5" tabindex="-1"></a>n0 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(encuesta_no_obs)</span>
+<span id="cb444-6"><a href="sec-im.html#cb444-6" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(encuesta_obs)</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="sec-im.html#cb445-1" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb445-2"><a href="sec-im.html#cb445-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb445-3"><a href="sec-im.html#cb445-3" tabindex="-1"></a><span class="cf">for</span> (ii <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>M) {</span>
+<span id="cb445-4"><a href="sec-im.html#cb445-4" tabindex="-1"></a>  vp  <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Income_vp_&quot;</span>,     ii)</span>
+<span id="cb445-5"><a href="sec-im.html#cb445-5" tabindex="-1"></a>  vp2 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Employment_vp_&quot;</span>, ii)</span>
+<span id="cb445-6"><a href="sec-im.html#cb445-6" tabindex="-1"></a></span>
+<span id="cb445-7"><a href="sec-im.html#cb445-7" tabindex="-1"></a>  encuesta_temp <span class="ot">&lt;-</span> encuesta_obs <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="at">size =</span> n1, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb445-8"><a href="sec-im.html#cb445-8" tabindex="-1"></a></span>
+<span id="cb445-9"><a href="sec-im.html#cb445-9" tabindex="-1"></a>  mod      <span class="ot">&lt;-</span> <span class="fu">lm</span>(Income <span class="sc">~</span> Zone <span class="sc">+</span> Sex <span class="sc">+</span> Expenditure, <span class="at">data =</span> encuesta_temp)</span>
+<span id="cb445-10"><a href="sec-im.html#cb445-10" tabindex="-1"></a>  mod.mult <span class="ot">&lt;-</span> <span class="fu">multinom</span>(Employment <span class="sc">~</span> Zone <span class="sc">+</span> Sex <span class="sc">+</span> Expenditure,</span>
+<span id="cb445-11"><a href="sec-im.html#cb445-11" tabindex="-1"></a>                       <span class="at">data =</span> encuesta_temp, <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb445-12"><a href="sec-im.html#cb445-12" tabindex="-1"></a></span>
+<span id="cb445-13"><a href="sec-im.html#cb445-13" tabindex="-1"></a>  encuesta_no_obs[[vp]]  <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod,      encuesta_no_obs)</span>
+<span id="cb445-14"><a href="sec-im.html#cb445-14" tabindex="-1"></a>  encuesta_obs[[vp]]     <span class="ot">&lt;-</span> encuesta_obs<span class="sc">$</span>Income</span>
+<span id="cb445-15"><a href="sec-im.html#cb445-15" tabindex="-1"></a></span>
+<span id="cb445-16"><a href="sec-im.html#cb445-16" tabindex="-1"></a>  encuesta_no_obs[[vp2]] <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod.mult, encuesta_no_obs, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb445-17"><a href="sec-im.html#cb445-17" tabindex="-1"></a>  encuesta_obs[[vp2]]    <span class="ot">&lt;-</span> encuesta_obs<span class="sc">$</span>Employment</span>
+<span id="cb445-18"><a href="sec-im.html#cb445-18" tabindex="-1"></a>}</span></code></pre></div>
+<p>La Tabla <a href="sec-im.html#tab:tab-vp-ingreso">9.40</a> presenta las primeras columnas del conjunto de valores plausibles para el ingreso en las observaciones no observadas:</p>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="sec-im.html#cb446-1" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">select</span>(encuesta_no_obs, Income, <span class="fu">matches</span>(<span class="st">&quot;Income_vp_&quot;</span>))[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="sc">%&gt;%</span></span>
+<span id="cb446-2"><a href="sec-im.html#cb446-2" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table>
+<caption><span id="tab:tab-vp-ingreso">Cuadro 9.40: </span>Valores plausibles del ingreso para las primeras 10 observaciones no observadas (primeras 4 imputaciones)</caption>
+<thead>
+<tr class="header">
+<th align="left">Income</th>
+<th align="center">Income_vp_1</th>
+<th align="center">Income_vp_2</th>
+<th align="center">Income_vp_3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">409.87</td>
+<td align="center">550.219</td>
+<td align="center">566.043</td>
+<td align="center">567.830</td>
+</tr>
+<tr class="even">
+<td align="left">409.87</td>
+<td align="center">561.119</td>
+<td align="center">529.346</td>
+<td align="center">541.831</td>
+</tr>
+<tr class="odd">
+<td align="left">90.92</td>
+<td align="center">210.568</td>
+<td align="center">225.771</td>
+<td align="center">163.991</td>
+</tr>
+<tr class="even">
+<td align="left">90.92</td>
+<td align="center">221.468</td>
+<td align="center">189.074</td>
+<td align="center">137.993</td>
+</tr>
+<tr class="odd">
+<td align="left">90.92</td>
+<td align="center">210.568</td>
+<td align="center">225.771</td>
+<td align="center">163.991</td>
+</tr>
+<tr class="even">
+<td align="left">135.33</td>
+<td align="center">222.694</td>
+<td align="center">237.919</td>
+<td align="center">178.408</td>
+</tr>
+<tr class="odd">
+<td align="left">135.33</td>
+<td align="center">222.694</td>
+<td align="center">237.919</td>
+<td align="center">178.408</td>
+</tr>
+<tr class="even">
+<td align="left">1539.75</td>
+<td align="center">784.858</td>
+<td align="center">801.110</td>
+<td align="center">846.810</td>
+</tr>
+<tr class="odd">
+<td align="left">336.00</td>
+<td align="center">507.896</td>
+<td align="center">472.791</td>
+<td align="center">439.747</td>
+</tr>
+<tr class="even">
+<td align="left">685.48</td>
+<td align="center">593.011</td>
+<td align="center">558.062</td>
+<td align="center">540.947</td>
+</tr>
+</tbody>
+</table>
+<p>La Figura <a href="#fig:fig-vp-ingreso-densidad"><strong>??</strong></a> muestra que las distribuciones de los 10 valores plausibles son muy similares entre sí y con respecto a la distribución del ingreso completo:</p>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="sec-im.html#cb447-1" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(encuesta_obs, encuesta_no_obs)</span>
+<span id="cb447-2"><a href="sec-im.html#cb447-2" tabindex="-1"></a>dat_plot10 <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(</span>
+<span id="cb447-3"><a href="sec-im.html#cb447-3" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Zone, Sex, <span class="fu">matches</span>(<span class="st">&quot;Income_vp_&quot;</span>)),</span>
+<span id="cb447-4"><a href="sec-im.html#cb447-4" tabindex="-1"></a>  <span class="at">key =</span> <span class="st">&quot;Caso&quot;</span>, <span class="at">value =</span> <span class="st">&quot;Income2&quot;</span>, <span class="sc">-</span>Zone, <span class="sc">-</span>Sex</span>
+<span id="cb447-5"><a href="sec-im.html#cb447-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="sec-im.html#cb448-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot10, <span class="fu">aes</span>(<span class="at">x =</span> Income2, <span class="at">col =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb448-2"><a href="sec-im.html#cb448-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb448-3"><a href="sec-im.html#cb448-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb448-4"><a href="sec-im.html#cb448-4" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">data =</span> encuesta, <span class="fu">aes</span>(<span class="at">x =</span> Income), <span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="09-Imputacion_files/figure-html/fig-vp-ingreso-densidad,%20Bootstrap1-1.svg" alt="Distribución de los 10 valores plausibles del ingreso versus la distribución del ingreso completo (línea negra)" width="70%" />
+<p class="caption">
+(#fig:fig-vp-ingreso-densidad, Bootstrap1)Distribución de los 10 valores plausibles del ingreso versus la distribución del ingreso completo (línea negra)
+</p>
+</div>
+<p>La Figura <a href="#fig:fig-vp-empleo-frecuencias"><strong>??</strong></a> compara las frecuencias de los valores plausibles para la variable empleo con la distribución de la variable completa, verificando que las proporciones son coherentes:</p>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="sec-im.html#cb449-1" tabindex="-1"></a>dat_plot11 <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(</span>
+<span id="cb449-2"><a href="sec-im.html#cb449-2" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb449-3"><a href="sec-im.html#cb449-3" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(Zone, Sex, Employment, <span class="fu">matches</span>(<span class="st">&quot;Employment_vp_&quot;</span>)),</span>
+<span id="cb449-4"><a href="sec-im.html#cb449-4" tabindex="-1"></a>  <span class="at">key =</span> <span class="st">&quot;Caso&quot;</span>, <span class="at">value =</span> <span class="st">&quot;Employment2&quot;</span>, <span class="sc">-</span>Zone, <span class="sc">-</span>Sex</span>
+<span id="cb449-5"><a href="sec-im.html#cb449-5" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb449-6"><a href="sec-im.html#cb449-6" tabindex="-1"></a>  <span class="fu">group_by</span>(Caso, Employment2) <span class="sc">%&gt;%</span></span>
+<span id="cb449-7"><a href="sec-im.html#cb449-7" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb449-8"><a href="sec-im.html#cb449-8" tabindex="-1"></a>  <span class="fu">group_by</span>(Caso) <span class="sc">%&gt;%</span></span>
+<span id="cb449-9"><a href="sec-im.html#cb449-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n))</span></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="sec-im.html#cb450-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot11,</span>
+<span id="cb450-2"><a href="sec-im.html#cb450-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Employment2, <span class="at">y =</span> prop, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb450-3"><a href="sec-im.html#cb450-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb450-4"><a href="sec-im.html#cb450-4" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Employment&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>),</span>
+<span id="cb450-5"><a href="sec-im.html#cb450-5" tabindex="-1"></a>                    <span class="at">na.value =</span> <span class="st">&quot;grey70&quot;</span>) <span class="sc">+</span></span>
+<span id="cb450-6"><a href="sec-im.html#cb450-6" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb450-7"><a href="sec-im.html#cb450-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="09-Imputacion_files/figure-html/fig-vp-empleo-frecuencias,%20Bootstrap2-1.svg" alt="Proporciones de los valores plausibles para la variable empleo comparadas con la variable completa" width="70%" />
+<p class="caption">
+(#fig:fig-vp-empleo-frecuencias, Bootstrap2)Proporciones de los valores plausibles para la variable empleo comparadas con la variable completa
+</p>
+</div>
+</div>
+<div id="estimación-del-ingreso-medio-mediante-imputación-múltiple" class="section level3 hasAnchor" number="9.11.4">
+<h3><span class="header-section-number">9.11.4</span> Estimación del ingreso medio mediante imputación múltiple<a href="sec-im.html#estimación-del-ingreso-medio-mediante-imputación-múltiple" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Se define el diseño muestral y se estima el ingreso medio para cada uno de los 10 valores plausibles:</p>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="sec-im.html#cb451-1" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
+<span id="cb451-2"><a href="sec-im.html#cb451-2" tabindex="-1"></a>diseno <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb451-3"><a href="sec-im.html#cb451-3" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(<span class="at">strata =</span> Stratum, <span class="at">ids =</span> PSU, <span class="at">weights =</span> wk, <span class="at">nest =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="sec-im.html#cb452-1" tabindex="-1"></a>estimacion_vp <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span></span>
+<span id="cb452-2"><a href="sec-im.html#cb452-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb452-3"><a href="sec-im.html#cb452-3" tabindex="-1"></a>    <span class="at">vp1  =</span> <span class="fu">survey_mean</span>(Income_vp_1,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb452-4"><a href="sec-im.html#cb452-4" tabindex="-1"></a>    <span class="at">vp2  =</span> <span class="fu">survey_mean</span>(Income_vp_2,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb452-5"><a href="sec-im.html#cb452-5" tabindex="-1"></a>    <span class="at">vp3  =</span> <span class="fu">survey_mean</span>(Income_vp_3,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb452-6"><a href="sec-im.html#cb452-6" tabindex="-1"></a>    <span class="at">vp4  =</span> <span class="fu">survey_mean</span>(Income_vp_4,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb452-7"><a href="sec-im.html#cb452-7" tabindex="-1"></a>    <span class="at">vp5  =</span> <span class="fu">survey_mean</span>(Income_vp_5,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb452-8"><a href="sec-im.html#cb452-8" tabindex="-1"></a>    <span class="at">vp6  =</span> <span class="fu">survey_mean</span>(Income_vp_6,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb452-9"><a href="sec-im.html#cb452-9" tabindex="-1"></a>    <span class="at">vp7  =</span> <span class="fu">survey_mean</span>(Income_vp_7,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb452-10"><a href="sec-im.html#cb452-10" tabindex="-1"></a>    <span class="at">vp8  =</span> <span class="fu">survey_mean</span>(Income_vp_8,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb452-11"><a href="sec-im.html#cb452-11" tabindex="-1"></a>    <span class="at">vp9  =</span> <span class="fu">survey_mean</span>(Income_vp_9,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb452-12"><a href="sec-im.html#cb452-12" tabindex="-1"></a>    <span class="at">vp10 =</span> <span class="fu">survey_mean</span>(Income_vp_10, <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>)</span>
+<span id="cb452-13"><a href="sec-im.html#cb452-13" tabindex="-1"></a>  )</span></code></pre></div>
+<p>La Tabla <a href="sec-im.html#tab:tab-vp-estimaciones">9.41</a> presenta las estimaciones del ingreso medio y su varianza para cada valor plausible:</p>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="sec-im.html#cb453-1" tabindex="-1"></a>estimacion_vp <span class="sc">%&lt;&gt;%</span></span>
+<span id="cb453-2"><a href="sec-im.html#cb453-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">gather</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb453-3"><a href="sec-im.html#cb453-3" tabindex="-1"></a>  <span class="fu">separate</span>(key, <span class="fu">c</span>(<span class="st">&quot;vp&quot;</span>, <span class="st">&quot;estimacion&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb453-4"><a href="sec-im.html#cb453-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimacion =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(estimacion), <span class="st">&quot;promedio&quot;</span>, <span class="st">&quot;var&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb453-5"><a href="sec-im.html#cb453-5" tabindex="-1"></a>  <span class="fu">spread</span>(estimacion, value) <span class="sc">%&gt;%</span></span>
+<span id="cb453-6"><a href="sec-im.html#cb453-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vp =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="sec-im.html#cb454-1" tabindex="-1"></a>estimacion_vp <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table>
+<caption><span id="tab:tab-vp-estimaciones">Cuadro 9.41: </span>Estimaciones del ingreso medio y su varianza para cada valor plausible</caption>
+<thead>
+<tr class="header">
+<th align="left">vp</th>
+<th align="center">promedio</th>
+<th align="center">var</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="center">619.352</td>
+<td align="center">845.706</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="center">615.785</td>
+<td align="center">870.043</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="center">617.606</td>
+<td align="center">844.552</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="center">617.432</td>
+<td align="center">867.513</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="center">617.748</td>
+<td align="center">856.773</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="center">619.973</td>
+<td align="center">857.805</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="center">617.110</td>
+<td align="center">852.660</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="center">618.338</td>
+<td align="center">860.798</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="center">619.278</td>
+<td align="center">867.949</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="center">616.940</td>
+<td align="center">850.131</td>
+</tr>
+</tbody>
+</table>
+<p>Aplicando las reglas de combinación de <span class="citation">Rubin (<a href="#ref-rubin1987multiple">1987</a>)</span>, la Tabla <a href="sec-im.html#tab:tab-im-resultado-media">9.42</a> presenta la estimación combinada del ingreso medio y su error estándar:</p>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="sec-im.html#cb455-1" tabindex="-1"></a>Media_vp <span class="ot">&lt;-</span> <span class="fu">mean</span>(estimacion_vp<span class="sc">$</span>promedio)</span>
+<span id="cb455-2"><a href="sec-im.html#cb455-2" tabindex="-1"></a>Ubar     <span class="ot">&lt;-</span> <span class="fu">mean</span>(estimacion_vp<span class="sc">$</span>var)</span>
+<span id="cb455-3"><a href="sec-im.html#cb455-3" tabindex="-1"></a>B        <span class="ot">&lt;-</span> <span class="fu">var</span>(estimacion_vp<span class="sc">$</span>promedio)</span>
+<span id="cb455-4"><a href="sec-im.html#cb455-4" tabindex="-1"></a>var_vp   <span class="ot">&lt;-</span> Ubar <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> M) <span class="sc">*</span> B</span></code></pre></div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="sec-im.html#cb456-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb456-2"><a href="sec-im.html#cb456-2" tabindex="-1"></a>  <span class="st">`</span><span class="at">Media estimada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(Media_vp, <span class="dv">4</span>),</span>
+<span id="cb456-3"><a href="sec-im.html#cb456-3" tabindex="-1"></a>  <span class="st">`</span><span class="at">Error estándar</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(var_vp), <span class="dv">4</span>)</span>
+<span id="cb456-4"><a href="sec-im.html#cb456-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table>
+<caption><span id="tab:tab-im-resultado-media">Cuadro 9.42: </span>Estimación combinada del ingreso medio mediante imputación múltiple (reglas de Rubin)</caption>
+<thead>
+<tr class="header">
+<th align="left">Media.estimada</th>
+<th align="center">Error.estándar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">617.956</td>
+<td align="center">29.312</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="estimación-de-la-varianza-del-ingreso" class="section level3 hasAnchor" number="9.11.5">
+<h3><span class="header-section-number">9.11.5</span> Estimación de la varianza del ingreso<a href="sec-im.html#estimación-de-la-varianza-del-ingreso" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="sec-im.html#cb457-1" tabindex="-1"></a>estimacion_var_vp <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span></span>
+<span id="cb457-2"><a href="sec-im.html#cb457-2" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(<span class="fu">matches</span>(<span class="st">&quot;Income_vp&quot;</span>)), survey_var, <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>)</span></code></pre></div>
+<p>La Tabla <a href="sec-im.html#tab:tab-vp-varianza-ingreso">9.43</a> presenta las estimaciones de la varianza del ingreso para cada valor plausible:</p>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="sec-im.html#cb458-1" tabindex="-1"></a>estimacion_var_vp <span class="sc">%&lt;&gt;%</span></span>
+<span id="cb458-2"><a href="sec-im.html#cb458-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">gather</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb458-3"><a href="sec-im.html#cb458-3" tabindex="-1"></a>  <span class="fu">separate</span>(key, <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;vp&quot;</span>, <span class="st">&quot;estimacion&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb458-4"><a href="sec-im.html#cb458-4" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb458-5"><a href="sec-im.html#cb458-5" tabindex="-1"></a>    <span class="at">estimacion =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(estimacion), <span class="st">&quot;promedio&quot;</span>, <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb458-6"><a href="sec-im.html#cb458-6" tabindex="-1"></a>    <span class="at">A =</span> <span class="cn">NULL</span>, <span class="at">B =</span> <span class="cn">NULL</span>,</span>
+<span id="cb458-7"><a href="sec-im.html#cb458-7" tabindex="-1"></a>    <span class="at">vp =</span> <span class="fu">as.numeric</span>(vp)</span>
+<span id="cb458-8"><a href="sec-im.html#cb458-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb458-9"><a href="sec-im.html#cb458-9" tabindex="-1"></a>  <span class="fu">spread</span>(estimacion, value)</span></code></pre></div>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="sec-im.html#cb459-1" tabindex="-1"></a>estimacion_var_vp <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table>
+<caption><span id="tab:tab-vp-varianza-ingreso">Cuadro 9.43: </span>Estimaciones de la varianza del ingreso para cada valor plausible</caption>
+<thead>
+<tr class="header">
+<th align="left">vp</th>
+<th align="center">promedio</th>
+<th align="center">var</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="center">262689.8</td>
+<td align="center">3074674460</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="center">263092.0</td>
+<td align="center">3079895581</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="center">274370.1</td>
+<td align="center">3237991671</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="center">269127.4</td>
+<td align="center">3164842634</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="center">270450.0</td>
+<td align="center">3165285304</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="center">264992.6</td>
+<td align="center">3106582542</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="center">270916.0</td>
+<td align="center">3175865575</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="center">276069.5</td>
+<td align="center">3251836316</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="center">265060.8</td>
+<td align="center">3111426636</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="center">275462.0</td>
+<td align="center">3258214990</td>
+</tr>
+</tbody>
+</table>
+<p>La Tabla <a href="sec-im.html#tab:tab-im-resultado-varianza">9.44</a> presenta la estimación combinada de la varianza del ingreso:</p>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="sec-im.html#cb460-1" tabindex="-1"></a>Media_var_vp <span class="ot">&lt;-</span> <span class="fu">mean</span>(estimacion_var_vp<span class="sc">$</span>promedio)</span>
+<span id="cb460-2"><a href="sec-im.html#cb460-2" tabindex="-1"></a>Ubar_var     <span class="ot">&lt;-</span> <span class="fu">mean</span>(estimacion_var_vp<span class="sc">$</span>var)</span>
+<span id="cb460-3"><a href="sec-im.html#cb460-3" tabindex="-1"></a>B_var        <span class="ot">&lt;-</span> <span class="fu">var</span>(estimacion_var_vp<span class="sc">$</span>promedio)</span>
+<span id="cb460-4"><a href="sec-im.html#cb460-4" tabindex="-1"></a>var_var_vp   <span class="ot">&lt;-</span> Ubar_var <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> M) <span class="sc">*</span> B_var</span></code></pre></div>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="sec-im.html#cb461-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb461-2"><a href="sec-im.html#cb461-2" tabindex="-1"></a>  <span class="st">`</span><span class="at">Varianza estimada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(Media_var_vp, <span class="dv">4</span>),</span>
+<span id="cb461-3"><a href="sec-im.html#cb461-3" tabindex="-1"></a>  <span class="st">`</span><span class="at">Error estándar</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(var_var_vp), <span class="dv">4</span>)</span>
+<span id="cb461-4"><a href="sec-im.html#cb461-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table>
+<caption><span id="tab:tab-im-resultado-varianza">Cuadro 9.44: </span>Estimación combinada de la varianza del ingreso mediante imputación múltiple (reglas de Rubin)</caption>
+<thead>
+<tr class="header">
+<th align="left">Varianza.estimada</th>
+<th align="center">Error.estándar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">269223</td>
+<td align="center">56489.27</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="estimación-de-proporciones-de-empleo" class="section level3 hasAnchor" number="9.11.6">
+<h3><span class="header-section-number">9.11.6</span> Estimación de proporciones de empleo<a href="sec-im.html#estimación-de-proporciones-de-empleo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="sec-im.html#cb462-1" tabindex="-1"></a>estimacion_prop_vp <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb462-2"><a href="sec-im.html#cb462-2" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">&quot;Employment_vp_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb462-3"><a href="sec-im.html#cb462-3" tabindex="-1"></a>  <span class="cf">function</span>(vp) {</span>
+<span id="cb462-4"><a href="sec-im.html#cb462-4" tabindex="-1"></a>    diseno <span class="sc">%&gt;%</span></span>
+<span id="cb462-5"><a href="sec-im.html#cb462-5" tabindex="-1"></a>      <span class="fu">group_by_at</span>(<span class="fu">vars</span>(<span class="at">Employment =</span> vp)) <span class="sc">%&gt;%</span></span>
+<span id="cb462-6"><a href="sec-im.html#cb462-6" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">prop =</span> <span class="fu">survey_mean</span>(<span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb462-7"><a href="sec-im.html#cb462-7" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">vp =</span> vp)</span>
+<span id="cb462-8"><a href="sec-im.html#cb462-8" tabindex="-1"></a>  }</span>
+<span id="cb462-9"><a href="sec-im.html#cb462-9" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">bind_rows</span>()</span></code></pre></div>
+<p>La Tabla <a href="sec-im.html#tab:tab-vp-proporciones">9.45</a> muestra las estimaciones de la proporción por estado de empleo para los primeros 12 registros:</p>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="sec-im.html#cb463-1" tabindex="-1"></a>estimacion_prop_vp <span class="sc">%&lt;&gt;%</span></span>
+<span id="cb463-2"><a href="sec-im.html#cb463-2" tabindex="-1"></a>  <span class="fu">separate</span>(vp, <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;vp&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb463-3"><a href="sec-im.html#cb463-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="cn">NULL</span>, <span class="at">B =</span> <span class="cn">NULL</span>, <span class="at">vp =</span> <span class="fu">as.numeric</span>(vp)) <span class="sc">%&gt;%</span></span>
+<span id="cb463-4"><a href="sec-im.html#cb463-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(vp, Employment<span class="sc">:</span>prop_var)</span></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="sec-im.html#cb464-1" tabindex="-1"></a>estimacion_prop_vp <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>12L) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table>
+<caption><span id="tab:tab-vp-proporciones">Cuadro 9.45: </span>Estimaciones de la proporción por estado de empleo para cada valor plausible (primeras 12 filas)</caption>
+<thead>
+<tr class="header">
+<th align="left">vp</th>
+<th align="center">Employment</th>
+<th align="center">prop</th>
+<th align="center">prop_var</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="center">Unemployed</td>
+<td align="center">0.036</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="center">Inactive</td>
+<td align="center">0.375</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="center">Employed</td>
+<td align="center">0.589</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="center">Unemployed</td>
+<td align="center">0.036</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="center">Inactive</td>
+<td align="center">0.377</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="center">Employed</td>
+<td align="center">0.587</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="center">Unemployed</td>
+<td align="center">0.036</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="center">Inactive</td>
+<td align="center">0.387</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="center">Employed</td>
+<td align="center">0.578</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="center">Unemployed</td>
+<td align="center">0.036</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="center">Inactive</td>
+<td align="center">0.355</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="center">Employed</td>
+<td align="center">0.609</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<p>La Tabla <a href="sec-im.html#tab:tab-im-resultado-proporciones">9.46</a> presenta la estimación combinada de las proporciones de empleo mediante las reglas de Rubin:</p>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="sec-im.html#cb465-1" tabindex="-1"></a>estimacion_prop_vp <span class="sc">%&gt;%</span></span>
+<span id="cb465-2"><a href="sec-im.html#cb465-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Employment) <span class="sc">%&gt;%</span></span>
+<span id="cb465-3"><a href="sec-im.html#cb465-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb465-4"><a href="sec-im.html#cb465-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Proporción estimada</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(prop), <span class="dv">4</span>),</span>
+<span id="cb465-5"><a href="sec-im.html#cb465-5" tabindex="-1"></a>    <span class="at">Ubar                  =</span> <span class="fu">mean</span>(prop_var),</span>
+<span id="cb465-6"><a href="sec-im.html#cb465-6" tabindex="-1"></a>    <span class="at">B                     =</span> <span class="fu">var</span>(prop)</span>
+<span id="cb465-7"><a href="sec-im.html#cb465-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb465-8"><a href="sec-im.html#cb465-8" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb465-9"><a href="sec-im.html#cb465-9" tabindex="-1"></a>    <span class="st">`</span><span class="at">Varianza total</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(Ubar <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> M) <span class="sc">*</span> B, <span class="dv">6</span>),</span>
+<span id="cb465-10"><a href="sec-im.html#cb465-10" tabindex="-1"></a>    <span class="at">Ubar =</span> <span class="cn">NULL</span>, <span class="at">B =</span> <span class="cn">NULL</span></span>
+<span id="cb465-11"><a href="sec-im.html#cb465-11" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb465-12"><a href="sec-im.html#cb465-12" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<table>
+<caption><span id="tab:tab-im-resultado-proporciones">Cuadro 9.46: </span>Estimación combinada de proporciones de empleo mediante imputación múltiple (reglas de Rubin)</caption>
+<thead>
+<tr class="header">
+<th align="left">Employment</th>
+<th align="center">Proporción estimada</th>
+<th align="center">Varianza total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Unemployed</td>
+<td align="center">0.036</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="left">Inactive</td>
+<td align="center">0.387</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Employed</td>
+<td align="center">0.578</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div class="csl-entry">
+Asparouhov, T. (2006). General Multi-Level Modeling with Sampling Weights. <em>Communications in Statistics, Theory and Methods</em>, <em>35</em>(3), 439-460. <a href="https://doi.org/10.1080/03610920500476598">https://doi.org/10.1080/03610920500476598</a>
+</div>
+<div class="csl-entry">
+Bache, S. M., &amp; Wickham, H. (2025). <em>magrittr: A Forward-Pipe Operator for R</em>. <a href="https://doi.org/10.32614/CRAN.package.magrittr">https://doi.org/10.32614/CRAN.package.magrittr</a>
+</div>
+<div class="csl-entry">
+Bautista, L. (1998). Diseños de muestreo estadístico. <em>Universidad Nacional de Colombia</em>.
+</div>
+<div class="csl-entry">
+Berglund, P. A., &amp; Heeringa, S. G. (2014). <em>Multiple Imputation of Missing Data Using <span>SAS</span></em>. SAS Institute.
+</div>
+<div class="csl-entry">
+Binder, D. A. (1983). On the variances of asymptotically normal estimators from complex surveys. <em>International Statistical Review/Revue Internationale de Statistique</em>, 279-292.
+</div>
+<div class="csl-entry">
+Binder, D. A. (2011). Estimating model parameters from a complex survey under a model-design randomization framework. <em>Pakistan Journal of Statistics</em>, <em>27</em>(4).
+</div>
+<div class="csl-entry">
+Binder, D. A., &amp; Kovacevic, M. S. (1995). Estimating some measures of income inequality from survey data: an application of the estimating equations approach. <em>Survey Methodology</em>, <em>21</em>, 137-146.
+</div>
+<div class="csl-entry">
+Browne, W. J., &amp; Draper, D. (2006). A Comparison of Bayesian and Likelihood-Based Methods for Fitting Multilevel Models. <em>Bayesian Analysis</em>, <em>1</em>(3), 473-514. <a href="https://doi.org/10.1214/06-BA117">https://doi.org/10.1214/06-BA117</a>
+</div>
+<div class="csl-entry">
+Bruch, C., Münnich, R., &amp; Zins, S. (2011). Variance estimation for complex surveys. <em>Deliverable D3</em>, <em>1</em>.
+</div>
+<div class="csl-entry">
+Cai, T. (2013). Investigation of Ways to Handle Sampling Weights for Multilevel Model Analyses. <em>Sociological Methodology</em>, <em>43</em>(1), 178-219. <a href="https://doi.org/10.1177/0081175013490035">https://doi.org/10.1177/0081175013490035</a>
+</div>
+<div class="csl-entry">
+Carpenter, J. R., &amp; Kenward, M. G. (2013). <em>Multiple Imputation and Its Application</em>. John Wiley &amp; Sons.
+</div>
+<div class="csl-entry">
+Chambers, R., Dorfman, A. H., &amp; Wehrly, T. E. (2012). Bias Robust Estimation in Finite Populations Using Nonparametric Calibration. <em>Journal of the American Statistical Association</em>, <em>88</em>(421), 268-277. <a href="https://doi.org/10.1080/01621459.1993.10594318">https://doi.org/10.1080/01621459.1993.10594318</a>
+</div>
+<div class="csl-entry">
+Cochran, W. G. (1977). <em>Sampling techniques</em>. John Wiley &amp; Sons.
+</div>
+<div class="csl-entry">
+Efron, B. (1979). Bootstrap methods: Another look at the jackknife. <em>The Annals of Statistics</em>, <em>7</em>(1), 1-26. <a href="https://doi.org/10.1214/aos/1176344552">https://doi.org/10.1214/aos/1176344552</a>
+</div>
+<div class="csl-entry">
+Fay, R. E. (1979). On Adjusting the Pearson Chi-Square Statistic for Cluster Sampling. <em>Proceedings of the Social Statistics Section, American Statistical Association</em>, 402-405.
+</div>
+<div class="csl-entry">
+Fellegi, I. P. (1980). Approximate Tests of Independence and Goodness of Fit Based on Stratified Multistage Samples. <em>Journal of the American Statistical Association</em>, <em>75</em>(370), 261-268. <a href="https://doi.org/10.2307/2287405">https://doi.org/10.2307/2287405</a>
+</div>
+<div class="csl-entry">
+Finch, W. H., Bolin, J. E., &amp; Kelley, K. (2019). <em>Multilevel Modeling Using <span>R</span></em> (2.ª ed.). CRC Press.
+</div>
+<div class="csl-entry">
+Freedman Ellis, G., &amp; Schneider, B. (2024). <em>srvyr: ’dplyr’-Like Syntax for Summary Statistics of Survey Data</em>. <a href="https://doi.org/10.32614/CRAN.package.srvyr">https://doi.org/10.32614/CRAN.package.srvyr</a>
+</div>
+<div class="csl-entry">
+Fuller, W. A. (1975). Regression analysis for sample survey. <em>Sankhya, Series C</em>, <em>37</em>, 117-132.
+</div>
+<div class="csl-entry">
+Fuller, W. A. (2002). Regression estimation for survey samples. <em>Survey Methodology</em>, <em>28</em>(1), 5-23.
+</div>
+<div class="csl-entry">
+Gambino, J. G., &amp; Nascimento Silva, P. L. do. (2009). Sampling and estimation in household surveys. En <em>Handbook of Statistics</em> (Vol. 29, pp. 407-439). Elsevier.
+</div>
+<div class="csl-entry">
+Gelman, A., &amp; Hill, J. (2006). <em>Data Analysis Using Regression and Multilevel/Hierarchical Models</em>. Cambridge University Press.
+</div>
+<div class="csl-entry">
+Goldstein, H. (2011). <em>Multilevel Statistical Models</em> (4.ª ed.). John Wiley &amp; Sons.
+</div>
+<div class="csl-entry">
+Gutiérrez, H. A. (2016). <em>Estrategias de muestreo: diseño de encuestas y estimación de parámetros</em> (Segunda edición). Ediciones de la U.
+</div>
+<div class="csl-entry">
+Gutiérrez, H. A. (2020a). <em>samplesize4surveys: Sample Size Calculations for Complex Surveys</em>. <a href="https://doi.org/10.32614/CRAN.package.samplesize4surveys">https://doi.org/10.32614/CRAN.package.samplesize4surveys</a>
+</div>
+<div class="csl-entry">
+Gutiérrez, H. A. (2020b). <em>TeachingSampling: Selection of Samples and Parameter Estimation in Finite Population</em>. <a href="https://doi.org/10.32614/CRAN.package.TeachingSampling">https://doi.org/10.32614/CRAN.package.TeachingSampling</a>
+</div>
+<div class="csl-entry">
+Gutiérrez, H. A., &amp; Babativa-Márquez, G. (2023). <em>Efectos de diseño para indicadores sociales en Am<span>é</span>rica Latina: función generalizada de varianza para estimadores directos provenientes de encuestas de hogares</em> (LC/TS.2023/95 106). Comisi<span>ó</span>n Econ<span>ó</span>mica para Am<span>é</span>rica Latina y el Caribe (CEPAL), Naciones Unidas. <a href="https://repositorio.cepal.org/server/api/core/bitstreams/feb8c8be-6434-41f2-8fd9-f12f71a0739a/content">https://repositorio.cepal.org/server/api/core/bitstreams/feb8c8be-6434-41f2-8fd9-f12f71a0739a/content</a>
+</div>
+<div class="csl-entry">
+Hansen, M. H., Hurwitz, W. N., Madow, W. G., et al. (1953). <em>Sample survey methods and theory</em>.
+</div>
+<div class="csl-entry">
+Hansen, M. H., &amp; Steinberg, J. (1956). Control of errors in surveys. <em>Biometrics</em>, <em>12</em>(4), 462-474.
+</div>
+<div class="csl-entry">
+Heeringa, S. G., West, B. T., Heeringa, S. G., &amp; Berglund, P. A. (2017). <em>Applied survey data analysis</em>. chapman; hall/CRC.
+</div>
+<div class="csl-entry">
+Jacob, G., Pessoa, D., &amp; Damico, A. (2024). <em>Poverty and Inequality with Complex Survey Data</em>. <a href="https://www.convey-r.org/">https://www.convey-r.org/</a>
+</div>
+<div class="csl-entry">
+Kalton, G., &amp; Flores-Cervantes, I. (2003). Weighting methods. <em>Journal of official statistics</em>, <em>19</em>(2), 81.
+</div>
+<div class="csl-entry">
+Kim, J. K., &amp; Fuller, W. A. (2004). Fractional Hot Deck Imputation. <em>Biometrika</em>, <em>91</em>(3), 559-578. <a href="https://doi.org/10.1093/biomet/91.3.559">https://doi.org/10.1093/biomet/91.3.559</a>
+</div>
+<div class="csl-entry">
+Kim, J. K., &amp; Shao, J. (2014). <em>Statistical Methods for Handling Incomplete Data</em>. CRC Press.
+</div>
+<div class="csl-entry">
+Kish, L. (1965). <em>Survey sampling.</em>
+</div>
+<div class="csl-entry">
+Kish, L. (1987). <em>Statistical Design for Research</em>. John Wiley &amp; Sons.
+</div>
+<div class="csl-entry">
+Kish, L., &amp; Frankel, M. R. (1974). Inference from complex samples. <em>Journal of the Royal Statistical Society, Series B</em>, <em>36</em>, 1-37.
+</div>
+<div class="csl-entry">
+Korn, E. L., &amp; Graubard, B. I. (1995). Analysis of large health surveys: accounting for the sampling design. <em>Journal of the Royal Statistical Society: Series A (Statistics in Society)</em>, <em>158</em>(2), 263-295.
+</div>
+<div class="csl-entry">
+Kovacevic, M. S., &amp; Binder, D. A. (1997). Variance estimation for measures of income inequality and polarization-the estimating equations approach. <em>Journal of Official Statistics</em>, <em>13</em>(1), 41.
+</div>
+<div class="csl-entry">
+Kovar, J., Rao, J., &amp; Wu, C. (1988). Bootstrap and other methods to measure errors in survey estimates. <em>Canadian Journal of Statistics</em>, <em>16</em>(S1), 25-45.
+</div>
+<div class="csl-entry">
+Kreft, I. G. G., &amp; De Leeuw, J. (1998). <em>Introducing Multilevel Modeling</em>. Sage Publications.
+</div>
+<div class="csl-entry">
+Langel, M., &amp; Tillé, Y. (2013). Variance estimation of the Gini index: revisiting a result several times published. <em>Journal of the Royal Statistical Society Series A: Statistics in Society</em>, <em>176</em>(2), 521-540.
+</div>
+<div class="csl-entry">
+Loomis, D., Richardson, D. B., &amp; Elliott, L. (2005). Poisson regression analysis of ungrouped data. <em>Occupational and environmental medicine</em>, <em>62</em>(5), 325-329.
+</div>
+<div class="csl-entry">
+Lumley, T. (2010). <em>Complex Surveys: A Guide to Analysis Using R: A Guide to Analysis Using R</em>. John Wiley; Sons.
+</div>
+<div class="csl-entry">
+Lumley, T. (2024). <em>survey: analysis of complex survey samples</em>.
+</div>
+<div class="csl-entry">
+Merlo, J., Chaix, B., Ohlsson, H., Beckman, A., Johnell, K., Hjerpe, P., Råstam, L., &amp; Larsen, K. (2006). A Brief Conceptual Tutorial of Multilevel Analysis in Social Epidemiology: Using Measures of Clustering in Multilevel Logistic Regression to Investigate Contextual Phenomena. <em>Journal of Epidemiology &amp; Community Health</em>, <em>60</em>(4), 290-297. <a href="https://doi.org/10.1136/jech.2004.029454">https://doi.org/10.1136/jech.2004.029454</a>
+</div>
+<div class="csl-entry">
+Molina, E. A., &amp; Skinner, C. J. (1992). Pseudo-likelihood and quasi-likelihood estimation for complex sampling schemes. <em>Computational Statistics &amp; Data Analysis</em>, <em>13</em>, 395-405.
+</div>
+<div class="csl-entry">
+Naciones Unidas. (2009). <em>Diseño de Muestras para Encuestas de Hogares: Directrices Prácticas.</em> Naciones Unidas. <a href="https://unstats.un.org/unsd/publication/seriesf/seriesf_98s.pdf">https://unstats.un.org/unsd/publication/seriesf/seriesf_98s.pdf</a>
+</div>
+<div class="csl-entry">
+Nelder, J. A., &amp; Wedderburn, R. W. M. (1972). Generalized Linear Models. <em>Journal of the Royal Statistical Society: Series A (General)</em>, <em>135</em>(3), 370-384. <a href="https://doi.org/10.2307/2344614">https://doi.org/10.2307/2344614</a>
+</div>
+<div class="csl-entry">
+Osier, G. (2009). Variance estimation for complex indicators of poverty and inequality using linearization techniques. <em>Survey research methods</em>, <em>3</em>, 167-195.
+</div>
+<div class="csl-entry">
+Park, I., Winglee, M., Clark, J., Rust, K., Sedlak, A., &amp; Morganstein, D. (2003). Design Effects and Survey Planning. <em>Proceedings of the Section on Survey Research Methods</em>, 3179-3186. <a href="https://www.asasrms.org/Proceedings/y2003/Files/JSM2003-000156.pdf">https://www.asasrms.org/Proceedings/y2003/Files/JSM2003-000156.pdf</a>
+</div>
+<div class="csl-entry">
+Pebesma, E. (2018). <span>Simple Features for R: Standardized Support for Spatial Vector Data</span>. <em><span>The R Journal</span></em>, <em>10</em>(1), 439-446. <a href="https://doi.org/10.32614/RJ-2018-009">https://doi.org/10.32614/RJ-2018-009</a>
+</div>
+<div class="csl-entry">
+Pedersen, T. L. (2024). <em>patchwork: The composer of plots</em>. <a href="https://CRAN.R-project.org/package=patchwork">https://CRAN.R-project.org/package=patchwork</a>
+</div>
+<div class="csl-entry">
+Pfeffermann, D. (1993). The Role of Sampling Weights When Modeling Survey Data. <em>International Statistical Review</em>, <em>61</em>(2), 317-337. <a href="https://doi.org/10.2307/1403631">https://doi.org/10.2307/1403631</a>
+</div>
+<div class="csl-entry">
+Pfeffermann, D. (2011). Modelling of complex survey data: <span>W</span>hy model? <span>W</span>hy is it a problem? <span>H</span>ow can we approach it? <em>Survey Methodology</em>, <em>37</em>(2), 115-136.
+</div>
+<div class="csl-entry">
+Pfeffermann, D., Skinner, C. J., Holmes, D. J., Goldstein, H., &amp; Rasbash, J. (1998). Weighting for Unequal Selection Probabilities in Multilevel Models. <em>Journal of the Royal Statistical Society: Series B</em>, <em>60</em>(1), 23-40. <a href="https://doi.org/10.1111/1467-9868.00106">https://doi.org/10.1111/1467-9868.00106</a>
+</div>
+<div class="csl-entry">
+Rabe-Hesketh, S., &amp; Skrondal, A. (2006). Multilevel Modelling of Complex Survey Data. <em>Journal of the Royal Statistical Society: Series A</em>, <em>169</em>(4), 805-827. <a href="https://doi.org/10.1111/j.1467-985X.2006.00426.x">https://doi.org/10.1111/j.1467-985X.2006.00426.x</a>
+</div>
+<div class="csl-entry">
+Rabe-Hesketh, S., &amp; Skrondal, A. (2012). <em>Multilevel and Longitudinal Modeling Using Stata</em> (3.ª ed.). Stata Press.
+</div>
+<div class="csl-entry">
+Raghunathan, T. E. (2016). <em>Missing Data Analysis in Practice</em>. CRC Press.
+</div>
+<div class="csl-entry">
+Rao, J. N. K., &amp; Scott, A. J. (1984). On chi-squared tests for multiway contingency tables with cell proportions estimated from survey data. <em>The Annals of Statistics</em>, <em>12</em>(1), 46-60.
+</div>
+<div class="csl-entry">
+Rao, J. N. K., Wu, C. F. J., &amp; Yue, K. (1992). Some recent work on resampling methods for complex surveys. <em>Survey Methodology</em>, <em>18</em>, 209-217.
+</div>
+<div class="csl-entry">
+Rubin, D. B. (1987). <em>Multiple Imputation for Nonresponse in Surveys</em>. John Wiley &amp; Sons.
+</div>
+<div class="csl-entry">
+Santana Sepúlveda, S., &amp; Mateos Farfán, E. (2014). <em>El arte de programar en R: un lenguaje para la estadística</em>. México: Instituto Mexicano de Tecnología del Agua. UNESCO. Comité Nacional Mexicano del Programa Hidrológico Internacional.
+</div>
+<div class="csl-entry">
+Särndal, C.-E., &amp; Lundström, S. (2005). <em>Estimation in surveys with nonresponse</em>. John Wiley &amp; Sons.
+</div>
+<div class="csl-entry">
+Särndal, C.-E., Swensson, B., &amp; Wretman, J. (2003). <em>Model assisted survey sampling</em>. Springer Science &amp; Business Media.
+</div>
+<div class="csl-entry">
+Shah, B. V., Holt, M. M., &amp; Folsom, R. F. (1977). Inference about regression models from sample survey data. <em>Bulletin of the International Statistical Institute</em>, <em>41</em>(3), 43-57.
+</div>
+<div class="csl-entry">
+Skinner, C. J., Holt, D., &amp; Smith, T. M. F. (Eds.). (1989). <em>Analysis of complex surveys</em>. John Wiley &amp; Sons.
+</div>
+<div class="csl-entry">
+Tellez Piñerez, C. F., &amp; Lemus Polanía, D. F. (2015). <em>Estadística Descriptiva y Probabilidad con aplicaciones en R</em>. Fundación Universitaria Los Libertadores.
+</div>
+<div class="csl-entry">
+Tennekes, M. (2023). <em>tmap: Thematic Maps</em>. <a href="https://CRAN.R-project.org/package=tmap">https://CRAN.R-project.org/package=tmap</a>
+</div>
+<div class="csl-entry">
+Thomas, D. R., &amp; Rao, J. N. K. (1987). Small-sample comparisons of level and power for simple goodness-of-fit statistics under cluster sampling. <em>Journal of the American Statistical Association</em>, <em>82</em>(398), 630-636.
+</div>
+<div class="csl-entry">
+Tillé, Y., &amp; Matei, A. (2025). <em>sampling: Survey Sampling</em>. <a href="https://doi.org/10.32614/CRAN.package.sampling">https://doi.org/10.32614/CRAN.package.sampling</a>
+</div>
+<div class="csl-entry">
+Valliant, R. (2024). <em>svydiags: Regression Model Diagnostics for Survey Data</em>. <a href="https://doi.org/10.32614/CRAN.package.svydiags">https://doi.org/10.32614/CRAN.package.svydiags</a>
+</div>
+<div class="csl-entry">
+Valliant, R., &amp; Zipf, G. (2025). <em>PracTools: Designing and Weighting Survey Samples</em>. <a href="https://doi.org/10.32614/CRAN.package.PracTools">https://doi.org/10.32614/CRAN.package.PracTools</a>
+</div>
+<div class="csl-entry">
+van Buuren, S. (2018). <em>Flexible Imputation of Missing Data</em> (2.ª ed.). CRC Press. <a href="https://stefvanbuuren.name/fimd/">https://stefvanbuuren.name/fimd/</a>
+</div>
+<div class="csl-entry">
+Wickham, H. (2019). <em>Advanced R</em> (2.ª ed.). Chapman; Hall/CRC. <a href="https://adv-r.hadley.nz/">https://adv-r.hadley.nz/</a>
+</div>
+<div class="csl-entry">
+Wickham, H., &amp; Grolemund, G. (2017). <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. O’Reilly Media. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>
+</div>
+<div class="csl-entry">
+Wickham, H., Miller, E., &amp; Smith, D. (2025). <em>haven: Import and Export ’SPSS’, ’Stata’ and ’SAS’ Files</em>. <a href="https://doi.org/10.32614/CRAN.package.haven">https://doi.org/10.32614/CRAN.package.haven</a>
+</div>
+<div class="csl-entry">
+Wickham, H., Navarro, D., &amp; Pedersen, T. L. (2023). <em>ggplot2: Elegant Graphics for Data Analysis</em> (3.ª ed.). Springer. <a href="https://doi.org/10.1007/978-3-319-24277-4">https://doi.org/10.1007/978-3-319-24277-4</a>
+</div>
+<div class="csl-entry">
+Wilkinson, L. (2005). <em>The grammar of graphics</em> (2.ª ed.). Springer.
+</div>
+<div class="csl-entry">
+Wolter, K. M., &amp; Wolter, K. M. (2007). <em>Introduction to variance estimation</em> (Vol. 53). Springer.
+</div>
+<div class="csl-entry">
+Zhou, H., Elliott, M. R., &amp; Raghunathan, T. E. (2016). A Two-Step Semiparametric Method to Accommodate Sampling Weights in Multiple Imputation. <em>Biometrics</em>, <em>72</em>(1), 242-252. <a href="https://doi.org/10.1111/biom.12413">https://doi.org/10.1111/biom.12413</a>
+</div>
+</div>
+</div>
+</div>
+<!-- </div> -->
+
+
+
+
+
+
+
+
+
+
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-rubin1987multiple" class="csl-entry">
+Rubin, D. B. (1987). <em>Multiple Imputation for Nonresponse in Surveys</em>. John Wiley &amp; Sons.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sec-knn-regresion.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/psirusteam/2021ASDA/09-Imputacion.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["Análisis de encuestas con R.pdf", "Análisis de encuestas con R.epub", "Análisis de encuestas con R.mobi"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  },
+  "tconfig": null
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
