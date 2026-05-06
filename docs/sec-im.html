@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -453,7 +454,7 @@ Este modelo se utiliza únicamente como mecanismo generador de datos para la sim
 <span id="cb440-12"><a href="sec-im.html#cb440-12" tabindex="-1"></a>}</span></code></pre></div>
 <div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="sec-im.html#cb441-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
 <span id="cb441-2"><a href="sec-im.html#cb441-2" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">generar</span>()</span></code></pre></div>
-<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="sec-im.html#cb442-1" tabindex="-1"></a><span class="fu">head</span>(datos, <span class="dv">12</span>) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="sec-im.html#cb442-1" tabindex="-1"></a><span class="fu">head</span>(datos, <span class="dv">12</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-datos-simulados">Cuadro 9.38: </span>Primeras 12 observaciones del conjunto de datos simulado con valores faltantes</caption>
 <thead>
@@ -591,7 +592,7 @@ Figura 9.22: Relación entre x e y: datos completos (izquierda) y datos con valo
 <div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="sec-im.html#cb446-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
 <span id="cb446-2"><a href="sec-im.html#cb446-2" tabindex="-1"></a>  <span class="st">`</span><span class="at">Estimación de beta</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">im.bootstrap</span>(datos)<span class="sc">$</span>beta, <span class="dv">1</span>),</span>
 <span id="cb446-3"><a href="sec-im.html#cb446-3" tabindex="-1"></a>  <span class="st">`</span><span class="at">Error estándar</span><span class="st">`</span>      <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">im.bootstrap</span>(datos)<span class="sc">$</span>sd, <span class="dv">4</span>)</span>
-<span id="cb446-4"><a href="sec-im.html#cb446-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb446-4"><a href="sec-im.html#cb446-4" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-im-bootstrap-result">Cuadro 9.39: </span>Estimación de la pendiente y su error estándar mediante imputación múltiple por bootstrap</caption>
 <thead>
@@ -648,8 +649,7 @@ Figura 9.23: Dispersión de los valores imputados por bootstrap: faltantes (Si) 
 <span id="cb449-17"><a href="sec-im.html#cb449-17" tabindex="-1"></a>  encuesta_obs[[vp2]]    <span class="ot">&lt;-</span> encuesta_obs<span class="sc">$</span>Employment</span>
 <span id="cb449-18"><a href="sec-im.html#cb449-18" tabindex="-1"></a>}</span></code></pre></div>
 <p>La Tabla <a href="sec-im.html#tab:tab-vp-ingreso">9.40</a> presenta las primeras columnas del conjunto de valores plausibles para el ingreso en las observaciones no observadas:</p>
-<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="sec-im.html#cb450-1" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">select</span>(encuesta_no_obs, Income, <span class="fu">matches</span>(<span class="st">&quot;Income_vp_&quot;</span>))[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="sc">%&gt;%</span></span>
-<span id="cb450-2"><a href="sec-im.html#cb450-2" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="sec-im.html#cb450-1" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">select</span>(encuesta_no_obs, Income, <span class="fu">matches</span>(<span class="st">&quot;Income_vp_&quot;</span>))[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-vp-ingreso">Cuadro 9.40: </span>Valores plausibles del ingreso para las primeras 10 observaciones no observadas (primeras 4 imputaciones)</caption>
 <thead>
@@ -789,7 +789,7 @@ Figura 9.25: Proporciones de los valores plausibles para la variable empleo comp
 <span id="cb457-4"><a href="sec-im.html#cb457-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimacion =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(estimacion), <span class="st">&quot;promedio&quot;</span>, <span class="st">&quot;var&quot;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb457-5"><a href="sec-im.html#cb457-5" tabindex="-1"></a>  <span class="fu">spread</span>(estimacion, value) <span class="sc">%&gt;%</span></span>
 <span id="cb457-6"><a href="sec-im.html#cb457-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vp =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="sec-im.html#cb458-1" tabindex="-1"></a>estimacion_vp <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="sec-im.html#cb458-1" tabindex="-1"></a>estimacion_vp</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-vp-estimaciones">Cuadro 9.41: </span>Estimaciones del ingreso medio y su varianza para cada valor plausible</caption>
 <thead>
@@ -860,7 +860,7 @@ Figura 9.25: Proporciones de los valores plausibles para la variable empleo comp
 <div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="sec-im.html#cb460-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
 <span id="cb460-2"><a href="sec-im.html#cb460-2" tabindex="-1"></a>  <span class="st">`</span><span class="at">Media estimada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(Media_vp, <span class="dv">4</span>),</span>
 <span id="cb460-3"><a href="sec-im.html#cb460-3" tabindex="-1"></a>  <span class="st">`</span><span class="at">Error estándar</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(var_vp), <span class="dv">4</span>)</span>
-<span id="cb460-4"><a href="sec-im.html#cb460-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb460-4"><a href="sec-im.html#cb460-4" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-im-resultado-media">Cuadro 9.42: </span>Estimación combinada del ingreso medio mediante imputación múltiple (reglas de Rubin)</caption>
 <thead>
@@ -891,7 +891,7 @@ Figura 9.25: Proporciones de los valores plausibles para la variable empleo comp
 <span id="cb462-7"><a href="sec-im.html#cb462-7" tabindex="-1"></a>    <span class="at">vp =</span> <span class="fu">as.numeric</span>(vp)</span>
 <span id="cb462-8"><a href="sec-im.html#cb462-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
 <span id="cb462-9"><a href="sec-im.html#cb462-9" tabindex="-1"></a>  <span class="fu">spread</span>(estimacion, value)</span></code></pre></div>
-<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="sec-im.html#cb463-1" tabindex="-1"></a>estimacion_var_vp <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="sec-im.html#cb463-1" tabindex="-1"></a>estimacion_var_vp</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-vp-varianza-ingreso">Cuadro 9.43: </span>Estimaciones de la varianza del ingreso para cada valor plausible</caption>
 <thead>
@@ -962,7 +962,7 @@ Figura 9.25: Proporciones de los valores plausibles para la variable empleo comp
 <div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="sec-im.html#cb465-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
 <span id="cb465-2"><a href="sec-im.html#cb465-2" tabindex="-1"></a>  <span class="st">`</span><span class="at">Varianza estimada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(Media_var_vp, <span class="dv">4</span>),</span>
 <span id="cb465-3"><a href="sec-im.html#cb465-3" tabindex="-1"></a>  <span class="st">`</span><span class="at">Error estándar</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(var_var_vp), <span class="dv">4</span>)</span>
-<span id="cb465-4"><a href="sec-im.html#cb465-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb465-4"><a href="sec-im.html#cb465-4" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-im-resultado-varianza">Cuadro 9.44: </span>Estimación combinada de la varianza del ingreso mediante imputación múltiple (reglas de Rubin)</caption>
 <thead>
@@ -995,7 +995,7 @@ Figura 9.25: Proporciones de los valores plausibles para la variable empleo comp
 <span id="cb467-2"><a href="sec-im.html#cb467-2" tabindex="-1"></a>  <span class="fu">separate</span>(vp, <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;vp&quot;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb467-3"><a href="sec-im.html#cb467-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="cn">NULL</span>, <span class="at">B =</span> <span class="cn">NULL</span>, <span class="at">vp =</span> <span class="fu">as.numeric</span>(vp)) <span class="sc">%&gt;%</span></span>
 <span id="cb467-4"><a href="sec-im.html#cb467-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(vp, Employment<span class="sc">:</span>prop_var)</span></code></pre></div>
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="sec-im.html#cb468-1" tabindex="-1"></a>estimacion_prop_vp <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>12L) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="sec-im.html#cb468-1" tabindex="-1"></a>estimacion_prop_vp <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>12L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-vp-proporciones">Cuadro 9.45: </span>Estimaciones de la proporción por estado de empleo para cada valor plausible (primeras 12 filas)</caption>
 <thead>
@@ -1092,8 +1092,7 @@ Figura 9.25: Proporciones de los valores plausibles para la variable empleo comp
 <span id="cb469-8"><a href="sec-im.html#cb469-8" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb469-9"><a href="sec-im.html#cb469-9" tabindex="-1"></a>    <span class="st">`</span><span class="at">Varianza total</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(Ubar <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> M) <span class="sc">*</span> B, <span class="dv">6</span>),</span>
 <span id="cb469-10"><a href="sec-im.html#cb469-10" tabindex="-1"></a>    <span class="at">Ubar =</span> <span class="cn">NULL</span>, <span class="at">B =</span> <span class="cn">NULL</span></span>
-<span id="cb469-11"><a href="sec-im.html#cb469-11" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb469-12"><a href="sec-im.html#cb469-12" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb469-11"><a href="sec-im.html#cb469-11" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-im-resultado-proporciones">Cuadro 9.46: </span>Estimación combinada de proporciones de empleo mediante imputación múltiple (reglas de Rubin)</caption>
 <thead>

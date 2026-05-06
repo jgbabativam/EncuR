@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -509,7 +510,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="sec-gamma.html#cb277-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
 <span id="cb277-2"><a href="sec-gamma.html#cb277-2" tabindex="-1"></a>  Estadístico <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Dispersión (alpha)&quot;</span>, <span class="st">&quot;Dispersión del modelo&quot;</span>),</span>
 <span id="cb277-3"><a href="sec-gamma.html#cb277-3" tabindex="-1"></a>  <span class="at">Valor       =</span> <span class="fu">c</span>(<span class="fu">round</span>(alpha, <span class="dv">4</span>), <span class="fu">round</span>(mod_s<span class="sc">$</span>dispersion, <span class="dv">4</span>))</span>
-<span id="cb277-4"><a href="sec-gamma.html#cb277-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb277-4"><a href="sec-gamma.html#cb277-4" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-gamma-dispersion">Cuadro 7.15: </span>Parámetro de dispersión del modelo Gamma</caption>
 <thead>
@@ -536,7 +537,7 @@ div.csl-indent {
 <span id="cb278-4"><a href="sec-gamma.html#cb278-4" tabindex="-1"></a>pred_gamma <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(pred_gamma, pred_IC)</span>
 <span id="cb278-5"><a href="sec-gamma.html#cb278-5" tabindex="-1"></a>pred_gamma<span class="sc">$</span>Income <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Income</span>
 <span id="cb278-6"><a href="sec-gamma.html#cb278-6" tabindex="-1"></a>pred_gamma<span class="sc">$</span>Age    <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Age</span></code></pre></div>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="sec-gamma.html#cb279-1" tabindex="-1"></a>pred_gamma <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="sec-gamma.html#cb279-1" tabindex="-1"></a>pred_gamma <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-gamma-predicciones">Cuadro 7.16: </span>Predicciones e intervalos de confianza del modelo Gamma (primeras 6 observaciones)</caption>
 <thead>
@@ -551,51 +552,51 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">456.8</td>
-<td align="center">41.80</td>
-<td align="center">374.9</td>
-<td align="center">538.8</td>
-<td align="center">409.9</td>
+<td align="left">456.827</td>
+<td align="center">41.804</td>
+<td align="center">374.893</td>
+<td align="center">538.761</td>
+<td align="center">409.87</td>
 <td align="center">68</td>
 </tr>
 <tr class="even">
-<td align="left">434.4</td>
-<td align="center">38.07</td>
-<td align="center">359.8</td>
-<td align="center">509.0</td>
-<td align="center">409.9</td>
+<td align="left">434.381</td>
+<td align="center">38.070</td>
+<td align="center">359.765</td>
+<td align="center">508.998</td>
+<td align="center">409.87</td>
 <td align="center">56</td>
 </tr>
 <tr class="odd">
-<td align="left">423.5</td>
-<td align="center">37.33</td>
-<td align="center">350.3</td>
-<td align="center">496.7</td>
-<td align="center">409.9</td>
+<td align="left">423.522</td>
+<td align="center">37.334</td>
+<td align="center">350.348</td>
+<td align="center">496.697</td>
+<td align="center">409.87</td>
 <td align="center">24</td>
 </tr>
 <tr class="even">
-<td align="left">441.2</td>
-<td align="center">39.35</td>
-<td align="center">364.1</td>
-<td align="center">518.3</td>
-<td align="center">409.9</td>
+<td align="left">441.212</td>
+<td align="center">39.354</td>
+<td align="center">364.079</td>
+<td align="center">518.345</td>
+<td align="center">409.87</td>
 <td align="center">26</td>
 </tr>
 <tr class="odd">
-<td align="left">416.7</td>
-<td align="center">37.78</td>
-<td align="center">342.6</td>
-<td align="center">490.7</td>
-<td align="center">409.9</td>
+<td align="left">416.687</td>
+<td align="center">37.776</td>
+<td align="center">342.648</td>
+<td align="center">490.726</td>
+<td align="center">409.87</td>
 <td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">436.1</td>
-<td align="center">38.37</td>
-<td align="center">360.9</td>
-<td align="center">511.3</td>
-<td align="center">823.8</td>
+<td align="left">436.128</td>
+<td align="center">38.365</td>
+<td align="center">360.935</td>
+<td align="center">511.322</td>
+<td align="center">823.75</td>
 <td align="center">61</td>
 </tr>
 </tbody>

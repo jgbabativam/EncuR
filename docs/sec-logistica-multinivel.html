@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -503,7 +504,7 @@ Note que en los modelos logísticos multinivel (GLMM) no se especifica un residu
 <span id="cb337-3"><a href="sec-logistica-multinivel.html#cb337-3" tabindex="-1"></a>                         <span class="at">weights =</span> wk2,</span>
 <span id="cb337-4"><a href="sec-logistica-multinivel.html#cb337-4" tabindex="-1"></a>                         <span class="at">family  =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>))</span></code></pre></div>
 <p>Los coeficientes del modelo nulo logístico por estrato se presentan en la Tabla <a href="sec-logistica-multinivel.html#tab:tab-coef-logit-nulo">8.13</a>:</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="sec-logistica-multinivel.html#cb338-1" tabindex="-1"></a><span class="fu">coef</span>(mod_logist_null)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>12L) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="sec-logistica-multinivel.html#cb338-1" tabindex="-1"></a><span class="fu">coef</span>(mod_logist_null)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>12L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-coef-logit-nulo">Cuadro 8.13: </span>Interceptos estimados por estrato en el modelo logístico nulo (primeros 12 estratos)</caption>
 <thead>
@@ -625,7 +626,7 @@ Note que en los modelos logísticos multinivel (GLMM) no se especifica un residu
 <span id="cb340-4"><a href="sec-logistica-multinivel.html#cb340-4" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">weighted.mean</span>(encuesta<span class="sc">$</span>pobreza, encuesta<span class="sc">$</span>wk2), <span class="dv">4</span>),</span>
 <span id="cb340-5"><a href="sec-logistica-multinivel.html#cb340-5" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">weighted.mean</span>(<span class="fu">predict</span>(mod_logist_null, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>), encuesta<span class="sc">$</span>wk2), <span class="dv">4</span>)</span>
 <span id="cb340-6"><a href="sec-logistica-multinivel.html#cb340-6" tabindex="-1"></a>  )</span>
-<span id="cb340-7"><a href="sec-logistica-multinivel.html#cb340-7" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb340-7"><a href="sec-logistica-multinivel.html#cb340-7" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-calibracion-logit-nulo">Cuadro 8.15: </span>Verificación de calibración del modelo logístico nulo: media ponderada predicha versus observada</caption>
 <thead>
@@ -672,7 +673,7 @@ Note que en los modelos logísticos multinivel (GLMM) no se especifica un residu
 ##     Adjusted ICC: 0.315
 ##   Unadjusted ICC: 0.187</code></pre>
 <p>Los coeficientes estimados por estrato se recogen en la Tabla <a href="sec-logistica-multinivel.html#tab:tab-coef-logit-int-aleatorio">8.16</a>:</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="sec-logistica-multinivel.html#cb343-1" tabindex="-1"></a><span class="fu">coef</span>(mod_logit_Int_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="sec-logistica-multinivel.html#cb343-1" tabindex="-1"></a><span class="fu">coef</span>(mod_logit_Int_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-coef-logit-int-aleatorio">Cuadro 8.16: </span>Coeficientes del modelo logístico con intercepto aleatorio por estrato (primeros 10 estratos)</caption>
 <thead>
@@ -818,7 +819,7 @@ Figura 8.15: Curvas de probabilidad predichas por estrato: modelo logístico con
 <span id="cb347-2"><a href="sec-logistica-multinivel.html#cb347-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb347-3"><a href="sec-logistica-multinivel.html#cb347-3" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media predicha (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Predicción, wk2), <span class="dv">4</span>),</span>
 <span id="cb347-4"><a href="sec-logistica-multinivel.html#cb347-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media observada (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Pobreza, wk2), <span class="dv">4</span>)</span>
-<span id="cb347-5"><a href="sec-logistica-multinivel.html#cb347-5" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb347-5"><a href="sec-logistica-multinivel.html#cb347-5" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-calibracion-logit-int">Cuadro 8.18: </span>Verificación de calibración del modelo logístico con intercepto aleatorio</caption>
 <thead>
@@ -891,7 +892,7 @@ N\!\left(
 ##     Adjusted ICC: 0.886
 ##   Unadjusted ICC: 0.653</code></pre>
 <p>Los coeficientes del modelo por estrato se muestran en la Tabla <a href="sec-logistica-multinivel.html#tab:tab-coef-logit-pendiente">8.19</a>:</p>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="sec-logistica-multinivel.html#cb350-1" tabindex="-1"></a><span class="fu">coef</span>(mod_logit_Pen_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="sec-logistica-multinivel.html#cb350-1" tabindex="-1"></a><span class="fu">coef</span>(mod_logit_Pen_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-coef-logit-pendiente">Cuadro 8.19: </span>Coeficientes del modelo logístico con intercepto y pendiente aleatoria por estrato (primeros 10 estratos)</caption>
 <thead>
@@ -1036,7 +1037,7 @@ Figura 8.16: Curvas de probabilidad predichas por estrato: modelo logístico con
 <span id="cb354-2"><a href="sec-logistica-multinivel.html#cb354-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb354-3"><a href="sec-logistica-multinivel.html#cb354-3" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media predicha (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Predicción, wk2), <span class="dv">4</span>),</span>
 <span id="cb354-4"><a href="sec-logistica-multinivel.html#cb354-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media observada (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Pobreza, wk2), <span class="dv">4</span>)</span>
-<span id="cb354-5"><a href="sec-logistica-multinivel.html#cb354-5" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb354-5"><a href="sec-logistica-multinivel.html#cb354-5" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-calibracion-logit-pendiente">Cuadro 8.21: </span>Verificación de calibración del modelo logístico con intercepto y pendiente aleatoria</caption>
 <thead>
@@ -1204,7 +1205,7 @@ Figura 8.17: Curvas de probabilidad de pobreza predichas por estrato y zona: mod
 <span id="cb360-3"><a href="sec-logistica-multinivel.html#cb360-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb360-4"><a href="sec-logistica-multinivel.html#cb360-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media predicha (ponderada)</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Predicción, wk2), <span class="dv">4</span>),</span>
 <span id="cb360-5"><a href="sec-logistica-multinivel.html#cb360-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media observada (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Pobreza, wk2), <span class="dv">4</span>)</span>
-<span id="cb360-6"><a href="sec-logistica-multinivel.html#cb360-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb360-6"><a href="sec-logistica-multinivel.html#cb360-6" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-calibracion-logit-zona">Cuadro 8.23: </span>Verificación de calibración del modelo logístico con zona: media ponderada predicha versus observada por zona</caption>
 <thead>

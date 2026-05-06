@@ -279,7 +279,13 @@ fit <- lm(Income ~ Expenditure, data = BigCity)
 
 Para visualizar los parámetros poblacionales del modelo se empleará la función `modelsummary`, cuyos resultados se presentan en la Tabla \@ref(tab:tab-modelo-poblacional):
 
-```{r tab-modelo-poblacional, tab.cap="Parámetros del modelo de regresión ajustado con datos poblacionales (BigCity)"}
+```{r eval=FALSE}
+data.frame(
+  Término = c("(Intercept)", "Expenditure", "Num.Obs.", "R2", "R2 Adj.", "RMSE"),
+  Población = c(123.337, 1.229, 150266, 0.359, 0.359, 461.74)
+)
+```
+```{r tab-modelo-poblacional, tab.cap="Parámetros del modelo de regresión ajustado con datos poblacionales (BigCity)", echo=FALSE}
 data.frame(
   Término = c("(Intercept)", "Expenditure", "Num.Obs.", "R2", "R2 Adj.", "RMSE"),
   Población = c(123.337, 1.229, 150266, 0.359, 0.359, 461.74)
@@ -715,7 +721,13 @@ Como se observa en la Figura \@ref(fig:fig-cook), ninguna distancia de Cook supe
 
 A continuación, se evalúa la influencia mediante $D_{f}Betas_{\left(i\right)j}$ con la función `svydfbetas`, cuyos resultados para las primeras diez observaciones se presentan en la Tabla \@ref(tab:tab-dfbetas-primeros):
 
-```{r tab-dfbetas-primeros, tab.cap="Valores DfBetas para las primeras diez observaciones de la muestra"}
+```{r eval=FALSE}
+d_dfbetas = data.frame(t(svydfbetas(mod_svy)$Dfbetas))
+colnames(d_dfbetas) <- paste0("Beta_", 1:5)
+d_dfbetas %>%
+  slice(1:10L)
+```
+```{r tab-dfbetas-primeros, tab.cap="Valores DfBetas para las primeras diez observaciones de la muestra", echo=FALSE}
 d_dfbetas = data.frame(t(svydfbetas(mod_svy)$Dfbetas))
 colnames(d_dfbetas) <- paste0("Beta_", 1:5)
 d_dfbetas %>%
@@ -725,7 +737,20 @@ d_dfbetas %>%
 
 Una vez obtenidos los $D_{f}Betas_{\left(i\right)j}$, se calcula el umbral de influencia a partir de los resultados de `svydfbetas` y se genera una variable dicotómica que clasifica cada observación, como se muestra en la Tabla \@ref(tab:tab-dfbetas-influyentes):
 
-```{r tab-dfbetas-influyentes, echo=TRUE, tab.cap="Las diez observaciones más influyentes según el criterio DfBetas"}
+```{r eval=FALSE}
+d_dfbetas$id <- 1:nrow(d_dfbetas)
+d_dfbetas <- reshape2::melt(d_dfbetas, id.vars = "id")
+cutoff <- svydfbetas(mod_svy)$cutoff
+d_dfbetas %<>% mutate(Criterio = ifelse(abs(value) > cutoff, "Si", "No"))
+
+tex_label <- d_dfbetas %>%
+  filter(Criterio == "Si") %>%
+  arrange(desc(abs(value))) %>%
+  slice(1:10L)
+
+tex_label
+```
+```{r tab-dfbetas-influyentes, echo=TRUE, tab.cap="Las diez observaciones más influyentes según el criterio DfBetas", echo=FALSE}
 d_dfbetas$id <- 1:nrow(d_dfbetas)
 d_dfbetas <- reshape2::melt(d_dfbetas, id.vars = "id")
 cutoff <- svydfbetas(mod_svy)$cutoff
@@ -869,7 +894,12 @@ $$
 
 Para calcular la varianza de la estimación se requiere la matriz de varianzas y covarianzas de los parámetros, presentada en la Tabla \@ref(tab:tab-vcov-modelo):
 
-```{r tab-vcov-modelo, tab.cap="Matriz de varianzas y covarianzas de los coeficientes del modelo"}
+```{r eval=FALSE}
+vcov(mod_svy) %>%
+  as.data.frame() %>%
+  tibble::rownames_to_column("Parámetro")
+```
+```{r tab-vcov-modelo, tab.cap="Matriz de varianzas y covarianzas de los coeficientes del modelo", echo=FALSE}
 vcov(mod_svy) %>%
   as.data.frame() %>%
   tibble::rownames_to_column("Parámetro") %>%

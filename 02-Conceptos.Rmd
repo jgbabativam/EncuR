@@ -320,7 +320,10 @@ FrameI <- BigCity %>%
                       
 ```
 
-```{r tab-BigCity, tab.cap="Total de personas, ingresos y gastos"}
+```{r eval=FALSE}
+  head(FrameI, 8)
+```
+```{r tab-BigCity, tab.cap="Total de personas, ingresos y gastos", echo=FALSE}
   head(FrameI, 8) %>%
   tabla_fmt()
 ```
@@ -339,7 +342,10 @@ nIh <- sizes$nIh
 ```
 
 
-```{r tab-sizes, tab.cap="Tamaños de muestra y factores de expansión por estrato"}
+```{r eval=FALSE}
+head(sizes, 8)
+```
+```{r tab-sizes, tab.cap="Tamaños de muestra y factores de expansión por estrato", echo=FALSE}
 head(sizes, 8) %>%
   tabla_fmt()
 ```
@@ -363,7 +369,11 @@ FrameII <- left_join(sizes,
 
 Una vez se tiene la base de datos con la muestra de UPMs, se procede a seleccionar aquellas variables que son de interés para el estudio, cuyas primeras observaciones se presentan en la Tabla \@ref(tab:tab-frameII).
 
-```{r tab-frameII, tab.cap="Muestra de UPMs con información del marco de muestreo (primeras 8 filas)"}
+```{r eval=FALSE}
+head(FrameII, 8) %>%
+  select(Stratum:Zone)
+```
+```{r tab-frameII, tab.cap="Muestra de UPMs con información del marco de muestreo (primeras 8 filas)", echo=FALSE}
 head(FrameII, 8) %>%
   select(Stratum:Zone) %>%
   tabla_fmt()
@@ -401,7 +411,11 @@ encuesta <- map_dfr(1:length(Ni), function(i) {
 
 
 
-```{r tab-encuesta, tab.cap="Primeras observaciones de la muestra final seleccionada"}
+```{r eval=FALSE}
+head(encuesta, 8) %>%
+  select(Stratum:Zone)
+```
+```{r tab-encuesta, tab.cap="Primeras observaciones de la muestra final seleccionada", echo=FALSE}
 head(encuesta, 8) %>%
   select(Stratum:Zone) %>%
   tabla_fmt()
@@ -490,7 +504,15 @@ diseno_cal <- calibrate(design = diseno,
 
 Después de la calibración, los pesos ajustados se asignan a la encuesta y reproducen exactamente los totales poblacionales establecidos en el vector totales. Esto puede verificarse sumando los pesos calibrados, como se muestra en la Tabla \@ref(tab:tab-cal-totales):
 
-```{r tab-cal-totales, tab.cap="Población representada por zona y sexo tras la calibración"}
+```{r eval=FALSE}
+encuesta$wk <- weights(diseno_cal)
+
+encuesta %>%
+  group_by(Zone, Sex) %>%
+  summarise(pob_rep = sum(wk)) %>%
+  adorn_totals()
+```
+```{r tab-cal-totales, tab.cap="Población representada por zona y sexo tras la calibración", echo=FALSE}
 encuesta$wk <- weights(diseno_cal)
 
 encuesta %>%

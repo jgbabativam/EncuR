@@ -298,7 +298,11 @@ datagrey <- data2 %>%
 
 Por otro lado, si el objetivo ahora en análisis de las encuestas de hogares es ordenar las filas de la base por alguna variable en particular, se utiliza en `R` la función `arrange()` para realizar esta operación. A continuación, la Tabla \@ref(tab:tab-arrange-ingreso) ejemplifica el uso de `arrange()` con la base de datos, ordenando de forma descendente por la variable *ingcorte*:
 
-```{r tab-arrange-ingreso, tab.cap="Base de datos ordenada de forma descendente por ingreso"}
+```{r eval=FALSE}
+datadog <- datablue %>% arrange(-ingcorte)
+datadog %>% head()
+```
+```{r tab-arrange-ingreso, tab.cap="Base de datos ordenada de forma descendente por ingreso", echo=FALSE}
 datadog <- datablue %>% arrange(-ingcorte)
 datadog %>% head() %>%
   tabla_fmt()
@@ -307,7 +311,10 @@ datadog %>% head() %>%
 
 Es posible utilizar la función `arrange()` para hacer ordenamientos más complicados. Por ejemplo, ordenar por más de una variable. A modo de ejemplo, la Tabla \@ref(tab:tab-arrange-sexo-edad) muestra la base de datos *datablue* ordenada por las variables *sexo* y *edad*:
 
-```{r tab-arrange-sexo-edad, tab.cap="Base de datos ordenada por sexo y edad"}
+```{r eval=FALSE}
+datablue %>% arrange(sexo, edad) %>% head()
+```
+```{r tab-arrange-sexo-edad, tab.cap="Base de datos ordenada por sexo y edad", echo=FALSE}
 datablue %>% arrange(sexo, edad) %>% head() %>%
   tabla_fmt()
 ```
@@ -315,7 +322,10 @@ datablue %>% arrange(sexo, edad) %>% head() %>%
 
 También es posible utilizar la función `arrange()` junto con la opción `desc()` para que el ordenamiento sea descendente, como se ilustra en la Tabla \@ref(tab:tab-arrange-edad-desc).
 
-```{r tab-arrange-edad-desc, tab.cap="Base de datos ordenada de forma descendente por edad"}
+```{r eval=FALSE}
+datablue %>% arrange(desc(edad)) %>% head()
+```
+```{r tab-arrange-edad-desc, tab.cap="Base de datos ordenada de forma descendente por edad", echo=FALSE}
 datablue %>% arrange(desc(edad)) %>% head() %>%
   tabla_fmt()
 ```
@@ -329,7 +339,12 @@ La función `mutate()` permite crear nuevas variables o modificar las existentes
 
 Por ejemplo, la Tabla \@ref(tab:tab-mutate-ingreso2) muestra la base *datablue* con la nueva variable *ingreso2*, que representa el doble del ingreso individual:
 
-```{r tab-mutate-ingreso2, tab.cap="Variable ingreso duplicado (ingreso2) creada con mutate()"}
+```{r eval=FALSE}
+datablue2 <- datablue %>%
+  mutate(ingreso2 = 2 * ingcorte)
+datablue2 %>% head()
+```
+```{r tab-mutate-ingreso2, tab.cap="Variable ingreso duplicado (ingreso2) creada con mutate()", echo=FALSE}
 datablue2 <- datablue %>%
   mutate(ingreso2 = 2 * ingcorte)
 datablue2 %>% head() %>%
@@ -338,7 +353,13 @@ datablue2 %>% head() %>%
 
 Es posible crear varias variables simultáneamente, ya que `mutate()` reconoce de forma secuencial las variables que se van generando dentro de la misma instrucción. En el siguiente ejemplo se crean dos nuevas variables en la base de datos, como se presenta en la Tabla \@ref(tab:tab-mutate-ingreso4):
 
-```{r tab-mutate-ingreso4, tab.cap="Creación simultánea de dos variables derivadas con mutate()"}
+```{r eval=FALSE}
+datacat <- datablue %>%
+  mutate(ingreso2 = 2 * ingcorte,
+         ingreso4 = 2 * ingreso2)
+datacat %>% head()
+```
+```{r tab-mutate-ingreso4, tab.cap="Creación simultánea de dos variables derivadas con mutate()", echo=FALSE}
 datacat <- datablue %>%
   mutate(ingreso2 = 2 * ingcorte,
          ingreso4 = 2 * ingreso2)
@@ -355,7 +376,14 @@ La función `group_by()` permite definir grupos dentro del conjunto de datos en 
 
 Por ejemplo, el siguiente código muestra cómo generar el número de encuestas efectivas realizadas en cada uno de los estados de Brasil, ordenadas de mayor a menor al usar `arrange()`, como se muestra en la Tabla \@ref(tab:tab-estados-brasil):
 
-```{r tab-estados-brasil, tab.cap="Número de encuestas por estado de Brasil (primeros seis)"}
+```{r eval=FALSE}
+data2 %>% 
+  group_by(estados) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(n)) %>% 
+  head()
+```
+```{r tab-estados-brasil, tab.cap="Número de encuestas por estado de Brasil (primeros seis)", echo=FALSE}
 data2 %>% 
   group_by(estados) %>% 
   summarise(n = n()) %>% 
@@ -366,7 +394,13 @@ data2 %>%
 
 De forma similar, la Tabla \@ref(tab:tab-conteo-sexo) muestra el número de encuestas por sexo del respondiente:
 
-```{r tab-conteo-sexo, tab.cap="Número de encuestas por sexo del respondiente"}
+```{r eval=FALSE}
+data2 %>% 
+  group_by(sexo) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(n))
+```
+```{r tab-conteo-sexo, tab.cap="Número de encuestas por sexo del respondiente", echo=FALSE}
 data2 %>% 
   group_by(sexo) %>% 
   summarise(n = n()) %>% 
@@ -376,7 +410,13 @@ data2 %>%
 
 O en caso de necesitar la consulta del número de encuestas efectivas por área geográfica, los resultados se presentan en la Tabla \@ref(tab:tab-conteo-area):
 
-```{r tab-conteo-area, tab.cap="Número de encuestas por área geográfica"}
+```{r eval=FALSE}
+data2 %>% 
+  group_by(area_ee) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(n))
+```
+```{r tab-conteo-area, tab.cap="Número de encuestas por área geográfica", echo=FALSE}
 data2 %>% 
   group_by(area_ee) %>% 
   summarise(n = n()) %>% 
@@ -387,7 +427,13 @@ data2 %>%
 
 Finalmente, la Tabla \@ref(tab:tab-conteo-parentesco) muestra la distribución de las entrevistas según el parentesco con el jefe del hogar (jefe, cónyuge, hijos, etc.):
 
-```{r tab-conteo-parentesco, tab.cap="Distribución de encuestas por parentesco con el jefe del hogar"}
+```{r eval=FALSE}
+data2 %>% 
+  group_by(paren_ee) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(n))
+```
+```{r tab-conteo-parentesco, tab.cap="Distribución de encuestas por parentesco con el jefe del hogar", echo=FALSE}
 data2 %>% 
   group_by(paren_ee) %>% 
   summarise(n = n()) %>% 
@@ -440,7 +486,12 @@ encu_dis <- data2 %>%
 En estadística, según @tellez2015estadistica las medidas descriptivas permiten la presentación y caracterización de un conjunto de datos con el fin de poder describir apropiadamente las diversas características presentes en la información de la muestra.
 Con `dplyr`, es posible calcular totales y promedios de manera simple, sin considerar ponderaciones, como se muestra en la Tabla \@ref(tab:tab-total-media-dplyr):
 
-```{r tab-total-media-dplyr, tab.cap="Total e ingreso promedio sin considerar ponderación (dplyr)"}
+```{r eval=FALSE}
+data2 %>%
+  summarise(total_ing = sum(ingcorte),
+            media_ing = mean(ingcorte))
+```
+```{r tab-total-media-dplyr, tab.cap="Total e ingreso promedio sin considerar ponderación (dplyr)", echo=FALSE}
 data2 %>%
   summarise(total_ing = sum(ingcorte),
             media_ing = mean(ingcorte)) %>%
@@ -449,7 +500,13 @@ data2 %>%
 
 También pueden obtenerse medias por grupos, por ejemplo, según el área de residencia, tal como se presenta en la Tabla \@ref(tab:tab-media-area-dplyr):
 
-```{r tab-media-area-dplyr, tab.cap="Ingreso promedio por área geográfica sin diseño muestral (dplyr)"}
+```{r eval=FALSE}
+data2 %>%
+  group_by(area_ee) %>%
+  summarise(n = n(),
+            media = mean(ingcorte))
+```
+```{r tab-media-area-dplyr, tab.cap="Ingreso promedio por área geográfica sin diseño muestral (dplyr)", echo=FALSE}
 data2 %>%
   group_by(area_ee) %>%
   summarise(n = n(),
@@ -461,7 +518,12 @@ Estos resultados son útiles para una exploración preliminar, pero no represent
 
 Una vez definido el objeto de diseño `encu_dis`, que incorpora las unidades primarias de muestreo (`upm`), los estratos (`estrato`) y los factores de expansión (`fep`), los mismos cálculos se pueden realizar de manera casi idéntica, pero ahora los resultados tienen en cuenta el diseño muestral, como se presenta en la Tabla \@ref(tab:tab-total-media-srvyr):
 
-```{r tab-total-media-srvyr, tab.cap="Total e ingreso promedio con diseño muestral (srvyr)"}
+```{r eval=FALSE}
+encu_dis %>%
+  summarise(total_ing = survey_total(ingcorte, vartype = "ci"),
+            media_ing = survey_mean(ingcorte, vartype = "ci"))
+```
+```{r tab-total-media-srvyr, tab.cap="Total e ingreso promedio con diseño muestral (srvyr)", echo=FALSE}
 encu_dis %>%
   summarise(total_ing = survey_total(ingcorte, vartype = "ci"),
             media_ing = survey_mean(ingcorte, vartype = "ci")) %>%
@@ -470,7 +532,12 @@ encu_dis %>%
 
 De igual modo, la Tabla \@ref(tab:tab-media-area-srvyr) presenta las medias por grupos considerando el diseño muestral:
 
-```{r tab-media-area-srvyr, tab.cap="Ingreso promedio por área geográfica con diseño muestral (srvyr)"}
+```{r eval=FALSE}
+encu_dis %>%
+  group_by(area_ee) %>%
+  summarise(media = survey_mean(ingcorte, vartype = "ci"))
+```
+```{r tab-media-area-srvyr, tab.cap="Ingreso promedio por área geográfica con diseño muestral (srvyr)", echo=FALSE}
 encu_dis %>%
   group_by(area_ee) %>%
   summarise(media = survey_mean(ingcorte, vartype = "ci")) %>%

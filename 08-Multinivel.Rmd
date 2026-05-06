@@ -211,7 +211,15 @@ encuesta$wk2 <- encuesta$wk / predict(mod_qw)
 n <- nrow(encuesta)
 encuesta <- encuesta %>% mutate(wk3 = n * wk / sum(wk))
 ```
-```{r tab-resumen-pesos, tab.cap="Suma de los factores de expansión según tipo de ponderación"}
+```{r eval=FALSE}
+encuesta %>%
+  summarise(
+    `Peso original (wk)`     = sum(wk),
+    `Q-weighted (wk2)`       = round(sum(wk2), 1),
+    `Senate-weighted (wk3)`  = round(sum(wk3), 1)
+  )
+```
+```{r tab-resumen-pesos, tab.cap="Suma de los factores de expansión según tipo de ponderación", echo=FALSE}
 encuesta %>%
   summarise(
     `Peso original (wk)`     = sum(wk),
@@ -249,13 +257,20 @@ coef_mod_null <- bind_cols(
 colnames(coef_mod_null) <- c("Intercepto (q-weighted)", "Intercepto (senate-weighted)")
 ```
 
-```{r tab-interceptos-nulos, tab.cap="Interceptos estimados por estrato bajo pesos q-weighted y senate-weighted (modelo nulo, primeros 12 estratos)"}
+```{r eval=FALSE}
+coef_mod_null %>% slice(1:12L)
+
+```
+```{r tab-interceptos-nulos, tab.cap="Interceptos estimados por estrato bajo pesos q-weighted y senate-weighted (modelo nulo, primeros 12 estratos)", echo=FALSE}
 coef_mod_null %>% slice(1:12L) %>% tabla_fmt()
 
 ```
 
 Las estimaciones son similares bajo ambas ponderaciones. Para los modelos siguientes se emplean los pesos q-weighted. La correlación intraclase se calcula con la función `icc()` del paquete `performance`, presentada en la Tabla \@ref(tab:tab-icc-nulo):
-```{r tab-icc-nulo, tab.cap="Correlación intraclase del modelo nulo (ingreso por estrato)"}
+```{r eval=FALSE}
+performance::icc(mod_null) %>% as.data.frame()
+```
+```{r tab-icc-nulo, tab.cap="Correlación intraclase del modelo nulo (ingreso por estrato)", echo=FALSE}
 performance::icc(mod_null) %>% as.data.frame() %>% tabla_fmt()
 ```
 
@@ -311,7 +326,10 @@ performance::icc(mod_Int_Aleatorio)
 
 Los coeficientes estimados por estrato se presentan en la Tabla \@ref(tab:tab-coef-intercepto-aleatorio):
 
-```{r tab-coef-intercepto-aleatorio, tab.cap="Coeficientes del modelo con intercepto aleatorio por estrato (primeros 8 estratos)"}
+```{r eval=FALSE}
+coef(mod_Int_Aleatorio)$Stratum %>% slice(1:8L)
+```
+```{r tab-coef-intercepto-aleatorio, tab.cap="Coeficientes del modelo con intercepto aleatorio por estrato (primeros 8 estratos)", echo=FALSE}
 coef(mod_Int_Aleatorio)$Stratum %>% slice(1:8L) %>% tabla_fmt()
 ```
 
@@ -391,7 +409,10 @@ performance::icc(mod_Pen_Aleatorio)
 
 Los coeficientes del modelo por estrato se presentan en la Tabla \@ref(tab:tab-coef-pendiente-aleatoria):
 
-```{r tab-coef-pendiente-aleatoria, tab.cap="Coeficientes del modelo con intercepto y pendiente aleatoria por estrato (primeros 10 estratos)"}
+```{r eval=FALSE}
+coef(mod_Pen_Aleatorio)$Stratum %>% slice(1:10L)
+```
+```{r tab-coef-pendiente-aleatoria, tab.cap="Coeficientes del modelo con intercepto y pendiente aleatoria por estrato (primeros 10 estratos)", echo=FALSE}
 coef(mod_Pen_Aleatorio)$Stratum %>% slice(1:10L) %>% tabla_fmt()
 ```
 
@@ -545,7 +566,16 @@ $$
 $$
 La Tabla \@ref(tab:tab-b0-calculado) presenta el intercepto efectivo $B_0$ calculado para cada combinación de estrato y zona:
 
-```{r tab-b0-calculado, tab.cap="Intercepto efectivo por estrato y zona en el modelo con gasto medio contextual"}
+```{r eval=FALSE}
+Coef_Estimado %>%
+  dplyr::mutate(
+    B0 = ifelse(Zone == "Urban",
+                `(Intercept)` + mu.y * mu.x + ZoneUrban,
+                `(Intercept)` + mu.y * mu.x)
+  ) %>%
+  dplyr::select(Stratum, Zone, B0, Expenditure)
+```
+```{r tab-b0-calculado, tab.cap="Intercepto efectivo por estrato y zona en el modelo con gasto medio contextual", echo=FALSE}
 Coef_Estimado %>%
   dplyr::mutate(
     B0 = ifelse(Zone == "Urban",
@@ -687,7 +717,10 @@ mod_logist_null <- glmer(pobreza ~ (1 | Stratum),
 
 Los coeficientes del modelo nulo logístico por estrato se presentan en la Tabla \@ref(tab:tab-coef-logit-nulo):
 
-```{r tab-coef-logit-nulo, tab.cap="Interceptos estimados por estrato en el modelo logístico nulo (primeros 12 estratos)"}
+```{r eval=FALSE}
+coef(mod_logist_null)$Stratum %>% slice(1:12L)
+```
+```{r tab-coef-logit-nulo, tab.cap="Interceptos estimados por estrato en el modelo logístico nulo (primeros 12 estratos)", echo=FALSE}
 coef(mod_logist_null)$Stratum %>% slice(1:12L) %>% tabla_fmt()
 ```
 
@@ -708,7 +741,16 @@ tab_pred %>% tabla_fmt()
 
 La Tabla \@ref(tab:tab-calibracion-logit-nulo) verifica la calibración del modelo comparando las medias ponderadas de las predicciones y de la variable observada:
 
-```{r tab-calibracion-logit-nulo, tab.cap="Verificación de calibración del modelo logístico nulo: media ponderada predicha versus observada"}
+```{r eval=FALSE}
+data.frame(
+  Estadístico = c("Media ponderada observada", "Media ponderada predicha"),
+  Valor = c(
+    round(weighted.mean(encuesta$pobreza, encuesta$wk2), 4),
+    round(weighted.mean(predict(mod_logist_null, type = "response"), encuesta$wk2), 4)
+  )
+)
+```
+```{r tab-calibracion-logit-nulo, tab.cap="Verificación de calibración del modelo logístico nulo: media ponderada predicha versus observada", echo=FALSE}
 data.frame(
   Estadístico = c("Media ponderada observada", "Media ponderada predicha"),
   Valor = c(
@@ -751,7 +793,10 @@ performance::icc(mod_logit_Int_Aleatorio)
 
 Los coeficientes estimados por estrato se recogen en la Tabla \@ref(tab:tab-coef-logit-int-aleatorio):
 
-```{r tab-coef-logit-int-aleatorio, tab.cap="Coeficientes del modelo logístico con intercepto aleatorio por estrato (primeros 10 estratos)"}
+```{r eval=FALSE}
+coef(mod_logit_Int_Aleatorio)$Stratum %>% slice(1:10L)
+```
+```{r tab-coef-logit-int-aleatorio, tab.cap="Coeficientes del modelo logístico con intercepto aleatorio por estrato (primeros 10 estratos)", echo=FALSE}
 coef(mod_logit_Int_Aleatorio)$Stratum %>% slice(1:10L) %>% tabla_fmt()
 ```
 
@@ -797,7 +842,14 @@ tab_pred %>% tabla_fmt()
 
 La Tabla \@ref(tab:tab-calibracion-logit-int) verifica la calibración del modelo:
 
-```{r tab-calibracion-logit-int, tab.cap="Verificación de calibración del modelo logístico con intercepto aleatorio"}
+```{r eval=FALSE}
+tab_pred %>%
+  summarise(
+    `Media predicha (ponderada)` = round(weighted.mean(Predicción, wk2), 4),
+    `Media observada (ponderada)` = round(weighted.mean(Pobreza, wk2), 4)
+  )
+```
+```{r tab-calibracion-logit-int, tab.cap="Verificación de calibración del modelo logístico con intercepto aleatorio", echo=FALSE}
 tab_pred %>%
   summarise(
     `Media predicha (ponderada)` = round(weighted.mean(Predicción, wk2), 4),
@@ -869,7 +921,10 @@ performance::icc(mod_logit_Pen_Aleatorio)
 
 Los coeficientes del modelo por estrato se muestran en la Tabla \@ref(tab:tab-coef-logit-pendiente):
 
-```{r tab-coef-logit-pendiente, tab.cap="Coeficientes del modelo logístico con intercepto y pendiente aleatoria por estrato (primeros 10 estratos)"}
+```{r eval=FALSE}
+coef(mod_logit_Pen_Aleatorio)$Stratum %>% slice(1:10L)
+```
+```{r tab-coef-logit-pendiente, tab.cap="Coeficientes del modelo logístico con intercepto y pendiente aleatoria por estrato (primeros 10 estratos)", echo=FALSE}
 coef(mod_logit_Pen_Aleatorio)$Stratum %>% slice(1:10L) %>% tabla_fmt()
 ```
 
@@ -913,7 +968,14 @@ tab_pred %>% tabla_fmt()
 
 ```
 
-```{r tab-calibracion-logit-pendiente, tab.cap="Verificación de calibración del modelo logístico con intercepto y pendiente aleatoria"}
+```{r eval=FALSE}
+tab_pred %>%
+  summarise(
+    `Media predicha (ponderada)` = round(weighted.mean(Predicción, wk2), 4),
+    `Media observada (ponderada)` = round(weighted.mean(Pobreza, wk2), 4)
+  )
+```
+```{r tab-calibracion-logit-pendiente, tab.cap="Verificación de calibración del modelo logístico con intercepto y pendiente aleatoria", echo=FALSE}
 tab_pred %>%
   summarise(
     `Media predicha (ponderada)` = round(weighted.mean(Predicción, wk2), 4),
@@ -1033,7 +1095,15 @@ tab_pred %>% tabla_fmt()
 
 ```
 
-```{r tab-calibracion-logit-zona, tab.cap="Verificación de calibración del modelo logístico con zona: media ponderada predicha versus observada por zona"}
+```{r eval=FALSE}
+tab_pred %>%
+  group_by(Zona) %>%
+  summarise(
+    `Media predicha (ponderada)`  = round(weighted.mean(Predicción, wk2), 4),
+    `Media observada (ponderada)` = round(weighted.mean(Pobreza, wk2), 4)
+  )
+```
+```{r tab-calibracion-logit-zona, tab.cap="Verificación de calibración del modelo logístico con zona: media ponderada predicha versus observada por zona", echo=FALSE}
 tab_pred %>%
   group_by(Zona) %>%
   summarise(

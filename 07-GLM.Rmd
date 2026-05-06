@@ -273,7 +273,13 @@ tab %>%
 
 Las proporciones por columna se obtienen con `prop.table()`, como se presenta en la Tabla \@ref(tab:tab-proporciones-pobreza):
 
-```{r tab-proporciones-pobreza, tab.cap="Proporciones por sexo según condición de pobreza"}
+```{r eval=FALSE}
+prop.table(tab, margin = 2) %>%
+  as.data.frame.matrix() %>%
+  rownames_to_column("Estado") %>%
+  mutate(Estado = paste0("Pobreza", Estado))
+```
+```{r tab-proporciones-pobreza, tab.cap="Proporciones por sexo según condición de pobreza", echo=FALSE}
 prop.table(tab, margin = 2) %>%
   as.data.frame.matrix() %>%
   rownames_to_column("Estado") %>%
@@ -504,7 +510,14 @@ tidy_regterm <- function(modelo, termino, nombre){
 }
 ```
 
-```{r tab-wald-logistica, tab.cap="Estadístico de Wald por variable en el modelo logístico base"}
+```{r eval=FALSE}
+bind_rows(
+  tidy_regterm(mod_loglin, ~Sex,    "Sex"),
+  tidy_regterm(mod_loglin, ~Zone,   "Zone"),
+  tidy_regterm(mod_loglin, ~Region, "Region"))
+
+```
+```{r tab-wald-logistica, tab.cap="Estadístico de Wald por variable en el modelo logístico base", echo=FALSE}
 bind_rows(
   tidy_regterm(mod_loglin, ~Sex,    "Sex"),
   tidy_regterm(mod_loglin, ~Zone,   "Zone"),
@@ -684,7 +697,14 @@ alpha   <- MASS::gamma.dispersion(modelo_gamma)
 mod_s   <- summary(modelo_gamma, dispersion = alpha)
 ```
 
-```{r tab-gamma-dispersion, tab.cap="Parámetro de dispersión del modelo Gamma"}
+```{r eval=FALSE}
+data.frame(
+  Estadístico = c("Dispersión (alpha)", "Dispersión del modelo"),
+  Valor       = c(round(alpha, 4), round(mod_s$dispersion, 4))
+)
+
+```
+```{r tab-gamma-dispersion, tab.cap="Parámetro de dispersión del modelo Gamma", echo=FALSE}
 data.frame(
   Estadístico = c("Dispersión (alpha)", "Dispersión del modelo"),
   Valor       = c(round(alpha, 4), round(mod_s$dispersion, 4))
@@ -703,7 +723,11 @@ pred_gamma$Income <- encuesta$Income
 pred_gamma$Age    <- encuesta$Age
 ```
 
-```{r tab-gamma-predicciones, tab.cap="Predicciones e intervalos de confianza del modelo Gamma (primeras 6 observaciones)"}
+```{r eval=FALSE}
+pred_gamma %>% slice(1:6L)
+
+```
+```{r tab-gamma-predicciones, tab.cap="Predicciones e intervalos de confianza del modelo Gamma (primeras 6 observaciones)", echo=FALSE}
 pred_gamma %>% slice(1:6L) %>% tabla_fmt()
 
 ```
@@ -923,7 +947,13 @@ diseno_15$variables %<>%
   mutate(prediccion = predict(model_mul2))
 ```
 
-```{r tab-multinomial-comparacion, tab.cap="Proporciones estimadas por estado de empleo según predicciones del modelo multinomial"}
+```{r eval=FALSE}
+diseno_15 %>%
+  group_by(Employment) %>%
+  summarise(Prop = survey_mean(vartype = c("se", "ci")))
+
+```
+```{r tab-multinomial-comparacion, tab.cap="Proporciones estimadas por estado de empleo según predicciones del modelo multinomial", echo=FALSE}
 diseno_15 %>%
   group_by(Employment) %>%
   summarise(Prop = survey_mean(vartype = c("se", "ci"))) %>%

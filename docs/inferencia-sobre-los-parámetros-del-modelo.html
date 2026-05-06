@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -554,8 +555,7 @@ var\left(\hat{E}\left(y_{i}\mid x_{obs,i}\right)\right)
 <p>Para calcular la varianza de la estimación se requiere la matriz de varianzas y covarianzas de los parámetros, presentada en la Tabla <a href="inferencia-sobre-los-parámetros-del-modelo.html#tab:tab-vcov-modelo">6.7</a>:</p>
 <div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="inferencia-sobre-los-parámetros-del-modelo.html#cb227-1" tabindex="-1"></a><span class="fu">vcov</span>(mod_svy) <span class="sc">%&gt;%</span></span>
 <span id="cb227-2"><a href="inferencia-sobre-los-parámetros-del-modelo.html#cb227-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb227-3"><a href="inferencia-sobre-los-parámetros-del-modelo.html#cb227-3" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">&quot;Parámetro&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb227-4"><a href="inferencia-sobre-los-parámetros-del-modelo.html#cb227-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb227-3"><a href="inferencia-sobre-los-parámetros-del-modelo.html#cb227-3" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">&quot;Parámetro&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-vcov-modelo">Cuadro 6.7: </span>Matriz de varianzas y covarianzas de los coeficientes del modelo</caption>
 <colgroup>
@@ -626,7 +626,7 @@ var\left(\hat{E}\left(y_{i}\mid x_{obs,i}\right)\right)
 <span id="cb228-4"><a href="inferencia-sobre-los-parámetros-del-modelo.html#cb228-4" tabindex="-1"></a>cov_beta <span class="ot">&lt;-</span> <span class="fu">vcov</span>(mod_svy) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
 <span id="cb228-5"><a href="inferencia-sobre-los-parámetros-del-modelo.html#cb228-5" tabindex="-1"></a></span>
 <span id="cb228-6"><a href="inferencia-sobre-los-parámetros-del-modelo.html#cb228-6" tabindex="-1"></a><span class="fu">as.numeric</span>(xobs <span class="sc">%*%</span> cov_beta <span class="sc">%*%</span> <span class="fu">t</span>(xobs))</span></code></pre></div>
-<pre><code>## [1] 1921</code></pre>
+<pre><code>## [1] 1920.837</code></pre>
 <p>El intervalo de confianza para la predicción se obtiene mediante:</p>
 <p><span class="math display">\[
 \boldsymbol{x}_{obs,i}\hat{\beta}\pm t_{\left(1-\frac{\alpha}{2},n-p\right)}\sqrt{var\left(\hat{E}\left(y_{i}\mid\boldsymbol{x}_{obs,i}\right)\right)}
@@ -664,19 +664,19 @@ var\left(\hat{E}\left(y_{i}\mid\boldsymbol{x}_{obs,i}\right)\right)=\boldsymbol{
 <p>La varianza asociada a esta predicción se calcula como:</p>
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="inferencia-sobre-los-parámetros-del-modelo.html#cb233-1" tabindex="-1"></a>x_noObs <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1600</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">40</span><span class="sc">^</span><span class="dv">2</span>),<span class="at">nrow =</span> <span class="dv">1</span>)</span>
 <span id="cb233-2"><a href="inferencia-sobre-los-parámetros-del-modelo.html#cb233-2" tabindex="-1"></a><span class="fu">as.numeric</span>(<span class="fu">sqrt</span>(x_noObs<span class="sc">%*%</span>cov_beta<span class="sc">%*%</span><span class="fu">t</span>(x_noObs)))</span></code></pre></div>
-<pre><code>## [1] 244.6</code></pre>
+<pre><code>## [1] 244.6294</code></pre>
 <p>El intervalo de confianza correspondiente sigue la expresión:</p>
 <p><span class="math display">\[
 \boldsymbol{x}_{obs,i}\hat{\beta}\pm t_{\left(1-\frac{\alpha}{2},n-p\right)}\sqrt{var\left(\hat{E}\left(y_{i}\mid\boldsymbol{x}_{obs,i}\right)\right)+\hat{\sigma}_{yx}^{2}}
 \]</span></p>
 <p>cuyo cálculo en R se realiza mediante:</p>
 <div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="inferencia-sobre-los-parámetros-del-modelo.html#cb235-1" tabindex="-1"></a><span class="fu">predict</span>(mod_svy, <span class="at">newdata =</span> datos_nuevos, <span class="at">type =</span>  <span class="st">&quot;link&quot;</span>)</span></code></pre></div>
-<pre><code>##   link  SE
-## 1 2122 245</code></pre>
+<pre><code>##     link     SE
+## 1 2121.8 244.63</code></pre>
 <p>y el intervalo:</p>
 <div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="inferencia-sobre-los-parámetros-del-modelo.html#cb237-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">predict</span>(mod_svy,<span class="at">newdata =</span> datos_nuevos))</span></code></pre></div>
-<pre><code>##   2.5 % 97.5 %
-## 1  1642   2601</code></pre>
+<pre><code>##      2.5 %   97.5 %
+## 1 1642.318 2601.247</code></pre>
 
 </div>
 </div>

@@ -95,7 +95,13 @@ donde $I(y_{hik}=d)$ es una variable binaria que toma el valor de 1 si la unidad
   
 En esta sección se presentan los procedimientos para estimar tamaños de población y subpoblaciones usando *R*, con el diseño muestral definido previamente. Por ejemplo, para estimar el tamaño de la población por zona, presentada en la Tabla \@ref(tab:tab-tamano-zona):
   
-```{r tab-tamano-zona, tab.cap="Tamaño poblacional estimado por zona geográfica"}
+```{r eval=FALSE}
+diseno %>% 
+     group_by(Zone) %>% 
+     summarise(n = unweighted(n()), 
+               Nd = survey_total(vartype = c("se","ci")))
+```
+```{r tab-tamano-zona, tab.cap="Tamaño poblacional estimado por zona geográfica", echo=FALSE}
 diseno %>% 
      group_by(Zone) %>% 
      summarise(n = unweighted(n()), 
@@ -112,7 +118,12 @@ diseno %>%
   
 De manera análoga, es posible estimar el número de personas en cada nivel de pobreza, presentada en la Tabla \@ref(tab:tab-tamano-pobreza):
   
-```{r tab-tamano-pobreza, tab.cap="Tamaño poblacional estimado por condición de pobreza"}
+```{r eval=FALSE}
+diseno %>% 
+  group_by(Poverty) %>% 
+  summarise(Nd = survey_total(vartype = c("se","ci")))
+```
+```{r tab-tamano-pobreza, tab.cap="Tamaño poblacional estimado por condición de pobreza", echo=FALSE}
 diseno %>% 
   group_by(Poverty) %>% 
   summarise(Nd = survey_total(vartype = c("se","ci"))) %>%
@@ -123,7 +134,13 @@ diseno %>%
   
 Otra variable categórica relevante en encuestas de hogares es el estado de ocupación. A continuación se presenta el código correspondiente, presentada en la Tabla \@ref(tab:tab-tamano-empleo):
   
-```{r tab-tamano-empleo, tab.cap="Tamaño poblacional estimado por estado de ocupación"}
+```{r eval=FALSE}
+diseno %>% 
+  filter(!is.na(Employment)) %>%
+  group_by(Employment) %>% 
+  summarise( Nd = survey_total(vartype = c("se","ci")))
+```
+```{r tab-tamano-empleo, tab.cap="Tamaño poblacional estimado por estado de ocupación", echo=FALSE}
 diseno %>% 
   filter(!is.na(Employment)) %>%
   group_by(Employment) %>% 
@@ -135,7 +152,14 @@ De los resultados de la estimación se puede concluir que, 4,634.8 personas est�
   
 Finalmente, utilizando `group_by` es posible desagregar las estimaciones en niveles más detallados. Por ejemplo, estado ocupacional por nivel de pobreza, presentada en la Tabla \@ref(tab:tab-tamano-empleo-pobreza):
   
-```{r tab-tamano-empleo-pobreza, echo=TRUE, tab.cap="Tamaño poblacional estimado por estado de ocupación y condición de pobreza"}
+```{r eval=FALSE}
+diseno %>% 
+  filter(!is.na(Employment)) %>%
+  group_by(Employment, Poverty) %>% 
+  cascade( Nd = survey_total(vartype =c("se","ci")), 
+           .fill = "Total")
+```
+```{r tab-tamano-empleo-pobreza, echo=TRUE, tab.cap="Tamaño poblacional estimado por estado de ocupación y condición de pobreza", echo=FALSE}
 diseno %>% 
   filter(!is.na(Employment)) %>%
   group_by(Employment, Poverty) %>% 
@@ -169,7 +193,13 @@ En esta sección se muestra cómo estimar proporciones poblacionales utilizando 
 
 A continuación se ilustra cómo obtener la proporción de personas por zona usando el diseño muestral previamente definido, presentada en la Tabla \@ref(tab:tab-prop-zona):
 
-```{r tab-prop-zona, tab.cap="Proporción de personas por zona geográfica"}
+```{r eval=FALSE}
+diseno %>% 
+  group_by(Zone) %>% 
+  summarise(prop = survey_mean(vartype = c("se","ci"), 
+                               proportion = TRUE))
+```
+```{r tab-prop-zona, tab.cap="Proporción de personas por zona geográfica", echo=FALSE}
 diseno %>% 
   group_by(Zone) %>% 
   summarise(prop = survey_mean(vartype = c("se","ci"), 
@@ -182,7 +212,12 @@ En este ejemplo, la función `survey_mean()` calcula la estimación de la propor
 
 La librería `survey` también cuenta con la función `survey_prop()`, diseñada específicamente para estimar proporciones, generando resultados equivalentes, así, presentada en la Tabla \@ref(tab:tab-prop-zona2):
 
-```{r tab-prop-zona2, tab.cap="Proporción de personas por zona geográfica (función survey_prop)"}
+```{r eval=FALSE}
+diseno %>% 
+  group_by(Zone) %>% 
+  summarise(prop = survey_prop(vartype = c("se","ci")))
+```
+```{r tab-prop-zona2, tab.cap="Proporción de personas por zona geográfica (función survey_prop)", echo=FALSE}
 diseno %>% 
   group_by(Zone) %>% 
   summarise(prop = survey_prop(vartype = c("se","ci"))) %>%
@@ -193,7 +228,12 @@ El lector puede elegir la función que le resulte más cómoda, ya que ambas per
 
 Si el interés ahora se centra en estimar subpoblaciones por ejemplo, proporción de hombres y mujeres que viven en la zona urbana, el código computacional es, presentada en la Tabla \@ref(tab:tab-prop-sexo-urbano):
 
-```{r tab-prop-sexo-urbano, tab.cap="Proporción de hombres y mujeres en zona urbana"}
+```{r eval=FALSE}
+sub_Urbano %>% 
+  group_by(Sex) %>% 
+  summarise(prop = survey_prop(vartype = c("se","ci")))
+```
+```{r tab-prop-sexo-urbano, tab.cap="Proporción de hombres y mujeres en zona urbana", echo=FALSE}
 sub_Urbano %>% 
   group_by(Sex) %>% 
   summarise(prop = survey_prop(vartype = c("se","ci"))) %>%
@@ -205,7 +245,13 @@ Arrojando como resultado que en la zona urbana el 53.6% son mujeres y 46.4%  son
 De manera análoga se puede realizar el mismo ejercicio, pero ahora con la zona rural, como se muestra en la Tabla \@ref(tab:tab-prop-sexo-rural).
 
 
-```{r tab-prop-sexo-rural, tab.cap="Proporción de hombres y mujeres en zona rural"}
+```{r eval=FALSE}
+sub_Rural %>% 
+  group_by(Sex) %>% 
+  summarise(n    = unweighted(n()),
+            prop = survey_prop(vartype = c("se","ci")))
+```
+```{r tab-prop-sexo-rural, tab.cap="Proporción de hombres y mujeres en zona rural", echo=FALSE}
 sub_Rural %>% 
   group_by(Sex) %>% 
   summarise(n    = unweighted(n()),
@@ -216,7 +262,12 @@ sub_Rural %>%
 Ahora bien, si nos centramos solo en la población de hombres en la base de datos y se desea estimar la proporción de hombres por zona, el código computacional es el siguiente, presentada en la Tabla \@ref(tab:tab-prop-zona-hombre): 
 
 
-```{r tab-prop-zona-hombre, tab.cap="Distribución por zona en la subpoblación masculina"}
+```{r eval=FALSE}
+sub_Hombre %>% 
+  group_by(Zone) %>% 
+  summarise(prop = survey_prop(vartype = c("se","ci")))
+```
+```{r tab-prop-zona-hombre, tab.cap="Distribución por zona en la subpoblación masculina", echo=FALSE}
 sub_Hombre %>% 
   group_by(Zone) %>% 
   summarise(prop = survey_prop(vartype = c("se","ci"))) %>%
@@ -227,7 +278,12 @@ Se puede observar que el 49% de los hombres están en la zona rural y el 51% en 
 
 Si se desea estimar por varios niveles de desagregación, al igual que en los capítulos anteriores, el uso de la función `group_by()` permite generar niveles de agregación al combinar dos o más variables. Por ejemplo, si se desea estimar la proporción de hombres por zona y en estado de pobreza, se realiza de la siguiente manera, presentada en la Tabla \@ref(tab:tab-prop-zona-pobreza-hombre):
 
-```{r tab-prop-zona-pobreza-hombre, tab.cap="Proporción de hombres por zona y condición de pobreza"}
+```{r eval=FALSE}
+sub_Hombre %>%
+  group_by(Zone, Poverty) %>% 
+  summarise(prop = survey_prop(vartype = c("se","ci")))
+```
+```{r tab-prop-zona-pobreza-hombre, tab.cap="Proporción de hombres por zona y condición de pobreza", echo=FALSE}
 sub_Hombre %>%
   group_by(Zone, Poverty) %>% 
   summarise(prop = survey_prop(vartype = c("se","ci"))) %>%
@@ -238,7 +294,13 @@ Se puede observar que, en la ruralidad, el 19,7% de los hombres están en pobrez
 
 Otro ejemplo podría ser estimar la proporción de hombres empleados o no por zona, que se realiza de la siguiente manera, presentada en la Tabla \@ref(tab:tab-prop-zona-empleo-hombre):
 
-```{r tab-prop-zona-empleo-hombre, tab.cap="Proporción de hombres por zona y estado de ocupación"}
+```{r eval=FALSE}
+sub_Hombre %>%
+    filter(!is.na(Employment)) %>%
+    group_by(Zone, Employment) %>% 
+    summarise(prop = survey_prop(vartype = c("se","ci")))
+```
+```{r tab-prop-zona-empleo-hombre, tab.cap="Proporción de hombres por zona y estado de ocupación", echo=FALSE}
 sub_Hombre %>%
     filter(!is.na(Employment)) %>%
     group_by(Zone, Employment) %>% 
@@ -250,7 +312,13 @@ Acá se puede observar que, el 7,6% de los hombres que viven en la ruralidad est
 
 De manera análoga se hace este mismo ejercicio para las mujeres, presentada en la Tabla \@ref(tab:tab-prop-zona-empleo-mujer):
 
-```{r tab-prop-zona-empleo-mujer, tab.cap="Proporción de mujeres por zona y estado de ocupación"}
+```{r eval=FALSE}
+sub_Mujer %>% 
+    filter(!is.na(Employment)) %>%
+    group_by(Zone, Employment) %>% 
+    summarise(prop = survey_prop(vartype = c("se","ci")))
+```
+```{r tab-prop-zona-empleo-mujer, tab.cap="Proporción de mujeres por zona y estado de ocupación", echo=FALSE}
 sub_Mujer %>% 
     filter(!is.na(Employment)) %>%
     group_by(Zone, Employment) %>% 
@@ -262,7 +330,12 @@ Para las mujeres se puede observar que, el 1,5% de las mujeres que viven en la r
 
 Otro parámetro que es de interés es estimar en encuestas de hogares la cantidad de personas menores y mayores de edad en los hogares. A continuación, se realiza un estimación de menores y mayores a 18 años cruzado por pobreza, presentada en la Tabla \@ref(tab:tab-prop-edad-pobreza):
 
-```{r tab-prop-edad-pobreza, echo=TRUE, tab.cap="Proporción por grupo de edad y condición de pobreza"}
+```{r eval=FALSE}
+diseno %>% 
+  group_by(edad_18, pobreza) %>% 
+  summarise(Prop = survey_prop(vartype =  c("se", "ci")))
+```
+```{r tab-prop-edad-pobreza, echo=TRUE, tab.cap="Proporción por grupo de edad y condición de pobreza", echo=FALSE}
 diseno %>% 
   group_by(edad_18, pobreza) %>% 
   summarise(Prop = survey_prop(vartype =  c("se", "ci"))) %>%
@@ -272,7 +345,13 @@ Se puede observar que, el 50% de los menores de edad y el 33% de los mayores de 
 
 Ahora, si se hace este mismo ejercicio, pero esta vez cruzando con la variable que indica empleo se obtiene, presentada en la Tabla \@ref(tab:tab-prop-edad-desempleo):
 
-```{r tab-prop-edad-desempleo, echo=TRUE, tab.cap="Proporción por grupo de edad y condición de desempleo"}
+```{r eval=FALSE}
+diseno %>% 
+  filter(!is.na(desempleo)) %>%
+  group_by(edad_18, desempleo) %>% 
+  summarise(Prop = survey_prop(vartype =  c("se", "ci")))
+```
+```{r tab-prop-edad-desempleo, echo=TRUE, tab.cap="Proporción por grupo de edad y condición de desempleo", echo=FALSE}
 diseno %>% 
   filter(!is.na(desempleo)) %>%
   group_by(edad_18, desempleo) %>% 
@@ -282,7 +361,12 @@ diseno %>%
 
 Como se observa, el 2% de los menores de edad y el 4% de los mayores de edad están desempleados. Por otro lado, si el objetivo ahora es estimar la proporción de menores de edad en la zona rural se realiza de la siguiente manera, presentada en la Tabla \@ref(tab:tab-prop-edad-rural):
 
-```{r tab-prop-edad-rural, tab.cap="Proporción por grupo de edad en zona rural"}
+```{r eval=FALSE}
+sub_Rural %>% 
+  group_by(edad_18) %>% 
+  summarise(Prop = survey_prop(vartype =  c("se", "ci")))
+```
+```{r tab-prop-edad-rural, tab.cap="Proporción por grupo de edad en zona rural", echo=FALSE}
 sub_Rural %>% 
   group_by(edad_18) %>% 
   summarise(Prop = survey_prop(vartype =  c("se", "ci"))) %>%
@@ -294,7 +378,16 @@ De la anterior tabla se puede observar que, el 37% de las personas que viven en 
 Como se mencionó al inicio del capítulo, es posible categorizar una variable de tipo cuantitativo como por ejemplo la edad y cruzarla con la variable que categoriza la empleabilidad. A continuación, se clasifica la edad de las mujeres en rangos de 18 a 35 años, y otra edad, como se muestra en la Tabla \@ref(tab:tab-prop-edad-rango-empleo-mujer).
 
 
-```{r tab-prop-edad-rango-empleo-mujer, tab.cap="Proporción de mujeres por rango de edad y estado de ocupación"}
+```{r eval=FALSE}
+sub_Mujer %>% 
+  filter(!is.na(Employment)) %>% 
+  mutate(edad_rango = case_when(
+                      Age>= 18 & Age <=35  ~ "18 - 35", 
+                      TRUE ~ "Otro")) %>%
+  group_by(edad_rango, Employment) %>% 
+  summarise(Prop = survey_prop(vartype =  c("se", "ci")))
+```
+```{r tab-prop-edad-rango-empleo-mujer, tab.cap="Proporción de mujeres por rango de edad y estado de ocupación", echo=FALSE}
 sub_Mujer %>% 
   filter(!is.na(Employment)) %>% 
   mutate(edad_rango = case_when(
@@ -444,7 +537,13 @@ dsg <- diseno %>%
                           labels = c("No pobre", "Pobre"))) 
 ```
 
-```{r tab-contingencia-pobreza-sexo, tab.cap="Proporción de hombres y mujeres en condición de pobreza y no pobreza"}
+```{r eval=FALSE}
+dsg %>%
+  group_by(pobreza,Sex) %>%
+  summarise(prop = survey_prop(vartype = c("se", "ci")))
+
+```
+```{r tab-contingencia-pobreza-sexo, tab.cap="Proporción de hombres y mujeres en condición de pobreza y no pobreza", echo=FALSE}
 dsg %>%
   group_by(pobreza,Sex) %>%
   summarise(prop = survey_prop(vartype = c("se", "ci"))) %>%
@@ -460,7 +559,11 @@ En la librería survey existe una alternativa para estimar tablas de contingenci
 tab_Sex_Pobr <- svyby(formula = ~Sex, by =  ~pobreza, design = dsg, FUN = svymean) 
 ```
 
-```{r tab-svyby-pobreza-sexo, tab.cap="Proporción de hombres y mujeres por condición de pobreza (svyby)"}
+```{r eval=FALSE}
+tab_Sex_Pobr
+
+```
+```{r tab-svyby-pobreza-sexo, tab.cap="Proporción de hombres y mujeres por condición de pobreza (svyby)", echo=FALSE}
 tab_Sex_Pobr %>%
   tabla_fmt()
 
@@ -470,7 +573,12 @@ Como se pudo observar, los argumentos que requiere la función son definir la va
 
 
 Para la estimación de los intervalos de confianza se utiliza la función `confint`, presentada en la Tabla \@ref(tab:tab-confint-sexo-pobreza):
-```{r tab-confint-sexo-pobreza, tab.cap="Intervalos de confianza para la proporción por sexo y pobreza"}
+```{r eval=FALSE}
+confint(tab_Sex_Pobr) %>% 
+  as.data.frame() %>%
+  rownames_to_column("Dominio")
+```
+```{r tab-confint-sexo-pobreza, tab.cap="Intervalos de confianza para la proporción por sexo y pobreza", echo=FALSE}
 confint(tab_Sex_Pobr) %>% 
   as.data.frame() %>%
   rownames_to_column("Dominio") %>%
@@ -485,14 +593,22 @@ tab_Sex_Ocupa <- svyby(formula = ~Sex, by = ~Employment,
                        design = diseno, FUN = svymean)
 ```
 
-```{r tab-svyby-empleo-sexo, tab.cap="Proporción de hombres y mujeres por estado de ocupación (svyby)"}
+```{r eval=FALSE}
+tab_Sex_Ocupa
+```
+```{r tab-svyby-empleo-sexo, tab.cap="Proporción de hombres y mujeres por estado de ocupación (svyby)", echo=FALSE}
 tab_Sex_Ocupa %>%
   tabla_fmt()
 ```
 
 De la anterior salida se puede observar que, el 27.2% de las mujeres y el 72.7% de los hombres están desempleados con errores estándares para estas estimaciones de 5.3% para mujeres y hombres. cuyos intervalos de confianza se calculan a continuación, presentada en la Tabla \@ref(tab:tab-confint-empleo-sexo):
 
-```{r tab-confint-empleo-sexo, tab.cap="Intervalos de confianza para la proporción por sexo y ocupación"}
+```{r eval=FALSE}
+confint(tab_Sex_Ocupa) %>% 
+  as.data.frame() %>%
+  rownames_to_column("Dominio")
+```
+```{r tab-confint-empleo-sexo, tab.cap="Intervalos de confianza para la proporción por sexo y ocupación", echo=FALSE}
 confint(tab_Sex_Ocupa) %>% 
   as.data.frame() %>%
   rownames_to_column("Dominio") %>%
@@ -503,7 +619,12 @@ confint(tab_Sex_Ocupa) %>%
 Si ahora el objetivo es estimar la pobreza, pero por las distintas regiones que se tienen en la base de datos. Primero, dado que la variable *pobreza* es de tipo numérica, es necesario convertirla en factor y luego realizar la estimación con la función `svyby`, como se muestra en la Tabla \@ref(tab:tab-svyby-region-pobreza).
 
 
-```{r tab-svyby-region-pobreza, tab.cap="Proporción en condición de pobreza por región"}
+```{r eval=FALSE}
+tab_region_pobreza <- svyby(formula = ~as.factor(pobreza),  by = ~Region,
+                            design =  diseno, FUN = svymean)
+tab_region_pobreza
+```
+```{r tab-svyby-region-pobreza, tab.cap="Proporción en condición de pobreza por región", echo=FALSE}
 tab_region_pobreza <- svyby(formula = ~as.factor(pobreza),  by = ~Region,
                             design =  diseno, FUN = svymean)
 tab_region_pobreza %>%
@@ -594,7 +715,11 @@ tab_Sex_Pobr <- svymean(x = ~interaction (Sex, pobreza), design = diseno,
                         se=T, na.rm=T, ci=T, keep.vars=T)
 ```
 
-```{r tab-interaccion-sexo-pobreza, echo=TRUE, tab.cap="Proporciones conjuntas de sexo y condición de pobreza"}
+```{r eval=FALSE}
+tab_Sex_Pobr %>% as.data.frame()
+
+```
+```{r tab-interaccion-sexo-pobreza, echo=TRUE, tab.cap="Proporciones conjuntas de sexo y condición de pobreza", echo=FALSE}
 tab_Sex_Pobr %>% as.data.frame() %>%
   tabla_fmt()
 
@@ -616,7 +741,13 @@ Según @heeringa2017applied, las estimaciones de las proporciones de las filas e
 
 A manera de ejemplo, se requiere estimar ahora, el contraste de proporciones de mujeres en estado de pobreza versus los hombres en esta misma condición  ($\hat{p}_F - \hat{p}_M$). Para ellos, primero, estimemos la proporción de hombres y mujeres en estado de pobreza como se ha mostrado en capítulos anteriores, presentada en la Tabla \@ref(tab:tab-svyby-pobreza-sexo2):
 
-```{r tab-svyby-pobreza-sexo2, tab.cap="Proporción en condición de pobreza por sexo"}
+```{r eval=FALSE}
+tab_sex_pobreza <- svyby(formula = ~pobreza, by = ~Sex,
+                         design = diseno, svymean, na.rm=T,
+                         covmat = TRUE, vartype = c("se", "ci"))
+tab_sex_pobreza
+```
+```{r tab-svyby-pobreza-sexo2, tab.cap="Proporción en condición de pobreza por sexo", echo=FALSE}
 tab_sex_pobreza <- svyby(formula = ~pobreza, by = ~Sex,
                          design = diseno, svymean, na.rm=T,
                          covmat = TRUE, vartype = c("se", "ci"))
@@ -634,7 +765,11 @@ Ahora bien, para calcular la estimación de la diferencia de proporciones junto 
 
 Con la función `vcov` se obtiene la matriz de covarianzas, presentada en la Tabla \@ref(tab:tab-vcov-sex-pobreza):
 
-```{r tab-vcov-sex-pobreza, tab.cap="Matriz de varianzas y covarianzas de la proporción de pobreza por sexo"}
+```{r eval=FALSE}
+vcov(tab_sex_pobreza) %>%
+  data.frame()
+```
+```{r tab-vcov-sex-pobreza, tab.cap="Matriz de varianzas y covarianzas de la proporción de pobreza por sexo", echo=FALSE}
 vcov(tab_sex_pobreza) %>%
   data.frame() %>%
   tabla_fmt(digits = 10)
@@ -659,7 +794,14 @@ De lo que se concluye que, la diferencia entre las proporciones de mujeres y hom
 
 Otro ejercicio de interés en un análisis de encuestas de hogares es verificar la diferencia del desempleo por sexo. Al igual que el ejemplo anterior, se inicia con la estimación del porcentaje de desempleados por sexo, presentada en la Tabla \@ref(tab:tab-svyby-desempleo-sexo):
 
-```{r tab-svyby-desempleo-sexo, tab.cap="Proporción en condición de desempleo por sexo"}
+```{r eval=FALSE}
+tab_sex_desempleo <- svyby(formula = ~desempleo, by = ~Sex,
+                           design  = diseno %>% filter(!is.na(desempleo)),
+                           FUN     = svymean, na.rm=T, covmat = TRUE,
+                           vartype = c("se", "ci"))
+tab_sex_desempleo
+```
+```{r tab-svyby-desempleo-sexo, tab.cap="Proporción en condición de desempleo por sexo", echo=FALSE}
 tab_sex_desempleo <- svyby(formula = ~desempleo, by = ~Sex,
                            design  = diseno %>% filter(!is.na(desempleo)),
                            FUN     = svymean, na.rm=T, covmat = TRUE,
@@ -677,7 +819,11 @@ Para calcular la estimación de la diferencia de proporciones junto con sus erro
 
 Estimación de la matriz de covarianza, presentada en la Tabla \@ref(tab:tab-vcov-sex-desempleo): 
 
-```{r tab-vcov-sex-desempleo, tab.cap="Matriz de varianzas y covarianzas de la proporción de desempleo por sexo"}
+```{r eval=FALSE}
+vcov(tab_sex_desempleo) %>%
+  data.frame()
+```
+```{r tab-vcov-sex-desempleo, tab.cap="Matriz de varianzas y covarianzas de la proporción de desempleo por sexo", echo=FALSE}
 vcov(tab_sex_desempleo) %>%
   data.frame() %>%
   tabla_fmt(digits = 10)
@@ -700,7 +846,14 @@ de lo que se concluye que, la estimación del contraste es 0.04 (4%) con un erro
 
 Otro ejercicio que se puede realizar en una encuesta de hogares es ahora estimar la proporción de desempleados por región. Para la realización de este ejercicio, se seguirán los pasos de los dos ejemplos anteriores, presentada en la Tabla \@ref(tab:tab-svyby-desempleo-region):
 
-```{r tab-svyby-desempleo-region, tab.cap="Proporción en condición de desempleo por región"}
+```{r eval=FALSE}
+tab_region_desempleo <- svyby(formula =  ~desempleo, by = ~Region,
+                              design  = diseno %>% filter(!is.na(desempleo)),
+                              FUN     = svymean, na.rm=T, covmat = TRUE,
+                              vartype = c("se", "ci"))
+tab_region_desempleo
+```
+```{r tab-svyby-desempleo-region, tab.cap="Proporción en condición de desempleo por región", echo=FALSE}
 tab_region_desempleo <- svyby(formula =  ~desempleo, by = ~Region,
                               design  = diseno %>% filter(!is.na(desempleo)),
                               FUN     = svymean, na.rm=T, covmat = TRUE,
@@ -753,7 +906,14 @@ svycontrast(tab_region_desempleo, list(
 
 Por último, repitiendo el contraste anterior y los pasos para resolverlo, pero ahora utilizando la variable pobreza se tiene, presentada en la Tabla \@ref(tab:tab-svyby-pobreza-region):
 
-```{r tab-svyby-pobreza-region, tab.cap="Proporción en condición de pobreza por región"}
+```{r eval=FALSE}
+tab_region_pobreza <- svyby(formula = ~pobreza, by = ~Region,
+                            design = diseno %>% filter(!is.na(desempleo)),
+                            FUN = svymean, na.rm=T, covmat = TRUE,
+                            vartype = c("se", "ci"))
+tab_region_pobreza
+```
+```{r tab-svyby-pobreza-region, tab.cap="Proporción en condición de pobreza por región", echo=FALSE}
 tab_region_pobreza <- svyby(formula = ~pobreza, by = ~Region,
                             design = diseno %>% filter(!is.na(desempleo)),
                             FUN = svymean, na.rm=T, covmat = TRUE,

@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -476,8 +477,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="sec-independencia.html#cb248-1" tabindex="-1"></a><span class="fu">prop.table</span>(tab, <span class="at">margin =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb248-2"><a href="sec-independencia.html#cb248-2" tabindex="-1"></a>  <span class="fu">as.data.frame.matrix</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb248-3"><a href="sec-independencia.html#cb248-3" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">&quot;Estado&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb248-4"><a href="sec-independencia.html#cb248-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Estado =</span> <span class="fu">paste0</span>(<span class="st">&quot;Pobreza&quot;</span>, Estado))  <span class="sc">%&gt;%</span></span>
-<span id="cb248-5"><a href="sec-independencia.html#cb248-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>(<span class="at">digits =</span> <span class="dv">4</span>)</span></code></pre></div>
+<span id="cb248-4"><a href="sec-independencia.html#cb248-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Estado =</span> <span class="fu">paste0</span>(<span class="st">&quot;Pobreza&quot;</span>, Estado))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-proporciones-pobreza">Cuadro 7.3: </span>Proporciones por sexo según condición de pobreza</caption>
 <thead>
@@ -561,7 +561,7 @@ F_{R\text{-}S, Pearson} = \chi_{R\text{-}S}^2 \big/ [(R-1)(C-1)] \sim F_{(R-1)(C
 ##  Pearson&#39;s X^2: Rao &amp; Scott adjustment
 ## 
 ## data:  NextMethod()
-## X-squared = 0.077, df = 1, p-value = 0.8</code></pre>
+## X-squared = 0.077194, df = 1, p-value = 0.8122</code></pre>
 <p>Con base en la estadística de Pearson, se concluye que el estado de pobreza y el sexo no están relacionados con una confianza del 95%. También se puede imprimir la prueba F.</p>
 <div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="sec-independencia.html#cb252-1" tabindex="-1"></a><span class="fu">summary</span>(tab, <span class="at">statistic =</span> <span class="st">&quot;F&quot;</span>) </span></code></pre></div>
 <pre><code>##            Sex
@@ -572,7 +572,7 @@ F_{R\text{-}S, Pearson} = \chi_{R\text{-}S}^2 \big/ [(R-1)(C-1)] \sim F_{(R-1)(C
 ##  Pearson&#39;s X^2: Rao &amp; Scott adjustment
 ## 
 ## data:  NextMethod()
-## F = 0.056, ndf = 1, ddf = 119, p-value = 0.8</code></pre>
+## F = 0.056464, ndf = 1, ddf = 119, p-value = 0.8126</code></pre>
 <p>Los resultados de la prueba F son similares a los obtenidos con la chi-cuadrado de Pearson.</p>
 </div>
 <div id="sec-wald" class="section level3 hasAnchor" number="7.3.2">
@@ -595,7 +595,7 @@ F_{wald} = Q_{wald} \times \frac{df - (R-1)(C-1) + 1}{(R-1)(C-1) \cdot df} \sim 
 ##  Design-based Wald test of association
 ## 
 ## data:  NextMethod()
-## F = 0.056, ndf = 1, ddf = 119, p-value = 0.8</code></pre>
+## F = 0.056213, ndf = 1, ddf = 119, p-value = 0.813</code></pre>
 <div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="sec-independencia.html#cb256-1" tabindex="-1"></a><span class="fu">summary</span>(tab, <span class="at">statistic =</span> <span class="st">&quot;adjWald&quot;</span>)</span></code></pre></div>
 <pre><code>##            Sex
 ## pobreza     Female  Male
@@ -605,7 +605,7 @@ F_{wald} = Q_{wald} \times \frac{df - (R-1)(C-1) + 1}{(R-1)(C-1) \cdot df} \sim 
 ##  Design-based Wald test of association
 ## 
 ## data:  NextMethod()
-## F = 0.056, ndf = 1, ddf = 119, p-value = 0.8</code></pre>
+## F = 0.056213, ndf = 1, ddf = 119, p-value = 0.813</code></pre>
 </div>
 </div>
 <h3>References</h3>

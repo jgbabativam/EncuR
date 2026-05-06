@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -427,8 +428,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="estimación-del-tamaño-poblacional.html#cb118-1" tabindex="-1"></a>diseno <span class="sc">%&gt;%</span> </span>
 <span id="cb118-2"><a href="estimación-del-tamaño-poblacional.html#cb118-2" tabindex="-1"></a>     <span class="fu">group_by</span>(Zone) <span class="sc">%&gt;%</span> </span>
 <span id="cb118-3"><a href="estimación-del-tamaño-poblacional.html#cb118-3" tabindex="-1"></a>     <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">unweighted</span>(<span class="fu">n</span>()), </span>
-<span id="cb118-4"><a href="estimación-del-tamaño-poblacional.html#cb118-4" tabindex="-1"></a>               <span class="at">Nd =</span> <span class="fu">survey_total</span>(<span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>,<span class="st">&quot;ci&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb118-5"><a href="estimación-del-tamaño-poblacional.html#cb118-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb118-4"><a href="estimación-del-tamaño-poblacional.html#cb118-4" tabindex="-1"></a>               <span class="at">Nd =</span> <span class="fu">survey_total</span>(<span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>,<span class="st">&quot;ci&quot;</span>)))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-tamano-zona">Cuadro 5.1: </span>Tamaño poblacional estimado por zona geográfica</caption>
 <thead>
@@ -469,8 +469,7 @@ div.csl-indent {
 <p>De manera análoga, es posible estimar el número de personas en cada nivel de pobreza, presentada en la Tabla <a href="estimación-del-tamaño-poblacional.html#tab:tab-tamano-pobreza">5.2</a>:</p>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="estimación-del-tamaño-poblacional.html#cb119-1" tabindex="-1"></a>diseno <span class="sc">%&gt;%</span> </span>
 <span id="cb119-2"><a href="estimación-del-tamaño-poblacional.html#cb119-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Poverty) <span class="sc">%&gt;%</span> </span>
-<span id="cb119-3"><a href="estimación-del-tamaño-poblacional.html#cb119-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Nd =</span> <span class="fu">survey_total</span>(<span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>,<span class="st">&quot;ci&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb119-4"><a href="estimación-del-tamaño-poblacional.html#cb119-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb119-3"><a href="estimación-del-tamaño-poblacional.html#cb119-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Nd =</span> <span class="fu">survey_total</span>(<span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>,<span class="st">&quot;ci&quot;</span>)))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-tamano-pobreza">Cuadro 5.2: </span>Tamaño poblacional estimado por condición de pobreza</caption>
 <thead>
@@ -511,8 +510,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="estimación-del-tamaño-poblacional.html#cb120-1" tabindex="-1"></a>diseno <span class="sc">%&gt;%</span> </span>
 <span id="cb120-2"><a href="estimación-del-tamaño-poblacional.html#cb120-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Employment)) <span class="sc">%&gt;%</span></span>
 <span id="cb120-3"><a href="estimación-del-tamaño-poblacional.html#cb120-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Employment) <span class="sc">%&gt;%</span> </span>
-<span id="cb120-4"><a href="estimación-del-tamaño-poblacional.html#cb120-4" tabindex="-1"></a>  <span class="fu">summarise</span>( <span class="at">Nd =</span> <span class="fu">survey_total</span>(<span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>,<span class="st">&quot;ci&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb120-5"><a href="estimación-del-tamaño-poblacional.html#cb120-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb120-4"><a href="estimación-del-tamaño-poblacional.html#cb120-4" tabindex="-1"></a>  <span class="fu">summarise</span>( <span class="at">Nd =</span> <span class="fu">survey_total</span>(<span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>,<span class="st">&quot;ci&quot;</span>)))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-tamano-empleo">Cuadro 5.3: </span>Tamaño poblacional estimado por estado de ocupación</caption>
 <thead>
@@ -554,8 +552,7 @@ div.csl-indent {
 <span id="cb121-2"><a href="estimación-del-tamaño-poblacional.html#cb121-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Employment)) <span class="sc">%&gt;%</span></span>
 <span id="cb121-3"><a href="estimación-del-tamaño-poblacional.html#cb121-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Employment, Poverty) <span class="sc">%&gt;%</span> </span>
 <span id="cb121-4"><a href="estimación-del-tamaño-poblacional.html#cb121-4" tabindex="-1"></a>  <span class="fu">cascade</span>( <span class="at">Nd =</span> <span class="fu">survey_total</span>(<span class="at">vartype =</span><span class="fu">c</span>(<span class="st">&quot;se&quot;</span>,<span class="st">&quot;ci&quot;</span>)), </span>
-<span id="cb121-5"><a href="estimación-del-tamaño-poblacional.html#cb121-5" tabindex="-1"></a>           <span class="at">.fill =</span> <span class="st">&quot;Total&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb121-6"><a href="estimación-del-tamaño-poblacional.html#cb121-6" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb121-5"><a href="estimación-del-tamaño-poblacional.html#cb121-5" tabindex="-1"></a>           <span class="at">.fill =</span> <span class="st">&quot;Total&quot;</span>)</span></code></pre></div>
 <table style="width:100%;">
 <caption><span id="tab:tab-tamano-empleo-pobreza">Cuadro 5.4: </span>Tamaño poblacional estimado por estado de ocupación y condición de pobreza</caption>
 <colgroup>

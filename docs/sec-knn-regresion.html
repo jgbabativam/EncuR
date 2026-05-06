@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -436,8 +437,7 @@ div.csl-indent {
 <span id="cb427-10"><a href="sec-knn-regresion.html#cb427-10" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(encuesta_obs, encuesta_no_obs)</span></code></pre></div>
 <p>La Tabla <a href="sec-knn-regresion.html#tab:tab-knn-reg-empleo-antes">9.29</a> y la Tabla <a href="sec-knn-regresion.html#tab:tab-knn-reg-empleo-despues">9.30</a> muestran la distribución de la variable empleo antes y después de la imputación:</p>
 <div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="sec-knn-regresion.html#cb428-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb428-2"><a href="sec-knn-regresion.html#cb428-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">&quot;Estado&quot;</span>, <span class="st">&quot;Proporción&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb428-3"><a href="sec-knn-regresion.html#cb428-3" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb428-2"><a href="sec-knn-regresion.html#cb428-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">&quot;Estado&quot;</span>, <span class="st">&quot;Proporción&quot;</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-knn-reg-empleo-antes">Cuadro 9.29: </span>Distribución de la variable empleo antes de la imputación KNN con regresión</caption>
 <thead>
@@ -466,8 +466,7 @@ div.csl-indent {
 </tbody>
 </table>
 <div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="sec-knn-regresion.html#cb429-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb429-2"><a href="sec-knn-regresion.html#cb429-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">&quot;Estado&quot;</span>, <span class="st">&quot;Proporción&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb429-3"><a href="sec-knn-regresion.html#cb429-3" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb429-2"><a href="sec-knn-regresion.html#cb429-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">&quot;Estado&quot;</span>, <span class="st">&quot;Proporción&quot;</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-knn-reg-empleo-despues">Cuadro 9.30: </span>Distribución de la variable empleo después de la imputación KNN con regresión</caption>
 <thead>
@@ -497,7 +496,7 @@ div.csl-indent {
 </table>
 <p>La Tabla <a href="sec-knn-regresion.html#tab:tab-knn-reg-zona-antes">9.31</a>, la Tabla <a href="sec-knn-regresion.html#tab:tab-knn-reg-zona-despues">9.32</a>, la Tabla <a href="sec-knn-regresion.html#tab:tab-knn-reg-sexo-antes">9.33</a> y la Tabla <a href="sec-knn-regresion.html#tab:tab-knn-reg-sexo-despues">9.34</a> verifican la preservación de las distribuciones marginales:</p>
 <div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="sec-knn-regresion.html#cb430-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Zone, encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb430-2"><a href="sec-knn-regresion.html#cb430-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>() <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb430-2"><a href="sec-knn-regresion.html#cb430-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-knn-reg-zona-antes">Cuadro 9.31: </span>Distribución conjunta de zona y empleo antes de la imputación KNN con regresión</caption>
 <thead>
@@ -546,7 +545,7 @@ div.csl-indent {
 </tbody>
 </table>
 <div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="sec-knn-regresion.html#cb431-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Zone, encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb431-2"><a href="sec-knn-regresion.html#cb431-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>() <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb431-2"><a href="sec-knn-regresion.html#cb431-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-knn-reg-zona-despues">Cuadro 9.32: </span>Distribución conjunta de zona y empleo después de la imputación KNN con regresión</caption>
 <thead>
@@ -595,7 +594,7 @@ div.csl-indent {
 </tbody>
 </table>
 <div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="sec-knn-regresion.html#cb432-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Sex, encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb432-2"><a href="sec-knn-regresion.html#cb432-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>() <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb432-2"><a href="sec-knn-regresion.html#cb432-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-knn-reg-sexo-antes">Cuadro 9.33: </span>Distribución conjunta de sexo y empleo antes de la imputación KNN con regresión</caption>
 <thead>
@@ -644,7 +643,7 @@ div.csl-indent {
 </tbody>
 </table>
 <div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="sec-knn-regresion.html#cb433-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Sex, encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb433-2"><a href="sec-knn-regresion.html#cb433-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>() <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb433-2"><a href="sec-knn-regresion.html#cb433-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-knn-reg-sexo-despues">Cuadro 9.34: </span>Distribución conjunta de sexo y empleo después de la imputación KNN con regresión</caption>
 <thead>
@@ -699,7 +698,7 @@ div.csl-indent {
 <span id="cb434-4"><a href="sec-knn-regresion.html#cb434-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
 <span id="cb434-5"><a href="sec-knn-regresion.html#cb434-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
 <span id="cb434-6"><a href="sec-knn-regresion.html#cb434-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
-<span id="cb434-7"><a href="sec-knn-regresion.html#cb434-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb434-7"><a href="sec-knn-regresion.html#cb434-7" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sesgo-knn-reg-global">Cuadro 9.35: </span>Comparación global entre ingreso original e imputado por KNN con regresión</caption>
 <thead>
@@ -726,7 +725,7 @@ div.csl-indent {
 <span id="cb435-5"><a href="sec-knn-regresion.html#cb435-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
 <span id="cb435-6"><a href="sec-knn-regresion.html#cb435-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
 <span id="cb435-7"><a href="sec-knn-regresion.html#cb435-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
-<span id="cb435-8"><a href="sec-knn-regresion.html#cb435-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb435-8"><a href="sec-knn-regresion.html#cb435-8" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sesgo-knn-reg-zona">Cuadro 9.36: </span>Comparación entre ingreso original e imputado por KNN con regresión, por zona</caption>
 <thead>
@@ -762,7 +761,7 @@ div.csl-indent {
 <span id="cb436-5"><a href="sec-knn-regresion.html#cb436-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
 <span id="cb436-6"><a href="sec-knn-regresion.html#cb436-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
 <span id="cb436-7"><a href="sec-knn-regresion.html#cb436-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
-<span id="cb436-8"><a href="sec-knn-regresion.html#cb436-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb436-8"><a href="sec-knn-regresion.html#cb436-8" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sesgo-knn-reg-sexo">Cuadro 9.37: </span>Comparación entre ingreso original e imputado por KNN con regresión, por sexo</caption>
 <thead>

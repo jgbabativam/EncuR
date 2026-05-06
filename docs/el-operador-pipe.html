@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -473,8 +474,7 @@ div.csl-indent {
 <span id="cb43-2"><a href="el-operador-pipe.html#cb43-2" tabindex="-1"></a>            <span class="fu">select</span>(<span class="sc">-</span>id_hogar, <span class="sc">-</span>id_pers)</span></code></pre></div>
 <p>Por otro lado, si el objetivo ahora en análisis de las encuestas de hogares es ordenar las filas de la base por alguna variable en particular, se utiliza en <code>R</code> la función <code>arrange()</code> para realizar esta operación. A continuación, la Tabla <a href="el-operador-pipe.html#tab:tab-arrange-ingreso">3.1</a> ejemplifica el uso de <code>arrange()</code> con la base de datos, ordenando de forma descendente por la variable <em>ingcorte</em>:</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="el-operador-pipe.html#cb44-1" tabindex="-1"></a>datadog <span class="ot">&lt;-</span> datablue <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>ingcorte)</span>
-<span id="cb44-2"><a href="el-operador-pipe.html#cb44-2" tabindex="-1"></a>datadog <span class="sc">%&gt;%</span> <span class="fu">head</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb44-3"><a href="el-operador-pipe.html#cb44-3" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb44-2"><a href="el-operador-pipe.html#cb44-2" tabindex="-1"></a>datadog <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-arrange-ingreso">Cuadro 3.1: </span>Base de datos ordenada de forma descendente por ingreso</caption>
 <thead>
@@ -525,8 +525,7 @@ div.csl-indent {
 </tbody>
 </table>
 <p>Es posible utilizar la función <code>arrange()</code> para hacer ordenamientos más complicados. Por ejemplo, ordenar por más de una variable. A modo de ejemplo, la Tabla <a href="el-operador-pipe.html#tab:tab-arrange-sexo-edad">3.2</a> muestra la base de datos <em>datablue</em> ordenada por las variables <em>sexo</em> y <em>edad</em>:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="el-operador-pipe.html#cb45-1" tabindex="-1"></a>datablue <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(sexo, edad) <span class="sc">%&gt;%</span> <span class="fu">head</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb45-2"><a href="el-operador-pipe.html#cb45-2" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="el-operador-pipe.html#cb45-1" tabindex="-1"></a>datablue <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(sexo, edad) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-arrange-sexo-edad">Cuadro 3.2: </span>Base de datos ordenada por sexo y edad</caption>
 <thead>
@@ -577,8 +576,7 @@ div.csl-indent {
 </tbody>
 </table>
 <p>También es posible utilizar la función <code>arrange()</code> junto con la opción <code>desc()</code> para que el ordenamiento sea descendente, como se ilustra en la Tabla <a href="el-operador-pipe.html#tab:tab-arrange-edad-desc">3.3</a>.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="el-operador-pipe.html#cb46-1" tabindex="-1"></a>datablue <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(edad)) <span class="sc">%&gt;%</span> <span class="fu">head</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb46-2"><a href="el-operador-pipe.html#cb46-2" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="el-operador-pipe.html#cb46-1" tabindex="-1"></a>datablue <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(edad)) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-arrange-edad-desc">Cuadro 3.3: </span>Base de datos ordenada de forma descendente por edad</caption>
 <thead>

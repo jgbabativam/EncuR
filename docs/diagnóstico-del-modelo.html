@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -466,7 +467,7 @@ R_{adj}^{2} = 1 - \frac{(n-1)}{(n-p)} \,(1 - R_{\omega}^{2}),
 <div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="diagnóstico-del-modelo.html#cb208-1" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> WSSE <span class="sc">/</span> WSST</span>
 <span id="cb208-2"><a href="diagnóstico-del-modelo.html#cb208-2" tabindex="-1"></a>R2</span></code></pre></div>
 <pre><code>##      variance    SE
-## [1,]    0.509 19005</code></pre>
+## [1,]  0.50942 19005</code></pre>
 <p>Para estimar el <span class="math inline">\(R_{adj}^{2}\)</span>, se requiere redefinir el diseño muestral incorporando los pesos <em>q-weighted</em> <span class="citation">(<a href="#ref-pfeffermann2011modelling">Pfeffermann, 2011</a>)</span>. El procedimiento es el siguiente:</p>
 <ol style="list-style-type: decimal">
 <li>Ajustar un modelo de regresión a los pesos finales de la encuesta utilizando las variables predictoras del modelo de interés:</li>
@@ -705,8 +706,7 @@ Figura 6.8: Distancia de Cook para cada observación de la muestra
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="diagnóstico-del-modelo.html#cb221-1" tabindex="-1"></a>d_dfbetas <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="fu">t</span>(<span class="fu">svydfbetas</span>(mod_svy)<span class="sc">$</span>Dfbetas))</span>
 <span id="cb221-2"><a href="diagnóstico-del-modelo.html#cb221-2" tabindex="-1"></a><span class="fu">colnames</span>(d_dfbetas) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Beta_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
 <span id="cb221-3"><a href="diagnóstico-del-modelo.html#cb221-3" tabindex="-1"></a>d_dfbetas <span class="sc">%&gt;%</span></span>
-<span id="cb221-4"><a href="diagnóstico-del-modelo.html#cb221-4" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L) <span class="sc">%&gt;%</span></span>
-<span id="cb221-5"><a href="diagnóstico-del-modelo.html#cb221-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb221-4"><a href="diagnóstico-del-modelo.html#cb221-4" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-dfbetas-primeros">Cuadro 6.3: </span>Valores DfBetas para las primeras diez observaciones de la muestra</caption>
 <thead>
@@ -802,8 +802,7 @@ Figura 6.8: Distancia de Cook para cada observación de la muestra
 <span id="cb222-8"><a href="diagnóstico-del-modelo.html#cb222-8" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(value))) <span class="sc">%&gt;%</span></span>
 <span id="cb222-9"><a href="diagnóstico-del-modelo.html#cb222-9" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L)</span>
 <span id="cb222-10"><a href="diagnóstico-del-modelo.html#cb222-10" tabindex="-1"></a></span>
-<span id="cb222-11"><a href="diagnóstico-del-modelo.html#cb222-11" tabindex="-1"></a>tex_label <span class="sc">%&gt;%</span></span>
-<span id="cb222-12"><a href="diagnóstico-del-modelo.html#cb222-12" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb222-11"><a href="diagnóstico-del-modelo.html#cb222-11" tabindex="-1"></a>tex_label</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-dfbetas-influyentes">Cuadro 6.4: </span>Las diez observaciones más influyentes según el criterio DfBetas</caption>
 <thead>

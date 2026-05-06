@@ -280,6 +280,7 @@ capítulo-4-análisis-de-variables-continuas
 capítulo-5-análisis-de-variables-categóricas
 capítulo-6-modelos-de-regresión
 capítulo-7-modelos-lineales-generalizados
+capítulo-8-modelos-multinivel
 capítulo-9-procedimientos-de-imputación
 conceptos-básicos-en-encuestas-de-hogares
 universo-de-estudio-y-población-objetivo

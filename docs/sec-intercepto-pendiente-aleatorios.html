@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -432,7 +433,7 @@ Ingreso_{ij} = \beta_{0j} + \beta_{1j} Gasto_{ij} + \epsilon_{ij}
 ##     Adjusted ICC: 0.702
 ##   Unadjusted ICC: 0.465</code></pre>
 <p>Los coeficientes del modelo por estrato se presentan en la Tabla <a href="sec-intercepto-pendiente-aleatorios.html#tab:tab-coef-pendiente-aleatoria">8.7</a>:</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb320-1" tabindex="-1"></a><span class="fu">coef</span>(mod_Pen_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L) <span class="sc">%&gt;%</span> <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb320-1" tabindex="-1"></a><span class="fu">coef</span>(mod_Pen_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-coef-pendiente-aleatoria">Cuadro 8.7: </span>Coeficientes del modelo con intercepto y pendiente aleatoria por estrato (primeros 10 estratos)</caption>
 <thead>
@@ -833,8 +834,7 @@ La Tabla <a href="sec-intercepto-pendiente-aleatorios.html#tab:tab-b0-calculado"
 <span id="cb331-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb331-4" tabindex="-1"></a>                <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span> <span class="sc">+</span> mu.y <span class="sc">*</span> mu.x <span class="sc">+</span> ZoneUrban,</span>
 <span id="cb331-5"><a href="sec-intercepto-pendiente-aleatorios.html#cb331-5" tabindex="-1"></a>                <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span> <span class="sc">+</span> mu.y <span class="sc">*</span> mu.x)</span>
 <span id="cb331-6"><a href="sec-intercepto-pendiente-aleatorios.html#cb331-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb331-7"><a href="sec-intercepto-pendiente-aleatorios.html#cb331-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Stratum, Zone, B0, Expenditure) <span class="sc">%&gt;%</span></span>
-<span id="cb331-8"><a href="sec-intercepto-pendiente-aleatorios.html#cb331-8" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb331-7"><a href="sec-intercepto-pendiente-aleatorios.html#cb331-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Stratum, Zone, B0, Expenditure)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-b0-calculado">Cuadro 8.12: </span>Intercepto efectivo por estrato y zona en el modelo con gasto medio contextual</caption>
 <thead>

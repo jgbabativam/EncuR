@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -422,18 +423,15 @@ div.csl-indent {
 <span id="cb1-6"><a href="práctica-en-r.html#cb1-6" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code></pre></div>
 <p>El paquete <code>TeachingSampling</code> permite extraer muestras probabilísticas bajo los diseños de muestreo más comunes. Por su parte, <code>survey</code> y <code>srvyr</code> facilitan la definición y el análisis de diseños muestrales complejos, mientras que del entorno <code>tidyverse</code>, así como los paquetes <code>janitor</code> y <code>patchwork</code> se emplean para la manipulación, transformación y visualización eficiente de los datos.</p>
 <p>Para el ejemplo se emplean los datos <em>BigCity</em>, descritos en la sección <a href="sec-motivacion.html#sec-motivacion">2.5</a>. Una vez cargadas las librerías, se agrupan las observaciones por unidad primaria de muestreo (UPM) y estrato, obteniendo los totales de personas, ingresos y gastos, presentados en la Tabla <a href="práctica-en-r.html#tab:tab-BigCity">2.1</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="práctica-en-r.html#cb2-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;BigCity&quot;</span>)</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="práctica-en-r.html#cb2-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&#39;BigCity&#39;</span>)</span>
 <span id="cb2-2"><a href="práctica-en-r.html#cb2-2" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="práctica-en-r.html#cb2-3" tabindex="-1"></a>FrameI <span class="ot">&lt;-</span> BigCity <span class="sc">%&gt;%</span></span>
-<span id="cb2-4"><a href="práctica-en-r.html#cb2-4" tabindex="-1"></a>  <span class="fu">group_by</span>(PSU) <span class="sc">%&gt;%</span></span>
-<span id="cb2-5"><a href="práctica-en-r.html#cb2-5" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb2-6"><a href="práctica-en-r.html#cb2-6" tabindex="-1"></a>    <span class="at">Stratum =</span> <span class="fu">unique</span>(Stratum),</span>
-<span id="cb2-7"><a href="práctica-en-r.html#cb2-7" tabindex="-1"></a>    <span class="at">Persons =</span> <span class="fu">n</span>(),</span>
-<span id="cb2-8"><a href="práctica-en-r.html#cb2-8" tabindex="-1"></a>    <span class="at">Income =</span> <span class="fu">sum</span>(Income),</span>
-<span id="cb2-9"><a href="práctica-en-r.html#cb2-9" tabindex="-1"></a>    <span class="at">Expenditure =</span> <span class="fu">sum</span>(Expenditure)</span>
-<span id="cb2-10"><a href="práctica-en-r.html#cb2-10" tabindex="-1"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="práctica-en-r.html#cb3-1" tabindex="-1"></a><span class="fu">head</span>(FrameI, <span class="dv">8</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="práctica-en-r.html#cb3-2" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb2-3"><a href="práctica-en-r.html#cb2-3" tabindex="-1"></a>FrameI <span class="ot">&lt;-</span> BigCity <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="práctica-en-r.html#cb2-4" tabindex="-1"></a>          <span class="fu">group_by</span>(PSU) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="práctica-en-r.html#cb2-5" tabindex="-1"></a>          <span class="fu">summarise</span>(<span class="at">Stratum =</span> <span class="fu">unique</span>(Stratum),</span>
+<span id="cb2-6"><a href="práctica-en-r.html#cb2-6" tabindex="-1"></a>                    <span class="at">Persons =</span> <span class="fu">n</span>(),</span>
+<span id="cb2-7"><a href="práctica-en-r.html#cb2-7" tabindex="-1"></a>                    <span class="at">Income =</span> <span class="fu">sum</span>(Income),</span>
+<span id="cb2-8"><a href="práctica-en-r.html#cb2-8" tabindex="-1"></a>                    <span class="at">Expenditure =</span> <span class="fu">sum</span>(Expenditure))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="práctica-en-r.html#cb3-1" tabindex="-1"></a>  <span class="fu">head</span>(FrameI, <span class="dv">8</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-BigCity">Cuadro 2.1: </span>Total de personas, ingresos y gastos</caption>
 <thead>
@@ -505,18 +503,15 @@ div.csl-indent {
 </tbody>
 </table>
 <p>Paso seguido, se calculan los tamaños poblacionales por estrato (<span class="math inline">\(N_{Ih}\)</span>) y sus respectivos tamaños de muestra (<span class="math inline">\(n_{Ih}\)</span>), como se muestra en la Tabla <a href="práctica-en-r.html#tab:tab-sizes">2.2</a>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="práctica-en-r.html#cb4-1" tabindex="-1"></a>sizes <span class="ot">&lt;-</span> FrameI <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="práctica-en-r.html#cb4-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="práctica-en-r.html#cb4-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb4-4"><a href="práctica-en-r.html#cb4-4" tabindex="-1"></a>    <span class="at">NIh =</span> <span class="fu">n</span>(),</span>
-<span id="cb4-5"><a href="práctica-en-r.html#cb4-5" tabindex="-1"></a>    <span class="at">nIh =</span> <span class="dv">2</span>,</span>
-<span id="cb4-6"><a href="práctica-en-r.html#cb4-6" tabindex="-1"></a>    <span class="at">dI =</span> NIh <span class="sc">/</span> nIh</span>
-<span id="cb4-7"><a href="práctica-en-r.html#cb4-7" tabindex="-1"></a>  )</span>
-<span id="cb4-8"><a href="práctica-en-r.html#cb4-8" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="práctica-en-r.html#cb4-9" tabindex="-1"></a>NIh <span class="ot">&lt;-</span> sizes<span class="sc">$</span>NIh</span>
-<span id="cb4-10"><a href="práctica-en-r.html#cb4-10" tabindex="-1"></a>nIh <span class="ot">&lt;-</span> sizes<span class="sc">$</span>nIh</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="práctica-en-r.html#cb5-1" tabindex="-1"></a><span class="fu">head</span>(sizes, <span class="dv">8</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="práctica-en-r.html#cb5-2" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="práctica-en-r.html#cb4-1" tabindex="-1"></a>sizes <span class="ot">&lt;-</span> FrameI <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="práctica-en-r.html#cb4-2" tabindex="-1"></a>         <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="práctica-en-r.html#cb4-3" tabindex="-1"></a>         <span class="fu">summarise</span>(<span class="at">NIh =</span> <span class="fu">n</span>(),</span>
+<span id="cb4-4"><a href="práctica-en-r.html#cb4-4" tabindex="-1"></a>                   <span class="at">nIh =</span> <span class="dv">2</span>,</span>
+<span id="cb4-5"><a href="práctica-en-r.html#cb4-5" tabindex="-1"></a>                   <span class="at">dI =</span> NIh<span class="sc">/</span>nIh)</span>
+<span id="cb4-6"><a href="práctica-en-r.html#cb4-6" tabindex="-1"></a>        </span>
+<span id="cb4-7"><a href="práctica-en-r.html#cb4-7" tabindex="-1"></a>NIh <span class="ot">&lt;-</span> sizes<span class="sc">$</span>NIh</span>
+<span id="cb4-8"><a href="práctica-en-r.html#cb4-8" tabindex="-1"></a>nIh <span class="ot">&lt;-</span> sizes<span class="sc">$</span>nIh</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="práctica-en-r.html#cb5-1" tabindex="-1"></a><span class="fu">head</span>(sizes, <span class="dv">8</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sizes">Cuadro 2.2: </span>Tamaños de muestra y factores de expansión por estrato</caption>
 <thead>
@@ -584,14 +579,11 @@ div.csl-indent {
 <span id="cb6-3"><a href="práctica-en-r.html#cb6-3" tabindex="-1"></a>UI <span class="ot">&lt;-</span> <span class="fu">levels</span>(<span class="fu">as.factor</span>(FrameI<span class="sc">$</span>PSU))</span>
 <span id="cb6-4"><a href="práctica-en-r.html#cb6-4" tabindex="-1"></a>sampleI <span class="ot">&lt;-</span> UI[samI]</span></code></pre></div>
 <p>Con la función <code>left_join</code> se vinculan las UPM seleccionadas con la información del marco de muestreo.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="práctica-en-r.html#cb7-1" tabindex="-1"></a>FrameII <span class="ot">&lt;-</span> <span class="fu">left_join</span>(</span>
-<span id="cb7-2"><a href="práctica-en-r.html#cb7-2" tabindex="-1"></a>  sizes,</span>
-<span id="cb7-3"><a href="práctica-en-r.html#cb7-3" tabindex="-1"></a>  BigCity[<span class="fu">which</span>(BigCity<span class="sc">$</span>PSU <span class="sc">%in%</span> sampleI), ]</span>
-<span id="cb7-4"><a href="práctica-en-r.html#cb7-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="práctica-en-r.html#cb7-1" tabindex="-1"></a>FrameII <span class="ot">&lt;-</span> <span class="fu">left_join</span>(sizes, </span>
+<span id="cb7-2"><a href="práctica-en-r.html#cb7-2" tabindex="-1"></a>           BigCity[<span class="fu">which</span>(BigCity<span class="sc">$</span>PSU <span class="sc">%in%</span> sampleI), ])</span></code></pre></div>
 <p>Una vez se tiene la base de datos con la muestra de UPMs, se procede a seleccionar aquellas variables que son de interés para el estudio, cuyas primeras observaciones se presentan en la Tabla <a href="práctica-en-r.html#tab:tab-frameII">2.3</a>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="práctica-en-r.html#cb8-1" tabindex="-1"></a><span class="fu">head</span>(FrameII, <span class="dv">8</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="práctica-en-r.html#cb8-2" tabindex="-1"></a>  <span class="fu">select</span>(Stratum<span class="sc">:</span>Zone) <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="práctica-en-r.html#cb8-3" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb8-2"><a href="práctica-en-r.html#cb8-2" tabindex="-1"></a>  <span class="fu">select</span>(Stratum<span class="sc">:</span>Zone)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-frameII">Cuadro 2.3: </span>Muestra de UPMs con información del marco de muestreo (primeras 8 filas)</caption>
 <thead>
@@ -690,10 +682,10 @@ div.csl-indent {
 </tbody>
 </table>
 <p>Luego de tener la información muestral de la primera etapa en la base FrameII se procede a calcular los tamaños de muestra dentro de cada UPM. En este caso, se tomará el 10% del tamaño de la UPM usando la función <code>ceiling</code> que aproxima al siguiente entero.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="práctica-en-r.html#cb9-1" tabindex="-1"></a>HHdb <span class="ot">&lt;-</span> FrameII <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="práctica-en-r.html#cb9-2" tabindex="-1"></a>  <span class="fu">group_by</span>(PSU) <span class="sc">%&gt;%</span></span>
-<span id="cb9-3"><a href="práctica-en-r.html#cb9-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Ni =</span> <span class="fu">n_distinct</span>(HHID))</span>
-<span id="cb9-4"><a href="práctica-en-r.html#cb9-4" tabindex="-1"></a></span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="práctica-en-r.html#cb9-1" tabindex="-1"></a>HHdb <span class="ot">&lt;-</span> FrameII <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="práctica-en-r.html#cb9-2" tabindex="-1"></a>        <span class="fu">group_by</span>(PSU) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="práctica-en-r.html#cb9-3" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">Ni =</span> <span class="fu">n_distinct</span>(HHID))</span>
+<span id="cb9-4"><a href="práctica-en-r.html#cb9-4" tabindex="-1"></a>        </span>
 <span id="cb9-5"><a href="práctica-en-r.html#cb9-5" tabindex="-1"></a>Ni <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(HHdb<span class="sc">$</span>Ni)</span>
 <span id="cb9-6"><a href="práctica-en-r.html#cb9-6" tabindex="-1"></a>ni <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(Ni <span class="sc">*</span> <span class="fl">0.1</span>)</span>
 <span id="cb9-7"><a href="práctica-en-r.html#cb9-7" tabindex="-1"></a><span class="fu">sum</span>(ni)</span></code></pre></div>
@@ -701,19 +693,16 @@ div.csl-indent {
 <p>Teniendo el vector de tamaños de muestra para cada UPM, se procede a realizar la selección mediante un diseño MAS con la función <code>S.SI</code> de la librería <code>TeachingSampling</code>. Se utilizará la función <code>map_dfr()</code> del paquete <code>purrr</code>, que permite aplicar la misma operación a cada UPM de forma eficiente, combinando automáticamente los resultados en un único conjunto de datos, como se presenta en la Tabla <a href="práctica-en-r.html#tab:tab-encuesta">2.4</a>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="práctica-en-r.html#cb11-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456</span>)</span>
 <span id="cb11-2"><a href="práctica-en-r.html#cb11-2" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(Ni), <span class="cf">function</span>(i) {</span>
-<span id="cb11-3"><a href="práctica-en-r.html#cb11-3" tabindex="-1"></a>  sam <span class="ot">&lt;-</span> <span class="fu">S.SI</span>(Ni[i], ni[i])</span>
-<span id="cb11-4"><a href="práctica-en-r.html#cb11-4" tabindex="-1"></a>  clusterII <span class="ot">&lt;-</span> FrameII <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PSU <span class="sc">==</span> HHdb<span class="sc">$</span>PSU[i])</span>
-<span id="cb11-5"><a href="práctica-en-r.html#cb11-5" tabindex="-1"></a>  clusterHH <span class="ot">&lt;-</span> clusterII <span class="sc">%&gt;%</span></span>
-<span id="cb11-6"><a href="práctica-en-r.html#cb11-6" tabindex="-1"></a>    <span class="fu">filter</span>(HHID <span class="sc">%in%</span> <span class="fu">unique</span>(clusterII<span class="sc">$</span>HHID)[sam]) <span class="sc">%&gt;%</span></span>
-<span id="cb11-7"><a href="práctica-en-r.html#cb11-7" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb11-8"><a href="práctica-en-r.html#cb11-8" tabindex="-1"></a>      <span class="at">dki =</span> Ni[i] <span class="sc">/</span> ni[i],</span>
-<span id="cb11-9"><a href="práctica-en-r.html#cb11-9" tabindex="-1"></a>      <span class="at">dk =</span> dI <span class="sc">*</span> dki</span>
-<span id="cb11-10"><a href="práctica-en-r.html#cb11-10" tabindex="-1"></a>    )</span>
-<span id="cb11-11"><a href="práctica-en-r.html#cb11-11" tabindex="-1"></a>  <span class="fu">return</span>(clusterHH)</span>
-<span id="cb11-12"><a href="práctica-en-r.html#cb11-12" tabindex="-1"></a>})</span></code></pre></div>
+<span id="cb11-3"><a href="práctica-en-r.html#cb11-3" tabindex="-1"></a>     sam <span class="ot">&lt;-</span> <span class="fu">S.SI</span>(Ni[i], ni[i])</span>
+<span id="cb11-4"><a href="práctica-en-r.html#cb11-4" tabindex="-1"></a>     clusterII <span class="ot">&lt;-</span> FrameII <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PSU <span class="sc">==</span> HHdb<span class="sc">$</span>PSU[i])</span>
+<span id="cb11-5"><a href="práctica-en-r.html#cb11-5" tabindex="-1"></a>     clusterHH <span class="ot">&lt;-</span> clusterII <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="práctica-en-r.html#cb11-6" tabindex="-1"></a>                  <span class="fu">filter</span>(HHID <span class="sc">%in%</span> <span class="fu">unique</span>(clusterII<span class="sc">$</span>HHID)[sam]) <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="práctica-en-r.html#cb11-7" tabindex="-1"></a>                  <span class="fu">mutate</span>(<span class="at">dki =</span> Ni[i] <span class="sc">/</span> ni[i],</span>
+<span id="cb11-8"><a href="práctica-en-r.html#cb11-8" tabindex="-1"></a>                         <span class="at">dk =</span> dI <span class="sc">*</span> dki)</span>
+<span id="cb11-9"><a href="práctica-en-r.html#cb11-9" tabindex="-1"></a>     <span class="fu">return</span>(clusterHH)</span>
+<span id="cb11-10"><a href="práctica-en-r.html#cb11-10" tabindex="-1"></a>})</span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="práctica-en-r.html#cb12-1" tabindex="-1"></a><span class="fu">head</span>(encuesta, <span class="dv">8</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="práctica-en-r.html#cb12-2" tabindex="-1"></a>  <span class="fu">select</span>(Stratum<span class="sc">:</span>Zone) <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="práctica-en-r.html#cb12-3" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb12-2"><a href="práctica-en-r.html#cb12-2" tabindex="-1"></a>  <span class="fu">select</span>(Stratum<span class="sc">:</span>Zone)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-encuesta">Cuadro 2.4: </span>Primeras observaciones de la muestra final seleccionada</caption>
 <thead>

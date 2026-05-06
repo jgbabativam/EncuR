@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -435,8 +436,7 @@ Ignorar esta estructura puede conducir a estimaciones sesgadas y errores estánd
 Con <code>dplyr</code>, es posible calcular totales y promedios de manera simple, sin considerar ponderaciones, como se muestra en la Tabla <a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#tab:tab-total-media-dplyr">3.10</a>:</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb54-1" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span></span>
 <span id="cb54-2"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb54-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_ing =</span> <span class="fu">sum</span>(ingcorte),</span>
-<span id="cb54-3"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb54-3" tabindex="-1"></a>            <span class="at">media_ing =</span> <span class="fu">mean</span>(ingcorte)) <span class="sc">%&gt;%</span></span>
-<span id="cb54-4"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb54-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb54-3"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb54-3" tabindex="-1"></a>            <span class="at">media_ing =</span> <span class="fu">mean</span>(ingcorte))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-total-media-dplyr">Cuadro 3.10: </span>Total e ingreso promedio sin considerar ponderación (dplyr)</caption>
 <thead>
@@ -456,8 +456,7 @@ Con <code>dplyr</code>, es posible calcular totales y promedios de manera simple
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb55-1" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span></span>
 <span id="cb55-2"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb55-2" tabindex="-1"></a>  <span class="fu">group_by</span>(area_ee) <span class="sc">%&gt;%</span></span>
 <span id="cb55-3"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb55-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb55-4"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb55-4" tabindex="-1"></a>            <span class="at">media =</span> <span class="fu">mean</span>(ingcorte)) <span class="sc">%&gt;%</span></span>
-<span id="cb55-5"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb55-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb55-4"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb55-4" tabindex="-1"></a>            <span class="at">media =</span> <span class="fu">mean</span>(ingcorte))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-media-area-dplyr">Cuadro 3.11: </span>Ingreso promedio por área geográfica sin diseño muestral (dplyr)</caption>
 <thead>
@@ -484,8 +483,7 @@ Con <code>dplyr</code>, es posible calcular totales y promedios de manera simple
 <p>Una vez definido el objeto de diseño <code>encu_dis</code>, que incorpora las unidades primarias de muestreo (<code>upm</code>), los estratos (<code>estrato</code>) y los factores de expansión (<code>fep</code>), los mismos cálculos se pueden realizar de manera casi idéntica, pero ahora los resultados tienen en cuenta el diseño muestral, como se presenta en la Tabla <a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#tab:tab-total-media-srvyr">3.12</a>:</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb56-1" tabindex="-1"></a>encu_dis <span class="sc">%&gt;%</span></span>
 <span id="cb56-2"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb56-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_ing =</span> <span class="fu">survey_total</span>(ingcorte, <span class="at">vartype =</span> <span class="st">&quot;ci&quot;</span>),</span>
-<span id="cb56-3"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb56-3" tabindex="-1"></a>            <span class="at">media_ing =</span> <span class="fu">survey_mean</span>(ingcorte, <span class="at">vartype =</span> <span class="st">&quot;ci&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb56-4"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb56-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb56-3"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb56-3" tabindex="-1"></a>            <span class="at">media_ing =</span> <span class="fu">survey_mean</span>(ingcorte, <span class="at">vartype =</span> <span class="st">&quot;ci&quot;</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-total-media-srvyr">Cuadro 3.12: </span>Total e ingreso promedio con diseño muestral (srvyr)</caption>
 <colgroup>
@@ -520,8 +518,7 @@ Con <code>dplyr</code>, es posible calcular totales y promedios de manera simple
 <p>De igual modo, la Tabla <a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#tab:tab-media-area-srvyr">3.13</a> presenta las medias por grupos considerando el diseño muestral:</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb57-1" tabindex="-1"></a>encu_dis <span class="sc">%&gt;%</span></span>
 <span id="cb57-2"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb57-2" tabindex="-1"></a>  <span class="fu">group_by</span>(area_ee) <span class="sc">%&gt;%</span></span>
-<span id="cb57-3"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb57-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">survey_mean</span>(ingcorte, <span class="at">vartype =</span> <span class="st">&quot;ci&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb57-4"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb57-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb57-3"><a href="diferencias-entre-el-análisis-tradicional-y-el-análisis-de-encuestas-complejas.html#cb57-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">survey_mean</span>(ingcorte, <span class="at">vartype =</span> <span class="st">&quot;ci&quot;</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-media-area-srvyr">Cuadro 3.13: </span>Ingreso promedio por área geográfica con diseño muestral (srvyr)</caption>
 <thead>

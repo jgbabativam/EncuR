@@ -65,11 +65,20 @@ res <- tab_antes %>% as.data.frame() %>%
   setNames(c("Estado de empleo", "Proporción")) 
 ```
 
-```{r tab-prop-empleo-antes, tab.cap="Distribución del estado de empleo antes de introducir valores faltantes"}
+```{r eval=FALSE}
+res
+```
+```{r tab-prop-empleo-antes, tab.cap="Distribución del estado de empleo antes de introducir valores faltantes", echo=FALSE}
 res |>  tabla_fmt()
 ```
 
-```{r tab-ingreso-medio-antes, tab.cap="Ingreso medio de la muestra antes de introducir valores faltantes"}
+```{r eval=FALSE}
+data.frame(
+  Estadístico = "Ingreso medio",
+  Valor       = round(mean(encuesta$Income, na.rm = TRUE), 1)
+)
+```
+```{r tab-ingreso-medio-antes, tab.cap="Ingreso medio de la muestra antes de introducir valores faltantes", echo=FALSE}
 data.frame(
   Estadístico = "Ingreso medio",
   Valor       = round(mean(encuesta$Income, na.rm = TRUE), 1)
@@ -265,7 +274,17 @@ encuesta <- full_join(
 
 La Tabla \@ref(tab:tab-porcentaje-faltantes) presenta el porcentaje de valores faltantes en la variable ingreso según zona y sexo:
 
-```{r tab-porcentaje-faltantes, tab.cap="Porcentaje de valores faltantes en la variable ingreso por zona y sexo"}
+```{r eval=FALSE}
+bind_rows(
+  encuesta %>% group_by(Dominio = Zone) %>%
+    summarise(Variable = "Zona",
+              `% faltante` = round(100 * mean(is.na(Income_missin)), 1)),
+  encuesta %>% group_by(Dominio = Sex) %>%
+    summarise(Variable = "Sexo",
+              `% faltante` = round(100 * mean(is.na(Income_missin)), 1))
+)
+```
+```{r tab-porcentaje-faltantes, tab.cap="Porcentaje de valores faltantes en la variable ingreso por zona y sexo", echo=FALSE}
 bind_rows(
   encuesta %>% group_by(Dominio = Zone) %>%
     summarise(Variable = "Zona",
@@ -289,7 +308,16 @@ encuesta %<>% dplyr::mutate(
 
 La Tabla \@ref(tab:tab-sesgo-media-inc) resume la media y la desviación estándar del ingreso original y del imputado, junto con el sesgo relativo:
 
-```{r tab-sesgo-media-inc, tab.cap="Comparación entre ingreso original e imputado por la media no condicional: media y desviación estándar"}
+```{r eval=FALSE}
+encuesta %>%
+  summarise(
+    `Media original`    = round(mean(Income), 1),
+    `Media imputada`    = round(mean(Income_imp), 1),
+    `DS original`       = round(sd(Income), 1),
+    `DS imputada`       = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-media-inc, tab.cap="Comparación entre ingreso original e imputado por la media no condicional: media y desviación estándar", echo=FALSE}
 encuesta %>%
   summarise(
     `Media original`    = round(mean(Income), 1),
@@ -348,7 +376,16 @@ encuesta %<>%
 
 La Tabla \@ref(tab:tab-sesgo-media-cond-global) compara la media y la desviación estándar globales. El sesgo relativo de la media es inferior al 1.5% y el de la desviación estándar es inferior al 5%:
 
-```{r tab-sesgo-media-cond-global, tab.cap="Comparación global entre ingreso original e imputado por la media condicional"}
+```{r eval=FALSE}
+encuesta %>%
+  summarise(
+    `Media original`  = round(mean(Income), 1),
+    `DS original`     = round(sd(Income), 1),
+    `Media imputada`  = round(mean(Income_imp), 1),
+    `DS imputada`     = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-media-cond-global, tab.cap="Comparación global entre ingreso original e imputado por la media condicional", echo=FALSE}
 encuesta %>%
   summarise(
     `Media original`  = round(mean(Income), 1),
@@ -360,7 +397,17 @@ encuesta %>%
 
 La Tabla \@ref(tab:tab-sesgo-media-cond-zona) presenta los resultados desagregados por zona. El sesgo relativo de la media es de 1.87% para la zona rural y de 0.8% para la urbana:
 
-```{r tab-sesgo-media-cond-zona, tab.cap="Comparación entre ingreso original e imputado por la media condicional, por zona"}
+```{r eval=FALSE}
+encuesta %>%
+  group_by(Zona = Zone) %>%
+  summarise(
+    `Media original`  = round(mean(Income), 1),
+    `DS original`     = round(sd(Income), 1),
+    `Media imputada`  = round(mean(Income_imp), 1),
+    `DS imputada`     = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-media-cond-zona, tab.cap="Comparación entre ingreso original e imputado por la media condicional, por zona", echo=FALSE}
 encuesta %>%
   group_by(Zona = Zone) %>%
   summarise(
@@ -373,7 +420,17 @@ encuesta %>%
 
 La Tabla \@ref(tab:tab-sesgo-media-cond-sexo) presenta el análisis por sexo:
 
-```{r tab-sesgo-media-cond-sexo, tab.cap="Comparación entre ingreso original e imputado por la media condicional, por sexo"}
+```{r eval=FALSE}
+encuesta %>%
+  group_by(Sexo = Sex) %>%
+  summarise(
+    `Media original`  = round(mean(Income), 1),
+    `DS original`     = round(sd(Income), 1),
+    `Media imputada`  = round(mean(Income_imp), 1),
+    `DS imputada`     = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-media-cond-sexo, tab.cap="Comparación entre ingreso original e imputado por la media condicional, por sexo", echo=FALSE}
 encuesta %>%
   group_by(Sexo = Sex) %>%
   summarise(
@@ -429,7 +486,16 @@ for (ii in receptor) {
 
 La Tabla \@ref(tab:tab-sesgo-hotdeck-global) compara los estadísticos globales. El sesgo relativo de la media es de 2.3%:
 
-```{r tab-sesgo-hotdeck-global, tab.cap="Comparación global entre ingreso original e imputado por hot-deck"}
+```{r eval=FALSE}
+encuesta %>%
+  summarise(
+    `Media original`  = round(mean(Income), 1),
+    `DS original`     = round(sd(Income), 1),
+    `Media imputada`  = round(mean(Income_imp), 1),
+    `DS imputada`     = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-hotdeck-global, tab.cap="Comparación global entre ingreso original e imputado por hot-deck", echo=FALSE}
 encuesta %>%
   summarise(
     `Media original`  = round(mean(Income), 1),
@@ -441,7 +507,17 @@ encuesta %>%
 
 La Tabla \@ref(tab:tab-sesgo-hotdeck-zona) presenta los resultados por zona. El sesgo relativo es de 7.4% en la zona rural y de 0.7% en la urbana, lo que sugiere mayor variabilidad en el proceso de donación en zonas con menor tamaño muestral:
 
-```{r tab-sesgo-hotdeck-zona, tab.cap="Comparación entre ingreso original e imputado por hot-deck, por zona"}
+```{r eval=FALSE}
+encuesta %>%
+  group_by(Zona = Zone) %>%
+  summarise(
+    `Media original`  = round(mean(Income), 1),
+    `DS original`     = round(sd(Income), 1),
+    `Media imputada`  = round(mean(Income_imp), 1),
+    `DS imputada`     = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-hotdeck-zona, tab.cap="Comparación entre ingreso original e imputado por hot-deck, por zona", echo=FALSE}
 encuesta %>%
   group_by(Zona = Zone) %>%
   summarise(
@@ -454,7 +530,17 @@ encuesta %>%
 
 La Tabla \@ref(tab:tab-sesgo-hotdeck-sexo) presenta los resultados por sexo:
 
-```{r tab-sesgo-hotdeck-sexo, tab.cap="Comparación entre ingreso original e imputado por hot-deck, por sexo"}
+```{r eval=FALSE}
+encuesta %>%
+  group_by(Sexo = Sex) %>%
+  summarise(
+    `Media original`  = round(mean(Income), 1),
+    `DS original`     = round(sd(Income), 1),
+    `Media imputada`  = round(mean(Income_imp), 1),
+    `DS imputada`     = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-hotdeck-sexo, tab.cap="Comparación entre ingreso original e imputado por hot-deck, por sexo", echo=FALSE}
 encuesta %>%
   group_by(Sexo = Sex) %>%
   summarise(
@@ -536,14 +622,24 @@ encuesta <- bind_rows(encuesta_obs, encuesta_no_obs)
 
 La Tabla \@ref(tab:tab-regresion-empleo-antes) presenta la distribución de la variable empleo antes de la imputación, y la Tabla \@ref(tab:tab-regresion-empleo-despues) muestra cómo se redistribuyen las categorías después de imputar el 20% de observaciones faltantes:
 
-```{r tab-regresion-empleo-antes, tab.cap="Distribución de la variable empleo antes de la imputación por regresión (con valores faltantes)"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Employment_missin, useNA = "a")) %>%
+  as.data.frame() %>%
+  setNames(c("Estado", "Proporción"))
+```
+```{r tab-regresion-empleo-antes, tab.cap="Distribución de la variable empleo antes de la imputación por regresión (con valores faltantes)", echo=FALSE}
 prop.table(table(encuesta$Employment_missin, useNA = "a")) %>%
   as.data.frame() %>%
   setNames(c("Estado", "Proporción")) %>%
   tabla_fmt()
 ```
 
-```{r tab-regresion-empleo-despues, tab.cap="Distribución de la variable empleo después de la imputación por regresión"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Employment_imp, useNA = "a")) %>%
+  as.data.frame() %>%
+  setNames(c("Estado", "Proporción"))
+```
+```{r tab-regresion-empleo-despues, tab.cap="Distribución de la variable empleo después de la imputación por regresión", echo=FALSE}
 prop.table(table(encuesta$Employment_imp, useNA = "a")) %>%
   as.data.frame() %>%
   setNames(c("Estado", "Proporción")) %>%
@@ -552,31 +648,56 @@ prop.table(table(encuesta$Employment_imp, useNA = "a")) %>%
 
 La Tabla \@ref(tab:tab-regresion-empleo-zona-antes) y la Tabla \@ref(tab:tab-regresion-empleo-zona-despues) muestran que la distribución marginal por zona se preserva tras la imputación:
 
-```{r tab-regresion-empleo-zona-antes, tab.cap="Distribución conjunta de zona y empleo antes de la imputación por regresión"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Zone, encuesta$Employment_missin, useNA = "a")) %>%
+  addmargins() %>% as.data.frame.matrix()
+```
+```{r tab-regresion-empleo-zona-antes, tab.cap="Distribución conjunta de zona y empleo antes de la imputación por regresión", echo=FALSE}
 prop.table(table(encuesta$Zone, encuesta$Employment_missin, useNA = "a")) %>%
   addmargins() %>% as.data.frame.matrix() %>% tabla_fmt()
 ```
 
-```{r tab-regresion-empleo-zona-despues, tab.cap="Distribución conjunta de zona y empleo después de la imputación por regresión"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Zone, encuesta$Employment_imp, useNA = "a")) %>%
+  addmargins() %>% as.data.frame.matrix()
+```
+```{r tab-regresion-empleo-zona-despues, tab.cap="Distribución conjunta de zona y empleo después de la imputación por regresión", echo=FALSE}
 prop.table(table(encuesta$Zone, encuesta$Employment_imp, useNA = "a")) %>%
   addmargins() %>% as.data.frame.matrix() %>% tabla_fmt()
 ```
 
 La Tabla \@ref(tab:tab-regresion-empleo-sexo-antes) y la Tabla \@ref(tab:tab-regresion-empleo-sexo-despues) presentan el análisis análogo por sexo:
 
-```{r tab-regresion-empleo-sexo-antes, tab.cap="Distribución conjunta de sexo y empleo antes de la imputación por regresión"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Sex, encuesta$Employment_missin, useNA = "a")) %>%
+  addmargins() %>% as.data.frame.matrix()
+```
+```{r tab-regresion-empleo-sexo-antes, tab.cap="Distribución conjunta de sexo y empleo antes de la imputación por regresión", echo=FALSE}
 prop.table(table(encuesta$Sex, encuesta$Employment_missin, useNA = "a")) %>%
   addmargins() %>% as.data.frame.matrix() %>% tabla_fmt()
 ```
 
-```{r tab-regresion-empleo-sexo-despues, tab.cap="Distribución conjunta de sexo y empleo después de la imputación por regresión"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Sex, encuesta$Employment_imp, useNA = "a")) %>%
+  addmargins() %>% as.data.frame.matrix()
+```
+```{r tab-regresion-empleo-sexo-despues, tab.cap="Distribución conjunta de sexo y empleo después de la imputación por regresión", echo=FALSE}
 prop.table(table(encuesta$Sex, encuesta$Employment_imp, useNA = "a")) %>%
   addmargins() %>% as.data.frame.matrix() %>% tabla_fmt()
 ```
 
 La Tabla \@ref(tab:tab-sesgo-regresion-global) resume los estadísticos del ingreso. El sesgo relativo de la media es de 1.2%, lo que indica una imputación precisa:
 
-```{r tab-sesgo-regresion-global, tab.cap="Comparación global entre ingreso original e imputado por regresión"}
+```{r eval=FALSE}
+encuesta %>%
+  summarise(
+    `Media original`  = round(mean(Income), 4),
+    `DS original`     = round(sd(Income), 4),
+    `Media imputada`  = round(mean(Income_imp), 4),
+    `DS imputada`     = round(sd(Income_imp), 4)
+  )
+```
+```{r tab-sesgo-regresion-global, tab.cap="Comparación global entre ingreso original e imputado por regresión", echo=FALSE}
 encuesta %>%
   summarise(
     `Media original`  = round(mean(Income), 4),
@@ -588,7 +709,17 @@ encuesta %>%
 
 La Tabla \@ref(tab:tab-sesgo-regresion-zona) y la Tabla \@ref(tab:tab-sesgo-regresion-sexo) presentan los resultados desagregados. Los sesgos relativos por zona son de 1.5% (rural) y 1.0% (urbana):
 
-```{r tab-sesgo-regresion-zona, tab.cap="Comparación entre ingreso original e imputado por regresión, por zona"}
+```{r eval=FALSE}
+encuesta %>%
+  group_by(Zona = Zone) %>%
+  summarise(
+    `Media original`  = round(mean(Income), 1),
+    `DS original`     = round(sd(Income), 1),
+    `Media imputada`  = round(mean(Income_imp), 1),
+    `DS imputada`     = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-regresion-zona, tab.cap="Comparación entre ingreso original e imputado por regresión, por zona", echo=FALSE}
 encuesta %>%
   group_by(Zona = Zone) %>%
   summarise(
@@ -599,7 +730,17 @@ encuesta %>%
   ) %>% tabla_fmt()
 ```
 
-```{r tab-sesgo-regresion-sexo, tab.cap="Comparación entre ingreso original e imputado por regresión, por sexo"}
+```{r eval=FALSE}
+encuesta %>%
+  group_by(Sexo = Sex) %>%
+  summarise(
+    `Media original`  = round(mean(Income), 1),
+    `DS original`     = round(sd(Income), 1),
+    `Media imputada`  = round(mean(Income_imp), 1),
+    `DS imputada`     = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-regresion-sexo, tab.cap="Comparación entre ingreso original e imputado por regresión, por sexo", echo=FALSE}
 encuesta %>%
   group_by(Sexo = Sex) %>%
   summarise(
@@ -663,13 +804,21 @@ encuesta <- bind_rows(encuesta_obs, encuesta_no_obs)
 
 La Tabla \@ref(tab:tab-knn-empleo-antes) y la Tabla \@ref(tab:tab-knn-empleo-despues) muestran la distribución de la variable empleo antes y después de la imputación:
 
-```{r tab-knn-empleo-antes, tab.cap="Distribución de la variable empleo antes de la imputación KNN"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Employment_missin, useNA = "a")) %>%
+  as.data.frame() %>% setNames(c("Estado", "Proporción"))
+```
+```{r tab-knn-empleo-antes, tab.cap="Distribución de la variable empleo antes de la imputación KNN", echo=FALSE}
 prop.table(table(encuesta$Employment_missin, useNA = "a")) %>%
   as.data.frame() %>% setNames(c("Estado", "Proporción")) %>%
   tabla_fmt()
 ```
 
-```{r tab-knn-empleo-despues, tab.cap="Distribución de la variable empleo después de la imputación KNN"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Employment_imp, useNA = "a")) %>%
+  as.data.frame() %>% setNames(c("Estado", "Proporción"))
+```
+```{r tab-knn-empleo-despues, tab.cap="Distribución de la variable empleo después de la imputación KNN", echo=FALSE}
 prop.table(table(encuesta$Employment_imp, useNA = "a")) %>%
   as.data.frame() %>% setNames(c("Estado", "Proporción")) %>%
   tabla_fmt()
@@ -677,29 +826,54 @@ prop.table(table(encuesta$Employment_imp, useNA = "a")) %>%
 
 La Tabla \@ref(tab:tab-knn-zona-antes), la Tabla \@ref(tab:tab-knn-zona-despues), la Tabla \@ref(tab:tab-knn-sexo-antes) y la Tabla \@ref(tab:tab-knn-sexo-despues) verifican que las distribuciones marginales por zona y sexo se preservan:
 
-```{r tab-knn-zona-antes, tab.cap="Distribución conjunta de zona y empleo antes de la imputación KNN"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Zone, encuesta$Employment_missin, useNA = "a")) %>%
+  addmargins() %>% as.data.frame.matrix()
+```
+```{r tab-knn-zona-antes, tab.cap="Distribución conjunta de zona y empleo antes de la imputación KNN", echo=FALSE}
 prop.table(table(encuesta$Zone, encuesta$Employment_missin, useNA = "a")) %>%
   addmargins() %>% as.data.frame.matrix() %>% tabla_fmt()
 ```
 
-```{r tab-knn-zona-despues, tab.cap="Distribución conjunta de zona y empleo después de la imputación KNN"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Zone, encuesta$Employment_imp, useNA = "a")) %>%
+  addmargins() %>% as.data.frame.matrix()
+```
+```{r tab-knn-zona-despues, tab.cap="Distribución conjunta de zona y empleo después de la imputación KNN", echo=FALSE}
 prop.table(table(encuesta$Zone, encuesta$Employment_imp, useNA = "a")) %>%
   addmargins() %>% as.data.frame.matrix() %>% tabla_fmt()
 ```
 
-```{r tab-knn-sexo-antes, tab.cap="Distribución conjunta de sexo y empleo antes de la imputación KNN"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Sex, encuesta$Employment_missin, useNA = "a")) %>%
+  addmargins() %>% as.data.frame.matrix()
+```
+```{r tab-knn-sexo-antes, tab.cap="Distribución conjunta de sexo y empleo antes de la imputación KNN", echo=FALSE}
 prop.table(table(encuesta$Sex, encuesta$Employment_missin, useNA = "a")) %>%
   addmargins() %>% as.data.frame.matrix() %>% tabla_fmt()
 ```
 
-```{r tab-knn-sexo-despues, tab.cap="Distribución conjunta de sexo y empleo después de la imputación KNN"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Sex, encuesta$Employment_imp, useNA = "a")) %>%
+  addmargins() %>% as.data.frame.matrix()
+```
+```{r tab-knn-sexo-despues, tab.cap="Distribución conjunta de sexo y empleo después de la imputación KNN", echo=FALSE}
 prop.table(table(encuesta$Sex, encuesta$Employment_imp, useNA = "a")) %>%
   addmargins() %>% as.data.frame.matrix() %>% tabla_fmt()
 ```
 
 La Tabla \@ref(tab:tab-sesgo-knn-global), la Tabla \@ref(tab:tab-sesgo-knn-zona) y la Tabla \@ref(tab:tab-sesgo-knn-sexo) resumen los estadísticos del ingreso. La diferencia entre la media real y la estimada es de aproximadamente 6 unidades monetarias a nivel global, presentada en la Tabla \@ref(fig:fig-knn-densidad):, presentada en la Tabla \@ref(fig:fig-knn-boxplot)::
 
-```{r tab-sesgo-knn-global, tab.cap="Comparación global entre ingreso original e imputado por KNN"}
+```{r eval=FALSE}
+encuesta %>%
+  summarise(
+    `Media original`  = round(mean(Income), 1),
+    `DS original`     = round(sd(Income), 1),
+    `Media imputada`  = round(mean(Income_imp), 1),
+    `DS imputada`     = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-knn-global, tab.cap="Comparación global entre ingreso original e imputado por KNN", echo=FALSE}
 encuesta %>%
   summarise(
     `Media original`  = round(mean(Income), 1),
@@ -709,7 +883,17 @@ encuesta %>%
   ) %>% tabla_fmt()
 ```
 
-```{r tab-sesgo-knn-zona, tab.cap="Comparación entre ingreso original e imputado por KNN, por zona"}
+```{r eval=FALSE}
+encuesta %>%
+  group_by(Zona = Zone) %>%
+  summarise(
+    `Media original`  = round(mean(Income), 1),
+    `DS original`     = round(sd(Income), 1),
+    `Media imputada`  = round(mean(Income_imp), 1),
+    `DS imputada`     = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-knn-zona, tab.cap="Comparación entre ingreso original e imputado por KNN, por zona", echo=FALSE}
 encuesta %>%
   group_by(Zona = Zone) %>%
   summarise(
@@ -720,7 +904,17 @@ encuesta %>%
   ) %>% tabla_fmt()
 ```
 
-```{r tab-sesgo-knn-sexo, tab.cap="Comparación entre ingreso original e imputado por KNN, por sexo"}
+```{r eval=FALSE}
+encuesta %>%
+  group_by(Sexo = Sex) %>%
+  summarise(
+    `Media original`  = round(mean(Income), 1),
+    `DS original`     = round(sd(Income), 1),
+    `Media imputada`  = round(mean(Income_imp), 1),
+    `DS imputada`     = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-knn-sexo, tab.cap="Comparación entre ingreso original e imputado por KNN, por sexo", echo=FALSE}
 encuesta %>%
   group_by(Sexo = Sex) %>%
   summarise(
@@ -784,13 +978,21 @@ encuesta <- bind_rows(encuesta_obs, encuesta_no_obs)
 
 La Tabla \@ref(tab:tab-knn-reg-empleo-antes) y la Tabla \@ref(tab:tab-knn-reg-empleo-despues) muestran la distribución de la variable empleo antes y después de la imputación:
 
-```{r tab-knn-reg-empleo-antes, tab.cap="Distribución de la variable empleo antes de la imputación KNN con regresión"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Employment_missin, useNA = "a")) %>%
+  as.data.frame() %>% setNames(c("Estado", "Proporción"))
+```
+```{r tab-knn-reg-empleo-antes, tab.cap="Distribución de la variable empleo antes de la imputación KNN con regresión", echo=FALSE}
 prop.table(table(encuesta$Employment_missin, useNA = "a")) %>%
   as.data.frame() %>% setNames(c("Estado", "Proporción")) %>%
   tabla_fmt()
 ```
 
-```{r tab-knn-reg-empleo-despues, tab.cap="Distribución de la variable empleo después de la imputación KNN con regresión"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Employment_imp, useNA = "a")) %>%
+  as.data.frame() %>% setNames(c("Estado", "Proporción"))
+```
+```{r tab-knn-reg-empleo-despues, tab.cap="Distribución de la variable empleo después de la imputación KNN con regresión", echo=FALSE}
 prop.table(table(encuesta$Employment_imp, useNA = "a")) %>%
   as.data.frame() %>% setNames(c("Estado", "Proporción")) %>%
   tabla_fmt()
@@ -798,29 +1000,54 @@ prop.table(table(encuesta$Employment_imp, useNA = "a")) %>%
 
 La Tabla \@ref(tab:tab-knn-reg-zona-antes), la Tabla \@ref(tab:tab-knn-reg-zona-despues), la Tabla \@ref(tab:tab-knn-reg-sexo-antes) y la Tabla \@ref(tab:tab-knn-reg-sexo-despues) verifican la preservación de las distribuciones marginales:
 
-```{r tab-knn-reg-zona-antes, tab.cap="Distribución conjunta de zona y empleo antes de la imputación KNN con regresión"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Zone, encuesta$Employment_missin, useNA = "a")) %>%
+  addmargins() %>% as.data.frame.matrix()
+```
+```{r tab-knn-reg-zona-antes, tab.cap="Distribución conjunta de zona y empleo antes de la imputación KNN con regresión", echo=FALSE}
 prop.table(table(encuesta$Zone, encuesta$Employment_missin, useNA = "a")) %>%
   addmargins() %>% as.data.frame.matrix() %>% tabla_fmt()
 ```
 
-```{r tab-knn-reg-zona-despues, tab.cap="Distribución conjunta de zona y empleo después de la imputación KNN con regresión"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Zone, encuesta$Employment_imp, useNA = "a")) %>%
+  addmargins() %>% as.data.frame.matrix()
+```
+```{r tab-knn-reg-zona-despues, tab.cap="Distribución conjunta de zona y empleo después de la imputación KNN con regresión", echo=FALSE}
 prop.table(table(encuesta$Zone, encuesta$Employment_imp, useNA = "a")) %>%
   addmargins() %>% as.data.frame.matrix() %>% tabla_fmt()
 ```
 
-```{r tab-knn-reg-sexo-antes, tab.cap="Distribución conjunta de sexo y empleo antes de la imputación KNN con regresión"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Sex, encuesta$Employment_missin, useNA = "a")) %>%
+  addmargins() %>% as.data.frame.matrix()
+```
+```{r tab-knn-reg-sexo-antes, tab.cap="Distribución conjunta de sexo y empleo antes de la imputación KNN con regresión", echo=FALSE}
 prop.table(table(encuesta$Sex, encuesta$Employment_missin, useNA = "a")) %>%
   addmargins() %>% as.data.frame.matrix() %>% tabla_fmt()
 ```
 
-```{r tab-knn-reg-sexo-despues, tab.cap="Distribución conjunta de sexo y empleo después de la imputación KNN con regresión"}
+```{r eval=FALSE}
+prop.table(table(encuesta$Sex, encuesta$Employment_imp, useNA = "a")) %>%
+  addmargins() %>% as.data.frame.matrix()
+```
+```{r tab-knn-reg-sexo-despues, tab.cap="Distribución conjunta de sexo y empleo después de la imputación KNN con regresión", echo=FALSE}
 prop.table(table(encuesta$Sex, encuesta$Employment_imp, useNA = "a")) %>%
   addmargins() %>% as.data.frame.matrix() %>% tabla_fmt()
 ```
 
 La Tabla \@ref(tab:tab-sesgo-knn-reg-global), la Tabla \@ref(tab:tab-sesgo-knn-reg-zona) y la Tabla \@ref(tab:tab-sesgo-knn-reg-sexo) muestran que la diferencia máxima entre el ingreso real y el imputado es de aproximadamente 5 unidades monetarias, presentada en la Tabla \@ref(fig:fig-knn-reg-densidad):, presentada en la Tabla \@ref(fig:fig-knn-reg-boxplot)::
 
-```{r tab-sesgo-knn-reg-global, tab.cap="Comparación global entre ingreso original e imputado por KNN con regresión"}
+```{r eval=FALSE}
+encuesta %>%
+  summarise(
+    `Media original`  = round(mean(Income), 1),
+    `DS original`     = round(sd(Income), 1),
+    `Media imputada`  = round(mean(Income_imp), 1),
+    `DS imputada`     = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-knn-reg-global, tab.cap="Comparación global entre ingreso original e imputado por KNN con regresión", echo=FALSE}
 encuesta %>%
   summarise(
     `Media original`  = round(mean(Income), 1),
@@ -830,7 +1057,17 @@ encuesta %>%
   ) %>% tabla_fmt()
 ```
 
-```{r tab-sesgo-knn-reg-zona, tab.cap="Comparación entre ingreso original e imputado por KNN con regresión, por zona"}
+```{r eval=FALSE}
+encuesta %>%
+  group_by(Zona = Zone) %>%
+  summarise(
+    `Media original`  = round(mean(Income), 1),
+    `DS original`     = round(sd(Income), 1),
+    `Media imputada`  = round(mean(Income_imp), 1),
+    `DS imputada`     = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-knn-reg-zona, tab.cap="Comparación entre ingreso original e imputado por KNN con regresión, por zona", echo=FALSE}
 encuesta %>%
   group_by(Zona = Zone) %>%
   summarise(
@@ -841,7 +1078,17 @@ encuesta %>%
   ) %>% tabla_fmt()
 ```
 
-```{r tab-sesgo-knn-reg-sexo, tab.cap="Comparación entre ingreso original e imputado por KNN con regresión, por sexo"}
+```{r eval=FALSE}
+encuesta %>%
+  group_by(Sexo = Sex) %>%
+  summarise(
+    `Media original`  = round(mean(Income), 1),
+    `DS original`     = round(sd(Income), 1),
+    `Media imputada`  = round(mean(Income_imp), 1),
+    `DS imputada`     = round(sd(Income_imp), 1)
+  )
+```
+```{r tab-sesgo-knn-reg-sexo, tab.cap="Comparación entre ingreso original e imputado por KNN con regresión, por sexo", echo=FALSE}
 encuesta %>%
   group_by(Sexo = Sex) %>%
   summarise(
@@ -935,7 +1182,11 @@ set.seed(1234)
 datos <- generar()
 ```
 
-```{r tab-datos-simulados, tab.cap="Primeras 12 observaciones del conjunto de datos simulado con valores faltantes"}
+```{r eval=FALSE}
+head(datos, 12)
+
+```
+```{r tab-datos-simulados, tab.cap="Primeras 12 observaciones del conjunto de datos simulado con valores faltantes", echo=FALSE}
 head(datos, 12) %>% tabla_fmt()
 
 ```
@@ -995,7 +1246,14 @@ La Tabla \@ref(tab:tab-im-bootstrap-result) presenta los resultados de la imputa
 datos <- generar()
 ```
 
-```{r tab-im-bootstrap-result, tab.cap="Estimación de la pendiente y su error estándar mediante imputación múltiple por bootstrap"}
+```{r eval=FALSE}
+data.frame(
+  `Estimación de beta`  = round(im.bootstrap(datos)$beta, 1),
+  `Error estándar`      = round(im.bootstrap(datos)$sd, 4)
+)
+
+```
+```{r tab-im-bootstrap-result, tab.cap="Estimación de la pendiente y su error estándar mediante imputación múltiple por bootstrap", echo=FALSE}
 data.frame(
   `Estimación de beta`  = round(im.bootstrap(datos)$beta, 1),
   `Error estándar`      = round(im.bootstrap(datos)$sd, 4)
@@ -1049,7 +1307,10 @@ for (ii in 1:M) {
 
 La Tabla \@ref(tab:tab-vp-ingreso) presenta las primeras columnas del conjunto de valores plausibles para el ingreso en las observaciones no observadas:
 
-```{r tab-vp-ingreso, tab.cap="Valores plausibles del ingreso para las primeras 10 observaciones no observadas (primeras 4 imputaciones)"}
+```{r eval=FALSE}
+dplyr::select(encuesta_no_obs, Income, matches("Income_vp_"))[1:10, 1:4]
+```
+```{r tab-vp-ingreso, tab.cap="Valores plausibles del ingreso para las primeras 10 observaciones no observadas (primeras 4 imputaciones)", echo=FALSE}
 dplyr::select(encuesta_no_obs, Income, matches("Income_vp_"))[1:10, 1:4] %>%
   tabla_fmt()
 ```
@@ -1133,7 +1394,12 @@ estimacion_vp %<>%
   mutate(vp = 1:10)
 ```
 
-```{r tab-vp-estimaciones, tab.cap="Estimaciones del ingreso medio y su varianza para cada valor plausible"}
+```{r eval=FALSE}
+  
+estimacion_vp
+
+```
+```{r tab-vp-estimaciones, tab.cap="Estimaciones del ingreso medio y su varianza para cada valor plausible", echo=FALSE}
   
 estimacion_vp %>% tabla_fmt()
 
@@ -1149,7 +1415,14 @@ B        <- var(estimacion_vp$promedio)
 var_vp   <- Ubar + (1 + 1 / M) * B
 ```
 
-```{r tab-im-resultado-media, tab.cap="Estimación combinada del ingreso medio mediante imputación múltiple (reglas de Rubin)"}
+```{r eval=FALSE}
+data.frame(
+  `Media estimada`  = round(Media_vp, 4),
+  `Error estándar`  = round(sqrt(var_vp), 4)
+)
+
+```
+```{r tab-im-resultado-media, tab.cap="Estimación combinada del ingreso medio mediante imputación múltiple (reglas de Rubin)", echo=FALSE}
 data.frame(
   `Media estimada`  = round(Media_vp, 4),
   `Error estándar`  = round(sqrt(var_vp), 4)
@@ -1179,7 +1452,11 @@ estimacion_var_vp %<>%
   spread(estimacion, value)
 ```
 
-```{r tab-vp-varianza-ingreso, tab.cap="Estimaciones de la varianza del ingreso para cada valor plausible"}
+```{r eval=FALSE}
+estimacion_var_vp
+
+```
+```{r tab-vp-varianza-ingreso, tab.cap="Estimaciones de la varianza del ingreso para cada valor plausible", echo=FALSE}
 estimacion_var_vp %>% tabla_fmt()
 
 ```
@@ -1194,7 +1471,14 @@ B_var        <- var(estimacion_var_vp$promedio)
 var_var_vp   <- Ubar_var + (1 + 1 / M) * B_var
 ```
 
-```{r tab-im-resultado-varianza, tab.cap="Estimación combinada de la varianza del ingreso mediante imputación múltiple (reglas de Rubin)"}
+```{r eval=FALSE}
+data.frame(
+  `Varianza estimada`  = round(Media_var_vp, 4),
+  `Error estándar`     = round(sqrt(var_var_vp), 4)
+)
+
+```
+```{r tab-im-resultado-varianza, tab.cap="Estimación combinada de la varianza del ingreso mediante imputación múltiple (reglas de Rubin)", echo=FALSE}
 data.frame(
   `Varianza estimada`  = round(Media_var_vp, 4),
   `Error estándar`     = round(sqrt(var_var_vp), 4)
@@ -1226,7 +1510,12 @@ estimacion_prop_vp %<>%
   dplyr::select(vp, Employment:prop_var)
 ```
 
-```{r tab-vp-proporciones, tab.cap="Estimaciones de la proporción por estado de empleo para cada valor plausible (primeras 12 filas)"}
+```{r eval=FALSE}
+  
+estimacion_prop_vp %>% slice(1:12L)
+
+```
+```{r tab-vp-proporciones, tab.cap="Estimaciones de la proporción por estado de empleo para cada valor plausible (primeras 12 filas)", echo=FALSE}
   
 estimacion_prop_vp %>% slice(1:12L) %>% tabla_fmt()
 
@@ -1234,7 +1523,20 @@ estimacion_prop_vp %>% slice(1:12L) %>% tabla_fmt()
 
 La Tabla \@ref(tab:tab-im-resultado-proporciones) presenta la estimación combinada de las proporciones de empleo mediante las reglas de Rubin:
 
-```{r tab-im-resultado-proporciones, tab.cap="Estimación combinada de proporciones de empleo mediante imputación múltiple (reglas de Rubin)"}
+```{r eval=FALSE}
+estimacion_prop_vp %>%
+  group_by(Employment) %>%
+  summarise(
+    `Proporción estimada` = round(mean(prop), 4),
+    Ubar                  = mean(prop_var),
+    B                     = var(prop)
+  ) %>%
+  mutate(
+    `Varianza total` = round(Ubar + (1 + 1 / M) * B, 6),
+    Ubar = NULL, B = NULL
+  )
+```
+```{r tab-im-resultado-proporciones, tab.cap="Estimación combinada de proporciones de empleo mediante imputación múltiple (reglas de Rubin)", echo=FALSE}
 estimacion_prop_vp %>%
   group_by(Employment) %>%
   summarise(

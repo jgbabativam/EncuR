@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -557,8 +558,7 @@ w_{hik}^{(r)} = w_{hik} \times \frac{n_h}{n_h - 1} \times n_{hi}^{(r)}
 </ul>
 <p>El siguiente ejemplo presenta cómo estimar totales y sus intervalos de confianza para diferentes variables de interés en <em>R</em>, utilizando la función <code>survey_total()</code>. A continuación, se presentan los códigos correspondientes, presentada en la Tabla <a href="estimación-de-totales-y-medias.html#tab:tab-total-ingreso">4.1</a>:</p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="estimación-de-totales-y-medias.html#cb61-1" tabindex="-1"></a>diseno <span class="sc">%&gt;%</span> </span>
-<span id="cb61-2"><a href="estimación-de-totales-y-medias.html#cb61-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ty =</span> <span class="fu">survey_total</span>(Income, <span class="at">vartype =</span> <span class="st">&quot;ci&quot;</span>, <span class="at">deff =</span> T)) <span class="sc">%&gt;%</span></span>
-<span id="cb61-3"><a href="estimación-de-totales-y-medias.html#cb61-3" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb61-2"><a href="estimación-de-totales-y-medias.html#cb61-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ty =</span> <span class="fu">survey_total</span>(Income, <span class="at">vartype =</span> <span class="st">&quot;ci&quot;</span>, <span class="at">deff =</span> T))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-total-ingreso">Cuadro 4.1: </span>Estimación del total de ingresos de los hogares con intervalo de confianza al 95%</caption>
 <thead>
@@ -584,8 +584,7 @@ w_{hik}^{(r)} = w_{hik} \times \frac{n_h}{n_h - 1} \times n_{hi}^{(r)}
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="estimación-de-totales-y-medias.html#cb62-1" tabindex="-1"></a>diseno <span class="sc">%&gt;%</span></span>
 <span id="cb62-2"><a href="estimación-de-totales-y-medias.html#cb62-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ty =</span> <span class="fu">survey_total</span>(Expenditure, </span>
 <span id="cb62-3"><a href="estimación-de-totales-y-medias.html#cb62-3" tabindex="-1"></a>                              <span class="at">vartype =</span> <span class="st">&quot;ci&quot;</span>, <span class="at">level =</span> <span class="fl">0.9</span>, </span>
-<span id="cb62-4"><a href="estimación-de-totales-y-medias.html#cb62-4" tabindex="-1"></a>                              <span class="at">deff =</span> T)) <span class="sc">%&gt;%</span></span>
-<span id="cb62-5"><a href="estimación-de-totales-y-medias.html#cb62-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb62-4"><a href="estimación-de-totales-y-medias.html#cb62-4" tabindex="-1"></a>                              <span class="at">deff =</span> T))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-total-gasto">Cuadro 4.2: </span>Estimación del total de gastos de los hogares con intervalo de confianza al 90%</caption>
 <thead>
@@ -611,8 +610,7 @@ w_{hik}^{(r)} = w_{hik} \times \frac{n_h}{n_h - 1} \times n_{hi}^{(r)}
 <span id="cb63-3"><a href="estimación-de-totales-y-medias.html#cb63-3" tabindex="-1"></a>  <span class="fu">cascade</span>(<span class="at">Total =</span> <span class="fu">survey_total</span>(Income, </span>
 <span id="cb63-4"><a href="estimación-de-totales-y-medias.html#cb63-4" tabindex="-1"></a>                               <span class="at">vartype =</span>  <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>),</span>
 <span id="cb63-5"><a href="estimación-de-totales-y-medias.html#cb63-5" tabindex="-1"></a>                               <span class="at">level =</span> <span class="fl">0.95</span>),</span>
-<span id="cb63-6"><a href="estimación-de-totales-y-medias.html#cb63-6" tabindex="-1"></a>          <span class="at">.fill =</span> <span class="st">&quot;Total ingreso&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb63-7"><a href="estimación-de-totales-y-medias.html#cb63-7" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb63-6"><a href="estimación-de-totales-y-medias.html#cb63-6" tabindex="-1"></a>          <span class="at">.fill =</span> <span class="st">&quot;Total ingreso&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-total-ingreso-sexo">Cuadro 4.3: </span>Total de ingresos de los hogares desagregado por sexo</caption>
 <thead>
@@ -670,8 +668,7 @@ var\left(\bar{Y}_{\omega}\right) &amp; \dot{=} &amp; \frac{var\left(\hat{Y}\righ
 <span id="cb64-2"><a href="estimación-de-totales-y-medias.html#cb64-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media_ing =</span> <span class="fu">survey_mean</span>(Income,</span>
 <span id="cb64-3"><a href="estimación-de-totales-y-medias.html#cb64-3" tabindex="-1"></a>                                <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>),</span>
 <span id="cb64-4"><a href="estimación-de-totales-y-medias.html#cb64-4" tabindex="-1"></a>                                <span class="at">level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb64-5"><a href="estimación-de-totales-y-medias.html#cb64-5" tabindex="-1"></a>                                <span class="at">deff =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb64-6"><a href="estimación-de-totales-y-medias.html#cb64-6" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb64-5"><a href="estimación-de-totales-y-medias.html#cb64-5" tabindex="-1"></a>                                <span class="at">deff =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-media-ingreso">Cuadro 4.4: </span>Estimación de la media de ingresos de los hogares</caption>
 <colgroup>
@@ -706,8 +703,7 @@ var\left(\bar{Y}_{\omega}\right) &amp; \dot{=} &amp; \frac{var\left(\hat{Y}\righ
 <span id="cb65-2"><a href="estimación-de-totales-y-medias.html#cb65-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media_gastos =</span> <span class="fu">survey_mean</span>(Expenditure,</span>
 <span id="cb65-3"><a href="estimación-de-totales-y-medias.html#cb65-3" tabindex="-1"></a>                                    <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>),</span>
 <span id="cb65-4"><a href="estimación-de-totales-y-medias.html#cb65-4" tabindex="-1"></a>                                    <span class="at">level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb65-5"><a href="estimación-de-totales-y-medias.html#cb65-5" tabindex="-1"></a>                                    <span class="at">deff =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb65-6"><a href="estimación-de-totales-y-medias.html#cb65-6" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb65-5"><a href="estimación-de-totales-y-medias.html#cb65-5" tabindex="-1"></a>                                    <span class="at">deff =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-media-gasto">Cuadro 4.5: </span>Estimación de la media de gastos de los hogares</caption>
 <colgroup>
@@ -743,8 +739,7 @@ var\left(\bar{Y}_{\omega}\right) &amp; \dot{=} &amp; \frac{var\left(\hat{Y}\righ
 <span id="cb66-4"><a href="estimación-de-totales-y-medias.html#cb66-4" tabindex="-1"></a>                              <span class="at">level =</span> <span class="fl">0.95</span>,</span>
 <span id="cb66-5"><a href="estimación-de-totales-y-medias.html#cb66-5" tabindex="-1"></a>                              <span class="at">vartype =</span>  <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>)),</span>
 <span id="cb66-6"><a href="estimación-de-totales-y-medias.html#cb66-6" tabindex="-1"></a>        <span class="at">.fill =</span> <span class="st">&quot;El gasto medio&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb66-7"><a href="estimación-de-totales-y-medias.html#cb66-7" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Sex)) <span class="sc">%&gt;%</span></span>
-<span id="cb66-8"><a href="estimación-de-totales-y-medias.html#cb66-8" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb66-7"><a href="estimación-de-totales-y-medias.html#cb66-7" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Sex))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-media-gasto-sexo">Cuadro 4.6: </span>Media de gastos de los hogares desagregada por sexo</caption>
 <thead>
@@ -787,8 +782,7 @@ var\left(\bar{Y}_{\omega}\right) &amp; \dot{=} &amp; \frac{var\left(\hat{Y}\righ
 <span id="cb67-4"><a href="estimación-de-totales-y-medias.html#cb67-4" tabindex="-1"></a>                              <span class="at">level =</span> <span class="fl">0.95</span>,</span>
 <span id="cb67-5"><a href="estimación-de-totales-y-medias.html#cb67-5" tabindex="-1"></a>                              <span class="at">vartype =</span>  <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>)),</span>
 <span id="cb67-6"><a href="estimación-de-totales-y-medias.html#cb67-6" tabindex="-1"></a>        <span class="at">.fill =</span> <span class="st">&quot;El gasto medio&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb67-7"><a href="estimación-de-totales-y-medias.html#cb67-7" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Zone)) <span class="sc">%&gt;%</span></span>
-<span id="cb67-8"><a href="estimación-de-totales-y-medias.html#cb67-8" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb67-7"><a href="estimación-de-totales-y-medias.html#cb67-7" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Zone))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-media-gasto-zona">Cuadro 4.7: </span>Media de gastos de los hogares desagregada por zona</caption>
 <thead>
@@ -831,8 +825,7 @@ var\left(\bar{Y}_{\omega}\right) &amp; \dot{=} &amp; \frac{var\left(\hat{Y}\righ
 <span id="cb68-4"><a href="estimación-de-totales-y-medias.html#cb68-4" tabindex="-1"></a>                              <span class="at">level =</span> <span class="fl">0.95</span>,</span>
 <span id="cb68-5"><a href="estimación-de-totales-y-medias.html#cb68-5" tabindex="-1"></a>                              <span class="at">vartype =</span>  <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>)),</span>
 <span id="cb68-6"><a href="estimación-de-totales-y-medias.html#cb68-6" tabindex="-1"></a>        <span class="at">.fill =</span> <span class="st">&quot;El gasto medio&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb68-7"><a href="estimación-de-totales-y-medias.html#cb68-7" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Zone), <span class="fu">desc</span>(Sex)) <span class="sc">%&gt;%</span></span>
-<span id="cb68-8"><a href="estimación-de-totales-y-medias.html#cb68-8" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb68-7"><a href="estimación-de-totales-y-medias.html#cb68-7" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Zone), <span class="fu">desc</span>(Sex))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-media-gasto-zona-sexo">Cuadro 4.8: </span>Media de gastos de los hogares desagregada por zona y sexo</caption>
 <colgroup>
@@ -933,8 +926,7 @@ s\left(y\right){}_{\omega} &amp; = &amp; \frac{\sum_{h=1}^{H}\sum_{\alpha=1}^{a_
 <span id="cb69-5"><a href="estimación-de-totales-y-medias.html#cb69-5" tabindex="-1"></a>                               <span class="at">vartype =</span>  <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>)</span>
 <span id="cb69-6"><a href="estimación-de-totales-y-medias.html#cb69-6" tabindex="-1"></a>                               ) </span>
 <span id="cb69-7"><a href="estimación-de-totales-y-medias.html#cb69-7" tabindex="-1"></a>                      )</span>
-<span id="cb69-8"><a href="estimación-de-totales-y-medias.html#cb69-8" tabindex="-1"></a>            ) <span class="sc">%&gt;%</span></span>
-<span id="cb69-9"><a href="estimación-de-totales-y-medias.html#cb69-9" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb69-8"><a href="estimación-de-totales-y-medias.html#cb69-8" tabindex="-1"></a>            )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sd-ingreso-zona">Cuadro 4.9: </span>Desviación estándar de los ingresos desagregada por zona</caption>
 <thead>
@@ -972,8 +964,7 @@ s\left(y\right){}_{\omega} &amp; = &amp; \frac{\sum_{h=1}^{H}\sum_{\alpha=1}^{a_
 <span id="cb70-5"><a href="estimación-de-totales-y-medias.html#cb70-5" tabindex="-1"></a>                                 <span class="at">vartype =</span>  <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>)</span>
 <span id="cb70-6"><a href="estimación-de-totales-y-medias.html#cb70-6" tabindex="-1"></a>                                 )</span>
 <span id="cb70-7"><a href="estimación-de-totales-y-medias.html#cb70-7" tabindex="-1"></a>                      )</span>
-<span id="cb70-8"><a href="estimación-de-totales-y-medias.html#cb70-8" tabindex="-1"></a>            ) <span class="sc">%&gt;%</span></span>
-<span id="cb70-9"><a href="estimación-de-totales-y-medias.html#cb70-9" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb70-8"><a href="estimación-de-totales-y-medias.html#cb70-8" tabindex="-1"></a>            )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sd-ingreso-zona-sexo">Cuadro 4.10: </span>Desviación estándar de los ingresos desagregada por zona y sexo</caption>
 <thead>
@@ -1048,8 +1039,7 @@ F\left(x\right) &amp; = &amp; \frac{{ \sum_{i=1}^{N}}I\left(y_{i}\leq x\right)}{
 <span id="cb71-3"><a href="estimación-de-totales-y-medias.html#cb71-3" tabindex="-1"></a>                                    <span class="at">level =</span> <span class="fl">0.95</span>,</span>
 <span id="cb71-4"><a href="estimación-de-totales-y-medias.html#cb71-4" tabindex="-1"></a>                                    <span class="at">vartype =</span>  <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>)</span>
 <span id="cb71-5"><a href="estimación-de-totales-y-medias.html#cb71-5" tabindex="-1"></a>                                    )</span>
-<span id="cb71-6"><a href="estimación-de-totales-y-medias.html#cb71-6" tabindex="-1"></a>            ) <span class="sc">%&gt;%</span></span>
-<span id="cb71-7"><a href="estimación-de-totales-y-medias.html#cb71-7" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb71-6"><a href="estimación-de-totales-y-medias.html#cb71-6" tabindex="-1"></a>            )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-mediana-gasto">Cuadro 4.11: </span>Estimación de la mediana de los gastos de los hogares</caption>
 <thead>
@@ -1077,8 +1067,7 @@ F\left(x\right) &amp; = &amp; \frac{{ \sum_{i=1}^{N}}I\left(y_{i}\leq x\right)}{
 <span id="cb72-4"><a href="estimación-de-totales-y-medias.html#cb72-4" tabindex="-1"></a>                                    <span class="at">level =</span> <span class="fl">0.95</span>,</span>
 <span id="cb72-5"><a href="estimación-de-totales-y-medias.html#cb72-5" tabindex="-1"></a>                                    <span class="at">vartype =</span>  <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>)</span>
 <span id="cb72-6"><a href="estimación-de-totales-y-medias.html#cb72-6" tabindex="-1"></a>                                    )</span>
-<span id="cb72-7"><a href="estimación-de-totales-y-medias.html#cb72-7" tabindex="-1"></a>            ) <span class="sc">%&gt;%</span></span>
-<span id="cb72-8"><a href="estimación-de-totales-y-medias.html#cb72-8" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb72-7"><a href="estimación-de-totales-y-medias.html#cb72-7" tabindex="-1"></a>            )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-mediana-gasto-zona">Cuadro 4.12: </span>Estimación de la mediana de los gastos desagregada por zona</caption>
 <thead>
@@ -1113,8 +1102,7 @@ F\left(x\right) &amp; = &amp; \frac{{ \sum_{i=1}^{N}}I\left(y_{i}\leq x\right)}{
 <span id="cb73-4"><a href="estimación-de-totales-y-medias.html#cb73-4" tabindex="-1"></a>                                    <span class="at">level =</span> <span class="fl">0.95</span>,</span>
 <span id="cb73-5"><a href="estimación-de-totales-y-medias.html#cb73-5" tabindex="-1"></a>                                    <span class="at">vartype =</span>  <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>)</span>
 <span id="cb73-6"><a href="estimación-de-totales-y-medias.html#cb73-6" tabindex="-1"></a>                                    )</span>
-<span id="cb73-7"><a href="estimación-de-totales-y-medias.html#cb73-7" tabindex="-1"></a>            ) <span class="sc">%&gt;%</span></span>
-<span id="cb73-8"><a href="estimación-de-totales-y-medias.html#cb73-8" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb73-7"><a href="estimación-de-totales-y-medias.html#cb73-7" tabindex="-1"></a>            )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-mediana-gasto-sexo">Cuadro 4.13: </span>Estimación de la mediana de los gastos desagregada por sexo</caption>
 <thead>
@@ -1151,8 +1139,7 @@ F\left(x\right) &amp; = &amp; \frac{{ \sum_{i=1}^{N}}I\left(y_{i}\leq x\right)}{
 <span id="cb74-5"><a href="estimación-de-totales-y-medias.html#cb74-5" tabindex="-1"></a>                                <span class="at">vartype =</span>  <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>),</span>
 <span id="cb74-6"><a href="estimación-de-totales-y-medias.html#cb74-6" tabindex="-1"></a>                                <span class="at">interval_type =</span> <span class="st">&quot;score&quot;</span></span>
 <span id="cb74-7"><a href="estimación-de-totales-y-medias.html#cb74-7" tabindex="-1"></a>                                )</span>
-<span id="cb74-8"><a href="estimación-de-totales-y-medias.html#cb74-8" tabindex="-1"></a>            ) <span class="sc">%&gt;%</span></span>
-<span id="cb74-9"><a href="estimación-de-totales-y-medias.html#cb74-9" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb74-8"><a href="estimación-de-totales-y-medias.html#cb74-8" tabindex="-1"></a>            )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-cuantil-gasto">Cuadro 4.14: </span>Estimación del primer cuartil de los gastos de los hogares</caption>
 <thead>
@@ -1182,8 +1169,7 @@ F\left(x\right) &amp; = &amp; \frac{{ \sum_{i=1}^{N}}I\left(y_{i}\leq x\right)}{
 <span id="cb75-6"><a href="estimación-de-totales-y-medias.html#cb75-6" tabindex="-1"></a>                                <span class="at">vartype =</span>  <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>),</span>
 <span id="cb75-7"><a href="estimación-de-totales-y-medias.html#cb75-7" tabindex="-1"></a>                                <span class="at">interval_type =</span> <span class="st">&quot;score&quot;</span></span>
 <span id="cb75-8"><a href="estimación-de-totales-y-medias.html#cb75-8" tabindex="-1"></a>                                )</span>
-<span id="cb75-9"><a href="estimación-de-totales-y-medias.html#cb75-9" tabindex="-1"></a>            ) <span class="sc">%&gt;%</span></span>
-<span id="cb75-10"><a href="estimación-de-totales-y-medias.html#cb75-10" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb75-9"><a href="estimación-de-totales-y-medias.html#cb75-9" tabindex="-1"></a>            )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-cuantil-gasto-zona-sexo">Cuadro 4.15: </span>Primer cuartil de los gastos desagregado por zona y sexo</caption>
 <thead>

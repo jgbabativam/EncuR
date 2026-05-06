@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -417,8 +418,7 @@ div.csl-indent {
 <p>Por ejemplo, la Tabla <a href="transformación-y-resumen-de-datos.html#tab:tab-mutate-ingreso2">3.4</a> muestra la base <em>datablue</em> con la nueva variable <em>ingreso2</em>, que representa el doble del ingreso individual:</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="transformación-y-resumen-de-datos.html#cb47-1" tabindex="-1"></a>datablue2 <span class="ot">&lt;-</span> datablue <span class="sc">%&gt;%</span></span>
 <span id="cb47-2"><a href="transformación-y-resumen-de-datos.html#cb47-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ingreso2 =</span> <span class="dv">2</span> <span class="sc">*</span> ingcorte)</span>
-<span id="cb47-3"><a href="transformación-y-resumen-de-datos.html#cb47-3" tabindex="-1"></a>datablue2 <span class="sc">%&gt;%</span> <span class="fu">head</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb47-4"><a href="transformación-y-resumen-de-datos.html#cb47-4" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb47-3"><a href="transformación-y-resumen-de-datos.html#cb47-3" tabindex="-1"></a>datablue2 <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-mutate-ingreso2">Cuadro 3.4: </span>Variable ingreso duplicado (ingreso2) creada con mutate()</caption>
 <thead>
@@ -479,8 +479,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="transformación-y-resumen-de-datos.html#cb48-1" tabindex="-1"></a>datacat <span class="ot">&lt;-</span> datablue <span class="sc">%&gt;%</span></span>
 <span id="cb48-2"><a href="transformación-y-resumen-de-datos.html#cb48-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ingreso2 =</span> <span class="dv">2</span> <span class="sc">*</span> ingcorte,</span>
 <span id="cb48-3"><a href="transformación-y-resumen-de-datos.html#cb48-3" tabindex="-1"></a>         <span class="at">ingreso4 =</span> <span class="dv">2</span> <span class="sc">*</span> ingreso2)</span>
-<span id="cb48-4"><a href="transformación-y-resumen-de-datos.html#cb48-4" tabindex="-1"></a>datacat <span class="sc">%&gt;%</span> <span class="fu">head</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb48-5"><a href="transformación-y-resumen-de-datos.html#cb48-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb48-4"><a href="transformación-y-resumen-de-datos.html#cb48-4" tabindex="-1"></a>datacat <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-mutate-ingreso4">Cuadro 3.5: </span>Creación simultánea de dos variables derivadas con mutate()</caption>
 <thead>
@@ -552,8 +551,7 @@ div.csl-indent {
 <span id="cb49-2"><a href="transformación-y-resumen-de-datos.html#cb49-2" tabindex="-1"></a>  <span class="fu">group_by</span>(estados) <span class="sc">%&gt;%</span> </span>
 <span id="cb49-3"><a href="transformación-y-resumen-de-datos.html#cb49-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
 <span id="cb49-4"><a href="transformación-y-resumen-de-datos.html#cb49-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-5"><a href="transformación-y-resumen-de-datos.html#cb49-5" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb49-6"><a href="transformación-y-resumen-de-datos.html#cb49-6" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb49-5"><a href="transformación-y-resumen-de-datos.html#cb49-5" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-estados-brasil">Cuadro 3.6: </span>Número de encuestas por estado de Brasil (primeros seis)</caption>
 <thead>
@@ -593,8 +591,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="transformación-y-resumen-de-datos.html#cb50-1" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span> </span>
 <span id="cb50-2"><a href="transformación-y-resumen-de-datos.html#cb50-2" tabindex="-1"></a>  <span class="fu">group_by</span>(sexo) <span class="sc">%&gt;%</span> </span>
 <span id="cb50-3"><a href="transformación-y-resumen-de-datos.html#cb50-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb50-4"><a href="transformación-y-resumen-de-datos.html#cb50-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
-<span id="cb50-5"><a href="transformación-y-resumen-de-datos.html#cb50-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb50-4"><a href="transformación-y-resumen-de-datos.html#cb50-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-conteo-sexo">Cuadro 3.7: </span>Número de encuestas por sexo del respondiente</caption>
 <thead>
@@ -618,8 +615,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="transformación-y-resumen-de-datos.html#cb51-1" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span> </span>
 <span id="cb51-2"><a href="transformación-y-resumen-de-datos.html#cb51-2" tabindex="-1"></a>  <span class="fu">group_by</span>(area_ee) <span class="sc">%&gt;%</span> </span>
 <span id="cb51-3"><a href="transformación-y-resumen-de-datos.html#cb51-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-4"><a href="transformación-y-resumen-de-datos.html#cb51-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
-<span id="cb51-5"><a href="transformación-y-resumen-de-datos.html#cb51-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb51-4"><a href="transformación-y-resumen-de-datos.html#cb51-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-conteo-area">Cuadro 3.8: </span>Número de encuestas por área geográfica</caption>
 <thead>
@@ -643,8 +639,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="transformación-y-resumen-de-datos.html#cb52-1" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span> </span>
 <span id="cb52-2"><a href="transformación-y-resumen-de-datos.html#cb52-2" tabindex="-1"></a>  <span class="fu">group_by</span>(paren_ee) <span class="sc">%&gt;%</span> </span>
 <span id="cb52-3"><a href="transformación-y-resumen-de-datos.html#cb52-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb52-4"><a href="transformación-y-resumen-de-datos.html#cb52-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
-<span id="cb52-5"><a href="transformación-y-resumen-de-datos.html#cb52-5" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<span id="cb52-4"><a href="transformación-y-resumen-de-datos.html#cb52-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-conteo-parentesco">Cuadro 3.9: </span>Distribución de encuestas por parentesco con el jefe del hogar</caption>
 <thead>

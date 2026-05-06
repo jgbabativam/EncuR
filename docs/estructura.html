@@ -23,7 +23,7 @@
 <meta name="author" content="Andrés Gutiérrez, Giovany Babativa-Márquez, Stalyn Guerrero, Cristian Téllez" />
 
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,7 +186,8 @@ div.csl-indent {
 <li class="chapter" data-level="1.7.4" data-path="estructura.html"><a href="estructura.html#capítulo-5-análisis-de-variables-categóricas"><i class="fa fa-check"></i><b>1.7.4</b> Capítulo 5: Análisis de variables categóricas</a></li>
 <li class="chapter" data-level="1.7.5" data-path="estructura.html"><a href="estructura.html#capítulo-6-modelos-de-regresión"><i class="fa fa-check"></i><b>1.7.5</b> Capítulo 6: Modelos de regresión</a></li>
 <li class="chapter" data-level="1.7.6" data-path="estructura.html"><a href="estructura.html#capítulo-7-modelos-lineales-generalizados"><i class="fa fa-check"></i><b>1.7.6</b> Capítulo 7: Modelos lineales generalizados</a></li>
-<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 9: Procedimientos de imputación</a></li>
+<li class="chapter" data-level="1.7.7" data-path="estructura.html"><a href="estructura.html#capítulo-8-modelos-multinivel"><i class="fa fa-check"></i><b>1.7.7</b> Capítulo 8: Modelos multinivel</a></li>
+<li class="chapter" data-level="1.7.8" data-path="estructura.html"><a href="estructura.html#capítulo-9-procedimientos-de-imputación"><i class="fa fa-check"></i><b>1.7.8</b> Capítulo 9: Procedimientos de imputación</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="conceptos-básicos-en-encuestas-de-hogares.html"><a href="conceptos-básicos-en-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Conceptos básicos en encuestas de hogares</a>
@@ -444,8 +445,13 @@ div.csl-indent {
 <p>Se extiende la modelización estadística a variables respuesta que no siguen una distribución normal (binarias, de conteo, proporciones) bajo diseños de muestreo complejo, resolviendo la incompatibilidad entre el supuesto IID de la verosimilitud clásica y la estructura dependiente de los datos de encuesta.</p>
 <p>Se construye un marco unificado de los modelos lineales generalizados de <span class="citation">Nelder &amp; Wedderburn (<a href="#ref-nelder1972generalized">1972</a>)</span>: familia exponencial, función de enlace, algoritmo MCPI. Dualidad inferencial en poblaciones finitas: medida de probabilidad del modelo versus medida de probabilidad del diseño; insesgamiento del estimador HT bajo el diseño de muestreo; sesgo del estimador simple <span class="math inline">\(\bar{y}_S\)</span> cuando el diseño es informativo; método de máxima verosimilitud (MV) estándar; método de máxima pseudo-verosimilitud (MPV) de <span class="citation">Pfeffermann (<a href="#ref-pfeffermann1993role">1993</a>)</span> con ecuaciones de estimación ponderadas <span class="math inline">\(T = \sum_{i\in s} w_i u_i(\theta) = 0\)</span>; varianza del estimador MPV por linealización de Taylor; casos particulares: distribución Bernoulli (el estimador MPV coincide con el estimador de Hàjek <span class="math inline">\(\tilde{p}_d\)</span>) y regresión normal (el estimador MPV coincide con mínimos cuadrados ponderados <span class="math inline">\((X&#39;WX)^{-1}(X&#39;WY)\)</span>); verificación empírica mediante simulaciones de Monte Carlo en R.</p>
 </div>
-<div id="capítulo-9-procedimientos-de-imputación" class="section level3 hasAnchor" number="1.7.7">
-<h3><span class="header-section-number">1.7.7</span> Capítulo 9: Procedimientos de imputación<a href="estructura.html#capítulo-9-procedimientos-de-imputación" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="capítulo-8-modelos-multinivel" class="section level3 hasAnchor" number="1.7.7">
+<h3><span class="header-section-number">1.7.7</span> Capítulo 8: Modelos multinivel<a href="estructura.html#capítulo-8-modelos-multinivel" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Se extienden los modelos estadísticos al análisis de datos con estructura jerárquica donde los individuos se encuentran anidados dentro de estratos en una encuesta de hogares. En este contexto, el supuesto de independencia de los modelos clásicos no se satisface, produciendo errores estándar sesgados y pruebas de hipótesis incorrectas <span class="citation">(<a href="#ref-finch2019multilevel">Finch et al., 2019</a>)</span>. El capítulo aborda cómo descomponer la varianza de la variable respuesta entre niveles jerárquicos y cómo incorporar los pesos de muestreo complejos en este contexto mediante una estimación ponderada apropiada.</p>
+<p>Se desarrolla la motivación del <em>shrinkage</em> (encogimiento) como principio de estimación parcialmente informada entre grupos, en contraste con el ajuste completamente independiente por estrato; el modelo nulo de dos niveles <span class="math inline">\(y_{ij} = \beta_{0j} + \epsilon_{ij}\)</span>, con <span class="math inline">\(\beta_{0j} = \gamma_{00} + \tau_{0j}\)</span> y <span class="math inline">\(\tau_{0j} \sim N(0, \sigma_\tau^2)\)</span>, para la descomposición de la varianza en componentes intragrupo <span class="math inline">\(\sigma_\epsilon^2\)</span> e intergrupo <span class="math inline">\(\sigma_\tau^2\)</span>; la correlación intraclase <span class="math inline">\(\rho = \sigma_\tau^2 / (\sigma_\tau^2 + \sigma_\epsilon^2)\)</span> como indicador de la heterogeneidad entre estratos; el método de pseudo-máxima verosimilitud ponderada de <span class="citation">Pfeffermann et al. (<a href="#ref-pfeffermann1998weighting">1998</a>)</span> y las estrategias de pesos <span class="math inline">\(q\)</span>-weighted <span class="math inline">\(w_{k2}\)</span> y senate-weighted <span class="math inline">\(w_{k3}\)</span> para controlar la dispersión de los factores de expansión en el ajuste multinivel; estimación de componentes de varianza mediante máxima verosimilitud restringida (REML); modelo con intercepto aleatorio <span class="math inline">\(\beta_{0j} = \gamma_{00} + \gamma_{01}X_{ij} + \tau_{0j}\)</span> para capturar diferencias de nivel entre estratos; modelo con pendiente aleatoria <span class="math inline">\(\beta_{1j} = \gamma_{10} + \tau_{1j}\)</span> para capturar efectos de covariables heterogéneos entre grupos; extensión de ambos modelos con la covariable zona geográfica; modelos logísticos multinivel para variable respuesta binaria (condición de pobreza) en sus variantes de intercepto aleatorio, pendiente aleatoria y extensión con zona; implementación con <code>lmer()</code> del paquete <code>lme4</code> y <code>performance::icc()</code> para el cálculo de la correlación intraclase.</p>
+</div>
+<div id="capítulo-9-procedimientos-de-imputación" class="section level3 hasAnchor" number="1.7.8">
+<h3><span class="header-section-number">1.7.8</span> Capítulo 9: Procedimientos de imputación<a href="estructura.html#capítulo-9-procedimientos-de-imputación" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>El problema de la no respuesta parcial en encuestas de hogares genera datos faltantes que pueden comprometer la validez de las estimaciones. Este capítulo aborda la identificación de patrones de datos faltantes, su impacto sobre los estimadores y los procedimientos computacionales para mitigarlo mediante técnicas de imputación.</p>
 <p>Se brindan los conceptos técnicos desarrollados de datos faltantes: MCAR, MAR y MNAR como propiedades de la distribución condicional de la matriz indicadora <span class="math inline">\(\boldsymbol{M}\)</span> dado los datos <span class="math inline">\(\boldsymbol{X}\)</span>; identificabilidad del mecanismo e implicaciones para la validez de la inferencia; simulación controlada de datos faltantes bajo cada mecanismo para diagnóstico y evaluación; impacto diferencial sobre distribuciones univariadas y bivariadas del ingreso y el gasto; imputación múltiple <span class="citation">(<a href="#ref-vanbuuren2012flexible">van Buuren, 2018</a>)</span> con el paquete <code>mice</code>; imputación fraccional <span class="citation">(<a href="#ref-kim2004fractional">Kim &amp; Fuller, 2004</a>)</span>; comparación de estimaciones antes y después de la imputación; diagnóstico de la calidad de la imputación mediante análisis de convergencia y comparación de distribuciones; integración con el objeto de diseño muestral para estimación post-imputación válida.</p>
 <p>El lector que los recorra en orden los capítulos habrá construido la capacidad de tomar cualquier encuesta de hogares latinoamericana, entender su diseño, procesar sus datos, estimar los indicadores de interés con la precisión estadística correcta, modelar las relaciones entre variables de manera válida bajo el diseño complejo, y manejar la no respuesta con métodos apropiados. Esa capacidad es, en esencia, lo que la producción rigurosa de estadísticas sociales exige.</p>
@@ -455,6 +461,9 @@ div.csl-indent {
 <!-- </div> -->
 <h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-finch2019multilevel" class="csl-entry">
+Finch, W. H., Bolin, J. E., &amp; Kelley, K. (2019). <em>Multilevel Modeling Using <span>R</span></em> (2.ª ed.). CRC Press.
+</div>
 <div id="ref-kim2004fractional" class="csl-entry">
 Kim, J. K., &amp; Fuller, W. A. (2004). Fractional Hot Deck Imputation. <em>Biometrika</em>, <em>91</em>(3), 559-578. <a href="https://doi.org/10.1093/biomet/91.3.559">https://doi.org/10.1093/biomet/91.3.559</a>
 </div>
@@ -469,6 +478,9 @@ Pfeffermann, D. (1993). The Role of Sampling Weights When Modeling Survey Data. 
 </div>
 <div id="ref-pfeffermann2011modelling" class="csl-entry">
 Pfeffermann, D. (2011). Modelling of complex survey data: <span>W</span>hy model? <span>W</span>hy is it a problem? <span>H</span>ow can we approach it? <em>Survey Methodology</em>, <em>37</em>(2), 115-136.
+</div>
+<div id="ref-pfeffermann1998weighting" class="csl-entry">
+Pfeffermann, D., Skinner, C. J., Holmes, D. J., Goldstein, H., &amp; Rasbash, J. (1998). Weighting for Unequal Selection Probabilities in Multilevel Models. <em>Journal of the Royal Statistical Society: Series B</em>, <em>60</em>(1), 23-40. <a href="https://doi.org/10.1111/1467-9868.00106">https://doi.org/10.1111/1467-9868.00106</a>
 </div>
 <div id="ref-vanbuuren2012flexible" class="csl-entry">
 van Buuren, S. (2018). <em>Flexible Imputation of Missing Data</em> (2.ª ed.). CRC Press. <a href="https://stefvanbuuren.name/fimd/">https://stefvanbuuren.name/fimd/</a>
