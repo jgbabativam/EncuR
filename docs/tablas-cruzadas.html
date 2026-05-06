@@ -620,7 +620,6 @@ IC[\text{logit}(\hat{p})] = \left\{ \ln\left(\frac{\hat{p}}{1-\hat{p}}\right) \p
 <p>Como se puede observar, el 52.3% de las mujeres y el 47.6% son pobres. Generando intervalos de confianza al 95% de (49.2%, 55.5%) para las mujeres y (44.5%, 50.7%) para los hombres.</p>
 <p>En la librería survey existe una alternativa para estimar tablas de contingencias y es utilizando la función <code>svyby</code> como se muestra a continuación, presentada en la Tabla <a href="tablas-cruzadas.html#tab:tab-svyby-pobreza-sexo">5.18</a>:</p>
 <div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="tablas-cruzadas.html#cb136-1" tabindex="-1"></a>tab_Sex_Pobr <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span>Sex, <span class="at">by =</span>  <span class="sc">~</span>pobreza, <span class="at">design =</span> dsg, <span class="at">FUN =</span> svymean) </span></code></pre></div>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="tablas-cruzadas.html#cb137-1" tabindex="-1"></a>tab_Sex_Pobr</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-svyby-pobreza-sexo">Cuadro 5.18: </span>Proporción de hombres y mujeres por condición de pobreza (svyby)</caption>
 <thead>
@@ -654,9 +653,9 @@ IC[\text{logit}(\hat{p})] = \left\{ \ln\left(\frac{\hat{p}}{1-\hat{p}}\right) \p
 </table>
 <p>Como se pudo observar, los argumentos que requiere la función son definir la variable a la cual se desea estimar (formula), las categorías por la cual se desea estimar (by), el diseño muestral (desing) y el parámetro que se desea estimar (FUN). Para la estimación de los intervalos de confianza se utiliza la función <em>confint</em> como sigue:</p>
 <p>Para la estimación de los intervalos de confianza se utiliza la función <code>confint</code>, presentada en la Tabla <a href="tablas-cruzadas.html#tab:tab-confint-sexo-pobreza">5.19</a>:</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="tablas-cruzadas.html#cb138-1" tabindex="-1"></a><span class="fu">confint</span>(tab_Sex_Pobr) <span class="sc">%&gt;%</span> </span>
-<span id="cb138-2"><a href="tablas-cruzadas.html#cb138-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb138-3"><a href="tablas-cruzadas.html#cb138-3" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">&quot;Dominio&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="tablas-cruzadas.html#cb137-1" tabindex="-1"></a><span class="fu">confint</span>(tab_Sex_Pobr) <span class="sc">%&gt;%</span> </span>
+<span id="cb137-2"><a href="tablas-cruzadas.html#cb137-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb137-3"><a href="tablas-cruzadas.html#cb137-3" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">&quot;Dominio&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-confint-sexo-pobreza">Cuadro 5.19: </span>Intervalos de confianza para la proporción por sexo y pobreza</caption>
 <thead>
@@ -691,9 +690,8 @@ IC[\text{logit}(\hat{p})] = \left\{ \ln\left(\frac{\hat{p}}{1-\hat{p}}\right) \p
 </table>
 <p>Los cuales coinciden con los generados anteriormente usando la función <code>group_by</code>.</p>
 <p>Otro análisis de interés relacionado con tablas de doble entrada en encuestas de hogares es estimar el porcentaje de desempleados por sexo, como se muestra en la Tabla <a href="tablas-cruzadas.html#tab:tab-svyby-empleo-sexo">5.20</a>.</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="tablas-cruzadas.html#cb139-1" tabindex="-1"></a>tab_Sex_Ocupa <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span>Sex, <span class="at">by =</span> <span class="sc">~</span>Employment,</span>
-<span id="cb139-2"><a href="tablas-cruzadas.html#cb139-2" tabindex="-1"></a>                       <span class="at">design =</span> diseno, <span class="at">FUN =</span> svymean)</span></code></pre></div>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="tablas-cruzadas.html#cb140-1" tabindex="-1"></a>tab_Sex_Ocupa</span></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="tablas-cruzadas.html#cb138-1" tabindex="-1"></a>tab_Sex_Ocupa <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span>Sex, <span class="at">by =</span> <span class="sc">~</span>Employment,</span>
+<span id="cb138-2"><a href="tablas-cruzadas.html#cb138-2" tabindex="-1"></a>                       <span class="at">design =</span> diseno, <span class="at">FUN =</span> svymean)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-svyby-empleo-sexo">Cuadro 5.20: </span>Proporción de hombres y mujeres por estado de ocupación (svyby)</caption>
 <colgroup>
@@ -742,9 +740,9 @@ IC[\text{logit}(\hat{p})] = \left\{ \ln\left(\frac{\hat{p}}{1-\hat{p}}\right) \p
 </tbody>
 </table>
 <p>De la anterior salida se puede observar que, el 27.2% de las mujeres y el 72.7% de los hombres están desempleados con errores estándares para estas estimaciones de 5.3% para mujeres y hombres. cuyos intervalos de confianza se calculan a continuación, presentada en la Tabla <a href="tablas-cruzadas.html#tab:tab-confint-empleo-sexo">5.21</a>:</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="tablas-cruzadas.html#cb141-1" tabindex="-1"></a><span class="fu">confint</span>(tab_Sex_Ocupa) <span class="sc">%&gt;%</span> </span>
-<span id="cb141-2"><a href="tablas-cruzadas.html#cb141-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb141-3"><a href="tablas-cruzadas.html#cb141-3" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">&quot;Dominio&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="tablas-cruzadas.html#cb139-1" tabindex="-1"></a><span class="fu">confint</span>(tab_Sex_Ocupa) <span class="sc">%&gt;%</span> </span>
+<span id="cb139-2"><a href="tablas-cruzadas.html#cb139-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb139-3"><a href="tablas-cruzadas.html#cb139-3" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">&quot;Dominio&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-confint-empleo-sexo">Cuadro 5.21: </span>Intervalos de confianza para la proporción por sexo y ocupación</caption>
 <thead>
@@ -788,9 +786,8 @@ IC[\text{logit}(\hat{p})] = \left\{ \ln\left(\frac{\hat{p}}{1-\hat{p}}\right) \p
 </tbody>
 </table>
 <p>Si ahora el objetivo es estimar la pobreza, pero por las distintas regiones que se tienen en la base de datos. Primero, dado que la variable <em>pobreza</em> es de tipo numérica, es necesario convertirla en factor y luego realizar la estimación con la función <code>svyby</code>, como se muestra en la Tabla <a href="tablas-cruzadas.html#tab:tab-svyby-region-pobreza">5.22</a>.</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="tablas-cruzadas.html#cb142-1" tabindex="-1"></a>tab_region_pobreza <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span><span class="fu">as.factor</span>(pobreza),  <span class="at">by =</span> <span class="sc">~</span>Region,</span>
-<span id="cb142-2"><a href="tablas-cruzadas.html#cb142-2" tabindex="-1"></a>                            <span class="at">design =</span>  diseno, <span class="at">FUN =</span> svymean)</span>
-<span id="cb142-3"><a href="tablas-cruzadas.html#cb142-3" tabindex="-1"></a>tab_region_pobreza</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="tablas-cruzadas.html#cb140-1" tabindex="-1"></a>tab_region_pobreza <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span><span class="fu">as.factor</span>(pobreza),  <span class="at">by =</span> <span class="sc">~</span>Region,</span>
+<span id="cb140-2"><a href="tablas-cruzadas.html#cb140-2" tabindex="-1"></a>                            <span class="at">design =</span>  diseno, <span class="at">FUN =</span> svymean)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-svyby-region-pobreza">Cuadro 5.22: </span>Proporción en condición de pobreza por región</caption>
 <colgroup>
@@ -885,7 +882,7 @@ X_{RS}^2 = \frac{n_{++}}{GDEFF} \sum_r \sum_c \frac{(\hat{p}_{rc} - \hat{P}_{rc}
 <div id="ejemplo-en-r" class="section level4 hasAnchor" number="5.3.6.3">
 <h4><span class="header-section-number">5.3.6.3</span> Ejemplo en R<a href="tablas-cruzadas.html#ejemplo-en-r" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>El paquete <strong><code>survey</code></strong> en R implementa estas pruebas a través de la función <code>svychisq()</code>, que aplica automáticamente las correcciones de Rao-Scott. A modo de ejemplo, para evaluar si la pobreza es independiente del sexo, se ejecuta:</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="tablas-cruzadas.html#cb143-1" tabindex="-1"></a><span class="fu">svychisq</span>(<span class="at">formula =</span> <span class="sc">~</span>Sex <span class="sc">+</span> pobreza, <span class="at">design =</span> diseno, <span class="at">statistic=</span><span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="tablas-cruzadas.html#cb141-1" tabindex="-1"></a><span class="fu">svychisq</span>(<span class="at">formula =</span> <span class="sc">~</span>Sex <span class="sc">+</span> pobreza, <span class="at">design =</span> diseno, <span class="at">statistic=</span><span class="st">&quot;F&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s X^2: Rao &amp; Scott adjustment
 ## 
@@ -896,13 +893,13 @@ X_{RS}^2 = \frac{n_{++}}{GDEFF} \sum_r \sum_c \frac{(\hat{p}_{rc} - \hat{P}_{rc}
 <li>Si el <strong>p-valor</strong> es inferior al 5%, se rechaza <span class="math inline">\(H_0\)</span>, lo que sugiere dependencia entre las variables.</li>
 </ul>
 <p>De manera similar, se pueden evaluar otras relaciones, como desempleo y sexo o pobreza y región:</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="tablas-cruzadas.html#cb145-1" tabindex="-1"></a><span class="fu">svychisq</span>(<span class="at">formula =</span> <span class="sc">~</span>Sex <span class="sc">+</span> Employment, <span class="at">design =</span> diseno, <span class="at">statistic =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="tablas-cruzadas.html#cb143-1" tabindex="-1"></a><span class="fu">svychisq</span>(<span class="at">formula =</span> <span class="sc">~</span>Sex <span class="sc">+</span> Employment, <span class="at">design =</span> diseno, <span class="at">statistic =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s X^2: Rao &amp; Scott adjustment
 ## 
 ## data:  NextMethod()
 ## F = 62.251, ndf = 1.6865, ddf = 200.6978, p-value &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="tablas-cruzadas.html#cb147-1" tabindex="-1"></a><span class="fu">svychisq</span>(<span class="at">formula =</span> <span class="sc">~</span>Region <span class="sc">+</span> pobreza, <span class="at">design =</span> diseno, <span class="at">statistic =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="tablas-cruzadas.html#cb145-1" tabindex="-1"></a><span class="fu">svychisq</span>(<span class="at">formula =</span> <span class="sc">~</span>Region <span class="sc">+</span> pobreza, <span class="at">design =</span> diseno, <span class="at">statistic =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s X^2: Rao &amp; Scott adjustment
 ## 
@@ -917,9 +914,8 @@ X_{RS}^2 = \frac{n_{++}}{GDEFF} \sum_r \sum_c \frac{(\hat{p}_{rc} - \hat{P}_{rc}
 }
 \]</span></p>
 <p>El procedimiento para realizarlo en <code>R</code> sería, primero estimar las proporciones de la tabla cruzada entre las variables sexo y pobreza, presentada en la Tabla <a href="tablas-cruzadas.html#tab:tab-interaccion-sexo-pobreza">5.23</a>:</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="tablas-cruzadas.html#cb149-1" tabindex="-1"></a>tab_Sex_Pobr <span class="ot">&lt;-</span> <span class="fu">svymean</span>(<span class="at">x =</span> <span class="sc">~</span><span class="fu">interaction</span> (Sex, pobreza), <span class="at">design =</span> diseno, </span>
-<span id="cb149-2"><a href="tablas-cruzadas.html#cb149-2" tabindex="-1"></a>                        <span class="at">se=</span>T, <span class="at">na.rm=</span>T, <span class="at">ci=</span>T, <span class="at">keep.vars=</span>T)</span></code></pre></div>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="tablas-cruzadas.html#cb150-1" tabindex="-1"></a>tab_Sex_Pobr <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="tablas-cruzadas.html#cb147-1" tabindex="-1"></a>tab_Sex_Pobr <span class="ot">&lt;-</span> <span class="fu">svymean</span>(<span class="at">x =</span> <span class="sc">~</span><span class="fu">interaction</span> (Sex, pobreza), <span class="at">design =</span> diseno, </span>
+<span id="cb147-2"><a href="tablas-cruzadas.html#cb147-2" tabindex="-1"></a>                        <span class="at">se=</span>T, <span class="at">na.rm=</span>T, <span class="at">ci=</span>T, <span class="at">keep.vars=</span>T)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-interaccion-sexo-pobreza">Cuadro 5.23: </span>Proporciones conjuntas de sexo y condición de pobreza</caption>
 <thead>
@@ -953,18 +949,17 @@ X_{RS}^2 = \frac{n_{++}}{GDEFF} \sum_r \sum_c \frac{(\hat{p}_{rc} - \hat{P}_{rc}
 </tbody>
 </table>
 <p>Luego, se realiza el contraste dividiendo cada uno de los elementos de la expresión mostrada anteriormente:</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="tablas-cruzadas.html#cb151-1" tabindex="-1"></a><span class="fu">svycontrast</span>(<span class="at">stat =</span> tab_Sex_Pobr, </span>
-<span id="cb151-2"><a href="tablas-cruzadas.html#cb151-2" tabindex="-1"></a><span class="at">contrasts =</span> <span class="fu">quote</span>((<span class="st">`</span><span class="at">interaction(Sex, pobreza)Female.0</span><span class="st">`</span><span class="sc">/</span><span class="st">`</span><span class="at">interaction(Sex, pobreza)Female.1</span><span class="st">`</span>) <span class="sc">/</span>(<span class="st">`</span><span class="at">interaction(Sex, pobreza)Male.0</span><span class="st">`</span><span class="sc">/</span> <span class="st">`</span><span class="at">interaction(Sex, pobreza)Male.1</span><span class="st">`</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="tablas-cruzadas.html#cb148-1" tabindex="-1"></a><span class="fu">svycontrast</span>(<span class="at">stat =</span> tab_Sex_Pobr, </span>
+<span id="cb148-2"><a href="tablas-cruzadas.html#cb148-2" tabindex="-1"></a><span class="at">contrasts =</span> <span class="fu">quote</span>((<span class="st">`</span><span class="at">interaction(Sex, pobreza)Female.0</span><span class="st">`</span><span class="sc">/</span><span class="st">`</span><span class="at">interaction(Sex, pobreza)Female.1</span><span class="st">`</span>) <span class="sc">/</span>(<span class="st">`</span><span class="at">interaction(Sex, pobreza)Male.0</span><span class="st">`</span><span class="sc">/</span> <span class="st">`</span><span class="at">interaction(Sex, pobreza)Male.1</span><span class="st">`</span>)))</span></code></pre></div>
 <pre><code>##           nlcon     SE
 ## contrast 1.0226 0.0961</code></pre>
 <p>Obteniendo que, se estima que el odds de las mujeres que no están en estado de pobreza es 1.02 comparándolo con el odds de los hombres. En otras palabras, se estima que las probabilidades de que las mujeres no estén en estado de pobreza sin tener en cuenta ninguna otra variable de la encuesta es cerca de 2% mayor que las probabilidades de los hombres.</p>
 <p><strong>Diferencia de proporciones en tablas de contingencias</strong></p>
 <p>Según <span class="citation">Heeringa et al. (<a href="#ref-heeringa2017applied">2017</a>)</span>, las estimaciones de las proporciones de las filas en las tablas de doble entrada son, de hecho, estimaciones de subpoblaciones en las que la subpoblación se define por los niveles de la variable factorial. Ahora bien, si el interés se centra en estimar diferencias de las proporciones de las categorías entre dos niveles de una variable factorial, se pueden usar contrastes.</p>
 <p>A manera de ejemplo, se requiere estimar ahora, el contraste de proporciones de mujeres en estado de pobreza versus los hombres en esta misma condición (<span class="math inline">\(\hat{p}_F - \hat{p}_M\)</span>). Para ellos, primero, estimemos la proporción de hombres y mujeres en estado de pobreza como se ha mostrado en capítulos anteriores, presentada en la Tabla <a href="tablas-cruzadas.html#tab:tab-svyby-pobreza-sexo2">5.24</a>:</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="tablas-cruzadas.html#cb153-1" tabindex="-1"></a>tab_sex_pobreza <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span>pobreza, <span class="at">by =</span> <span class="sc">~</span>Sex,</span>
-<span id="cb153-2"><a href="tablas-cruzadas.html#cb153-2" tabindex="-1"></a>                         <span class="at">design =</span> diseno, svymean, <span class="at">na.rm=</span>T,</span>
-<span id="cb153-3"><a href="tablas-cruzadas.html#cb153-3" tabindex="-1"></a>                         <span class="at">covmat =</span> <span class="cn">TRUE</span>, <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>))</span>
-<span id="cb153-4"><a href="tablas-cruzadas.html#cb153-4" tabindex="-1"></a>tab_sex_pobreza</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="tablas-cruzadas.html#cb150-1" tabindex="-1"></a>tab_sex_pobreza <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span>pobreza, <span class="at">by =</span> <span class="sc">~</span>Sex,</span>
+<span id="cb150-2"><a href="tablas-cruzadas.html#cb150-2" tabindex="-1"></a>                         <span class="at">design =</span> diseno, svymean, <span class="at">na.rm=</span>T,</span>
+<span id="cb150-3"><a href="tablas-cruzadas.html#cb150-3" tabindex="-1"></a>                         <span class="at">covmat =</span> <span class="cn">TRUE</span>, <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-svyby-pobreza-sexo2">Cuadro 5.24: </span>Proporción en condición de pobreza por sexo</caption>
 <thead>
@@ -1000,11 +995,11 @@ X_{RS}^2 = \frac{n_{++}}{GDEFF} \sum_r \sum_c \frac{(\hat{p}_{rc} - \hat{P}_{rc}
 <ul>
 <li><em>Paso 1:</em> Calcular la diferencia de estimaciones</li>
 </ul>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="tablas-cruzadas.html#cb154-1" tabindex="-1"></a><span class="fl">0.3892</span> <span class="sc">-</span> <span class="fl">0.3946</span>          </span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="tablas-cruzadas.html#cb151-1" tabindex="-1"></a><span class="fl">0.3892</span> <span class="sc">-</span> <span class="fl">0.3946</span>          </span></code></pre></div>
 <pre><code>## [1] -0.0054</code></pre>
 <p>Con la función <code>vcov</code> se obtiene la matriz de covarianzas, presentada en la Tabla <a href="tablas-cruzadas.html#tab:tab-vcov-sex-pobreza">5.25</a>:</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="tablas-cruzadas.html#cb156-1" tabindex="-1"></a><span class="fu">vcov</span>(tab_sex_pobreza) <span class="sc">%&gt;%</span></span>
-<span id="cb156-2"><a href="tablas-cruzadas.html#cb156-2" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="tablas-cruzadas.html#cb153-1" tabindex="-1"></a><span class="fu">vcov</span>(tab_sex_pobreza) <span class="sc">%&gt;%</span></span>
+<span id="cb153-2"><a href="tablas-cruzadas.html#cb153-2" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-vcov-sex-pobreza">Cuadro 5.25: </span>Matriz de varianzas y covarianzas de la proporción de pobreza por sexo</caption>
 <thead>
@@ -1030,21 +1025,20 @@ X_{RS}^2 = \frac{n_{++}}{GDEFF} \sum_r \sum_c \frac{(\hat{p}_{rc} - \hat{P}_{rc}
 <ul>
 <li><em>Paso 2:</em> El cálculo del error estándar es:</li>
 </ul>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="tablas-cruzadas.html#cb157-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.0009983</span> <span class="sc">+</span> <span class="fl">0.0013416</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="fl">0.0009183</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="tablas-cruzadas.html#cb154-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.0009983</span> <span class="sc">+</span> <span class="fl">0.0013416</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="fl">0.0009183</span>)</span></code></pre></div>
 <pre><code>## [1] 0.02243435</code></pre>
 <p>Ahora bien, aplicando la función <code>svycontrast</code> se puede obtener la estimación de la diferencia de proporciones anterior:</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="tablas-cruzadas.html#cb159-1" tabindex="-1"></a><span class="fu">svycontrast</span>(tab_sex_pobreza,</span>
-<span id="cb159-2"><a href="tablas-cruzadas.html#cb159-2" tabindex="-1"></a>            <span class="fu">list</span>(<span class="at">diff_Sex =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb159-3"><a href="tablas-cruzadas.html#cb159-3" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="tablas-cruzadas.html#cb156-1" tabindex="-1"></a><span class="fu">svycontrast</span>(tab_sex_pobreza,</span>
+<span id="cb156-2"><a href="tablas-cruzadas.html#cb156-2" tabindex="-1"></a>            <span class="fu">list</span>(<span class="at">diff_Sex =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb156-3"><a href="tablas-cruzadas.html#cb156-3" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span></code></pre></div>
 <pre><code>##              contrast   diff_Sex
 ## diff_Sex -0.005322297 0.02243418</code></pre>
 <p>De lo que se concluye que, la diferencia entre las proporciones de mujeres y hombres en estado de pobreza es -0.005 (-0.5%) con una desviación estándar de 0.022.</p>
 <p>Otro ejercicio de interés en un análisis de encuestas de hogares es verificar la diferencia del desempleo por sexo. Al igual que el ejemplo anterior, se inicia con la estimación del porcentaje de desempleados por sexo, presentada en la Tabla <a href="tablas-cruzadas.html#tab:tab-svyby-desempleo-sexo">5.26</a>:</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="tablas-cruzadas.html#cb161-1" tabindex="-1"></a>tab_sex_desempleo <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span>desempleo, <span class="at">by =</span> <span class="sc">~</span>Sex,</span>
-<span id="cb161-2"><a href="tablas-cruzadas.html#cb161-2" tabindex="-1"></a>                           <span class="at">design  =</span> diseno <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(desempleo)),</span>
-<span id="cb161-3"><a href="tablas-cruzadas.html#cb161-3" tabindex="-1"></a>                           <span class="at">FUN     =</span> svymean, <span class="at">na.rm=</span>T, <span class="at">covmat =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb161-4"><a href="tablas-cruzadas.html#cb161-4" tabindex="-1"></a>                           <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>))</span>
-<span id="cb161-5"><a href="tablas-cruzadas.html#cb161-5" tabindex="-1"></a>tab_sex_desempleo</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="tablas-cruzadas.html#cb158-1" tabindex="-1"></a>tab_sex_desempleo <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span>desempleo, <span class="at">by =</span> <span class="sc">~</span>Sex,</span>
+<span id="cb158-2"><a href="tablas-cruzadas.html#cb158-2" tabindex="-1"></a>                           <span class="at">design  =</span> diseno <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(desempleo)),</span>
+<span id="cb158-3"><a href="tablas-cruzadas.html#cb158-3" tabindex="-1"></a>                           <span class="at">FUN     =</span> svymean, <span class="at">na.rm=</span>T, <span class="at">covmat =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb158-4"><a href="tablas-cruzadas.html#cb158-4" tabindex="-1"></a>                           <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-svyby-desempleo-sexo">Cuadro 5.26: </span>Proporción en condición de desempleo por sexo</caption>
 <thead>
@@ -1080,11 +1074,11 @@ X_{RS}^2 = \frac{n_{++}}{GDEFF} \sum_r \sum_c \frac{(\hat{p}_{rc} - \hat{P}_{rc}
 <ul>
 <li><em>Paso 1</em>: Diferencia de las estimaciones</li>
 </ul>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="tablas-cruzadas.html#cb162-1" tabindex="-1"></a><span class="fl">0.02169</span> <span class="sc">-</span> <span class="fl">0.06783</span>   </span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="tablas-cruzadas.html#cb159-1" tabindex="-1"></a><span class="fl">0.02169</span> <span class="sc">-</span> <span class="fl">0.06783</span>   </span></code></pre></div>
 <pre><code>## [1] -0.04614</code></pre>
 <p>Estimación de la matriz de covarianza, presentada en la Tabla <a href="tablas-cruzadas.html#tab:tab-vcov-sex-desempleo">5.27</a>:</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="tablas-cruzadas.html#cb164-1" tabindex="-1"></a><span class="fu">vcov</span>(tab_sex_desempleo) <span class="sc">%&gt;%</span></span>
-<span id="cb164-2"><a href="tablas-cruzadas.html#cb164-2" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="tablas-cruzadas.html#cb161-1" tabindex="-1"></a><span class="fu">vcov</span>(tab_sex_desempleo) <span class="sc">%&gt;%</span></span>
+<span id="cb161-2"><a href="tablas-cruzadas.html#cb161-2" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-vcov-sex-desempleo">Cuadro 5.27: </span>Matriz de varianzas y covarianzas de la proporción de desempleo por sexo</caption>
 <thead>
@@ -1110,21 +1104,20 @@ X_{RS}^2 = \frac{n_{++}}{GDEFF} \sum_r \sum_c \frac{(\hat{p}_{rc} - \hat{P}_{rc}
 <ul>
 <li><em>Paso 2</em>: Estimación del error estándar.</li>
 </ul>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="tablas-cruzadas.html#cb165-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.00003114</span>  <span class="sc">+</span> <span class="fl">0.00014789</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="fl">0.00002081</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="tablas-cruzadas.html#cb162-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.00003114</span>  <span class="sc">+</span> <span class="fl">0.00014789</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="fl">0.00002081</span>)</span></code></pre></div>
 <pre><code>## [1] 0.0117222</code></pre>
 <p>Siguiendo el ejemplo anterior, utilizando la función <code>svycontrast</code> se tiene que:</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="tablas-cruzadas.html#cb167-1" tabindex="-1"></a><span class="fu">svycontrast</span>(tab_sex_desempleo,</span>
-<span id="cb167-2"><a href="tablas-cruzadas.html#cb167-2" tabindex="-1"></a>            <span class="fu">list</span>(<span class="at">diff_Sex =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb167-3"><a href="tablas-cruzadas.html#cb167-3" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="tablas-cruzadas.html#cb164-1" tabindex="-1"></a><span class="fu">svycontrast</span>(tab_sex_desempleo,</span>
+<span id="cb164-2"><a href="tablas-cruzadas.html#cb164-2" tabindex="-1"></a>            <span class="fu">list</span>(<span class="at">diff_Sex =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb164-3"><a href="tablas-cruzadas.html#cb164-3" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span></code></pre></div>
 <pre><code>##            contrast   diff_Sex
 ## diff_Sex 0.04613982 0.01172195</code></pre>
 <p>de lo que se concluye que, la estimación del contraste es 0.04 (4%) con un error estándar de 0.011.</p>
 <p>Otro ejercicio que se puede realizar en una encuesta de hogares es ahora estimar la proporción de desempleados por región. Para la realización de este ejercicio, se seguirán los pasos de los dos ejemplos anteriores, presentada en la Tabla <a href="tablas-cruzadas.html#tab:tab-svyby-desempleo-region">5.28</a>:</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="tablas-cruzadas.html#cb169-1" tabindex="-1"></a>tab_region_desempleo <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span>  <span class="sc">~</span>desempleo, <span class="at">by =</span> <span class="sc">~</span>Region,</span>
-<span id="cb169-2"><a href="tablas-cruzadas.html#cb169-2" tabindex="-1"></a>                              <span class="at">design  =</span> diseno <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(desempleo)),</span>
-<span id="cb169-3"><a href="tablas-cruzadas.html#cb169-3" tabindex="-1"></a>                              <span class="at">FUN     =</span> svymean, <span class="at">na.rm=</span>T, <span class="at">covmat =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb169-4"><a href="tablas-cruzadas.html#cb169-4" tabindex="-1"></a>                              <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>))</span>
-<span id="cb169-5"><a href="tablas-cruzadas.html#cb169-5" tabindex="-1"></a>tab_region_desempleo</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="tablas-cruzadas.html#cb166-1" tabindex="-1"></a>tab_region_desempleo <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span>  <span class="sc">~</span>desempleo, <span class="at">by =</span> <span class="sc">~</span>Region,</span>
+<span id="cb166-2"><a href="tablas-cruzadas.html#cb166-2" tabindex="-1"></a>                              <span class="at">design  =</span> diseno <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(desempleo)),</span>
+<span id="cb166-3"><a href="tablas-cruzadas.html#cb166-3" tabindex="-1"></a>                              <span class="at">FUN     =</span> svymean, <span class="at">na.rm=</span>T, <span class="at">covmat =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb166-4"><a href="tablas-cruzadas.html#cb166-4" tabindex="-1"></a>                              <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-svyby-desempleo-region">Cuadro 5.28: </span>Proporción en condición de desempleo por región</caption>
 <thead>
@@ -1193,31 +1186,84 @@ X_{RS}^2 = \frac{n_{++}}{GDEFF} \sum_r \sum_c \frac{(\hat{p}_{rc} - \hat{P}_{rc}
 \end{array}\right]
 \]</span></p>
 <p>La matriz de varianzas y covarianzas es:</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="tablas-cruzadas.html#cb170-1" tabindex="-1"></a><span class="fu">vcov</span>(tab_region_desempleo) <span class="sc">%&gt;%</span></span>
-<span id="cb170-2"><a href="tablas-cruzadas.html#cb170-2" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb170-3"><a href="tablas-cruzadas.html#cb170-3" tabindex="-1"></a>  <span class="fu">tabla_fmt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="tablas-cruzadas.html#cb167-1" tabindex="-1"></a><span class="fu">vcov</span>(tab_region_desempleo) <span class="sc">%&gt;%</span></span>
+<span id="cb167-2"><a href="tablas-cruzadas.html#cb167-2" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Norte</th>
+<th align="center">Sur</th>
+<th align="center">Centro</th>
+<th align="center">Occidente</th>
+<th align="center">Oriente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Norte</td>
+<td align="left">0</td>
+<td align="center">0.000</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="left">Sur</td>
+<td align="left">0</td>
+<td align="center">0.001</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Centro</td>
+<td align="left">0</td>
+<td align="center">0.000</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="left">Occidente</td>
+<td align="left">0</td>
+<td align="center">0.000</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Oriente</td>
+<td align="left">0</td>
+<td align="center">0.000</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
 <p>Por tanto, la varianza estimada está dada por:</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="tablas-cruzadas.html#cb171-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.0002981</span> <span class="sc">+</span> <span class="fl">0.0002884</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="tablas-cruzadas.html#cb168-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.0002981</span> <span class="sc">+</span> <span class="fl">0.0002884</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="dv">0</span>)</span></code></pre></div>
 <pre><code>## [1] 0.02421776</code></pre>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="tablas-cruzadas.html#cb173-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.0001968</span> <span class="sc">+</span> <span class="fl">0.0002884</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="tablas-cruzadas.html#cb170-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.0001968</span> <span class="sc">+</span> <span class="fl">0.0002884</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="dv">0</span>)</span></code></pre></div>
 <pre><code>## [1] 0.02202726</code></pre>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="tablas-cruzadas.html#cb175-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.0001267</span> <span class="sc">+</span> <span class="fl">0.0004093</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="tablas-cruzadas.html#cb172-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.0001267</span> <span class="sc">+</span> <span class="fl">0.0004093</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="dv">0</span>)</span></code></pre></div>
 <pre><code>## [1] 0.02315167</code></pre>
 <p>Usando la función <code>svycontrast</code>, la estimación de los contrastes sería:</p>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="tablas-cruzadas.html#cb177-1" tabindex="-1"></a><span class="fu">svycontrast</span>(tab_region_desempleo, <span class="fu">list</span>(</span>
-<span id="cb177-2"><a href="tablas-cruzadas.html#cb177-2" tabindex="-1"></a>                             <span class="at">Norte_sur =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb177-3"><a href="tablas-cruzadas.html#cb177-3" tabindex="-1"></a>                             <span class="at">Sur_centro =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb177-4"><a href="tablas-cruzadas.html#cb177-4" tabindex="-1"></a>                             <span class="at">Occidente_Oriente =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="tablas-cruzadas.html#cb174-1" tabindex="-1"></a><span class="fu">svycontrast</span>(tab_region_desempleo, <span class="fu">list</span>(</span>
+<span id="cb174-2"><a href="tablas-cruzadas.html#cb174-2" tabindex="-1"></a>                             <span class="at">Norte_sur =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb174-3"><a href="tablas-cruzadas.html#cb174-3" tabindex="-1"></a>                             <span class="at">Sur_centro =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb174-4"><a href="tablas-cruzadas.html#cb174-4" tabindex="-1"></a>                             <span class="at">Occidente_Oriente =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()</span></code></pre></div>
 <pre><code>##                     contrast         SE
 ## Norte_sur         0.01004463 0.02355327
 ## Sur_centro        0.02690618 0.02679477
 ## Occidente_Oriente 0.01046292 0.01758365</code></pre>
 <p>Por último, repitiendo el contraste anterior y los pasos para resolverlo, pero ahora utilizando la variable pobreza se tiene, presentada en la Tabla <a href="tablas-cruzadas.html#tab:tab-svyby-pobreza-region">5.29</a>:</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="tablas-cruzadas.html#cb179-1" tabindex="-1"></a>tab_region_pobreza <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span>pobreza, <span class="at">by =</span> <span class="sc">~</span>Region,</span>
-<span id="cb179-2"><a href="tablas-cruzadas.html#cb179-2" tabindex="-1"></a>                            <span class="at">design =</span> diseno <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(desempleo)),</span>
-<span id="cb179-3"><a href="tablas-cruzadas.html#cb179-3" tabindex="-1"></a>                            <span class="at">FUN =</span> svymean, <span class="at">na.rm=</span>T, <span class="at">covmat =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb179-4"><a href="tablas-cruzadas.html#cb179-4" tabindex="-1"></a>                            <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>))</span>
-<span id="cb179-5"><a href="tablas-cruzadas.html#cb179-5" tabindex="-1"></a>tab_region_pobreza</span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="tablas-cruzadas.html#cb176-1" tabindex="-1"></a>tab_region_pobreza <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="at">formula =</span> <span class="sc">~</span>pobreza, <span class="at">by =</span> <span class="sc">~</span>Region,</span>
+<span id="cb176-2"><a href="tablas-cruzadas.html#cb176-2" tabindex="-1"></a>                            <span class="at">design =</span> diseno <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(desempleo)),</span>
+<span id="cb176-3"><a href="tablas-cruzadas.html#cb176-3" tabindex="-1"></a>                            <span class="at">FUN =</span> svymean, <span class="at">na.rm=</span>T, <span class="at">covmat =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb176-4"><a href="tablas-cruzadas.html#cb176-4" tabindex="-1"></a>                            <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>))</span>
+<span id="cb176-5"><a href="tablas-cruzadas.html#cb176-5" tabindex="-1"></a>tab_region_pobreza</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-svyby-pobreza-region">Cuadro 5.29: </span>Proporción en condición de pobreza por región</caption>
 <thead>
@@ -1286,10 +1332,10 @@ X_{RS}^2 = \frac{n_{++}}{GDEFF} \sum_r \sum_c \frac{(\hat{p}_{rc} - \hat{P}_{rc}
 \end{array}\right]
 \]</span></p>
 <p>Y, utilizando la función <code>svycontrast</code> se obtiene:</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="tablas-cruzadas.html#cb180-1" tabindex="-1"></a><span class="fu">svycontrast</span>(tab_region_pobreza, <span class="fu">list</span>(</span>
-<span id="cb180-2"><a href="tablas-cruzadas.html#cb180-2" tabindex="-1"></a>                <span class="at">Norte_sur =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb180-3"><a href="tablas-cruzadas.html#cb180-3" tabindex="-1"></a>                <span class="at">Sur_centro =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb180-4"><a href="tablas-cruzadas.html#cb180-4" tabindex="-1"></a>                <span class="at">Occidente_Oriente =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="tablas-cruzadas.html#cb177-1" tabindex="-1"></a><span class="fu">svycontrast</span>(tab_region_pobreza, <span class="fu">list</span>(</span>
+<span id="cb177-2"><a href="tablas-cruzadas.html#cb177-2" tabindex="-1"></a>                <span class="at">Norte_sur =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb177-3"><a href="tablas-cruzadas.html#cb177-3" tabindex="-1"></a>                <span class="at">Sur_centro =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb177-4"><a href="tablas-cruzadas.html#cb177-4" tabindex="-1"></a>                <span class="at">Occidente_Oriente =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()</span></code></pre></div>
 <pre><code>##                       contrast         SE
 ## Norte_sur          0.002888908 0.08663389
 ## Sur_centro        -0.028718759 0.08660027

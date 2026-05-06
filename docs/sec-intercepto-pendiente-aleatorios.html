@@ -425,15 +425,15 @@ Ingreso_{ij} = \beta_{0j} + \beta_{1j} Gasto_{ij} + \epsilon_{ij}
 \beta_{1j} = \gamma_{10} + \gamma_{11} Stratum_j + \tau_{1j}
 \]</span></p>
 <p>El ajuste en <code>R</code> es:</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb318-1" tabindex="-1"></a>mod_Pen_Aleatorio <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Income <span class="sc">~</span> Expenditure <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Expenditure <span class="sc">|</span> Stratum),</span>
-<span id="cb318-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb318-2" tabindex="-1"></a>                          <span class="at">data =</span> encuesta, <span class="at">weights =</span> wk2)</span>
-<span id="cb318-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb318-3" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(mod_Pen_Aleatorio)</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb315-1" tabindex="-1"></a>mod_Pen_Aleatorio <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Income <span class="sc">~</span> Expenditure <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Expenditure <span class="sc">|</span> Stratum),</span>
+<span id="cb315-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb315-2" tabindex="-1"></a>                          <span class="at">data =</span> encuesta, <span class="at">weights =</span> wk2)</span>
+<span id="cb315-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb315-3" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(mod_Pen_Aleatorio)</span></code></pre></div>
 <pre><code>## # Intraclass Correlation Coefficient
 ## 
 ##     Adjusted ICC: 0.702
 ##   Unadjusted ICC: 0.465</code></pre>
 <p>Los coeficientes del modelo por estrato se presentan en la Tabla <a href="sec-intercepto-pendiente-aleatorios.html#tab:tab-coef-pendiente-aleatoria">8.7</a>:</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb320-1" tabindex="-1"></a><span class="fu">coef</span>(mod_Pen_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L)</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb317-1" tabindex="-1"></a><span class="fu">coef</span>(mod_Pen_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-coef-pendiente-aleatoria">Cuadro 8.7: </span>Coeficientes del modelo con intercepto y pendiente aleatoria por estrato (primeros 10 estratos)</caption>
 <thead>
@@ -497,20 +497,20 @@ Ingreso_{ij} = \beta_{0j} + \beta_{1j} Gasto_{ij} + \epsilon_{ij}
 </tbody>
 </table>
 <p>La Figura <a href="sec-intercepto-pendiente-aleatorios.html#fig:fig-pendiente-aleatoria">8.9</a> presenta las rectas estimadas por estrato:</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb321-1" tabindex="-1"></a>Coef_Estimado <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(</span>
-<span id="cb321-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb321-2" tabindex="-1"></a>  <span class="fu">coef</span>(mod_Pen_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;Stratum&quot;</span>),</span>
-<span id="cb321-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb321-3" tabindex="-1"></a>  encuesta_plot <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Stratum) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>()</span>
-<span id="cb321-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb321-4" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encuesta_plot,</span>
-<span id="cb322-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Income, <span class="at">x =</span> Expenditure, <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
-<span id="cb322-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-3" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
-<span id="cb322-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">data =</span> Coef_Estimado,</span>
-<span id="cb322-5"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-5" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">slope =</span> Expenditure,</span>
-<span id="cb322-6"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-6" tabindex="-1"></a>                            <span class="at">intercept =</span> <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span>,</span>
-<span id="cb322-7"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-7" tabindex="-1"></a>                            <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
-<span id="cb322-8"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
-<span id="cb322-9"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-9" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
-<span id="cb322-10"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-10" tabindex="-1"></a>  <span class="fu">theme_cepal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb318-1" tabindex="-1"></a>Coef_Estimado <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(</span>
+<span id="cb318-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb318-2" tabindex="-1"></a>  <span class="fu">coef</span>(mod_Pen_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;Stratum&quot;</span>),</span>
+<span id="cb318-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb318-3" tabindex="-1"></a>  encuesta_plot <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Stratum) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>()</span>
+<span id="cb318-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb318-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb319-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encuesta_plot,</span>
+<span id="cb319-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb319-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Income, <span class="at">x =</span> Expenditure, <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
+<span id="cb319-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb319-3" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb319-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb319-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">data =</span> Coef_Estimado,</span>
+<span id="cb319-5"><a href="sec-intercepto-pendiente-aleatorios.html#cb319-5" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">slope =</span> Expenditure,</span>
+<span id="cb319-6"><a href="sec-intercepto-pendiente-aleatorios.html#cb319-6" tabindex="-1"></a>                            <span class="at">intercept =</span> <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span>,</span>
+<span id="cb319-7"><a href="sec-intercepto-pendiente-aleatorios.html#cb319-7" tabindex="-1"></a>                            <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
+<span id="cb319-8"><a href="sec-intercepto-pendiente-aleatorios.html#cb319-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb319-9"><a href="sec-intercepto-pendiente-aleatorios.html#cb319-9" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb319-10"><a href="sec-intercepto-pendiente-aleatorios.html#cb319-10" tabindex="-1"></a>  <span class="fu">theme_cepal</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-pendiente-aleatoria"></span>
 <img src="08-Multinivel_files/figure-html/fig-pendiente-aleatoria-1.svg" alt="Rectas de regresión estimadas por estrato: modelo con intercepto y pendiente aleatoria" width="70%" />
 <p class="caption">
@@ -518,10 +518,10 @@ Figura 8.9: Rectas de regresión estimadas por estrato: modelo con intercepto y 
 </p>
 </div>
 <p>Las predicciones de este modelo se recogen en la Tabla <a href="sec-intercepto-pendiente-aleatorios.html#tab:tab-pred-pendiente-aleatoria">8.8</a>:</p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb323-1" tabindex="-1"></a>tab_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(  Predicción <span class="ot">=</span> <span class="fu">predict</span>(mod_Pen_Aleatorio),</span>
-<span id="cb323-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb323-2" tabindex="-1"></a>  <span class="at">Ingreso    =</span> encuesta<span class="sc">$</span>Income,</span>
-<span id="cb323-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb323-3" tabindex="-1"></a>  <span class="at">Estrato    =</span> encuesta<span class="sc">$</span>Stratum</span>
-<span id="cb323-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb323-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb320-1" tabindex="-1"></a>tab_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(  Predicción <span class="ot">=</span> <span class="fu">predict</span>(mod_Pen_Aleatorio),</span>
+<span id="cb320-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb320-2" tabindex="-1"></a>  <span class="at">Ingreso    =</span> encuesta<span class="sc">$</span>Income,</span>
+<span id="cb320-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb320-3" tabindex="-1"></a>  <span class="at">Estrato    =</span> encuesta<span class="sc">$</span>Stratum</span>
+<span id="cb320-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb320-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-pred-pendiente-aleatoria">Cuadro 8.8: </span>Predicciones del modelo con intercepto y pendiente aleatoria (primeras 6 observaciones)</caption>
 <thead>
@@ -572,12 +572,12 @@ Figura 8.9: Rectas de regresión estimadas por estrato: modelo con intercepto y 
 </tbody>
 </table>
 <p>La Figura <a href="sec-intercepto-pendiente-aleatorios.html#fig:fig-pred-pendiente-aleatoria">8.10</a> muestra que la calidad predictiva mejora respecto a los modelos anteriores:</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb324-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tab_pred,</span>
-<span id="cb324-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb324-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Predicción, <span class="at">y =</span> Ingreso, <span class="at">colour =</span> Estrato)) <span class="sc">+</span></span>
-<span id="cb324-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb324-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb324-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb324-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb324-5"><a href="sec-intercepto-pendiente-aleatorios.html#cb324-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb324-6"><a href="sec-intercepto-pendiente-aleatorios.html#cb324-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb321-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tab_pred,</span>
+<span id="cb321-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb321-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Predicción, <span class="at">y =</span> Ingreso, <span class="at">colour =</span> Estrato)) <span class="sc">+</span></span>
+<span id="cb321-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb321-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb321-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb321-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb321-5"><a href="sec-intercepto-pendiente-aleatorios.html#cb321-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb321-6"><a href="sec-intercepto-pendiente-aleatorios.html#cb321-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-pred-pendiente-aleatoria"></span>
 <img src="08-Multinivel_files/figure-html/fig-pred-pendiente-aleatoria-1.svg" alt="Predicciones del modelo con intercepto y pendiente aleatoria versus ingreso observado. La línea roja indica ajuste perfecto." width="70%" />
 <p class="caption">
@@ -601,21 +601,21 @@ Ingreso_{ij} = \beta_{0j} + \beta_{1j} Gasto_{ij} + \beta_{2j} Zona_{ij} + \epsi
 \beta_{2j} = \gamma_{20} + \gamma_{21} Stratum_j + \gamma_{22} \mu_j + \tau_{2j}
 \]</span></p>
 <p>donde <span class="math inline">\(\mu_j\)</span> es el gasto medio de los hogares en el estrato <span class="math inline">\(j\)</span>.</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb325-1" tabindex="-1"></a>media_estrato <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb325-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb325-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
-<span id="cb325-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb325-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu =</span> <span class="fu">mean</span>(Expenditure))</span>
-<span id="cb325-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb325-4" tabindex="-1"></a></span>
-<span id="cb325-5"><a href="sec-intercepto-pendiente-aleatorios.html#cb325-5" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(encuesta, media_estrato, <span class="at">by =</span> <span class="st">&quot;Stratum&quot;</span>)</span>
-<span id="cb325-6"><a href="sec-intercepto-pendiente-aleatorios.html#cb325-6" tabindex="-1"></a></span>
-<span id="cb325-7"><a href="sec-intercepto-pendiente-aleatorios.html#cb325-7" tabindex="-1"></a>mod_Pen_Aleatorio2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb325-8"><a href="sec-intercepto-pendiente-aleatorios.html#cb325-8" tabindex="-1"></a>  Income <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Expenditure <span class="sc">+</span> Zone <span class="sc">+</span> mu <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Expenditure <span class="sc">+</span> Zone <span class="sc">+</span> mu <span class="sc">|</span> Stratum),</span>
-<span id="cb325-9"><a href="sec-intercepto-pendiente-aleatorios.html#cb325-9" tabindex="-1"></a>  <span class="at">data =</span> encuesta, <span class="at">weights =</span> wk2</span>
-<span id="cb325-10"><a href="sec-intercepto-pendiente-aleatorios.html#cb325-10" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-1" tabindex="-1"></a>media_estrato <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb322-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
+<span id="cb322-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu =</span> <span class="fu">mean</span>(Expenditure))</span>
+<span id="cb322-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-4" tabindex="-1"></a></span>
+<span id="cb322-5"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-5" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(encuesta, media_estrato, <span class="at">by =</span> <span class="st">&quot;Stratum&quot;</span>)</span>
+<span id="cb322-6"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-6" tabindex="-1"></a></span>
+<span id="cb322-7"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-7" tabindex="-1"></a>mod_Pen_Aleatorio2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
+<span id="cb322-8"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-8" tabindex="-1"></a>  Income <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Expenditure <span class="sc">+</span> Zone <span class="sc">+</span> mu <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Expenditure <span class="sc">+</span> Zone <span class="sc">+</span> mu <span class="sc">|</span> Stratum),</span>
+<span id="cb322-9"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-9" tabindex="-1"></a>  <span class="at">data =</span> encuesta, <span class="at">weights =</span> wk2</span>
+<span id="cb322-10"><a href="sec-intercepto-pendiente-aleatorios.html#cb322-10" tabindex="-1"></a>)</span></code></pre></div>
 <p>Las predicciones del modelo se presentan en la Tabla <a href="sec-intercepto-pendiente-aleatorios.html#tab:tab-pred-zona">8.9</a>:</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb326-1" tabindex="-1"></a>tab_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(  Predicción <span class="ot">=</span> <span class="fu">predict</span>(mod_Pen_Aleatorio2),</span>
-<span id="cb326-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb326-2" tabindex="-1"></a>  <span class="at">Ingreso    =</span> encuesta<span class="sc">$</span>Income,</span>
-<span id="cb326-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb326-3" tabindex="-1"></a>  <span class="at">Estrato    =</span> encuesta<span class="sc">$</span>Stratum</span>
-<span id="cb326-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb326-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb323-1" tabindex="-1"></a>tab_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(  Predicción <span class="ot">=</span> <span class="fu">predict</span>(mod_Pen_Aleatorio2),</span>
+<span id="cb323-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb323-2" tabindex="-1"></a>  <span class="at">Ingreso    =</span> encuesta<span class="sc">$</span>Income,</span>
+<span id="cb323-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb323-3" tabindex="-1"></a>  <span class="at">Estrato    =</span> encuesta<span class="sc">$</span>Stratum</span>
+<span id="cb323-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb323-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-pred-zona">Cuadro 8.9: </span>Predicciones del modelo con zona y gasto medio por estrato (primeras 6 observaciones)</caption>
 <thead>
@@ -666,12 +666,12 @@ Ingreso_{ij} = \beta_{0j} + \beta_{1j} Gasto_{ij} + \beta_{2j} Zona_{ij} + \epsi
 </tbody>
 </table>
 <p>La Figura <a href="sec-intercepto-pendiente-aleatorios.html#fig:fig-pred-zona">8.11</a> muestra que la inclusión de la variable zona mejora marginalmente la calidad predictiva:</p>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb327-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tab_pred,</span>
-<span id="cb327-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb327-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Predicción, <span class="at">y =</span> Ingreso, <span class="at">colour =</span> Estrato)) <span class="sc">+</span></span>
-<span id="cb327-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb327-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb327-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb327-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb327-5"><a href="sec-intercepto-pendiente-aleatorios.html#cb327-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb327-6"><a href="sec-intercepto-pendiente-aleatorios.html#cb327-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb324-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tab_pred,</span>
+<span id="cb324-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb324-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Predicción, <span class="at">y =</span> Ingreso, <span class="at">colour =</span> Estrato)) <span class="sc">+</span></span>
+<span id="cb324-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb324-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb324-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb324-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb324-5"><a href="sec-intercepto-pendiente-aleatorios.html#cb324-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb324-6"><a href="sec-intercepto-pendiente-aleatorios.html#cb324-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-pred-zona"></span>
 <img src="08-Multinivel_files/figure-html/fig-pred-zona-1.svg" alt="Predicciones del modelo con zona versus ingreso observado por estrato. La línea roja indica ajuste perfecto." width="70%" />
 <p class="caption">
@@ -679,8 +679,8 @@ Figura 8.11: Predicciones del modelo con zona versus ingreso observado por estra
 </p>
 </div>
 <p>Para escribir el modelo ajustado de forma explícita, se construye la matriz de diseño y la matriz de coeficientes por estrato. La Tabla <a href="sec-intercepto-pendiente-aleatorios.html#tab:tab-matriz-diseno">8.10</a> presenta las combinaciones únicas de la matriz de diseño para las primeras 7 filas:</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb328-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">model.matrix</span>(mod_Pen_Aleatorio2)) <span class="sc">%&gt;%</span></span>
-<span id="cb328-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb328-2" tabindex="-1"></a>  <span class="fu">distinct</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb325-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">model.matrix</span>(mod_Pen_Aleatorio2)) <span class="sc">%&gt;%</span></span>
+<span id="cb325-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb325-2" tabindex="-1"></a>  <span class="fu">distinct</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-matriz-diseno">Cuadro 8.10: </span>Combinaciones únicas de la matriz de diseño del modelo con zona</caption>
 <thead>
@@ -755,10 +755,10 @@ Figura 8.11: Predicciones del modelo con zona versus ingreso observado por estra
 </tbody>
 </table>
 <p>La Tabla <a href="sec-intercepto-pendiente-aleatorios.html#tab:tab-coef-zona">8.11</a> muestra los coeficientes estimados por estrato y zona:</p>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-1" tabindex="-1"></a>Coef_Estimado <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(</span>
-<span id="cb329-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-2" tabindex="-1"></a>  <span class="fu">coef</span>(mod_Pen_Aleatorio2)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;Stratum&quot;</span>),</span>
-<span id="cb329-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-3" tabindex="-1"></a>  encuesta_plot <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Stratum, Zone) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>()</span>
-<span id="cb329-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb326-1" tabindex="-1"></a>Coef_Estimado <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(</span>
+<span id="cb326-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb326-2" tabindex="-1"></a>  <span class="fu">coef</span>(mod_Pen_Aleatorio2)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;Stratum&quot;</span>),</span>
+<span id="cb326-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb326-3" tabindex="-1"></a>  encuesta_plot <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Stratum, Zone) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>()</span>
+<span id="cb326-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb326-4" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-coef-zona">Cuadro 8.11: </span>Coeficientes estimados por estrato y zona en el modelo con gasto medio contextual</caption>
 <thead>
@@ -822,19 +822,19 @@ Figura 8.11: Predicciones del modelo con zona versus ingreso observado por estra
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb330-1" tabindex="-1"></a>Coef_Estimado <span class="ot">&lt;-</span> Coef_Estimado <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(media_estrato, <span class="at">by =</span> <span class="st">&quot;Stratum&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb327-1" tabindex="-1"></a>Coef_Estimado <span class="ot">&lt;-</span> Coef_Estimado <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(media_estrato, <span class="at">by =</span> <span class="st">&quot;Stratum&quot;</span>)</span></code></pre></div>
 <p>A modo de ejemplo, para el estrato <em>idStrt002</em> el modelo ajustado es:</p>
 <p><span class="math display">\[
 \hat{y}_{ij} = 50.9 + 1.59 \cdot Expenditure_{ij} + 27.92 \cdot Zone_{ij} + (-0.12) \cdot \mu_j
 \]</span>
 La Tabla <a href="sec-intercepto-pendiente-aleatorios.html#tab:tab-b0-calculado">8.12</a> presenta el intercepto efectivo <span class="math inline">\(B_0\)</span> calculado para cada combinación de estrato y zona:</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb331-1" tabindex="-1"></a>Coef_Estimado <span class="sc">%&gt;%</span></span>
-<span id="cb331-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb331-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb331-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb331-3" tabindex="-1"></a>    <span class="at">B0 =</span> <span class="fu">ifelse</span>(Zone <span class="sc">==</span> <span class="st">&quot;Urban&quot;</span>,</span>
-<span id="cb331-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb331-4" tabindex="-1"></a>                <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span> <span class="sc">+</span> mu.y <span class="sc">*</span> mu.x <span class="sc">+</span> ZoneUrban,</span>
-<span id="cb331-5"><a href="sec-intercepto-pendiente-aleatorios.html#cb331-5" tabindex="-1"></a>                <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span> <span class="sc">+</span> mu.y <span class="sc">*</span> mu.x)</span>
-<span id="cb331-6"><a href="sec-intercepto-pendiente-aleatorios.html#cb331-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb331-7"><a href="sec-intercepto-pendiente-aleatorios.html#cb331-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Stratum, Zone, B0, Expenditure)</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb328-1" tabindex="-1"></a>Coef_Estimado <span class="sc">%&gt;%</span></span>
+<span id="cb328-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb328-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb328-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb328-3" tabindex="-1"></a>    <span class="at">B0 =</span> <span class="fu">ifelse</span>(Zone <span class="sc">==</span> <span class="st">&quot;Urban&quot;</span>,</span>
+<span id="cb328-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb328-4" tabindex="-1"></a>                <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span> <span class="sc">+</span> mu.y <span class="sc">*</span> mu.x <span class="sc">+</span> ZoneUrban,</span>
+<span id="cb328-5"><a href="sec-intercepto-pendiente-aleatorios.html#cb328-5" tabindex="-1"></a>                <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span> <span class="sc">+</span> mu.y <span class="sc">*</span> mu.x)</span>
+<span id="cb328-6"><a href="sec-intercepto-pendiente-aleatorios.html#cb328-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb328-7"><a href="sec-intercepto-pendiente-aleatorios.html#cb328-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Stratum, Zone, B0, Expenditure)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-b0-calculado">Cuadro 8.12: </span>Intercepto efectivo por estrato y zona en el modelo con gasto medio contextual</caption>
 <thead>
@@ -885,17 +885,17 @@ La Tabla <a href="sec-intercepto-pendiente-aleatorios.html#tab:tab-b0-calculado"
 </tbody>
 </table>
 <p>La Figura <a href="sec-intercepto-pendiente-aleatorios.html#fig:fig-zona-facet">8.12</a> presenta el ajuste del modelo desagregado por zona:</p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb332-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encuesta_plot,</span>
-<span id="cb332-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb332-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Income, <span class="at">x =</span> Expenditure, <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
-<span id="cb332-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb332-3" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
-<span id="cb332-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb332-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>Zone) <span class="sc">+</span></span>
-<span id="cb332-5"><a href="sec-intercepto-pendiente-aleatorios.html#cb332-5" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">data =</span> Coef_Estimado,</span>
-<span id="cb332-6"><a href="sec-intercepto-pendiente-aleatorios.html#cb332-6" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">slope =</span> Expenditure,</span>
-<span id="cb332-7"><a href="sec-intercepto-pendiente-aleatorios.html#cb332-7" tabindex="-1"></a>                            <span class="at">intercept =</span> B0,</span>
-<span id="cb332-8"><a href="sec-intercepto-pendiente-aleatorios.html#cb332-8" tabindex="-1"></a>                            <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
-<span id="cb332-9"><a href="sec-intercepto-pendiente-aleatorios.html#cb332-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
-<span id="cb332-10"><a href="sec-intercepto-pendiente-aleatorios.html#cb332-10" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
-<span id="cb332-11"><a href="sec-intercepto-pendiente-aleatorios.html#cb332-11" tabindex="-1"></a>  <span class="fu">theme_cepal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encuesta_plot,</span>
+<span id="cb329-2"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Income, <span class="at">x =</span> Expenditure, <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
+<span id="cb329-3"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-3" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb329-4"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>Zone) <span class="sc">+</span></span>
+<span id="cb329-5"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-5" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">data =</span> Coef_Estimado,</span>
+<span id="cb329-6"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-6" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">slope =</span> Expenditure,</span>
+<span id="cb329-7"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-7" tabindex="-1"></a>                            <span class="at">intercept =</span> B0,</span>
+<span id="cb329-8"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-8" tabindex="-1"></a>                            <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
+<span id="cb329-9"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb329-10"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-10" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb329-11"><a href="sec-intercepto-pendiente-aleatorios.html#cb329-11" tabindex="-1"></a>  <span class="fu">theme_cepal</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-zona-facet"></span>
 <img src="08-Multinivel_files/figure-html/fig-zona-facet-1.svg" alt="Rectas de regresión estimadas por estrato, desagregadas por zona (urbana y rural)" width="70%" />
 <p class="caption">

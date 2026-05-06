@@ -414,34 +414,34 @@ div.csl-indent {
 <div id="configuración-del-diseño-muestral" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> Configuración del diseño muestral<a href="configuración-del-diseño-muestral.html#configuración-del-diseño-muestral" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Para ilustrar los modelos presentados en este capítulo se utilizan la base de datos <code>encuesta</code> y la población <code>BigCity</code>, siguiendo la misma estructura utilizada en capítulos anteriores. Las librerías y el diseño muestral se configuran como sigue:</p>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="configuración-del-diseño-muestral.html#cb245-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">digits =</span> <span class="dv">4</span>)</span>
-<span id="cb245-2"><a href="configuración-del-diseño-muestral.html#cb245-2" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
-<span id="cb245-3"><a href="configuración-del-diseño-muestral.html#cb245-3" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
-<span id="cb245-4"><a href="configuración-del-diseño-muestral.html#cb245-4" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb245-5"><a href="configuración-del-diseño-muestral.html#cb245-5" tabindex="-1"></a><span class="fu">library</span>(jtools)</span>
-<span id="cb245-6"><a href="configuración-del-diseño-muestral.html#cb245-6" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb245-7"><a href="configuración-del-diseño-muestral.html#cb245-7" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb245-8"><a href="configuración-del-diseño-muestral.html#cb245-8" tabindex="-1"></a></span>
-<span id="cb245-9"><a href="configuración-del-diseño-muestral.html#cb245-9" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Data/encuesta.rds&quot;</span>)</span>
-<span id="cb245-10"><a href="configuración-del-diseño-muestral.html#cb245-10" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;BigCity&quot;</span>, <span class="at">package =</span> <span class="st">&quot;TeachingSampling&quot;</span>)</span>
-<span id="cb245-11"><a href="configuración-del-diseño-muestral.html#cb245-11" tabindex="-1"></a></span>
-<span id="cb245-12"><a href="configuración-del-diseño-muestral.html#cb245-12" tabindex="-1"></a>diseno <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb245-13"><a href="configuración-del-diseño-muestral.html#cb245-13" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(</span>
-<span id="cb245-14"><a href="configuración-del-diseño-muestral.html#cb245-14" tabindex="-1"></a>    <span class="at">strata  =</span> Stratum,</span>
-<span id="cb245-15"><a href="configuración-del-diseño-muestral.html#cb245-15" tabindex="-1"></a>    <span class="at">ids     =</span> PSU,</span>
-<span id="cb245-16"><a href="configuración-del-diseño-muestral.html#cb245-16" tabindex="-1"></a>    <span class="at">weights =</span> wk,</span>
-<span id="cb245-17"><a href="configuración-del-diseño-muestral.html#cb245-17" tabindex="-1"></a>    <span class="at">nest    =</span> <span class="cn">TRUE</span></span>
-<span id="cb245-18"><a href="configuración-del-diseño-muestral.html#cb245-18" tabindex="-1"></a>  )</span>
-<span id="cb245-19"><a href="configuración-del-diseño-muestral.html#cb245-19" tabindex="-1"></a></span>
-<span id="cb245-20"><a href="configuración-del-diseño-muestral.html#cb245-20" tabindex="-1"></a>diseno <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span></span>
-<span id="cb245-21"><a href="configuración-del-diseño-muestral.html#cb245-21" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb245-22"><a href="configuración-del-diseño-muestral.html#cb245-22" tabindex="-1"></a>    <span class="at">pobreza   =</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(Poverty <span class="sc">!=</span> <span class="st">&quot;NotPoor&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
-<span id="cb245-23"><a href="configuración-del-diseño-muestral.html#cb245-23" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), </span>
-<span id="cb245-24"><a href="configuración-del-diseño-muestral.html#cb245-24" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;=Pobre&quot;</span>, <span class="st">&quot;=No pobre&quot;</span>)),</span>
-<span id="cb245-25"><a href="configuración-del-diseño-muestral.html#cb245-25" tabindex="-1"></a>    <span class="at">desempleo =</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(Employment <span class="sc">==</span> <span class="st">&quot;Unemployed&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb245-26"><a href="configuración-del-diseño-muestral.html#cb245-26" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), </span>
-<span id="cb245-27"><a href="configuración-del-diseño-muestral.html#cb245-27" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;=Desempleado&quot;</span>, <span class="st">&quot;=No desempleado&quot;</span>))</span>
-<span id="cb245-28"><a href="configuración-del-diseño-muestral.html#cb245-28" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="configuración-del-diseño-muestral.html#cb242-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">digits =</span> <span class="dv">4</span>)</span>
+<span id="cb242-2"><a href="configuración-del-diseño-muestral.html#cb242-2" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb242-3"><a href="configuración-del-diseño-muestral.html#cb242-3" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
+<span id="cb242-4"><a href="configuración-del-diseño-muestral.html#cb242-4" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb242-5"><a href="configuración-del-diseño-muestral.html#cb242-5" tabindex="-1"></a><span class="fu">library</span>(jtools)</span>
+<span id="cb242-6"><a href="configuración-del-diseño-muestral.html#cb242-6" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb242-7"><a href="configuración-del-diseño-muestral.html#cb242-7" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb242-8"><a href="configuración-del-diseño-muestral.html#cb242-8" tabindex="-1"></a></span>
+<span id="cb242-9"><a href="configuración-del-diseño-muestral.html#cb242-9" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Data/encuesta.rds&quot;</span>)</span>
+<span id="cb242-10"><a href="configuración-del-diseño-muestral.html#cb242-10" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;BigCity&quot;</span>, <span class="at">package =</span> <span class="st">&quot;TeachingSampling&quot;</span>)</span>
+<span id="cb242-11"><a href="configuración-del-diseño-muestral.html#cb242-11" tabindex="-1"></a></span>
+<span id="cb242-12"><a href="configuración-del-diseño-muestral.html#cb242-12" tabindex="-1"></a>diseno <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb242-13"><a href="configuración-del-diseño-muestral.html#cb242-13" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(</span>
+<span id="cb242-14"><a href="configuración-del-diseño-muestral.html#cb242-14" tabindex="-1"></a>    <span class="at">strata  =</span> Stratum,</span>
+<span id="cb242-15"><a href="configuración-del-diseño-muestral.html#cb242-15" tabindex="-1"></a>    <span class="at">ids     =</span> PSU,</span>
+<span id="cb242-16"><a href="configuración-del-diseño-muestral.html#cb242-16" tabindex="-1"></a>    <span class="at">weights =</span> wk,</span>
+<span id="cb242-17"><a href="configuración-del-diseño-muestral.html#cb242-17" tabindex="-1"></a>    <span class="at">nest    =</span> <span class="cn">TRUE</span></span>
+<span id="cb242-18"><a href="configuración-del-diseño-muestral.html#cb242-18" tabindex="-1"></a>  )</span>
+<span id="cb242-19"><a href="configuración-del-diseño-muestral.html#cb242-19" tabindex="-1"></a></span>
+<span id="cb242-20"><a href="configuración-del-diseño-muestral.html#cb242-20" tabindex="-1"></a>diseno <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span></span>
+<span id="cb242-21"><a href="configuración-del-diseño-muestral.html#cb242-21" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb242-22"><a href="configuración-del-diseño-muestral.html#cb242-22" tabindex="-1"></a>    <span class="at">pobreza   =</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(Poverty <span class="sc">!=</span> <span class="st">&quot;NotPoor&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
+<span id="cb242-23"><a href="configuración-del-diseño-muestral.html#cb242-23" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), </span>
+<span id="cb242-24"><a href="configuración-del-diseño-muestral.html#cb242-24" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;=Pobre&quot;</span>, <span class="st">&quot;=No pobre&quot;</span>)),</span>
+<span id="cb242-25"><a href="configuración-del-diseño-muestral.html#cb242-25" tabindex="-1"></a>    <span class="at">desempleo =</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(Employment <span class="sc">==</span> <span class="st">&quot;Unemployed&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb242-26"><a href="configuración-del-diseño-muestral.html#cb242-26" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), </span>
+<span id="cb242-27"><a href="configuración-del-diseño-muestral.html#cb242-27" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;=Desempleado&quot;</span>, <span class="st">&quot;=No desempleado&quot;</span>))</span>
+<span id="cb242-28"><a href="configuración-del-diseño-muestral.html#cb242-28" tabindex="-1"></a>  )</span></code></pre></div>
 </div>
             </section>
 

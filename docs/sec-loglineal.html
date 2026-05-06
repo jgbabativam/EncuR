@@ -418,8 +418,8 @@ div.csl-indent {
 \log(p_{ijk}) = \mu + \lambda_i^X + \lambda_j^Y + \lambda_k^Z + \lambda_{ij}^{XY},
 \]</span></p>
 <p>donde <span class="math inline">\(p_{ijk}\)</span> es la proporción esperada en la celda <span class="math inline">\((i,j,k)\)</span> y <span class="math inline">\(\mu = \log(p_0) = 1/(\text{número de celdas})\)</span>. En <code>R</code>, el ajuste se realiza con <code>svyloglin()</code>:</p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="sec-loglineal.html#cb258-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">svyloglin</span>(<span class="at">formula =</span> <span class="sc">~</span>pobreza <span class="sc">+</span> Sex <span class="sc">+</span> pobreza<span class="sc">:</span>Sex,</span>
-<span id="cb258-2"><a href="sec-loglineal.html#cb258-2" tabindex="-1"></a>                  <span class="at">design  =</span> diseno)</span></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="sec-loglineal.html#cb255-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">svyloglin</span>(<span class="at">formula =</span> <span class="sc">~</span>pobreza <span class="sc">+</span> Sex <span class="sc">+</span> pobreza<span class="sc">:</span>Sex,</span>
+<span id="cb255-2"><a href="sec-loglineal.html#cb255-2" tabindex="-1"></a>                  <span class="at">design  =</span> diseno)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-loglineal-interaccion">Cuadro 7.5: </span>Modelo log-lineal con interacción pobreza × sexo</caption>
 <thead>
@@ -448,8 +448,8 @@ div.csl-indent {
 </tbody>
 </table>
 <p>La Tabla <a href="sec-loglineal.html#tab:tab-loglineal-interaccion">7.5</a> muestra que la interacción pobreza × sexo no es significativa con una confianza del 95%, confirmando los resultados de las pruebas de independencia. Se ajusta entonces el modelo sin interacción, presentada en la Tabla <a href="sec-loglineal.html#tab:tab-loglineal-sin-interaccion">7.6</a>:</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="sec-loglineal.html#cb259-1" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">svyloglin</span>(<span class="at">formula =</span> <span class="sc">~</span>pobreza <span class="sc">+</span> Sex,</span>
-<span id="cb259-2"><a href="sec-loglineal.html#cb259-2" tabindex="-1"></a>                  <span class="at">design  =</span> diseno)</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="sec-loglineal.html#cb256-1" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">svyloglin</span>(<span class="at">formula =</span> <span class="sc">~</span>pobreza <span class="sc">+</span> Sex,</span>
+<span id="cb256-2"><a href="sec-loglineal.html#cb256-2" tabindex="-1"></a>                  <span class="at">design  =</span> diseno)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-loglineal-sin-interaccion">Cuadro 7.6: </span>Modelo log-lineal sin interacción</caption>
 <thead>
@@ -474,7 +474,7 @@ div.csl-indent {
 </tbody>
 </table>
 <p>La comparación de ambos modelos mediante análisis de varianza, presentada a continuación, confirma que la interacción no aporta significativamente al ajuste.</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="sec-loglineal.html#cb260-1" tabindex="-1"></a><span class="fu">anova</span>(mod1, mod2)</span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="sec-loglineal.html#cb257-1" tabindex="-1"></a><span class="fu">anova</span>(mod1, mod2)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ##  Model 1: y ~ pobreza + Sex
 ## Model 2: y ~ pobreza + Sex + pobreza:Sex 

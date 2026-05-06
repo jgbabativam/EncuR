@@ -418,22 +418,22 @@ div.csl-indent {
 \frac{1}{\mu_i} = B_0 + B_1 x_1 + \cdots + B_p x_p, \qquad \text{equivalente a: } \mu_i = \frac{1}{B_0 + B_1 x_1}
 \]</span></p>
 <p>Para el ajuste del modelo Gamma se utilizan pesos q-weighted en función de las variables de interés. Primero se definen dichos pesos:</p>
-<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="sec-gamma.html#cb274-1" tabindex="-1"></a>mod_qw <span class="ot">&lt;-</span> <span class="fu">lm</span>(wk <span class="sc">~</span> Age <span class="sc">+</span> Sex <span class="sc">+</span> Region <span class="sc">+</span> Zone, <span class="at">data =</span> encuesta)</span>
-<span id="cb274-2"><a href="sec-gamma.html#cb274-2" tabindex="-1"></a>encuesta<span class="sc">$</span>wk2 <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>wk <span class="sc">/</span> <span class="fu">predict</span>(mod_qw)</span>
-<span id="cb274-3"><a href="sec-gamma.html#cb274-3" tabindex="-1"></a></span>
-<span id="cb274-4"><a href="sec-gamma.html#cb274-4" tabindex="-1"></a>diseno_gamma <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb274-5"><a href="sec-gamma.html#cb274-5" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(</span>
-<span id="cb274-6"><a href="sec-gamma.html#cb274-6" tabindex="-1"></a>    <span class="at">strata  =</span> Stratum,</span>
-<span id="cb274-7"><a href="sec-gamma.html#cb274-7" tabindex="-1"></a>    <span class="at">ids     =</span> PSU,</span>
-<span id="cb274-8"><a href="sec-gamma.html#cb274-8" tabindex="-1"></a>    <span class="at">weights =</span> wk2,</span>
-<span id="cb274-9"><a href="sec-gamma.html#cb274-9" tabindex="-1"></a>    <span class="at">nest    =</span> <span class="cn">TRUE</span></span>
-<span id="cb274-10"><a href="sec-gamma.html#cb274-10" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="sec-gamma.html#cb271-1" tabindex="-1"></a>mod_qw <span class="ot">&lt;-</span> <span class="fu">lm</span>(wk <span class="sc">~</span> Age <span class="sc">+</span> Sex <span class="sc">+</span> Region <span class="sc">+</span> Zone, <span class="at">data =</span> encuesta)</span>
+<span id="cb271-2"><a href="sec-gamma.html#cb271-2" tabindex="-1"></a>encuesta<span class="sc">$</span>wk2 <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>wk <span class="sc">/</span> <span class="fu">predict</span>(mod_qw)</span>
+<span id="cb271-3"><a href="sec-gamma.html#cb271-3" tabindex="-1"></a></span>
+<span id="cb271-4"><a href="sec-gamma.html#cb271-4" tabindex="-1"></a>diseno_gamma <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb271-5"><a href="sec-gamma.html#cb271-5" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(</span>
+<span id="cb271-6"><a href="sec-gamma.html#cb271-6" tabindex="-1"></a>    <span class="at">strata  =</span> Stratum,</span>
+<span id="cb271-7"><a href="sec-gamma.html#cb271-7" tabindex="-1"></a>    <span class="at">ids     =</span> PSU,</span>
+<span id="cb271-8"><a href="sec-gamma.html#cb271-8" tabindex="-1"></a>    <span class="at">weights =</span> wk2,</span>
+<span id="cb271-9"><a href="sec-gamma.html#cb271-9" tabindex="-1"></a>    <span class="at">nest    =</span> <span class="cn">TRUE</span></span>
+<span id="cb271-10"><a href="sec-gamma.html#cb271-10" tabindex="-1"></a>  )</span></code></pre></div>
 <p>El modelo Gamma se ajusta especificando <code>family = Gamma(link = "inverse")</code>. Los coeficientes estimados se presentan en la Tabla <a href="sec-gamma.html#tab:tab-gamma-coeficientes">7.14</a>:</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="sec-gamma.html#cb275-1" tabindex="-1"></a>modelo_gamma <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(</span>
-<span id="cb275-2"><a href="sec-gamma.html#cb275-2" tabindex="-1"></a>  <span class="at">formula =</span> Income <span class="sc">~</span> Age <span class="sc">+</span> Sex <span class="sc">+</span> Region <span class="sc">+</span> Zone,</span>
-<span id="cb275-3"><a href="sec-gamma.html#cb275-3" tabindex="-1"></a>  <span class="at">design  =</span> diseno_gamma,</span>
-<span id="cb275-4"><a href="sec-gamma.html#cb275-4" tabindex="-1"></a>  <span class="at">family  =</span> <span class="fu">Gamma</span>(<span class="at">link =</span> <span class="st">&quot;inverse&quot;</span>)</span>
-<span id="cb275-5"><a href="sec-gamma.html#cb275-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="sec-gamma.html#cb272-1" tabindex="-1"></a>modelo_gamma <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(</span>
+<span id="cb272-2"><a href="sec-gamma.html#cb272-2" tabindex="-1"></a>  <span class="at">formula =</span> Income <span class="sc">~</span> Age <span class="sc">+</span> Sex <span class="sc">+</span> Region <span class="sc">+</span> Zone,</span>
+<span id="cb272-3"><a href="sec-gamma.html#cb272-3" tabindex="-1"></a>  <span class="at">design  =</span> diseno_gamma,</span>
+<span id="cb272-4"><a href="sec-gamma.html#cb272-4" tabindex="-1"></a>  <span class="at">family  =</span> <span class="fu">Gamma</span>(<span class="at">link =</span> <span class="st">&quot;inverse&quot;</span>)</span>
+<span id="cb272-5"><a href="sec-gamma.html#cb272-5" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-gamma-coeficientes">Cuadro 7.14: </span>Coeficientes del modelo Gamma para el ingreso de los hogares</caption>
 <thead>
@@ -505,12 +505,12 @@ div.csl-indent {
 </tbody>
 </table>
 <p>El intercepto, la variable edad y la zona rural resultaron significativos con una confianza del 95%. El parámetro de dispersión específico para la distribución Gamma se estima como, presentada en la Tabla <a href="sec-gamma.html#tab:tab-gamma-dispersion">7.15</a>:</p>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="sec-gamma.html#cb276-1" tabindex="-1"></a>alpha   <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">gamma.dispersion</span>(modelo_gamma)</span>
-<span id="cb276-2"><a href="sec-gamma.html#cb276-2" tabindex="-1"></a>mod_s   <span class="ot">&lt;-</span> <span class="fu">summary</span>(modelo_gamma, <span class="at">dispersion =</span> alpha)</span></code></pre></div>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="sec-gamma.html#cb277-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb277-2"><a href="sec-gamma.html#cb277-2" tabindex="-1"></a>  Estadístico <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Dispersión (alpha)&quot;</span>, <span class="st">&quot;Dispersión del modelo&quot;</span>),</span>
-<span id="cb277-3"><a href="sec-gamma.html#cb277-3" tabindex="-1"></a>  <span class="at">Valor       =</span> <span class="fu">c</span>(<span class="fu">round</span>(alpha, <span class="dv">4</span>), <span class="fu">round</span>(mod_s<span class="sc">$</span>dispersion, <span class="dv">4</span>))</span>
-<span id="cb277-4"><a href="sec-gamma.html#cb277-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="sec-gamma.html#cb273-1" tabindex="-1"></a>alpha   <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">gamma.dispersion</span>(modelo_gamma)</span>
+<span id="cb273-2"><a href="sec-gamma.html#cb273-2" tabindex="-1"></a>mod_s   <span class="ot">&lt;-</span> <span class="fu">summary</span>(modelo_gamma, <span class="at">dispersion =</span> alpha)</span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="sec-gamma.html#cb274-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb274-2"><a href="sec-gamma.html#cb274-2" tabindex="-1"></a>  Estadístico <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Dispersión (alpha)&quot;</span>, <span class="st">&quot;Dispersión del modelo&quot;</span>),</span>
+<span id="cb274-3"><a href="sec-gamma.html#cb274-3" tabindex="-1"></a>  <span class="at">Valor       =</span> <span class="fu">c</span>(<span class="fu">round</span>(alpha, <span class="dv">4</span>), <span class="fu">round</span>(mod_s<span class="sc">$</span>dispersion, <span class="dv">4</span>))</span>
+<span id="cb274-4"><a href="sec-gamma.html#cb274-4" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-gamma-dispersion">Cuadro 7.15: </span>Parámetro de dispersión del modelo Gamma</caption>
 <thead>
@@ -531,13 +531,13 @@ div.csl-indent {
 </tbody>
 </table>
 <p>Los intervalos de predicción e intervalos de confianza se calculan con las funciones <code>predict()</code> y <code>confint()</code>, presentada en la Tabla <a href="sec-gamma.html#tab:tab-gamma-predicciones">7.16</a>:</p>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="sec-gamma.html#cb278-1" tabindex="-1"></a>pred_gamma <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">predict</span>(modelo_gamma, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">se =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb278-2"><a href="sec-gamma.html#cb278-2" tabindex="-1"></a>pred_IC    <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">confint</span>(<span class="fu">predict</span>(modelo_gamma, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">se =</span> <span class="cn">TRUE</span>)))</span>
-<span id="cb278-3"><a href="sec-gamma.html#cb278-3" tabindex="-1"></a><span class="fu">colnames</span>(pred_IC) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Lim_Inf&quot;</span>, <span class="st">&quot;Lim_Sup&quot;</span>)</span>
-<span id="cb278-4"><a href="sec-gamma.html#cb278-4" tabindex="-1"></a>pred_gamma <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(pred_gamma, pred_IC)</span>
-<span id="cb278-5"><a href="sec-gamma.html#cb278-5" tabindex="-1"></a>pred_gamma<span class="sc">$</span>Income <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Income</span>
-<span id="cb278-6"><a href="sec-gamma.html#cb278-6" tabindex="-1"></a>pred_gamma<span class="sc">$</span>Age    <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Age</span></code></pre></div>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="sec-gamma.html#cb279-1" tabindex="-1"></a>pred_gamma <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="sec-gamma.html#cb275-1" tabindex="-1"></a>pred_gamma <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">predict</span>(modelo_gamma, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">se =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb275-2"><a href="sec-gamma.html#cb275-2" tabindex="-1"></a>pred_IC    <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">confint</span>(<span class="fu">predict</span>(modelo_gamma, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">se =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb275-3"><a href="sec-gamma.html#cb275-3" tabindex="-1"></a><span class="fu">colnames</span>(pred_IC) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Lim_Inf&quot;</span>, <span class="st">&quot;Lim_Sup&quot;</span>)</span>
+<span id="cb275-4"><a href="sec-gamma.html#cb275-4" tabindex="-1"></a>pred_gamma <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(pred_gamma, pred_IC)</span>
+<span id="cb275-5"><a href="sec-gamma.html#cb275-5" tabindex="-1"></a>pred_gamma<span class="sc">$</span>Income <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Income</span>
+<span id="cb275-6"><a href="sec-gamma.html#cb275-6" tabindex="-1"></a>pred_gamma<span class="sc">$</span>Age    <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Age</span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="sec-gamma.html#cb276-1" tabindex="-1"></a>pred_gamma <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-gamma-predicciones">Cuadro 7.16: </span>Predicciones e intervalos de confianza del modelo Gamma (primeras 6 observaciones)</caption>
 <thead>
@@ -602,14 +602,14 @@ div.csl-indent {
 </tbody>
 </table>
 <p>La Figura <a href="sec-gamma.html#fig:fig-gamma-predicciones">7.4</a> presenta las predicciones con sus intervalos de confianza para las primeras 100 observaciones, ordenadas por edad:</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="sec-gamma.html#cb280-1" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span>
-<span id="cb280-2"><a href="sec-gamma.html#cb280-2" tabindex="-1"></a><span class="fu">ggplot</span>(pred_gamma <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>100L),</span>
-<span id="cb280-3"><a href="sec-gamma.html#cb280-3" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> response)) <span class="sc">+</span></span>
-<span id="cb280-4"><a href="sec-gamma.html#cb280-4" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> Lim_Inf, <span class="at">ymax =</span> Lim_Sup),</span>
-<span id="cb280-5"><a href="sec-gamma.html#cb280-5" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">linetype =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb280-6"><a href="sec-gamma.html#cb280-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">position =</span> pd) <span class="sc">+</span></span>
-<span id="cb280-7"><a href="sec-gamma.html#cb280-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Edad&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Ingreso predicho&quot;</span>) <span class="sc">+</span></span>
-<span id="cb280-8"><a href="sec-gamma.html#cb280-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="sec-gamma.html#cb277-1" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span>
+<span id="cb277-2"><a href="sec-gamma.html#cb277-2" tabindex="-1"></a><span class="fu">ggplot</span>(pred_gamma <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>100L),</span>
+<span id="cb277-3"><a href="sec-gamma.html#cb277-3" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> response)) <span class="sc">+</span></span>
+<span id="cb277-4"><a href="sec-gamma.html#cb277-4" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> Lim_Inf, <span class="at">ymax =</span> Lim_Sup),</span>
+<span id="cb277-5"><a href="sec-gamma.html#cb277-5" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">linetype =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb277-6"><a href="sec-gamma.html#cb277-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">position =</span> pd) <span class="sc">+</span></span>
+<span id="cb277-7"><a href="sec-gamma.html#cb277-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Edad&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Ingreso predicho&quot;</span>) <span class="sc">+</span></span>
+<span id="cb277-8"><a href="sec-gamma.html#cb277-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-gamma-predicciones"></span>
 <img src="07-GLM_files/figure-html/fig-gamma-predicciones-1.svg" alt="Predicciones del modelo Gamma con intervalos de confianza al 95% para las primeras 100 observaciones" width="75%" />
 <p class="caption">

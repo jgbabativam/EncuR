@@ -422,15 +422,15 @@ Ingreso_{ij} = \beta_{0j} + \beta_1 Gasto_{ij} + \epsilon_{ij}
 \beta_{0j} = \gamma_{00} + \gamma_{01} Stratum_j + \tau_{0j}
 \]</span></p>
 <p>con <span class="math inline">\(\tau_{0j} \sim N(0, \sigma_\tau^2)\)</span> y <span class="math inline">\(\epsilon_{ij} \sim N(0, \sigma_\epsilon^2)\)</span>. El ajuste en <code>R</code> es:</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="sec-intercepto-aleatorio.html#cb311-1" tabindex="-1"></a>mod_Int_Aleatorio <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Income <span class="sc">~</span> Expenditure <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Stratum),</span>
-<span id="cb311-2"><a href="sec-intercepto-aleatorio.html#cb311-2" tabindex="-1"></a>                          <span class="at">data =</span> encuesta, <span class="at">weights =</span> wk2)</span>
-<span id="cb311-3"><a href="sec-intercepto-aleatorio.html#cb311-3" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(mod_Int_Aleatorio)</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="sec-intercepto-aleatorio.html#cb308-1" tabindex="-1"></a>mod_Int_Aleatorio <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Income <span class="sc">~</span> Expenditure <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Stratum),</span>
+<span id="cb308-2"><a href="sec-intercepto-aleatorio.html#cb308-2" tabindex="-1"></a>                          <span class="at">data =</span> encuesta, <span class="at">weights =</span> wk2)</span>
+<span id="cb308-3"><a href="sec-intercepto-aleatorio.html#cb308-3" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(mod_Int_Aleatorio)</span></code></pre></div>
 <pre><code>## # Intraclass Correlation Coefficient
 ## 
 ##     Adjusted ICC: 0.196
 ##   Unadjusted ICC: 0.102</code></pre>
 <p>Los coeficientes estimados por estrato se presentan en la Tabla <a href="sec-intercepto-aleatorio.html#tab:tab-coef-intercepto-aleatorio">8.5</a>:</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="sec-intercepto-aleatorio.html#cb313-1" tabindex="-1"></a><span class="fu">coef</span>(mod_Int_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>8L)</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="sec-intercepto-aleatorio.html#cb310-1" tabindex="-1"></a><span class="fu">coef</span>(mod_Int_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>8L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-coef-intercepto-aleatorio">Cuadro 8.5: </span>Coeficientes del modelo con intercepto aleatorio por estrato (primeros 8 estratos)</caption>
 <thead>
@@ -484,20 +484,20 @@ Ingreso_{ij} = \beta_{0j} + \beta_1 Gasto_{ij} + \epsilon_{ij}
 </tbody>
 </table>
 <p>La Figura <a href="sec-intercepto-aleatorio.html#fig:fig-intercepto-aleatorio">8.7</a> muestra las rectas de regresión estimadas por estrato, donde se aprecia la variación en el intercepto:</p>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="sec-intercepto-aleatorio.html#cb314-1" tabindex="-1"></a>Coef_Estimado <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(</span>
-<span id="cb314-2"><a href="sec-intercepto-aleatorio.html#cb314-2" tabindex="-1"></a>  <span class="fu">coef</span>(mod_Int_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;Stratum&quot;</span>),</span>
-<span id="cb314-3"><a href="sec-intercepto-aleatorio.html#cb314-3" tabindex="-1"></a>  encuesta_plot <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Stratum) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>()</span>
-<span id="cb314-4"><a href="sec-intercepto-aleatorio.html#cb314-4" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="sec-intercepto-aleatorio.html#cb315-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encuesta_plot,</span>
-<span id="cb315-2"><a href="sec-intercepto-aleatorio.html#cb315-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Income, <span class="at">x =</span> Expenditure, <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
-<span id="cb315-3"><a href="sec-intercepto-aleatorio.html#cb315-3" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
-<span id="cb315-4"><a href="sec-intercepto-aleatorio.html#cb315-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">data =</span> Coef_Estimado,</span>
-<span id="cb315-5"><a href="sec-intercepto-aleatorio.html#cb315-5" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">slope =</span> Expenditure,</span>
-<span id="cb315-6"><a href="sec-intercepto-aleatorio.html#cb315-6" tabindex="-1"></a>                            <span class="at">intercept =</span> <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span>,</span>
-<span id="cb315-7"><a href="sec-intercepto-aleatorio.html#cb315-7" tabindex="-1"></a>                            <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
-<span id="cb315-8"><a href="sec-intercepto-aleatorio.html#cb315-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
-<span id="cb315-9"><a href="sec-intercepto-aleatorio.html#cb315-9" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
-<span id="cb315-10"><a href="sec-intercepto-aleatorio.html#cb315-10" tabindex="-1"></a>  <span class="fu">theme_cepal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="sec-intercepto-aleatorio.html#cb311-1" tabindex="-1"></a>Coef_Estimado <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(</span>
+<span id="cb311-2"><a href="sec-intercepto-aleatorio.html#cb311-2" tabindex="-1"></a>  <span class="fu">coef</span>(mod_Int_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;Stratum&quot;</span>),</span>
+<span id="cb311-3"><a href="sec-intercepto-aleatorio.html#cb311-3" tabindex="-1"></a>  encuesta_plot <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Stratum) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>()</span>
+<span id="cb311-4"><a href="sec-intercepto-aleatorio.html#cb311-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="sec-intercepto-aleatorio.html#cb312-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encuesta_plot,</span>
+<span id="cb312-2"><a href="sec-intercepto-aleatorio.html#cb312-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Income, <span class="at">x =</span> Expenditure, <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
+<span id="cb312-3"><a href="sec-intercepto-aleatorio.html#cb312-3" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb312-4"><a href="sec-intercepto-aleatorio.html#cb312-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">data =</span> Coef_Estimado,</span>
+<span id="cb312-5"><a href="sec-intercepto-aleatorio.html#cb312-5" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">slope =</span> Expenditure,</span>
+<span id="cb312-6"><a href="sec-intercepto-aleatorio.html#cb312-6" tabindex="-1"></a>                            <span class="at">intercept =</span> <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span>,</span>
+<span id="cb312-7"><a href="sec-intercepto-aleatorio.html#cb312-7" tabindex="-1"></a>                            <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
+<span id="cb312-8"><a href="sec-intercepto-aleatorio.html#cb312-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb312-9"><a href="sec-intercepto-aleatorio.html#cb312-9" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb312-10"><a href="sec-intercepto-aleatorio.html#cb312-10" tabindex="-1"></a>  <span class="fu">theme_cepal</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-intercepto-aleatorio"></span>
 <img src="08-Multinivel_files/figure-html/fig-intercepto-aleatorio-1.svg" alt="Rectas de regresión estimadas por estrato: modelo con intercepto aleatorio" width="70%" />
 <p class="caption">
@@ -505,10 +505,10 @@ Figura 8.7: Rectas de regresión estimadas por estrato: modelo con intercepto al
 </p>
 </div>
 <p>La variación en el intercepto entre estratos es considerable, lo que confirma que el modelo con intercepto aleatorio captura diferencias estructurales en el nivel de ingreso entre grupos. Las predicciones del modelo se presentan en la Tabla <a href="sec-intercepto-aleatorio.html#tab:tab-pred-intercepto-aleatorio">8.6</a>:</p>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="sec-intercepto-aleatorio.html#cb316-1" tabindex="-1"></a>tab_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(  Predicción <span class="ot">=</span> <span class="fu">predict</span>(mod_Int_Aleatorio),</span>
-<span id="cb316-2"><a href="sec-intercepto-aleatorio.html#cb316-2" tabindex="-1"></a>  <span class="at">Ingreso    =</span> encuesta<span class="sc">$</span>Income,</span>
-<span id="cb316-3"><a href="sec-intercepto-aleatorio.html#cb316-3" tabindex="-1"></a>  <span class="at">Estrato    =</span> encuesta<span class="sc">$</span>Stratum) <span class="sc">%&gt;%</span> </span>
-<span id="cb316-4"><a href="sec-intercepto-aleatorio.html#cb316-4" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="sec-intercepto-aleatorio.html#cb313-1" tabindex="-1"></a>tab_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(  Predicción <span class="ot">=</span> <span class="fu">predict</span>(mod_Int_Aleatorio),</span>
+<span id="cb313-2"><a href="sec-intercepto-aleatorio.html#cb313-2" tabindex="-1"></a>  <span class="at">Ingreso    =</span> encuesta<span class="sc">$</span>Income,</span>
+<span id="cb313-3"><a href="sec-intercepto-aleatorio.html#cb313-3" tabindex="-1"></a>  <span class="at">Estrato    =</span> encuesta<span class="sc">$</span>Stratum) <span class="sc">%&gt;%</span> </span>
+<span id="cb313-4"><a href="sec-intercepto-aleatorio.html#cb313-4" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-pred-intercepto-aleatorio">Cuadro 8.6: </span>Predicciones del modelo con intercepto aleatorio (primeras 6 observaciones)</caption>
 <thead>
@@ -559,12 +559,12 @@ Figura 8.7: Rectas de regresión estimadas por estrato: modelo con intercepto al
 </tbody>
 </table>
 <p>La Figura <a href="sec-intercepto-aleatorio.html#fig:fig-pred-intercepto-aleatorio">8.8</a> muestra que las predicciones se acercan más a la línea de 45° que las del modelo nulo:</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="sec-intercepto-aleatorio.html#cb317-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tab_pred,</span>
-<span id="cb317-2"><a href="sec-intercepto-aleatorio.html#cb317-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Predicción, <span class="at">y =</span> Ingreso, <span class="at">colour =</span> Estrato)) <span class="sc">+</span></span>
-<span id="cb317-3"><a href="sec-intercepto-aleatorio.html#cb317-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb317-4"><a href="sec-intercepto-aleatorio.html#cb317-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb317-5"><a href="sec-intercepto-aleatorio.html#cb317-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb317-6"><a href="sec-intercepto-aleatorio.html#cb317-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="sec-intercepto-aleatorio.html#cb314-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tab_pred,</span>
+<span id="cb314-2"><a href="sec-intercepto-aleatorio.html#cb314-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Predicción, <span class="at">y =</span> Ingreso, <span class="at">colour =</span> Estrato)) <span class="sc">+</span></span>
+<span id="cb314-3"><a href="sec-intercepto-aleatorio.html#cb314-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb314-4"><a href="sec-intercepto-aleatorio.html#cb314-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb314-5"><a href="sec-intercepto-aleatorio.html#cb314-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb314-6"><a href="sec-intercepto-aleatorio.html#cb314-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-pred-intercepto-aleatorio"></span>
 <img src="08-Multinivel_files/figure-html/fig-pred-intercepto-aleatorio-1.svg" alt="Predicciones del modelo con intercepto aleatorio versus ingreso observado. La línea roja indica ajuste perfecto." width="70%" />
 <p class="caption">

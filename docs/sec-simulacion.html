@@ -417,22 +417,22 @@ div.csl-indent {
 <div id="esquema-mcar" class="section level3 hasAnchor" number="9.3.1">
 <h3><span class="header-section-number">9.3.1</span> Esquema MCAR<a href="sec-simulacion.html#esquema-mcar" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Se elimina aleatoriamente el 20% de las observaciones, de forma independiente de cualquier variable del estudio:</p>
-<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="sec-simulacion.html#cb365-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb365-2"><a href="sec-simulacion.html#cb365-2" tabindex="-1"></a>encuesta_MCAR <span class="ot">&lt;-</span> <span class="fu">sample_frac</span>(encuesta, <span class="fl">0.8</span>)</span>
-<span id="cb365-3"><a href="sec-simulacion.html#cb365-3" tabindex="-1"></a>dat_plot <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb365-4"><a href="sec-simulacion.html#cb365-4" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">encuesta_MCAR =</span> encuesta_MCAR, <span class="at">encuesta =</span> encuesta),</span>
-<span id="cb365-5"><a href="sec-simulacion.html#cb365-5" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">&quot;Caso&quot;</span></span>
-<span id="cb365-6"><a href="sec-simulacion.html#cb365-6" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="sec-simulacion.html#cb362-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb362-2"><a href="sec-simulacion.html#cb362-2" tabindex="-1"></a>encuesta_MCAR <span class="ot">&lt;-</span> <span class="fu">sample_frac</span>(encuesta, <span class="fl">0.8</span>)</span>
+<span id="cb362-3"><a href="sec-simulacion.html#cb362-3" tabindex="-1"></a>dat_plot <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb362-4"><a href="sec-simulacion.html#cb362-4" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">encuesta_MCAR =</span> encuesta_MCAR, <span class="at">encuesta =</span> encuesta),</span>
+<span id="cb362-5"><a href="sec-simulacion.html#cb362-5" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">&quot;Caso&quot;</span></span>
+<span id="cb362-6"><a href="sec-simulacion.html#cb362-6" tabindex="-1"></a>)</span></code></pre></div>
 <p>La Figura <a href="sec-simulacion.html#fig:fig-mcar-zona-sexo">9.1</a> muestra la distribución del ingreso por zona y sexo con y sin datos faltantes bajo el esquema MCAR. Al ser la eliminación completamente aleatoria, las distribuciones permanecen prácticamente inalteradas:</p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="sec-simulacion.html#cb366-1" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot, <span class="fu">aes</span>(<span class="at">x =</span> Zone, <span class="at">y =</span> Income)) <span class="sc">+</span></span>
-<span id="cb366-2"><a href="sec-simulacion.html#cb366-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(. <span class="sc">~</span> Caso) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb366-3"><a href="sec-simulacion.html#cb366-3" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb366-4"><a href="sec-simulacion.html#cb366-4" tabindex="-1"></a></span>
-<span id="cb366-5"><a href="sec-simulacion.html#cb366-5" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot, <span class="fu">aes</span>(<span class="at">x =</span> Sex, <span class="at">y =</span> Income)) <span class="sc">+</span></span>
-<span id="cb366-6"><a href="sec-simulacion.html#cb366-6" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(. <span class="sc">~</span> Caso) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb366-7"><a href="sec-simulacion.html#cb366-7" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb366-8"><a href="sec-simulacion.html#cb366-8" tabindex="-1"></a></span>
-<span id="cb366-9"><a href="sec-simulacion.html#cb366-9" tabindex="-1"></a>p1 <span class="sc">|</span> p2</span></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="sec-simulacion.html#cb363-1" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot, <span class="fu">aes</span>(<span class="at">x =</span> Zone, <span class="at">y =</span> Income)) <span class="sc">+</span></span>
+<span id="cb363-2"><a href="sec-simulacion.html#cb363-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(. <span class="sc">~</span> Caso) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb363-3"><a href="sec-simulacion.html#cb363-3" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb363-4"><a href="sec-simulacion.html#cb363-4" tabindex="-1"></a></span>
+<span id="cb363-5"><a href="sec-simulacion.html#cb363-5" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot, <span class="fu">aes</span>(<span class="at">x =</span> Sex, <span class="at">y =</span> Income)) <span class="sc">+</span></span>
+<span id="cb363-6"><a href="sec-simulacion.html#cb363-6" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(. <span class="sc">~</span> Caso) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb363-7"><a href="sec-simulacion.html#cb363-7" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb363-8"><a href="sec-simulacion.html#cb363-8" tabindex="-1"></a></span>
+<span id="cb363-9"><a href="sec-simulacion.html#cb363-9" tabindex="-1"></a>p1 <span class="sc">|</span> p2</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-mcar-zona-sexo"></span>
 <img src="09-Imputacion_files/figure-html/fig-mcar-zona-sexo-1.svg" alt="Distribución del ingreso por zona y sexo: muestra completa versus esquema MCAR" width="70%" />
 <p class="caption">
@@ -440,17 +440,17 @@ Figura 9.1: Distribución del ingreso por zona y sexo: muestra completa versus e
 </p>
 </div>
 <p>La Figura <a href="sec-simulacion.html#fig:fig-mcar-densidad-ingreso">9.2</a> confirma que la distribución del ingreso no se altera bajo MCAR. La línea roja indica la media de la muestra completa:</p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="sec-simulacion.html#cb367-1" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot, <span class="fu">aes</span>(<span class="at">x =</span> Income, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb367-2"><a href="sec-simulacion.html#cb367-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb367-3"><a href="sec-simulacion.html#cb367-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb367-4"><a href="sec-simulacion.html#cb367-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb367-5"><a href="sec-simulacion.html#cb367-5" tabindex="-1"></a></span>
-<span id="cb367-6"><a href="sec-simulacion.html#cb367-6" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot, <span class="fu">aes</span>(<span class="at">x =</span> Income, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb367-7"><a href="sec-simulacion.html#cb367-7" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">facet_grid</span>(. <span class="sc">~</span> Sex) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb367-8"><a href="sec-simulacion.html#cb367-8" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb367-9"><a href="sec-simulacion.html#cb367-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb367-10"><a href="sec-simulacion.html#cb367-10" tabindex="-1"></a></span>
-<span id="cb367-11"><a href="sec-simulacion.html#cb367-11" tabindex="-1"></a>p1 <span class="sc">/</span> p2</span></code></pre></div>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="sec-simulacion.html#cb364-1" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot, <span class="fu">aes</span>(<span class="at">x =</span> Income, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb364-2"><a href="sec-simulacion.html#cb364-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb364-3"><a href="sec-simulacion.html#cb364-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb364-4"><a href="sec-simulacion.html#cb364-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb364-5"><a href="sec-simulacion.html#cb364-5" tabindex="-1"></a></span>
+<span id="cb364-6"><a href="sec-simulacion.html#cb364-6" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot, <span class="fu">aes</span>(<span class="at">x =</span> Income, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb364-7"><a href="sec-simulacion.html#cb364-7" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">facet_grid</span>(. <span class="sc">~</span> Sex) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb364-8"><a href="sec-simulacion.html#cb364-8" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb364-9"><a href="sec-simulacion.html#cb364-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb364-10"><a href="sec-simulacion.html#cb364-10" tabindex="-1"></a></span>
+<span id="cb364-11"><a href="sec-simulacion.html#cb364-11" tabindex="-1"></a>p1 <span class="sc">/</span> p2</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-mcar-densidad-ingreso"></span>
 <img src="09-Imputacion_files/figure-html/fig-mcar-densidad-ingreso-1.svg" alt="Densidad del ingreso: muestra completa versus esquema MCAR, total y por sexo" width="70%" />
 <p class="caption">
@@ -458,17 +458,17 @@ Figura 9.2: Densidad del ingreso: muestra completa versus esquema MCAR, total y 
 </p>
 </div>
 <p>La Figura <a href="sec-simulacion.html#fig:fig-mcar-densidad-gasto">9.3</a> presenta el mismo análisis para la variable gasto, con resultados análogos:</p>
-<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="sec-simulacion.html#cb368-1" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot, <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb368-2"><a href="sec-simulacion.html#cb368-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb368-3"><a href="sec-simulacion.html#cb368-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb368-4"><a href="sec-simulacion.html#cb368-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Expenditure), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb368-5"><a href="sec-simulacion.html#cb368-5" tabindex="-1"></a></span>
-<span id="cb368-6"><a href="sec-simulacion.html#cb368-6" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot, <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb368-7"><a href="sec-simulacion.html#cb368-7" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">facet_grid</span>(. <span class="sc">~</span> Sex) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb368-8"><a href="sec-simulacion.html#cb368-8" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Expenditure), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb368-9"><a href="sec-simulacion.html#cb368-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb368-10"><a href="sec-simulacion.html#cb368-10" tabindex="-1"></a></span>
-<span id="cb368-11"><a href="sec-simulacion.html#cb368-11" tabindex="-1"></a>p1 <span class="sc">/</span> p2</span></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="sec-simulacion.html#cb365-1" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot, <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb365-2"><a href="sec-simulacion.html#cb365-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb365-3"><a href="sec-simulacion.html#cb365-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb365-4"><a href="sec-simulacion.html#cb365-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Expenditure), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb365-5"><a href="sec-simulacion.html#cb365-5" tabindex="-1"></a></span>
+<span id="cb365-6"><a href="sec-simulacion.html#cb365-6" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot, <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb365-7"><a href="sec-simulacion.html#cb365-7" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">facet_grid</span>(. <span class="sc">~</span> Sex) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb365-8"><a href="sec-simulacion.html#cb365-8" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Expenditure), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb365-9"><a href="sec-simulacion.html#cb365-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb365-10"><a href="sec-simulacion.html#cb365-10" tabindex="-1"></a></span>
+<span id="cb365-11"><a href="sec-simulacion.html#cb365-11" tabindex="-1"></a>p1 <span class="sc">/</span> p2</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-mcar-densidad-gasto"></span>
 <img src="09-Imputacion_files/figure-html/fig-mcar-densidad-gasto-1.svg" alt="Densidad del gasto: muestra completa versus esquema MCAR, total y por sexo" width="70%" />
 <p class="caption">
@@ -479,22 +479,22 @@ Figura 9.3: Densidad del gasto: muestra completa versus esquema MCAR, total y po
 <div id="esquema-mar" class="section level3 hasAnchor" number="9.3.2">
 <h3><span class="header-section-number">9.3.2</span> Esquema MAR<a href="sec-simulacion.html#esquema-mar" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>En el esquema MAR, la probabilidad de que un dato falte depende de variables observadas pero no del valor de la propia variable. Se simula una pérdida de información mediante muestreo estratificado por zona y sexo, con proporciones de respuesta muy distintas entre grupos:</p>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="sec-simulacion.html#cb369-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb369-2"><a href="sec-simulacion.html#cb369-2" tabindex="-1"></a>temp_estrato <span class="ot">&lt;-</span> <span class="fu">paste0</span>(encuesta<span class="sc">$</span>Zone, encuesta<span class="sc">$</span>Sex)</span>
-<span id="cb369-3"><a href="sec-simulacion.html#cb369-3" tabindex="-1"></a>sel <span class="ot">&lt;-</span> <span class="fu">S.STSI</span>(<span class="at">S  =</span> temp_estrato,</span>
-<span id="cb369-4"><a href="sec-simulacion.html#cb369-4" tabindex="-1"></a>              <span class="at">Nh =</span> <span class="fu">c</span>(<span class="dv">481</span>, <span class="dv">428</span>, <span class="dv">531</span>, <span class="dv">439</span>),</span>
-<span id="cb369-5"><a href="sec-simulacion.html#cb369-5" tabindex="-1"></a>              <span class="at">nh =</span> <span class="fu">c</span>(<span class="dv">20</span>,  <span class="dv">380</span>,  <span class="dv">20</span>, <span class="dv">280</span>))</span>
-<span id="cb369-6"><a href="sec-simulacion.html#cb369-6" tabindex="-1"></a>encuesta_MAR <span class="ot">&lt;-</span> encuesta[<span class="sc">-</span>sel, ]</span>
-<span id="cb369-7"><a href="sec-simulacion.html#cb369-7" tabindex="-1"></a>dat_plot2    <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb369-8"><a href="sec-simulacion.html#cb369-8" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">encuesta_MAR =</span> encuesta_MAR, <span class="at">encuesta =</span> encuesta),</span>
-<span id="cb369-9"><a href="sec-simulacion.html#cb369-9" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">&quot;Caso&quot;</span></span>
-<span id="cb369-10"><a href="sec-simulacion.html#cb369-10" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="sec-simulacion.html#cb366-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb366-2"><a href="sec-simulacion.html#cb366-2" tabindex="-1"></a>temp_estrato <span class="ot">&lt;-</span> <span class="fu">paste0</span>(encuesta<span class="sc">$</span>Zone, encuesta<span class="sc">$</span>Sex)</span>
+<span id="cb366-3"><a href="sec-simulacion.html#cb366-3" tabindex="-1"></a>sel <span class="ot">&lt;-</span> <span class="fu">S.STSI</span>(<span class="at">S  =</span> temp_estrato,</span>
+<span id="cb366-4"><a href="sec-simulacion.html#cb366-4" tabindex="-1"></a>              <span class="at">Nh =</span> <span class="fu">c</span>(<span class="dv">481</span>, <span class="dv">428</span>, <span class="dv">531</span>, <span class="dv">439</span>),</span>
+<span id="cb366-5"><a href="sec-simulacion.html#cb366-5" tabindex="-1"></a>              <span class="at">nh =</span> <span class="fu">c</span>(<span class="dv">20</span>,  <span class="dv">380</span>,  <span class="dv">20</span>, <span class="dv">280</span>))</span>
+<span id="cb366-6"><a href="sec-simulacion.html#cb366-6" tabindex="-1"></a>encuesta_MAR <span class="ot">&lt;-</span> encuesta[<span class="sc">-</span>sel, ]</span>
+<span id="cb366-7"><a href="sec-simulacion.html#cb366-7" tabindex="-1"></a>dat_plot2    <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb366-8"><a href="sec-simulacion.html#cb366-8" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">encuesta_MAR =</span> encuesta_MAR, <span class="at">encuesta =</span> encuesta),</span>
+<span id="cb366-9"><a href="sec-simulacion.html#cb366-9" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">&quot;Caso&quot;</span></span>
+<span id="cb366-10"><a href="sec-simulacion.html#cb366-10" tabindex="-1"></a>)</span></code></pre></div>
 <p>Dado que en el esquema MAR la probabilidad de no respuesta varía sistemáticamente entre grupos, la distribución de la variable de interés se ve afectada cuando se analiza a nivel global o por dominio. La Figura <a href="sec-simulacion.html#fig:fig-mar-boxplot-zona">9.4</a> ilustra este efecto sobre la distribución del gasto por zona y sexo:</p>
-<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="sec-simulacion.html#cb370-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot2, <span class="fu">aes</span>(<span class="at">x =</span> Caso, <span class="at">y =</span> Expenditure)) <span class="sc">+</span></span>
-<span id="cb370-2"><a href="sec-simulacion.html#cb370-2" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Expenditure), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb370-3"><a href="sec-simulacion.html#cb370-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb370-4"><a href="sec-simulacion.html#cb370-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Zone <span class="sc">~</span> Sex) <span class="sc">+</span></span>
-<span id="cb370-5"><a href="sec-simulacion.html#cb370-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="sec-simulacion.html#cb367-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot2, <span class="fu">aes</span>(<span class="at">x =</span> Caso, <span class="at">y =</span> Expenditure)) <span class="sc">+</span></span>
+<span id="cb367-2"><a href="sec-simulacion.html#cb367-2" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Expenditure), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb367-3"><a href="sec-simulacion.html#cb367-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb367-4"><a href="sec-simulacion.html#cb367-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Zone <span class="sc">~</span> Sex) <span class="sc">+</span></span>
+<span id="cb367-5"><a href="sec-simulacion.html#cb367-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-mar-boxplot-zona"></span>
 <img src="09-Imputacion_files/figure-html/fig-mar-boxplot-zona-1.svg" alt="Distribución del gasto por zona y sexo: muestra completa versus esquema MAR" width="70%" />
 <p class="caption">
@@ -502,18 +502,18 @@ Figura 9.4: Distribución del gasto por zona y sexo: muestra completa versus esq
 </p>
 </div>
 <p>La Figura <a href="sec-simulacion.html#fig:fig-mar-densidad-ingreso">9.5</a> muestra el cambio distribucional en el ingreso bajo MAR. A diferencia del esquema MCAR, las curvas difieren notablemente, en especial al desagregar por sexo:</p>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="sec-simulacion.html#cb371-1" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot2, <span class="fu">aes</span>(<span class="at">x =</span> Income, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb371-2"><a href="sec-simulacion.html#cb371-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb371-3"><a href="sec-simulacion.html#cb371-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb371-4"><a href="sec-simulacion.html#cb371-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb371-5"><a href="sec-simulacion.html#cb371-5" tabindex="-1"></a></span>
-<span id="cb371-6"><a href="sec-simulacion.html#cb371-6" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot2, <span class="fu">aes</span>(<span class="at">x =</span> Income, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb371-7"><a href="sec-simulacion.html#cb371-7" tabindex="-1"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> Sex) <span class="sc">+</span></span>
-<span id="cb371-8"><a href="sec-simulacion.html#cb371-8" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb371-9"><a href="sec-simulacion.html#cb371-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
-<span id="cb371-10"><a href="sec-simulacion.html#cb371-10" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb371-11"><a href="sec-simulacion.html#cb371-11" tabindex="-1"></a></span>
-<span id="cb371-12"><a href="sec-simulacion.html#cb371-12" tabindex="-1"></a>p1 <span class="sc">/</span> p2</span></code></pre></div>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="sec-simulacion.html#cb368-1" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot2, <span class="fu">aes</span>(<span class="at">x =</span> Income, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb368-2"><a href="sec-simulacion.html#cb368-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb368-3"><a href="sec-simulacion.html#cb368-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb368-4"><a href="sec-simulacion.html#cb368-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb368-5"><a href="sec-simulacion.html#cb368-5" tabindex="-1"></a></span>
+<span id="cb368-6"><a href="sec-simulacion.html#cb368-6" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot2, <span class="fu">aes</span>(<span class="at">x =</span> Income, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb368-7"><a href="sec-simulacion.html#cb368-7" tabindex="-1"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> Sex) <span class="sc">+</span></span>
+<span id="cb368-8"><a href="sec-simulacion.html#cb368-8" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb368-9"><a href="sec-simulacion.html#cb368-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb368-10"><a href="sec-simulacion.html#cb368-10" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb368-11"><a href="sec-simulacion.html#cb368-11" tabindex="-1"></a></span>
+<span id="cb368-12"><a href="sec-simulacion.html#cb368-12" tabindex="-1"></a>p1 <span class="sc">/</span> p2</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-mar-densidad-ingreso"></span>
 <img src="09-Imputacion_files/figure-html/fig-mar-densidad-ingreso-1.svg" alt="Densidad del ingreso: muestra completa versus esquema MAR, total y por sexo" width="70%" />
 <p class="caption">
@@ -521,18 +521,18 @@ Figura 9.5: Densidad del ingreso: muestra completa versus esquema MAR, total y p
 </p>
 </div>
 <p>La Figura <a href="sec-simulacion.html#fig:fig-mar-densidad-gasto">9.6</a> presenta el mismo análisis para el gasto, mostrando un cambio distribucional entre hombres y mujeres:</p>
-<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="sec-simulacion.html#cb372-1" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot2, <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb372-2"><a href="sec-simulacion.html#cb372-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb372-3"><a href="sec-simulacion.html#cb372-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb372-4"><a href="sec-simulacion.html#cb372-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Expenditure), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb372-5"><a href="sec-simulacion.html#cb372-5" tabindex="-1"></a></span>
-<span id="cb372-6"><a href="sec-simulacion.html#cb372-6" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot2, <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb372-7"><a href="sec-simulacion.html#cb372-7" tabindex="-1"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> Sex) <span class="sc">+</span></span>
-<span id="cb372-8"><a href="sec-simulacion.html#cb372-8" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb372-9"><a href="sec-simulacion.html#cb372-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
-<span id="cb372-10"><a href="sec-simulacion.html#cb372-10" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Expenditure), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb372-11"><a href="sec-simulacion.html#cb372-11" tabindex="-1"></a></span>
-<span id="cb372-12"><a href="sec-simulacion.html#cb372-12" tabindex="-1"></a>p1 <span class="sc">/</span> p2</span></code></pre></div>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="sec-simulacion.html#cb369-1" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot2, <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb369-2"><a href="sec-simulacion.html#cb369-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb369-3"><a href="sec-simulacion.html#cb369-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb369-4"><a href="sec-simulacion.html#cb369-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Expenditure), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb369-5"><a href="sec-simulacion.html#cb369-5" tabindex="-1"></a></span>
+<span id="cb369-6"><a href="sec-simulacion.html#cb369-6" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_plot2, <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb369-7"><a href="sec-simulacion.html#cb369-7" tabindex="-1"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> Sex) <span class="sc">+</span></span>
+<span id="cb369-8"><a href="sec-simulacion.html#cb369-8" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb369-9"><a href="sec-simulacion.html#cb369-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb369-10"><a href="sec-simulacion.html#cb369-10" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Expenditure), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb369-11"><a href="sec-simulacion.html#cb369-11" tabindex="-1"></a></span>
+<span id="cb369-12"><a href="sec-simulacion.html#cb369-12" tabindex="-1"></a>p1 <span class="sc">/</span> p2</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-mar-densidad-gasto"></span>
 <img src="09-Imputacion_files/figure-html/fig-mar-densidad-gasto-1.svg" alt="Densidad del gasto: muestra completa versus esquema MAR, total y por sexo" width="70%" />
 <p class="caption">
@@ -543,20 +543,20 @@ Figura 9.6: Densidad del gasto: muestra completa versus esquema MAR, total y por
 <div id="esquema-mnar" class="section level3 hasAnchor" number="9.3.3">
 <h3><span class="header-section-number">9.3.3</span> Esquema MNAR<a href="sec-simulacion.html#esquema-mnar" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>En el esquema MNAR, la probabilidad de no respuesta depende del propio valor de la variable de interés. Para simularlo, se retienen únicamente las 1 300 observaciones con menores ingresos, lo que trunca la parte superior de la distribución:</p>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="sec-simulacion.html#cb373-1" tabindex="-1"></a>encuesta_MNAR <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb373-2"><a href="sec-simulacion.html#cb373-2" tabindex="-1"></a>  <span class="fu">arrange</span>(Income) <span class="sc">%&gt;%</span></span>
-<span id="cb373-3"><a href="sec-simulacion.html#cb373-3" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>1300L)</span>
-<span id="cb373-4"><a href="sec-simulacion.html#cb373-4" tabindex="-1"></a></span>
-<span id="cb373-5"><a href="sec-simulacion.html#cb373-5" tabindex="-1"></a>dat_plot3 <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb373-6"><a href="sec-simulacion.html#cb373-6" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">encuesta_MNAR =</span> encuesta_MNAR, <span class="at">encuesta =</span> encuesta),</span>
-<span id="cb373-7"><a href="sec-simulacion.html#cb373-7" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">&quot;Caso&quot;</span></span>
-<span id="cb373-8"><a href="sec-simulacion.html#cb373-8" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="sec-simulacion.html#cb370-1" tabindex="-1"></a>encuesta_MNAR <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb370-2"><a href="sec-simulacion.html#cb370-2" tabindex="-1"></a>  <span class="fu">arrange</span>(Income) <span class="sc">%&gt;%</span></span>
+<span id="cb370-3"><a href="sec-simulacion.html#cb370-3" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>1300L)</span>
+<span id="cb370-4"><a href="sec-simulacion.html#cb370-4" tabindex="-1"></a></span>
+<span id="cb370-5"><a href="sec-simulacion.html#cb370-5" tabindex="-1"></a>dat_plot3 <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb370-6"><a href="sec-simulacion.html#cb370-6" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">encuesta_MNAR =</span> encuesta_MNAR, <span class="at">encuesta =</span> encuesta),</span>
+<span id="cb370-7"><a href="sec-simulacion.html#cb370-7" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">&quot;Caso&quot;</span></span>
+<span id="cb370-8"><a href="sec-simulacion.html#cb370-8" tabindex="-1"></a>)</span></code></pre></div>
 <p>La Figura <a href="sec-simulacion.html#fig:fig-mnar-densidad-ingreso">9.7</a> ilustra el efecto más severo del esquema MNAR sobre el ingreso. La línea azul indica la media de la submuestra MNAR, claramente desplazada hacia la izquierda respecto a la media de la muestra completa (línea roja):</p>
-<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="sec-simulacion.html#cb374-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot3, <span class="fu">aes</span>(<span class="at">x =</span> Income, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb374-2"><a href="sec-simulacion.html#cb374-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb374-3"><a href="sec-simulacion.html#cb374-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb374-4"><a href="sec-simulacion.html#cb374-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income),      <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb374-5"><a href="sec-simulacion.html#cb374-5" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta_MNAR<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="sec-simulacion.html#cb371-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot3, <span class="fu">aes</span>(<span class="at">x =</span> Income, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb371-2"><a href="sec-simulacion.html#cb371-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb371-3"><a href="sec-simulacion.html#cb371-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb371-4"><a href="sec-simulacion.html#cb371-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income),      <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb371-5"><a href="sec-simulacion.html#cb371-5" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta_MNAR<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-mnar-densidad-ingreso"></span>
 <img src="09-Imputacion_files/figure-html/fig-mnar-densidad-ingreso-1.svg" alt="Densidad del ingreso: muestra completa versus esquema MNAR. La línea roja indica la media de la muestra completa; la línea azul, la de la submuestra MNAR." width="70%" />
 <p class="caption">
@@ -564,11 +564,11 @@ Figura 9.7: Densidad del ingreso: muestra completa versus esquema MNAR. La líne
 </p>
 </div>
 <p>La Figura <a href="sec-simulacion.html#fig:fig-mnar-densidad-gasto">9.8</a> presenta el mismo efecto para la variable gasto:</p>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="sec-simulacion.html#cb375-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot3, <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb375-2"><a href="sec-simulacion.html#cb375-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb375-3"><a href="sec-simulacion.html#cb375-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb375-4"><a href="sec-simulacion.html#cb375-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Expenditure),      <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb375-5"><a href="sec-simulacion.html#cb375-5" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta_MNAR<span class="sc">$</span>Expenditure), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="sec-simulacion.html#cb372-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot3, <span class="fu">aes</span>(<span class="at">x =</span> Expenditure, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb372-2"><a href="sec-simulacion.html#cb372-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb372-3"><a href="sec-simulacion.html#cb372-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb372-4"><a href="sec-simulacion.html#cb372-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Expenditure),      <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb372-5"><a href="sec-simulacion.html#cb372-5" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta_MNAR<span class="sc">$</span>Expenditure), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-mnar-densidad-gasto"></span>
 <img src="09-Imputacion_files/figure-html/fig-mnar-densidad-gasto-1.svg" alt="Densidad del gasto: muestra completa versus esquema MNAR" width="70%" />
 <p class="caption">
@@ -576,11 +576,11 @@ Figura 9.8: Densidad del gasto: muestra completa versus esquema MNAR
 </p>
 </div>
 <p>La Figura <a href="sec-simulacion.html#fig:fig-mnar-boxplot-zona">9.9</a> desagrega el efecto del esquema MNAR por zona y sexo, evidenciando cambios distribucionales importantes en todos los subgrupos:</p>
-<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="sec-simulacion.html#cb376-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot3, <span class="fu">aes</span>(<span class="at">x =</span> Caso, <span class="at">y =</span> Income)) <span class="sc">+</span></span>
-<span id="cb376-2"><a href="sec-simulacion.html#cb376-2" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb376-3"><a href="sec-simulacion.html#cb376-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb376-4"><a href="sec-simulacion.html#cb376-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Zone <span class="sc">~</span> Sex) <span class="sc">+</span></span>
-<span id="cb376-5"><a href="sec-simulacion.html#cb376-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="sec-simulacion.html#cb373-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot3, <span class="fu">aes</span>(<span class="at">x =</span> Caso, <span class="at">y =</span> Income)) <span class="sc">+</span></span>
+<span id="cb373-2"><a href="sec-simulacion.html#cb373-2" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb373-3"><a href="sec-simulacion.html#cb373-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb373-4"><a href="sec-simulacion.html#cb373-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Zone <span class="sc">~</span> Sex) <span class="sc">+</span></span>
+<span id="cb373-5"><a href="sec-simulacion.html#cb373-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-mnar-boxplot-zona"></span>
 <img src="09-Imputacion_files/figure-html/fig-mnar-boxplot-zona-1.svg" alt="Distribución del ingreso por zona y sexo: muestra completa versus esquema MNAR" width="70%" />
 <p class="caption">

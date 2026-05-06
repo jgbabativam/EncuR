@@ -417,37 +417,37 @@ div.csl-indent {
 <p>La principal ventaja de estos modelos radica en su capacidad para descomponer la varianza de la variable de respuesta en componentes correspondientes a cada nivel de la jerarquía, lo que permite identificar tanto los factores individuales como los contextuales que explican el fenómeno de interés. Los efectos fijos representan las relaciones promedio entre las variables en la población, mientras que los efectos aleatorios capturan la variación en esas relaciones entre las unidades de nivel superior, como los hogares o los estratos. De esta manera, los modelos multinivel permiten obtener estimaciones más precisas que los modelos de regresión convencionales cuando los datos presentan dependencia intragrupo.</p>
 <p>Entre las referencias fundamentales sobre el uso de modelos multinivel en encuestas de hogares se encuentran <span class="citation">Goldstein (<a href="#ref-goldstein2011multilevel">2011</a>)</span>, <span class="citation">Gelman &amp; Hill (<a href="#ref-gelman2006data">2006</a>)</span> y <span class="citation">Rabe-Hesketh &amp; Skrondal (<a href="#ref-rabehesketh2012multilevel">2012</a>)</span>. En el contexto comparativo entre enfoques de estimación, <span class="citation">Browne &amp; Draper (<a href="#ref-browne2006comparison">2006</a>)</span> examinan las diferencias entre los métodos bayesianos y los basados en verosimilitud para el ajuste de modelos jerárquicos. En epidemiología social, <span class="citation">Merlo et al. (<a href="#ref-merlo2006brief">2006</a>)</span> presentan una introducción conceptual a los modelos multinivel con énfasis en el análisis de fenómenos contextuales como la segregación residencial y las desigualdades en salud.</p>
 <p>Para iniciar este capítulo, se cargan las librerías necesarias, la base de datos y el tema gráfico de la CEPAL:</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="cap-multinivel.html#cb292-1" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
-<span id="cb292-2"><a href="cap-multinivel.html#cb292-2" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
-<span id="cb292-3"><a href="cap-multinivel.html#cb292-3" tabindex="-1"></a><span class="fu">library</span>(TeachingSampling)</span>
-<span id="cb292-4"><a href="cap-multinivel.html#cb292-4" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb292-5"><a href="cap-multinivel.html#cb292-5" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb292-6"><a href="cap-multinivel.html#cb292-6" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb292-7"><a href="cap-multinivel.html#cb292-7" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb292-8"><a href="cap-multinivel.html#cb292-8" tabindex="-1"></a><span class="fu">library</span>(performance)</span></code></pre></div>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="cap-multinivel.html#cb293-1" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Data/encuesta.rds&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="cap-multinivel.html#cb294-1" tabindex="-1"></a>theme_cepal <span class="ot">&lt;-</span> <span class="cf">function</span>(...) <span class="fu">theme_light</span>(<span class="dv">10</span>) <span class="sc">+</span></span>
-<span id="cb294-2"><a href="cap-multinivel.html#cb294-2" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x      =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb294-3"><a href="cap-multinivel.html#cb294-3" tabindex="-1"></a>        <span class="at">axis.ticks.x     =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb294-4"><a href="cap-multinivel.html#cb294-4" tabindex="-1"></a>        <span class="at">axis.text.y      =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb294-5"><a href="cap-multinivel.html#cb294-5" tabindex="-1"></a>        <span class="at">axis.ticks.y     =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb294-6"><a href="cap-multinivel.html#cb294-6" tabindex="-1"></a>        <span class="at">legend.position  =</span> <span class="st">&quot;top&quot;</span>,</span>
-<span id="cb294-7"><a href="cap-multinivel.html#cb294-7" tabindex="-1"></a>        <span class="at">legend.justification =</span> <span class="st">&quot;left&quot;</span>,</span>
-<span id="cb294-8"><a href="cap-multinivel.html#cb294-8" tabindex="-1"></a>        <span class="at">legend.direction =</span> <span class="st">&quot;horizontal&quot;</span>,</span>
-<span id="cb294-9"><a href="cap-multinivel.html#cb294-9" tabindex="-1"></a>        <span class="at">plot.title       =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb294-10"><a href="cap-multinivel.html#cb294-10" tabindex="-1"></a>        ...)</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="cap-multinivel.html#cb289-1" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb289-2"><a href="cap-multinivel.html#cb289-2" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
+<span id="cb289-3"><a href="cap-multinivel.html#cb289-3" tabindex="-1"></a><span class="fu">library</span>(TeachingSampling)</span>
+<span id="cb289-4"><a href="cap-multinivel.html#cb289-4" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb289-5"><a href="cap-multinivel.html#cb289-5" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb289-6"><a href="cap-multinivel.html#cb289-6" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb289-7"><a href="cap-multinivel.html#cb289-7" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb289-8"><a href="cap-multinivel.html#cb289-8" tabindex="-1"></a><span class="fu">library</span>(performance)</span></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="cap-multinivel.html#cb290-1" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Data/encuesta.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="cap-multinivel.html#cb291-1" tabindex="-1"></a>theme_cepal <span class="ot">&lt;-</span> <span class="cf">function</span>(...) <span class="fu">theme_light</span>(<span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb291-2"><a href="cap-multinivel.html#cb291-2" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x      =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb291-3"><a href="cap-multinivel.html#cb291-3" tabindex="-1"></a>        <span class="at">axis.ticks.x     =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb291-4"><a href="cap-multinivel.html#cb291-4" tabindex="-1"></a>        <span class="at">axis.text.y      =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb291-5"><a href="cap-multinivel.html#cb291-5" tabindex="-1"></a>        <span class="at">axis.ticks.y     =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb291-6"><a href="cap-multinivel.html#cb291-6" tabindex="-1"></a>        <span class="at">legend.position  =</span> <span class="st">&quot;top&quot;</span>,</span>
+<span id="cb291-7"><a href="cap-multinivel.html#cb291-7" tabindex="-1"></a>        <span class="at">legend.justification =</span> <span class="st">&quot;left&quot;</span>,</span>
+<span id="cb291-8"><a href="cap-multinivel.html#cb291-8" tabindex="-1"></a>        <span class="at">legend.direction =</span> <span class="st">&quot;horizontal&quot;</span>,</span>
+<span id="cb291-9"><a href="cap-multinivel.html#cb291-9" tabindex="-1"></a>        <span class="at">plot.title       =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb291-10"><a href="cap-multinivel.html#cb291-10" tabindex="-1"></a>        ...)</span></code></pre></div>
 <p>Para ilustrar los conceptos de este capítulo se define una submuestra con seis estratos, filtrando registros con valores de gasto inferiores a 700 para facilitar la visualización:</p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="cap-multinivel.html#cb295-1" tabindex="-1"></a>encuesta_plot <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb295-2"><a href="cap-multinivel.html#cb295-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(HHID, Stratum) <span class="sc">%&gt;%</span></span>
-<span id="cb295-3"><a href="cap-multinivel.html#cb295-3" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb295-4"><a href="cap-multinivel.html#cb295-4" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
-<span id="cb295-5"><a href="cap-multinivel.html#cb295-5" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb295-6"><a href="cap-multinivel.html#cb295-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
-<span id="cb295-7"><a href="cap-multinivel.html#cb295-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>n) <span class="sc">%&gt;%</span></span>
-<span id="cb295-8"><a href="cap-multinivel.html#cb295-8" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L) <span class="sc">%&gt;%</span></span>
-<span id="cb295-9"><a href="cap-multinivel.html#cb295-9" tabindex="-1"></a>  <span class="fu">inner_join</span>(encuesta) <span class="sc">%&gt;%</span></span>
-<span id="cb295-10"><a href="cap-multinivel.html#cb295-10" tabindex="-1"></a>  <span class="fu">filter</span>(Expenditure <span class="sc">&lt;</span> <span class="dv">700</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb295-11"><a href="cap-multinivel.html#cb295-11" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Income, Expenditure, Stratum, Sex, Region, Zone)</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="cap-multinivel.html#cb292-1" tabindex="-1"></a>encuesta_plot <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb292-2"><a href="cap-multinivel.html#cb292-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(HHID, Stratum) <span class="sc">%&gt;%</span></span>
+<span id="cb292-3"><a href="cap-multinivel.html#cb292-3" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb292-4"><a href="cap-multinivel.html#cb292-4" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
+<span id="cb292-5"><a href="cap-multinivel.html#cb292-5" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb292-6"><a href="cap-multinivel.html#cb292-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb292-7"><a href="cap-multinivel.html#cb292-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>n) <span class="sc">%&gt;%</span></span>
+<span id="cb292-8"><a href="cap-multinivel.html#cb292-8" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L) <span class="sc">%&gt;%</span></span>
+<span id="cb292-9"><a href="cap-multinivel.html#cb292-9" tabindex="-1"></a>  <span class="fu">inner_join</span>(encuesta) <span class="sc">%&gt;%</span></span>
+<span id="cb292-10"><a href="cap-multinivel.html#cb292-10" tabindex="-1"></a>  <span class="fu">filter</span>(Expenditure <span class="sc">&lt;</span> <span class="dv">700</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb292-11"><a href="cap-multinivel.html#cb292-11" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Income, Expenditure, Stratum, Sex, Region, Zone)</span></code></pre></div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">

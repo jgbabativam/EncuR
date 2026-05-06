@@ -418,13 +418,13 @@ div.csl-indent {
 <div id="carga-del-shapefile-y-mapa-base" class="section level3 hasAnchor" number="5.5.1">
 <h3><span class="header-section-number">5.5.1</span> Carga del shapefile y mapa base<a href="viz-mapas.html#carga-del-shapefile-y-mapa-base" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>El primer paso consiste en cargar el archivo geoespacial y verificar que las regiones del shapefile coincidan con las de la encuesta:</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="viz-mapas.html#cb188-1" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb188-2"><a href="viz-mapas.html#cb188-2" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
-<span id="cb188-3"><a href="viz-mapas.html#cb188-3" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span>
-<span id="cb188-4"><a href="viz-mapas.html#cb188-4" tabindex="-1"></a>shapeBigCity <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">&quot;Data/shapeBigCity/BigCity.shp&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="viz-mapas.html#cb185-1" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb185-2"><a href="viz-mapas.html#cb185-2" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb185-3"><a href="viz-mapas.html#cb185-3" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span>
+<span id="cb185-4"><a href="viz-mapas.html#cb185-4" tabindex="-1"></a>shapeBigCity <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">&quot;Data/shapeBigCity/BigCity.shp&quot;</span>)</span></code></pre></div>
 <p>Con el shapefile cargado, se puede generar un mapa de las regiones usando <code>tm_shape()</code> y <code>tm_polygons()</code>, como se muestra en la Figura <a href="viz-mapas.html#fig:fig-mapa-regiones">5.6</a>:</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="viz-mapas.html#cb189-1" tabindex="-1"></a><span class="fu">tm_shape</span>(shapeBigCity) <span class="sc">+</span></span>
-<span id="cb189-2"><a href="viz-mapas.html#cb189-2" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">col =</span> <span class="st">&quot;Region&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="viz-mapas.html#cb186-1" tabindex="-1"></a><span class="fu">tm_shape</span>(shapeBigCity) <span class="sc">+</span></span>
+<span id="cb186-2"><a href="viz-mapas.html#cb186-2" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">col =</span> <span class="st">&quot;Region&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-mapa-regiones"></span>
 <img src="05-Categ%C3%B3ricas_files/figure-html/fig-mapa-regiones-1.svg" alt="Mapa de regiones geográficas de BigCity" width="70%" />
 <p class="caption">
@@ -435,20 +435,20 @@ Figura 5.6: Mapa de regiones geográficas de BigCity
 <div id="mapa-coroplético-de-pobreza-masculina-por-región" class="section level3 hasAnchor" number="5.5.2">
 <h3><span class="header-section-number">5.5.2</span> Mapa coroplético de pobreza masculina por región<a href="viz-mapas.html#mapa-coroplético-de-pobreza-masculina-por-región" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Una aplicación directa consiste en representar geográficamente la proporción de hombres en condición de pobreza por región, calculada anteriormente en la Figura <a href="viz-categoricas.html#fig:fig-barras-prop-region-hombre">5.5</a>. Para ello se vincula el objeto <code>prop_RegionH_Pobreza</code> con el shapefile mediante <code>left_join()</code>, filtrando únicamente las observaciones correspondientes a condición de pobreza (<code>pobreza == 1</code>):</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="viz-mapas.html#cb190-1" tabindex="-1"></a>shape_temp <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(</span>
-<span id="cb190-2"><a href="viz-mapas.html#cb190-2" tabindex="-1"></a>  shapeBigCity <span class="sc">%&gt;%</span></span>
-<span id="cb190-3"><a href="viz-mapas.html#cb190-3" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
-<span id="cb190-4"><a href="viz-mapas.html#cb190-4" tabindex="-1"></a>      prop_RegionH_Pobreza <span class="sc">%&gt;%</span></span>
-<span id="cb190-5"><a href="viz-mapas.html#cb190-5" tabindex="-1"></a>        <span class="fu">filter</span>(pobreza <span class="sc">==</span> <span class="dv">1</span>),</span>
-<span id="cb190-6"><a href="viz-mapas.html#cb190-6" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;Region&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="viz-mapas.html#cb187-1" tabindex="-1"></a>shape_temp <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(</span>
+<span id="cb187-2"><a href="viz-mapas.html#cb187-2" tabindex="-1"></a>  shapeBigCity <span class="sc">%&gt;%</span></span>
+<span id="cb187-3"><a href="viz-mapas.html#cb187-3" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
+<span id="cb187-4"><a href="viz-mapas.html#cb187-4" tabindex="-1"></a>      prop_RegionH_Pobreza <span class="sc">%&gt;%</span></span>
+<span id="cb187-5"><a href="viz-mapas.html#cb187-5" tabindex="-1"></a>        <span class="fu">filter</span>(pobreza <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb187-6"><a href="viz-mapas.html#cb187-6" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">&quot;Region&quot;</span>))</span></code></pre></div>
 <p>Una vez construido el objeto de mapa, se especifican los cortes para la escala de color y se genera el mapa coroplético, como se presenta en la Figura <a href="viz-mapas.html#fig:fig-mapa-pobreza-hombre">5.7</a>:</p>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="viz-mapas.html#cb191-1" tabindex="-1"></a>brks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">2</span>, .<span class="dv">4</span>, .<span class="dv">6</span>, <span class="fl">0.8</span>, <span class="dv">1</span>)</span>
-<span id="cb191-2"><a href="viz-mapas.html#cb191-2" tabindex="-1"></a>shape_temp <span class="sc">+</span></span>
-<span id="cb191-3"><a href="viz-mapas.html#cb191-3" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
-<span id="cb191-4"><a href="viz-mapas.html#cb191-4" tabindex="-1"></a>    <span class="at">col    =</span> <span class="st">&quot;prop&quot;</span>,</span>
-<span id="cb191-5"><a href="viz-mapas.html#cb191-5" tabindex="-1"></a>    <span class="at">breaks =</span> brks,</span>
-<span id="cb191-6"><a href="viz-mapas.html#cb191-6" tabindex="-1"></a>    <span class="at">title  =</span> <span class="st">&quot;Proporción en pobreza&quot;</span>,</span>
-<span id="cb191-7"><a href="viz-mapas.html#cb191-7" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">&quot;YlOrRd&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="viz-mapas.html#cb188-1" tabindex="-1"></a>brks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">2</span>, .<span class="dv">4</span>, .<span class="dv">6</span>, <span class="fl">0.8</span>, <span class="dv">1</span>)</span>
+<span id="cb188-2"><a href="viz-mapas.html#cb188-2" tabindex="-1"></a>shape_temp <span class="sc">+</span></span>
+<span id="cb188-3"><a href="viz-mapas.html#cb188-3" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb188-4"><a href="viz-mapas.html#cb188-4" tabindex="-1"></a>    <span class="at">col    =</span> <span class="st">&quot;prop&quot;</span>,</span>
+<span id="cb188-5"><a href="viz-mapas.html#cb188-5" tabindex="-1"></a>    <span class="at">breaks =</span> brks,</span>
+<span id="cb188-6"><a href="viz-mapas.html#cb188-6" tabindex="-1"></a>    <span class="at">title  =</span> <span class="st">&quot;Proporción en pobreza&quot;</span>,</span>
+<span id="cb188-7"><a href="viz-mapas.html#cb188-7" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">&quot;YlOrRd&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-mapa-pobreza-hombre"></span>
 <img src="05-Categ%C3%B3ricas_files/figure-html/fig-mapa-pobreza-hombre-1.svg" alt="Proporción de hombres en condición de pobreza por región" width="70%" />
 <p class="caption">
@@ -459,23 +459,23 @@ Figura 5.7: Proporción de hombres en condición de pobreza por región
 <div id="mapa-del-coeficiente-de-variación-del-ingreso-medio" class="section level3 hasAnchor" number="5.5.3">
 <h3><span class="header-section-number">5.5.3</span> Mapa del coeficiente de variación del ingreso medio<a href="viz-mapas.html#mapa-del-coeficiente-de-variación-del-ingreso-medio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Otro uso frecuente de los mapas en encuestas es la visualización de la precisión de las estimaciones. El coeficiente de variación (CV) del ingreso medio por región permite identificar las áreas donde las estimaciones son menos confiables, como se muestra en la Figura <a href="viz-mapas.html#fig:fig-mapa-cv-ingreso">5.8</a>:</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="viz-mapas.html#cb192-1" tabindex="-1"></a>prom_region <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="sc">~</span>Income, <span class="sc">~</span>Region, diseno,</span>
-<span id="cb192-2"><a href="viz-mapas.html#cb192-2" tabindex="-1"></a>  svymean,</span>
-<span id="cb192-3"><a href="viz-mapas.html#cb192-3" tabindex="-1"></a>  <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">covmat =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb192-4"><a href="viz-mapas.html#cb192-4" tabindex="-1"></a>  <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;cv&quot;</span>))</span>
-<span id="cb192-5"><a href="viz-mapas.html#cb192-5" tabindex="-1"></a></span>
-<span id="cb192-6"><a href="viz-mapas.html#cb192-6" tabindex="-1"></a>brks_cv <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.2</span>, <span class="dv">1</span>)</span>
-<span id="cb192-7"><a href="viz-mapas.html#cb192-7" tabindex="-1"></a>shape_cv <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(</span>
-<span id="cb192-8"><a href="viz-mapas.html#cb192-8" tabindex="-1"></a>  shapeBigCity <span class="sc">%&gt;%</span></span>
-<span id="cb192-9"><a href="viz-mapas.html#cb192-9" tabindex="-1"></a>    <span class="fu">left_join</span>(prom_region, <span class="at">by =</span> <span class="st">&quot;Region&quot;</span>))</span>
-<span id="cb192-10"><a href="viz-mapas.html#cb192-10" tabindex="-1"></a></span>
-<span id="cb192-11"><a href="viz-mapas.html#cb192-11" tabindex="-1"></a>shape_cv <span class="sc">+</span></span>
-<span id="cb192-12"><a href="viz-mapas.html#cb192-12" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
-<span id="cb192-13"><a href="viz-mapas.html#cb192-13" tabindex="-1"></a>    <span class="st">&quot;cv&quot;</span>,</span>
-<span id="cb192-14"><a href="viz-mapas.html#cb192-14" tabindex="-1"></a>    <span class="at">breaks =</span> brks_cv,</span>
-<span id="cb192-15"><a href="viz-mapas.html#cb192-15" tabindex="-1"></a>    <span class="at">title  =</span> <span class="st">&quot;CV del ingreso medio&quot;</span>,</span>
-<span id="cb192-16"><a href="viz-mapas.html#cb192-16" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">&quot;#FFFFFF&quot;</span>, <span class="st">&quot;#000000&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb192-17"><a href="viz-mapas.html#cb192-17" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">asp =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="viz-mapas.html#cb189-1" tabindex="-1"></a>prom_region <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="sc">~</span>Income, <span class="sc">~</span>Region, diseno,</span>
+<span id="cb189-2"><a href="viz-mapas.html#cb189-2" tabindex="-1"></a>  svymean,</span>
+<span id="cb189-3"><a href="viz-mapas.html#cb189-3" tabindex="-1"></a>  <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">covmat =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb189-4"><a href="viz-mapas.html#cb189-4" tabindex="-1"></a>  <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;cv&quot;</span>))</span>
+<span id="cb189-5"><a href="viz-mapas.html#cb189-5" tabindex="-1"></a></span>
+<span id="cb189-6"><a href="viz-mapas.html#cb189-6" tabindex="-1"></a>brks_cv <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.2</span>, <span class="dv">1</span>)</span>
+<span id="cb189-7"><a href="viz-mapas.html#cb189-7" tabindex="-1"></a>shape_cv <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(</span>
+<span id="cb189-8"><a href="viz-mapas.html#cb189-8" tabindex="-1"></a>  shapeBigCity <span class="sc">%&gt;%</span></span>
+<span id="cb189-9"><a href="viz-mapas.html#cb189-9" tabindex="-1"></a>    <span class="fu">left_join</span>(prom_region, <span class="at">by =</span> <span class="st">&quot;Region&quot;</span>))</span>
+<span id="cb189-10"><a href="viz-mapas.html#cb189-10" tabindex="-1"></a></span>
+<span id="cb189-11"><a href="viz-mapas.html#cb189-11" tabindex="-1"></a>shape_cv <span class="sc">+</span></span>
+<span id="cb189-12"><a href="viz-mapas.html#cb189-12" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb189-13"><a href="viz-mapas.html#cb189-13" tabindex="-1"></a>    <span class="st">&quot;cv&quot;</span>,</span>
+<span id="cb189-14"><a href="viz-mapas.html#cb189-14" tabindex="-1"></a>    <span class="at">breaks =</span> brks_cv,</span>
+<span id="cb189-15"><a href="viz-mapas.html#cb189-15" tabindex="-1"></a>    <span class="at">title  =</span> <span class="st">&quot;CV del ingreso medio&quot;</span>,</span>
+<span id="cb189-16"><a href="viz-mapas.html#cb189-16" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">&quot;#FFFFFF&quot;</span>, <span class="st">&quot;#000000&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb189-17"><a href="viz-mapas.html#cb189-17" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">asp =</span> <span class="dv">0</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-mapa-cv-ingreso"></span>
 <img src="05-Categ%C3%B3ricas_files/figure-html/fig-mapa-cv-ingreso-1.svg" alt="Coeficiente de variación del ingreso medio por región" width="70%" />
 <p class="caption">
@@ -487,39 +487,39 @@ Figura 5.8: Coeficiente de variación del ingreso medio por región
 <div id="mapa-bivariante-con-ggplot2" class="section level3 hasAnchor" number="5.5.4">
 <h3><span class="header-section-number">5.5.4</span> Mapa bivariante con <code>ggplot2</code><a href="viz-mapas.html#mapa-bivariante-con-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Cuando se desea representar simultáneamente dos variables —por ejemplo, la proporción de pobreza y su coeficiente de variación— es posible construir un mapa bivariante utilizando <code>ggplot2</code> junto con los paquetes <code>biscale</code> y <code>cowplot</code>. Este tipo de visualización permite identificar regiones con alta pobreza y alta incertidumbre en la estimación de forma conjunta, como se presenta en la Figura <a href="viz-mapas.html#fig:fig-mapa-bivariante">5.9</a>:</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="viz-mapas.html#cb193-1" tabindex="-1"></a>prom_region_Sex <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span></span>
-<span id="cb193-2"><a href="viz-mapas.html#cb193-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Region, Zone, Sex, pobreza) <span class="sc">%&gt;%</span></span>
-<span id="cb193-3"><a href="viz-mapas.html#cb193-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">prop =</span> <span class="fu">survey_mean</span>(<span class="at">vartype =</span> <span class="st">&quot;cv&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb193-4"><a href="viz-mapas.html#cb193-4" tabindex="-1"></a>  <span class="fu">filter</span>(pobreza <span class="sc">==</span> <span class="dv">1</span>, Zone <span class="sc">==</span> <span class="st">&quot;Rural&quot;</span>, Sex <span class="sc">==</span> <span class="st">&quot;Female&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="viz-mapas.html#cb194-1" tabindex="-1"></a><span class="fu">library</span>(biscale)</span>
-<span id="cb194-2"><a href="viz-mapas.html#cb194-2" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
-<span id="cb194-3"><a href="viz-mapas.html#cb194-3" tabindex="-1"></a></span>
-<span id="cb194-4"><a href="viz-mapas.html#cb194-4" tabindex="-1"></a>temp_shape <span class="ot">&lt;-</span> shapeBigCity <span class="sc">%&gt;%</span></span>
-<span id="cb194-5"><a href="viz-mapas.html#cb194-5" tabindex="-1"></a>  <span class="fu">left_join</span>(prom_region_Sex, <span class="at">by =</span> <span class="st">&quot;Region&quot;</span>)</span>
-<span id="cb194-6"><a href="viz-mapas.html#cb194-6" tabindex="-1"></a></span>
-<span id="cb194-7"><a href="viz-mapas.html#cb194-7" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb194-8"><a href="viz-mapas.html#cb194-8" tabindex="-1"></a>datos_bi <span class="ot">&lt;-</span> <span class="fu">bi_class</span>(temp_shape,</span>
-<span id="cb194-9"><a href="viz-mapas.html#cb194-9" tabindex="-1"></a>  <span class="at">y =</span> prop, <span class="at">x =</span> prop_cv, <span class="at">dim =</span> k,</span>
-<span id="cb194-10"><a href="viz-mapas.html#cb194-10" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">&quot;fisher&quot;</span>)</span>
-<span id="cb194-11"><a href="viz-mapas.html#cb194-11" tabindex="-1"></a></span>
-<span id="cb194-12"><a href="viz-mapas.html#cb194-12" tabindex="-1"></a>map_bi <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb194-13"><a href="viz-mapas.html#cb194-13" tabindex="-1"></a>  <span class="fu">geom_sf</span>(</span>
-<span id="cb194-14"><a href="viz-mapas.html#cb194-14" tabindex="-1"></a>    <span class="at">data =</span> datos_bi,</span>
-<span id="cb194-15"><a href="viz-mapas.html#cb194-15" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> bi_class, <span class="at">geometry =</span> geometry),</span>
-<span id="cb194-16"><a href="viz-mapas.html#cb194-16" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb194-17"><a href="viz-mapas.html#cb194-17" tabindex="-1"></a>  <span class="fu">bi_scale_fill</span>(<span class="at">pal =</span> <span class="st">&quot;GrPink&quot;</span>, <span class="at">dim =</span> k) <span class="sc">+</span></span>
-<span id="cb194-18"><a href="viz-mapas.html#cb194-18" tabindex="-1"></a>  <span class="fu">bi_theme</span>() <span class="sc">+</span></span>
-<span id="cb194-19"><a href="viz-mapas.html#cb194-19" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb194-20"><a href="viz-mapas.html#cb194-20" tabindex="-1"></a></span>
-<span id="cb194-21"><a href="viz-mapas.html#cb194-21" tabindex="-1"></a>legend_bi <span class="ot">&lt;-</span> <span class="fu">bi_legend</span>(</span>
-<span id="cb194-22"><a href="viz-mapas.html#cb194-22" tabindex="-1"></a>  <span class="at">pal  =</span> <span class="st">&quot;GrPink&quot;</span>, <span class="at">dim =</span> k,</span>
-<span id="cb194-23"><a href="viz-mapas.html#cb194-23" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;Coeficiente de variación&quot;</span>,</span>
-<span id="cb194-24"><a href="viz-mapas.html#cb194-24" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;Pobreza femenina rural&quot;</span>,</span>
-<span id="cb194-25"><a href="viz-mapas.html#cb194-25" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">8</span>)</span>
-<span id="cb194-26"><a href="viz-mapas.html#cb194-26" tabindex="-1"></a></span>
-<span id="cb194-27"><a href="viz-mapas.html#cb194-27" tabindex="-1"></a><span class="fu">ggdraw</span>() <span class="sc">+</span></span>
-<span id="cb194-28"><a href="viz-mapas.html#cb194-28" tabindex="-1"></a>  <span class="fu">draw_plot</span>(map_bi,     <span class="dv">0</span>,    <span class="dv">0</span>,    <span class="dv">1</span>, <span class="at">scale =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb194-29"><a href="viz-mapas.html#cb194-29" tabindex="-1"></a>  <span class="fu">draw_plot</span>(legend_bi,  <span class="fl">0.75</span>, <span class="fl">0.4</span>,  <span class="fl">0.2</span>, <span class="fl">0.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="viz-mapas.html#cb190-1" tabindex="-1"></a>prom_region_Sex <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span></span>
+<span id="cb190-2"><a href="viz-mapas.html#cb190-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Region, Zone, Sex, pobreza) <span class="sc">%&gt;%</span></span>
+<span id="cb190-3"><a href="viz-mapas.html#cb190-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">prop =</span> <span class="fu">survey_mean</span>(<span class="at">vartype =</span> <span class="st">&quot;cv&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb190-4"><a href="viz-mapas.html#cb190-4" tabindex="-1"></a>  <span class="fu">filter</span>(pobreza <span class="sc">==</span> <span class="dv">1</span>, Zone <span class="sc">==</span> <span class="st">&quot;Rural&quot;</span>, Sex <span class="sc">==</span> <span class="st">&quot;Female&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="viz-mapas.html#cb191-1" tabindex="-1"></a><span class="fu">library</span>(biscale)</span>
+<span id="cb191-2"><a href="viz-mapas.html#cb191-2" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb191-3"><a href="viz-mapas.html#cb191-3" tabindex="-1"></a></span>
+<span id="cb191-4"><a href="viz-mapas.html#cb191-4" tabindex="-1"></a>temp_shape <span class="ot">&lt;-</span> shapeBigCity <span class="sc">%&gt;%</span></span>
+<span id="cb191-5"><a href="viz-mapas.html#cb191-5" tabindex="-1"></a>  <span class="fu">left_join</span>(prom_region_Sex, <span class="at">by =</span> <span class="st">&quot;Region&quot;</span>)</span>
+<span id="cb191-6"><a href="viz-mapas.html#cb191-6" tabindex="-1"></a></span>
+<span id="cb191-7"><a href="viz-mapas.html#cb191-7" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb191-8"><a href="viz-mapas.html#cb191-8" tabindex="-1"></a>datos_bi <span class="ot">&lt;-</span> <span class="fu">bi_class</span>(temp_shape,</span>
+<span id="cb191-9"><a href="viz-mapas.html#cb191-9" tabindex="-1"></a>  <span class="at">y =</span> prop, <span class="at">x =</span> prop_cv, <span class="at">dim =</span> k,</span>
+<span id="cb191-10"><a href="viz-mapas.html#cb191-10" tabindex="-1"></a>  <span class="at">style =</span> <span class="st">&quot;fisher&quot;</span>)</span>
+<span id="cb191-11"><a href="viz-mapas.html#cb191-11" tabindex="-1"></a></span>
+<span id="cb191-12"><a href="viz-mapas.html#cb191-12" tabindex="-1"></a>map_bi <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb191-13"><a href="viz-mapas.html#cb191-13" tabindex="-1"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb191-14"><a href="viz-mapas.html#cb191-14" tabindex="-1"></a>    <span class="at">data =</span> datos_bi,</span>
+<span id="cb191-15"><a href="viz-mapas.html#cb191-15" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> bi_class, <span class="at">geometry =</span> geometry),</span>
+<span id="cb191-16"><a href="viz-mapas.html#cb191-16" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb191-17"><a href="viz-mapas.html#cb191-17" tabindex="-1"></a>  <span class="fu">bi_scale_fill</span>(<span class="at">pal =</span> <span class="st">&quot;GrPink&quot;</span>, <span class="at">dim =</span> k) <span class="sc">+</span></span>
+<span id="cb191-18"><a href="viz-mapas.html#cb191-18" tabindex="-1"></a>  <span class="fu">bi_theme</span>() <span class="sc">+</span></span>
+<span id="cb191-19"><a href="viz-mapas.html#cb191-19" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb191-20"><a href="viz-mapas.html#cb191-20" tabindex="-1"></a></span>
+<span id="cb191-21"><a href="viz-mapas.html#cb191-21" tabindex="-1"></a>legend_bi <span class="ot">&lt;-</span> <span class="fu">bi_legend</span>(</span>
+<span id="cb191-22"><a href="viz-mapas.html#cb191-22" tabindex="-1"></a>  <span class="at">pal  =</span> <span class="st">&quot;GrPink&quot;</span>, <span class="at">dim =</span> k,</span>
+<span id="cb191-23"><a href="viz-mapas.html#cb191-23" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;Coeficiente de variación&quot;</span>,</span>
+<span id="cb191-24"><a href="viz-mapas.html#cb191-24" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;Pobreza femenina rural&quot;</span>,</span>
+<span id="cb191-25"><a href="viz-mapas.html#cb191-25" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">8</span>)</span>
+<span id="cb191-26"><a href="viz-mapas.html#cb191-26" tabindex="-1"></a></span>
+<span id="cb191-27"><a href="viz-mapas.html#cb191-27" tabindex="-1"></a><span class="fu">ggdraw</span>() <span class="sc">+</span></span>
+<span id="cb191-28"><a href="viz-mapas.html#cb191-28" tabindex="-1"></a>  <span class="fu">draw_plot</span>(map_bi,     <span class="dv">0</span>,    <span class="dv">0</span>,    <span class="dv">1</span>, <span class="at">scale =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb191-29"><a href="viz-mapas.html#cb191-29" tabindex="-1"></a>  <span class="fu">draw_plot</span>(legend_bi,  <span class="fl">0.75</span>, <span class="fl">0.4</span>,  <span class="fl">0.2</span>, <span class="fl">0.2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-mapa-bivariante"></span>
 <img src="05-Categ%C3%B3ricas_files/figure-html/fig-mapa-bivariante-1.svg" alt="Mapa bivariante: proporción de pobreza femenina rural y su coeficiente de variación por región" width="80%" />
 <p class="caption">

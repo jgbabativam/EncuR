@@ -414,26 +414,26 @@ div.csl-indent {
 <div id="sec-construccion-base" class="section level2 hasAnchor" number="9.4">
 <h2><span class="header-section-number">9.4</span> Construcción de la base con datos faltantes<a href="sec-construccion-base.html#sec-construccion-base" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Para los ejercicios de imputación, se construye una base de trabajo que combina la encuesta completa con la versión MCAR, preservando los valores faltantes en las variables ingreso y empleo:</p>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="sec-construccion-base.html#cb377-1" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">full_join</span>(</span>
-<span id="cb377-2"><a href="sec-construccion-base.html#cb377-2" tabindex="-1"></a>  encuesta,</span>
-<span id="cb377-3"><a href="sec-construccion-base.html#cb377-3" tabindex="-1"></a>  encuesta_MCAR <span class="sc">%&gt;%</span></span>
-<span id="cb377-4"><a href="sec-construccion-base.html#cb377-4" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(HHID, PersonID, Income, Employment) <span class="sc">%&gt;%</span></span>
-<span id="cb377-5"><a href="sec-construccion-base.html#cb377-5" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb377-6"><a href="sec-construccion-base.html#cb377-6" tabindex="-1"></a>      <span class="at">Income_missin     =</span> Income,</span>
-<span id="cb377-7"><a href="sec-construccion-base.html#cb377-7" tabindex="-1"></a>      <span class="at">Employment_missin =</span> Employment,</span>
-<span id="cb377-8"><a href="sec-construccion-base.html#cb377-8" tabindex="-1"></a>      <span class="at">Employment        =</span> <span class="cn">NULL</span>,</span>
-<span id="cb377-9"><a href="sec-construccion-base.html#cb377-9" tabindex="-1"></a>      <span class="at">Income            =</span> <span class="cn">NULL</span></span>
-<span id="cb377-10"><a href="sec-construccion-base.html#cb377-10" tabindex="-1"></a>    )</span>
-<span id="cb377-11"><a href="sec-construccion-base.html#cb377-11" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="sec-construccion-base.html#cb374-1" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">full_join</span>(</span>
+<span id="cb374-2"><a href="sec-construccion-base.html#cb374-2" tabindex="-1"></a>  encuesta,</span>
+<span id="cb374-3"><a href="sec-construccion-base.html#cb374-3" tabindex="-1"></a>  encuesta_MCAR <span class="sc">%&gt;%</span></span>
+<span id="cb374-4"><a href="sec-construccion-base.html#cb374-4" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(HHID, PersonID, Income, Employment) <span class="sc">%&gt;%</span></span>
+<span id="cb374-5"><a href="sec-construccion-base.html#cb374-5" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb374-6"><a href="sec-construccion-base.html#cb374-6" tabindex="-1"></a>      <span class="at">Income_missin     =</span> Income,</span>
+<span id="cb374-7"><a href="sec-construccion-base.html#cb374-7" tabindex="-1"></a>      <span class="at">Employment_missin =</span> Employment,</span>
+<span id="cb374-8"><a href="sec-construccion-base.html#cb374-8" tabindex="-1"></a>      <span class="at">Employment        =</span> <span class="cn">NULL</span>,</span>
+<span id="cb374-9"><a href="sec-construccion-base.html#cb374-9" tabindex="-1"></a>      <span class="at">Income            =</span> <span class="cn">NULL</span></span>
+<span id="cb374-10"><a href="sec-construccion-base.html#cb374-10" tabindex="-1"></a>    )</span>
+<span id="cb374-11"><a href="sec-construccion-base.html#cb374-11" tabindex="-1"></a>)</span></code></pre></div>
 <p>La Tabla <a href="sec-construccion-base.html#tab:tab-porcentaje-faltantes">9.3</a> presenta el porcentaje de valores faltantes en la variable ingreso según zona y sexo:</p>
-<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="sec-construccion-base.html#cb378-1" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb378-2"><a href="sec-construccion-base.html#cb378-2" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(<span class="at">Dominio =</span> Zone) <span class="sc">%&gt;%</span></span>
-<span id="cb378-3"><a href="sec-construccion-base.html#cb378-3" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">Variable =</span> <span class="st">&quot;Zona&quot;</span>,</span>
-<span id="cb378-4"><a href="sec-construccion-base.html#cb378-4" tabindex="-1"></a>              <span class="st">`</span><span class="at">% faltante</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">mean</span>(<span class="fu">is.na</span>(Income_missin)), <span class="dv">1</span>)),</span>
-<span id="cb378-5"><a href="sec-construccion-base.html#cb378-5" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(<span class="at">Dominio =</span> Sex) <span class="sc">%&gt;%</span></span>
-<span id="cb378-6"><a href="sec-construccion-base.html#cb378-6" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">Variable =</span> <span class="st">&quot;Sexo&quot;</span>,</span>
-<span id="cb378-7"><a href="sec-construccion-base.html#cb378-7" tabindex="-1"></a>              <span class="st">`</span><span class="at">% faltante</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">mean</span>(<span class="fu">is.na</span>(Income_missin)), <span class="dv">1</span>))</span>
-<span id="cb378-8"><a href="sec-construccion-base.html#cb378-8" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="sec-construccion-base.html#cb375-1" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb375-2"><a href="sec-construccion-base.html#cb375-2" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(<span class="at">Dominio =</span> Zone) <span class="sc">%&gt;%</span></span>
+<span id="cb375-3"><a href="sec-construccion-base.html#cb375-3" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">Variable =</span> <span class="st">&quot;Zona&quot;</span>,</span>
+<span id="cb375-4"><a href="sec-construccion-base.html#cb375-4" tabindex="-1"></a>              <span class="st">`</span><span class="at">% faltante</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">mean</span>(<span class="fu">is.na</span>(Income_missin)), <span class="dv">1</span>)),</span>
+<span id="cb375-5"><a href="sec-construccion-base.html#cb375-5" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(<span class="at">Dominio =</span> Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb375-6"><a href="sec-construccion-base.html#cb375-6" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">Variable =</span> <span class="st">&quot;Sexo&quot;</span>,</span>
+<span id="cb375-7"><a href="sec-construccion-base.html#cb375-7" tabindex="-1"></a>              <span class="st">`</span><span class="at">% faltante</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">mean</span>(<span class="fu">is.na</span>(Income_missin)), <span class="dv">1</span>))</span>
+<span id="cb375-8"><a href="sec-construccion-base.html#cb375-8" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-porcentaje-faltantes">Cuadro 9.3: </span>Porcentaje de valores faltantes en la variable ingreso por zona y sexo</caption>
 <thead>

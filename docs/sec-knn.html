@@ -420,22 +420,22 @@ div.csl-indent {
 <li>Imputar el valor faltante con la información del donante identificado.</li>
 </ol>
 <p>A continuación, se imputan el ingreso y el empleo utilizando el gasto como covariable y la distancia euclidiana como medida de similitud:</p>
-<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="sec-knn.html#cb413-1" tabindex="-1"></a>encuesta<span class="sc">$</span>Income_imp     <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Income_missin</span>
-<span id="cb413-2"><a href="sec-knn.html#cb413-2" tabindex="-1"></a>encuesta<span class="sc">$</span>Employment_imp <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Employment_missin</span>
-<span id="cb413-3"><a href="sec-knn.html#cb413-3" tabindex="-1"></a>encuesta_obs    <span class="ot">&lt;-</span> <span class="fu">filter</span>(encuesta, <span class="sc">!</span><span class="fu">is.na</span>(Income_missin))</span>
-<span id="cb413-4"><a href="sec-knn.html#cb413-4" tabindex="-1"></a>encuesta_no_obs <span class="ot">&lt;-</span> <span class="fu">filter</span>(encuesta, <span class="fu">is.na</span>(Income_missin))</span>
-<span id="cb413-5"><a href="sec-knn.html#cb413-5" tabindex="-1"></a></span>
-<span id="cb413-6"><a href="sec-knn.html#cb413-6" tabindex="-1"></a><span class="cf">for</span> (ii <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(encuesta_no_obs)) {</span>
-<span id="cb413-7"><a href="sec-knn.html#cb413-7" tabindex="-1"></a>  Expen_ii  <span class="ot">&lt;-</span> encuesta_no_obs<span class="sc">$</span>Expenditure[[ii]]</span>
-<span id="cb413-8"><a href="sec-knn.html#cb413-8" tabindex="-1"></a>  don_ii    <span class="ot">&lt;-</span> <span class="fu">which.min</span>(<span class="fu">abs</span>(Expen_ii <span class="sc">-</span> encuesta_obs<span class="sc">$</span>Expenditure))</span>
-<span id="cb413-9"><a href="sec-knn.html#cb413-9" tabindex="-1"></a>  encuesta_no_obs<span class="sc">$</span>Income_imp[[ii]]     <span class="ot">&lt;-</span> encuesta_obs<span class="sc">$</span>Income_missin[[don_ii]]</span>
-<span id="cb413-10"><a href="sec-knn.html#cb413-10" tabindex="-1"></a>  encuesta_no_obs<span class="sc">$</span>Employment_imp[[ii]] <span class="ot">&lt;-</span> encuesta_obs<span class="sc">$</span>Employment_missin[[don_ii]]</span>
-<span id="cb413-11"><a href="sec-knn.html#cb413-11" tabindex="-1"></a>}</span>
-<span id="cb413-12"><a href="sec-knn.html#cb413-12" tabindex="-1"></a></span>
-<span id="cb413-13"><a href="sec-knn.html#cb413-13" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(encuesta_obs, encuesta_no_obs)</span></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="sec-knn.html#cb410-1" tabindex="-1"></a>encuesta<span class="sc">$</span>Income_imp     <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Income_missin</span>
+<span id="cb410-2"><a href="sec-knn.html#cb410-2" tabindex="-1"></a>encuesta<span class="sc">$</span>Employment_imp <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Employment_missin</span>
+<span id="cb410-3"><a href="sec-knn.html#cb410-3" tabindex="-1"></a>encuesta_obs    <span class="ot">&lt;-</span> <span class="fu">filter</span>(encuesta, <span class="sc">!</span><span class="fu">is.na</span>(Income_missin))</span>
+<span id="cb410-4"><a href="sec-knn.html#cb410-4" tabindex="-1"></a>encuesta_no_obs <span class="ot">&lt;-</span> <span class="fu">filter</span>(encuesta, <span class="fu">is.na</span>(Income_missin))</span>
+<span id="cb410-5"><a href="sec-knn.html#cb410-5" tabindex="-1"></a></span>
+<span id="cb410-6"><a href="sec-knn.html#cb410-6" tabindex="-1"></a><span class="cf">for</span> (ii <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(encuesta_no_obs)) {</span>
+<span id="cb410-7"><a href="sec-knn.html#cb410-7" tabindex="-1"></a>  Expen_ii  <span class="ot">&lt;-</span> encuesta_no_obs<span class="sc">$</span>Expenditure[[ii]]</span>
+<span id="cb410-8"><a href="sec-knn.html#cb410-8" tabindex="-1"></a>  don_ii    <span class="ot">&lt;-</span> <span class="fu">which.min</span>(<span class="fu">abs</span>(Expen_ii <span class="sc">-</span> encuesta_obs<span class="sc">$</span>Expenditure))</span>
+<span id="cb410-9"><a href="sec-knn.html#cb410-9" tabindex="-1"></a>  encuesta_no_obs<span class="sc">$</span>Income_imp[[ii]]     <span class="ot">&lt;-</span> encuesta_obs<span class="sc">$</span>Income_missin[[don_ii]]</span>
+<span id="cb410-10"><a href="sec-knn.html#cb410-10" tabindex="-1"></a>  encuesta_no_obs<span class="sc">$</span>Employment_imp[[ii]] <span class="ot">&lt;-</span> encuesta_obs<span class="sc">$</span>Employment_missin[[don_ii]]</span>
+<span id="cb410-11"><a href="sec-knn.html#cb410-11" tabindex="-1"></a>}</span>
+<span id="cb410-12"><a href="sec-knn.html#cb410-12" tabindex="-1"></a></span>
+<span id="cb410-13"><a href="sec-knn.html#cb410-13" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(encuesta_obs, encuesta_no_obs)</span></code></pre></div>
 <p>La Tabla <a href="sec-knn.html#tab:tab-knn-empleo-antes">9.20</a> y la Tabla <a href="sec-knn.html#tab:tab-knn-empleo-despues">9.21</a> muestran la distribución de la variable empleo antes y después de la imputación:</p>
-<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="sec-knn.html#cb414-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb414-2"><a href="sec-knn.html#cb414-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">&quot;Estado&quot;</span>, <span class="st">&quot;Proporción&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="sec-knn.html#cb411-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb411-2"><a href="sec-knn.html#cb411-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">&quot;Estado&quot;</span>, <span class="st">&quot;Proporción&quot;</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-knn-empleo-antes">Cuadro 9.20: </span>Distribución de la variable empleo antes de la imputación KNN</caption>
 <thead>
@@ -463,8 +463,8 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="sec-knn.html#cb415-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb415-2"><a href="sec-knn.html#cb415-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">&quot;Estado&quot;</span>, <span class="st">&quot;Proporción&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="sec-knn.html#cb412-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb412-2"><a href="sec-knn.html#cb412-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">&quot;Estado&quot;</span>, <span class="st">&quot;Proporción&quot;</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-knn-empleo-despues">Cuadro 9.21: </span>Distribución de la variable empleo después de la imputación KNN</caption>
 <thead>
@@ -493,8 +493,8 @@ div.csl-indent {
 </tbody>
 </table>
 <p>La Tabla <a href="sec-knn.html#tab:tab-knn-zona-antes">9.22</a>, la Tabla <a href="sec-knn.html#tab:tab-knn-zona-despues">9.23</a>, la Tabla <a href="sec-knn.html#tab:tab-knn-sexo-antes">9.24</a> y la Tabla <a href="sec-knn.html#tab:tab-knn-sexo-despues">9.25</a> verifican que las distribuciones marginales por zona y sexo se preservan:</p>
-<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="sec-knn.html#cb416-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Zone, encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb416-2"><a href="sec-knn.html#cb416-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="sec-knn.html#cb413-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Zone, encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb413-2"><a href="sec-knn.html#cb413-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-knn-zona-antes">Cuadro 9.22: </span>Distribución conjunta de zona y empleo antes de la imputación KNN</caption>
 <thead>
@@ -542,8 +542,8 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="sec-knn.html#cb417-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Zone, encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb417-2"><a href="sec-knn.html#cb417-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="sec-knn.html#cb414-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Zone, encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb414-2"><a href="sec-knn.html#cb414-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-knn-zona-despues">Cuadro 9.23: </span>Distribución conjunta de zona y empleo después de la imputación KNN</caption>
 <thead>
@@ -591,8 +591,8 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="sec-knn.html#cb418-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Sex, encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb418-2"><a href="sec-knn.html#cb418-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="sec-knn.html#cb415-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Sex, encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb415-2"><a href="sec-knn.html#cb415-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-knn-sexo-antes">Cuadro 9.24: </span>Distribución conjunta de sexo y empleo antes de la imputación KNN</caption>
 <thead>
@@ -640,8 +640,8 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="sec-knn.html#cb419-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Sex, encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb419-2"><a href="sec-knn.html#cb419-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="sec-knn.html#cb416-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Sex, encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb416-2"><a href="sec-knn.html#cb416-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-knn-sexo-despues">Cuadro 9.25: </span>Distribución conjunta de sexo y empleo después de la imputación KNN</caption>
 <thead>
@@ -690,13 +690,13 @@ div.csl-indent {
 </tbody>
 </table>
 <p>La Tabla <a href="sec-knn.html#tab:tab-sesgo-knn-global">9.26</a>, la Tabla <a href="sec-knn.html#tab:tab-sesgo-knn-zona">9.27</a> y la Tabla <a href="sec-knn.html#tab:tab-sesgo-knn-sexo">9.28</a> resumen los estadísticos del ingreso. La diferencia entre la media real y la estimada es de aproximadamente 6 unidades monetarias a nivel global, presentada en la Tabla <a href="sec-knn.html#fig:fig-knn-densidad">9.18</a>:, presentada en la Tabla <a href="sec-knn.html#fig:fig-knn-boxplot">9.19</a>::</p>
-<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="sec-knn.html#cb420-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb420-2"><a href="sec-knn.html#cb420-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb420-3"><a href="sec-knn.html#cb420-3" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb420-4"><a href="sec-knn.html#cb420-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb420-5"><a href="sec-knn.html#cb420-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
-<span id="cb420-6"><a href="sec-knn.html#cb420-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
-<span id="cb420-7"><a href="sec-knn.html#cb420-7" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="sec-knn.html#cb417-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb417-2"><a href="sec-knn.html#cb417-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb417-3"><a href="sec-knn.html#cb417-3" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb417-4"><a href="sec-knn.html#cb417-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb417-5"><a href="sec-knn.html#cb417-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
+<span id="cb417-6"><a href="sec-knn.html#cb417-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
+<span id="cb417-7"><a href="sec-knn.html#cb417-7" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sesgo-knn-global">Cuadro 9.26: </span>Comparación global entre ingreso original e imputado por KNN</caption>
 <thead>
@@ -716,14 +716,14 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="sec-knn.html#cb421-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb421-2"><a href="sec-knn.html#cb421-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Zona =</span> Zone) <span class="sc">%&gt;%</span></span>
-<span id="cb421-3"><a href="sec-knn.html#cb421-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb421-4"><a href="sec-knn.html#cb421-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb421-5"><a href="sec-knn.html#cb421-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb421-6"><a href="sec-knn.html#cb421-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
-<span id="cb421-7"><a href="sec-knn.html#cb421-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
-<span id="cb421-8"><a href="sec-knn.html#cb421-8" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="sec-knn.html#cb418-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb418-2"><a href="sec-knn.html#cb418-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Zona =</span> Zone) <span class="sc">%&gt;%</span></span>
+<span id="cb418-3"><a href="sec-knn.html#cb418-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb418-4"><a href="sec-knn.html#cb418-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb418-5"><a href="sec-knn.html#cb418-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb418-6"><a href="sec-knn.html#cb418-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
+<span id="cb418-7"><a href="sec-knn.html#cb418-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
+<span id="cb418-8"><a href="sec-knn.html#cb418-8" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sesgo-knn-zona">Cuadro 9.27: </span>Comparación entre ingreso original e imputado por KNN, por zona</caption>
 <thead>
@@ -752,14 +752,14 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="sec-knn.html#cb422-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb422-2"><a href="sec-knn.html#cb422-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Sexo =</span> Sex) <span class="sc">%&gt;%</span></span>
-<span id="cb422-3"><a href="sec-knn.html#cb422-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb422-4"><a href="sec-knn.html#cb422-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb422-5"><a href="sec-knn.html#cb422-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb422-6"><a href="sec-knn.html#cb422-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
-<span id="cb422-7"><a href="sec-knn.html#cb422-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
-<span id="cb422-8"><a href="sec-knn.html#cb422-8" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="sec-knn.html#cb419-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb419-2"><a href="sec-knn.html#cb419-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Sexo =</span> Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb419-3"><a href="sec-knn.html#cb419-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb419-4"><a href="sec-knn.html#cb419-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb419-5"><a href="sec-knn.html#cb419-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb419-6"><a href="sec-knn.html#cb419-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
+<span id="cb419-7"><a href="sec-knn.html#cb419-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
+<span id="cb419-8"><a href="sec-knn.html#cb419-8" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sesgo-knn-sexo">Cuadro 9.28: </span>Comparación entre ingreso original e imputado por KNN, por sexo</caption>
 <thead>
@@ -788,26 +788,26 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="sec-knn.html#cb423-1" tabindex="-1"></a>dat_plot8 <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(</span>
-<span id="cb423-2"><a href="sec-knn.html#cb423-2" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Zone, Sex, Income, Income_imp),</span>
-<span id="cb423-3"><a href="sec-knn.html#cb423-3" tabindex="-1"></a>  <span class="at">key =</span> <span class="st">&quot;Caso&quot;</span>, <span class="at">value =</span> <span class="st">&quot;Income2&quot;</span>, <span class="sc">-</span>Zone, <span class="sc">-</span>Sex</span>
-<span id="cb423-4"><a href="sec-knn.html#cb423-4" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="sec-knn.html#cb424-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot8, <span class="fu">aes</span>(<span class="at">x =</span> Income2, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb424-2"><a href="sec-knn.html#cb424-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb424-3"><a href="sec-knn.html#cb424-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb424-4"><a href="sec-knn.html#cb424-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income),     <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb424-5"><a href="sec-knn.html#cb424-5" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income_imp), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="sec-knn.html#cb420-1" tabindex="-1"></a>dat_plot8 <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(</span>
+<span id="cb420-2"><a href="sec-knn.html#cb420-2" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Zone, Sex, Income, Income_imp),</span>
+<span id="cb420-3"><a href="sec-knn.html#cb420-3" tabindex="-1"></a>  <span class="at">key =</span> <span class="st">&quot;Caso&quot;</span>, <span class="at">value =</span> <span class="st">&quot;Income2&quot;</span>, <span class="sc">-</span>Zone, <span class="sc">-</span>Sex</span>
+<span id="cb420-4"><a href="sec-knn.html#cb420-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="sec-knn.html#cb421-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot8, <span class="fu">aes</span>(<span class="at">x =</span> Income2, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb421-2"><a href="sec-knn.html#cb421-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb421-3"><a href="sec-knn.html#cb421-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb421-4"><a href="sec-knn.html#cb421-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income),     <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb421-5"><a href="sec-knn.html#cb421-5" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income_imp), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-knn-densidad"></span>
 <img src="09-Imputacion_files/figure-html/fig-knn-densidad-1.svg" alt="Densidad del ingreso original versus imputado por KNN" width="70%" />
 <p class="caption">
 Figura 9.18: Densidad del ingreso original versus imputado por KNN
 </p>
 </div>
-<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="sec-knn.html#cb425-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot8, <span class="fu">aes</span>(<span class="at">x =</span> Caso, <span class="at">y =</span> Income2)) <span class="sc">+</span></span>
-<span id="cb425-2"><a href="sec-knn.html#cb425-2" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb425-3"><a href="sec-knn.html#cb425-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb425-4"><a href="sec-knn.html#cb425-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Zone <span class="sc">~</span> Sex) <span class="sc">+</span></span>
-<span id="cb425-5"><a href="sec-knn.html#cb425-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="sec-knn.html#cb422-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot8, <span class="fu">aes</span>(<span class="at">x =</span> Caso, <span class="at">y =</span> Income2)) <span class="sc">+</span></span>
+<span id="cb422-2"><a href="sec-knn.html#cb422-2" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb422-3"><a href="sec-knn.html#cb422-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb422-4"><a href="sec-knn.html#cb422-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Zone <span class="sc">~</span> Sex) <span class="sc">+</span></span>
+<span id="cb422-5"><a href="sec-knn.html#cb422-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-knn-boxplot"></span>
 <img src="09-Imputacion_files/figure-html/fig-knn-boxplot-1.svg" alt="Boxplots del ingreso original e imputado por KNN, por zona y sexo" width="70%" />
 <p class="caption">

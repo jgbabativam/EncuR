@@ -440,21 +440,21 @@ Este modelo se utiliza únicamente como mecanismo generador de datos para la sim
 <div id="implementación-mediante-bootstrap" class="section level3 hasAnchor" number="9.11.2">
 <h3><span class="header-section-number">9.11.2</span> Implementación mediante bootstrap<a href="sec-im.html#implementación-mediante-bootstrap" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Para ilustrar la metodología, se simula un conjunto de datos con <span class="math inline">\(n = 500\)</span> observaciones y <span class="math inline">\(n_0 = 200\)</span> valores faltantes, con pendiente <span class="math inline">\(\beta = 10\)</span> y desviación estándar <span class="math inline">\(\sigma = 2\)</span>, presentada en la Tabla <a href="sec-im.html#tab:tab-datos-simulados">9.38</a>::</p>
-<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="sec-im.html#cb440-1" tabindex="-1"></a>generar <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">n_0 =</span> <span class="dv">200</span>, <span class="at">beta =</span> <span class="dv">10</span>, <span class="at">sigma =</span> <span class="dv">2</span>) {</span>
-<span id="cb440-2"><a href="sec-im.html#cb440-2" tabindex="-1"></a>  x       <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
-<span id="cb440-3"><a href="sec-im.html#cb440-3" tabindex="-1"></a>  mu      <span class="ot">&lt;-</span> beta <span class="sc">*</span> x</span>
-<span id="cb440-4"><a href="sec-im.html#cb440-4" tabindex="-1"></a>  y       <span class="ot">&lt;-</span> mu <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
-<span id="cb440-5"><a href="sec-im.html#cb440-5" tabindex="-1"></a>  datos   <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
-<span id="cb440-6"><a href="sec-im.html#cb440-6" tabindex="-1"></a>  faltantes <span class="ot">&lt;-</span> <span class="fu">sample</span>(n, n_0)</span>
-<span id="cb440-7"><a href="sec-im.html#cb440-7" tabindex="-1"></a>  datos<span class="sc">$</span>faltantes       <span class="ot">&lt;-</span> <span class="st">&quot;No&quot;</span></span>
-<span id="cb440-8"><a href="sec-im.html#cb440-8" tabindex="-1"></a>  datos<span class="sc">$</span>faltantes[faltantes] <span class="ot">&lt;-</span> <span class="st">&quot;Si&quot;</span></span>
-<span id="cb440-9"><a href="sec-im.html#cb440-9" tabindex="-1"></a>  datos<span class="sc">$</span>y.per           <span class="ot">&lt;-</span> y</span>
-<span id="cb440-10"><a href="sec-im.html#cb440-10" tabindex="-1"></a>  datos<span class="sc">$</span>y.per[faltantes] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb440-11"><a href="sec-im.html#cb440-11" tabindex="-1"></a>  <span class="fu">return</span>(datos)</span>
-<span id="cb440-12"><a href="sec-im.html#cb440-12" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="sec-im.html#cb441-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb441-2"><a href="sec-im.html#cb441-2" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">generar</span>()</span></code></pre></div>
-<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="sec-im.html#cb442-1" tabindex="-1"></a><span class="fu">head</span>(datos, <span class="dv">12</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="sec-im.html#cb437-1" tabindex="-1"></a>generar <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">n_0 =</span> <span class="dv">200</span>, <span class="at">beta =</span> <span class="dv">10</span>, <span class="at">sigma =</span> <span class="dv">2</span>) {</span>
+<span id="cb437-2"><a href="sec-im.html#cb437-2" tabindex="-1"></a>  x       <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb437-3"><a href="sec-im.html#cb437-3" tabindex="-1"></a>  mu      <span class="ot">&lt;-</span> beta <span class="sc">*</span> x</span>
+<span id="cb437-4"><a href="sec-im.html#cb437-4" tabindex="-1"></a>  y       <span class="ot">&lt;-</span> mu <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
+<span id="cb437-5"><a href="sec-im.html#cb437-5" tabindex="-1"></a>  datos   <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb437-6"><a href="sec-im.html#cb437-6" tabindex="-1"></a>  faltantes <span class="ot">&lt;-</span> <span class="fu">sample</span>(n, n_0)</span>
+<span id="cb437-7"><a href="sec-im.html#cb437-7" tabindex="-1"></a>  datos<span class="sc">$</span>faltantes       <span class="ot">&lt;-</span> <span class="st">&quot;No&quot;</span></span>
+<span id="cb437-8"><a href="sec-im.html#cb437-8" tabindex="-1"></a>  datos<span class="sc">$</span>faltantes[faltantes] <span class="ot">&lt;-</span> <span class="st">&quot;Si&quot;</span></span>
+<span id="cb437-9"><a href="sec-im.html#cb437-9" tabindex="-1"></a>  datos<span class="sc">$</span>y.per           <span class="ot">&lt;-</span> y</span>
+<span id="cb437-10"><a href="sec-im.html#cb437-10" tabindex="-1"></a>  datos<span class="sc">$</span>y.per[faltantes] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb437-11"><a href="sec-im.html#cb437-11" tabindex="-1"></a>  <span class="fu">return</span>(datos)</span>
+<span id="cb437-12"><a href="sec-im.html#cb437-12" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="sec-im.html#cb438-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb438-2"><a href="sec-im.html#cb438-2" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">generar</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="sec-im.html#cb439-1" tabindex="-1"></a><span class="fu">head</span>(datos, <span class="dv">12</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-datos-simulados">Cuadro 9.38: </span>Primeras 12 observaciones del conjunto de datos simulado con valores faltantes</caption>
 <thead>
@@ -541,18 +541,18 @@ Este modelo se utiliza únicamente como mecanismo generador de datos para la sim
 </tbody>
 </table>
 <p>La Figura <a href="sec-im.html#fig:fig-datos-sim-completos">9.22</a> compara la relación entre <span class="math inline">\(x\)</span> e <span class="math inline">\(y\)</span> para los datos completos y para los datos con valores faltantes. Las distribuciones son muy similares, lo que indica que los faltantes se introdujeron de forma aproximadamente aleatoria:</p>
-<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="sec-im.html#cb443-1" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb443-2"><a href="sec-im.html#cb443-2" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> datos, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb443-3"><a href="sec-im.html#cb443-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb443-4"><a href="sec-im.html#cb443-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
-<span id="cb443-5"><a href="sec-im.html#cb443-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Datos completos&quot;</span>)</span>
-<span id="cb443-6"><a href="sec-im.html#cb443-6" tabindex="-1"></a></span>
-<span id="cb443-7"><a href="sec-im.html#cb443-7" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> datos, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y.per)) <span class="sc">+</span></span>
-<span id="cb443-8"><a href="sec-im.html#cb443-8" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb443-9"><a href="sec-im.html#cb443-9" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
-<span id="cb443-10"><a href="sec-im.html#cb443-10" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Con valores faltantes&quot;</span>)</span>
-<span id="cb443-11"><a href="sec-im.html#cb443-11" tabindex="-1"></a></span>
-<span id="cb443-12"><a href="sec-im.html#cb443-12" tabindex="-1"></a>p1 <span class="sc">|</span> p2</span></code></pre></div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="sec-im.html#cb440-1" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb440-2"><a href="sec-im.html#cb440-2" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> datos, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb440-3"><a href="sec-im.html#cb440-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb440-4"><a href="sec-im.html#cb440-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb440-5"><a href="sec-im.html#cb440-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Datos completos&quot;</span>)</span>
+<span id="cb440-6"><a href="sec-im.html#cb440-6" tabindex="-1"></a></span>
+<span id="cb440-7"><a href="sec-im.html#cb440-7" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> datos, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y.per)) <span class="sc">+</span></span>
+<span id="cb440-8"><a href="sec-im.html#cb440-8" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb440-9"><a href="sec-im.html#cb440-9" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb440-10"><a href="sec-im.html#cb440-10" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Con valores faltantes&quot;</span>)</span>
+<span id="cb440-11"><a href="sec-im.html#cb440-11" tabindex="-1"></a></span>
+<span id="cb440-12"><a href="sec-im.html#cb440-12" tabindex="-1"></a>p1 <span class="sc">|</span> p2</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-datos-sim-completos"></span>
 <img src="09-Imputacion_files/figure-html/fig-datos-sim-completos-1.svg" alt="Relación entre x e y: datos completos (izquierda) y datos con valores faltantes (derecha)" width="70%" />
 <p class="caption">
@@ -560,39 +560,39 @@ Figura 9.22: Relación entre x e y: datos completos (izquierda) y datos con valo
 </p>
 </div>
 <p>La función de imputación por bootstrap genera <span class="math inline">\(M\)</span> conjuntos de valores plausibles y devuelve el estimador combinado de <span class="math inline">\(\beta\)</span> junto con su error estándar:</p>
-<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="sec-im.html#cb444-1" tabindex="-1"></a>im.bootstrap <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, <span class="at">M =</span> <span class="dv">15</span>) {</span>
-<span id="cb444-2"><a href="sec-im.html#cb444-2" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
-<span id="cb444-3"><a href="sec-im.html#cb444-3" tabindex="-1"></a>  n     <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos)</span>
-<span id="cb444-4"><a href="sec-im.html#cb444-4" tabindex="-1"></a>  datos1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(datos)</span>
-<span id="cb444-5"><a href="sec-im.html#cb444-5" tabindex="-1"></a>  n1    <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos1)</span>
-<span id="cb444-6"><a href="sec-im.html#cb444-6" tabindex="-1"></a>  n0    <span class="ot">&lt;-</span> n <span class="sc">-</span> n1</span>
-<span id="cb444-7"><a href="sec-im.html#cb444-7" tabindex="-1"></a>  Ind   <span class="ot">&lt;-</span> <span class="fu">is.na</span>(datos<span class="sc">$</span>y.per)</span>
-<span id="cb444-8"><a href="sec-im.html#cb444-8" tabindex="-1"></a>  beta1 <span class="ot">&lt;-</span> sigma1 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb444-9"><a href="sec-im.html#cb444-9" tabindex="-1"></a></span>
-<span id="cb444-10"><a href="sec-im.html#cb444-10" tabindex="-1"></a>  <span class="cf">for</span> (m <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>M) {</span>
-<span id="cb444-11"><a href="sec-im.html#cb444-11" tabindex="-1"></a>    datos.m      <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">sample_n</span>(datos1, n1, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb444-12"><a href="sec-im.html#cb444-12" tabindex="-1"></a>    model1       <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> x, <span class="at">data =</span> datos.m)</span>
-<span id="cb444-13"><a href="sec-im.html#cb444-13" tabindex="-1"></a>    beta         <span class="ot">&lt;-</span> model1<span class="sc">$</span>coeff</span>
-<span id="cb444-14"><a href="sec-im.html#cb444-14" tabindex="-1"></a>    sigma        <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">anova</span>(model1)[[<span class="st">&quot;Mean Sq&quot;</span>]][<span class="dv">2</span>])</span>
-<span id="cb444-15"><a href="sec-im.html#cb444-15" tabindex="-1"></a>    faltantes.bt <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n0, datos<span class="sc">$</span>x[Ind] <span class="sc">*</span> beta, <span class="at">sd =</span> sigma)</span>
-<span id="cb444-16"><a href="sec-im.html#cb444-16" tabindex="-1"></a>    datos<span class="sc">$</span>y.per[Ind] <span class="ot">&lt;-</span> faltantes.bt</span>
-<span id="cb444-17"><a href="sec-im.html#cb444-17" tabindex="-1"></a>    model.input  <span class="ot">&lt;-</span> <span class="fu">lm</span>(y.per <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> x, <span class="at">data =</span> datos)</span>
-<span id="cb444-18"><a href="sec-im.html#cb444-18" tabindex="-1"></a>    beta1[m]     <span class="ot">&lt;-</span> model.input<span class="sc">$</span>coeff</span>
-<span id="cb444-19"><a href="sec-im.html#cb444-19" tabindex="-1"></a>    sigma1[m]    <span class="ot">&lt;-</span> <span class="fu">summary</span>(model.input)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
-<span id="cb444-20"><a href="sec-im.html#cb444-20" tabindex="-1"></a>  }</span>
-<span id="cb444-21"><a href="sec-im.html#cb444-21" tabindex="-1"></a></span>
-<span id="cb444-22"><a href="sec-im.html#cb444-22" tabindex="-1"></a>  beta.input <span class="ot">&lt;-</span> <span class="fu">mean</span>(beta1)</span>
-<span id="cb444-23"><a href="sec-im.html#cb444-23" tabindex="-1"></a>  u.bar      <span class="ot">&lt;-</span> <span class="fu">mean</span>(sigma1<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb444-24"><a href="sec-im.html#cb444-24" tabindex="-1"></a>  B          <span class="ot">&lt;-</span> <span class="fu">var</span>(beta1)</span>
-<span id="cb444-25"><a href="sec-im.html#cb444-25" tabindex="-1"></a>  beta.sd    <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(u.bar <span class="sc">+</span> B <span class="sc">+</span> B <span class="sc">/</span> M)</span>
-<span id="cb444-26"><a href="sec-im.html#cb444-26" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">new =</span> datos, <span class="at">beta =</span> beta.input, <span class="at">sd =</span> beta.sd)</span>
-<span id="cb444-27"><a href="sec-im.html#cb444-27" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="sec-im.html#cb441-1" tabindex="-1"></a>im.bootstrap <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, <span class="at">M =</span> <span class="dv">15</span>) {</span>
+<span id="cb441-2"><a href="sec-im.html#cb441-2" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
+<span id="cb441-3"><a href="sec-im.html#cb441-3" tabindex="-1"></a>  n     <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos)</span>
+<span id="cb441-4"><a href="sec-im.html#cb441-4" tabindex="-1"></a>  datos1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(datos)</span>
+<span id="cb441-5"><a href="sec-im.html#cb441-5" tabindex="-1"></a>  n1    <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos1)</span>
+<span id="cb441-6"><a href="sec-im.html#cb441-6" tabindex="-1"></a>  n0    <span class="ot">&lt;-</span> n <span class="sc">-</span> n1</span>
+<span id="cb441-7"><a href="sec-im.html#cb441-7" tabindex="-1"></a>  Ind   <span class="ot">&lt;-</span> <span class="fu">is.na</span>(datos<span class="sc">$</span>y.per)</span>
+<span id="cb441-8"><a href="sec-im.html#cb441-8" tabindex="-1"></a>  beta1 <span class="ot">&lt;-</span> sigma1 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb441-9"><a href="sec-im.html#cb441-9" tabindex="-1"></a></span>
+<span id="cb441-10"><a href="sec-im.html#cb441-10" tabindex="-1"></a>  <span class="cf">for</span> (m <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>M) {</span>
+<span id="cb441-11"><a href="sec-im.html#cb441-11" tabindex="-1"></a>    datos.m      <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">sample_n</span>(datos1, n1, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb441-12"><a href="sec-im.html#cb441-12" tabindex="-1"></a>    model1       <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> x, <span class="at">data =</span> datos.m)</span>
+<span id="cb441-13"><a href="sec-im.html#cb441-13" tabindex="-1"></a>    beta         <span class="ot">&lt;-</span> model1<span class="sc">$</span>coeff</span>
+<span id="cb441-14"><a href="sec-im.html#cb441-14" tabindex="-1"></a>    sigma        <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">anova</span>(model1)[[<span class="st">&quot;Mean Sq&quot;</span>]][<span class="dv">2</span>])</span>
+<span id="cb441-15"><a href="sec-im.html#cb441-15" tabindex="-1"></a>    faltantes.bt <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n0, datos<span class="sc">$</span>x[Ind] <span class="sc">*</span> beta, <span class="at">sd =</span> sigma)</span>
+<span id="cb441-16"><a href="sec-im.html#cb441-16" tabindex="-1"></a>    datos<span class="sc">$</span>y.per[Ind] <span class="ot">&lt;-</span> faltantes.bt</span>
+<span id="cb441-17"><a href="sec-im.html#cb441-17" tabindex="-1"></a>    model.input  <span class="ot">&lt;-</span> <span class="fu">lm</span>(y.per <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> x, <span class="at">data =</span> datos)</span>
+<span id="cb441-18"><a href="sec-im.html#cb441-18" tabindex="-1"></a>    beta1[m]     <span class="ot">&lt;-</span> model.input<span class="sc">$</span>coeff</span>
+<span id="cb441-19"><a href="sec-im.html#cb441-19" tabindex="-1"></a>    sigma1[m]    <span class="ot">&lt;-</span> <span class="fu">summary</span>(model.input)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
+<span id="cb441-20"><a href="sec-im.html#cb441-20" tabindex="-1"></a>  }</span>
+<span id="cb441-21"><a href="sec-im.html#cb441-21" tabindex="-1"></a></span>
+<span id="cb441-22"><a href="sec-im.html#cb441-22" tabindex="-1"></a>  beta.input <span class="ot">&lt;-</span> <span class="fu">mean</span>(beta1)</span>
+<span id="cb441-23"><a href="sec-im.html#cb441-23" tabindex="-1"></a>  u.bar      <span class="ot">&lt;-</span> <span class="fu">mean</span>(sigma1<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb441-24"><a href="sec-im.html#cb441-24" tabindex="-1"></a>  B          <span class="ot">&lt;-</span> <span class="fu">var</span>(beta1)</span>
+<span id="cb441-25"><a href="sec-im.html#cb441-25" tabindex="-1"></a>  beta.sd    <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(u.bar <span class="sc">+</span> B <span class="sc">+</span> B <span class="sc">/</span> M)</span>
+<span id="cb441-26"><a href="sec-im.html#cb441-26" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">new =</span> datos, <span class="at">beta =</span> beta.input, <span class="at">sd =</span> beta.sd)</span>
+<span id="cb441-27"><a href="sec-im.html#cb441-27" tabindex="-1"></a>}</span></code></pre></div>
 <p>La Tabla <a href="sec-im.html#tab:tab-im-bootstrap-result">9.39</a> presenta los resultados de la imputación por bootstrap:</p>
-<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="sec-im.html#cb445-1" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">generar</span>()</span></code></pre></div>
-<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="sec-im.html#cb446-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb446-2"><a href="sec-im.html#cb446-2" tabindex="-1"></a>  <span class="st">`</span><span class="at">Estimación de beta</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">im.bootstrap</span>(datos)<span class="sc">$</span>beta, <span class="dv">1</span>),</span>
-<span id="cb446-3"><a href="sec-im.html#cb446-3" tabindex="-1"></a>  <span class="st">`</span><span class="at">Error estándar</span><span class="st">`</span>      <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">im.bootstrap</span>(datos)<span class="sc">$</span>sd, <span class="dv">4</span>)</span>
-<span id="cb446-4"><a href="sec-im.html#cb446-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="sec-im.html#cb442-1" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">generar</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="sec-im.html#cb443-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb443-2"><a href="sec-im.html#cb443-2" tabindex="-1"></a>  <span class="st">`</span><span class="at">Estimación de beta</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">im.bootstrap</span>(datos)<span class="sc">$</span>beta, <span class="dv">1</span>),</span>
+<span id="cb443-3"><a href="sec-im.html#cb443-3" tabindex="-1"></a>  <span class="st">`</span><span class="at">Error estándar</span><span class="st">`</span>      <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">im.bootstrap</span>(datos)<span class="sc">$</span>sd, <span class="dv">4</span>)</span>
+<span id="cb443-4"><a href="sec-im.html#cb443-4" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-im-bootstrap-result">Cuadro 9.39: </span>Estimación de la pendiente y su error estándar mediante imputación múltiple por bootstrap</caption>
 <thead>
@@ -609,11 +609,11 @@ Figura 9.22: Relación entre x e y: datos completos (izquierda) y datos con valo
 </tbody>
 </table>
 <p>La Figura <a href="sec-im.html#fig:fig-im-bootstrap-dispersion">9.23</a> visualiza la distribución de los valores imputados diferenciados según si eran faltantes o no, confirmando que los valores plausibles presentan una dispersión coherente con el modelo:</p>
-<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="sec-im.html#cb447-1" tabindex="-1"></a>nuevos <span class="ot">&lt;-</span> <span class="fu">im.bootstrap</span>(datos)<span class="sc">$</span>new</span>
-<span id="cb447-2"><a href="sec-im.html#cb447-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nuevos, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y.per, <span class="at">color =</span> faltantes)) <span class="sc">+</span></span>
-<span id="cb447-3"><a href="sec-im.html#cb447-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb447-4"><a href="sec-im.html#cb447-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;x&quot;</span>, <span class="at">y =</span> <span class="st">&quot;y (con imputación)&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Era faltante&quot;</span>) <span class="sc">+</span></span>
-<span id="cb447-5"><a href="sec-im.html#cb447-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="sec-im.html#cb444-1" tabindex="-1"></a>nuevos <span class="ot">&lt;-</span> <span class="fu">im.bootstrap</span>(datos)<span class="sc">$</span>new</span>
+<span id="cb444-2"><a href="sec-im.html#cb444-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nuevos, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y.per, <span class="at">color =</span> faltantes)) <span class="sc">+</span></span>
+<span id="cb444-3"><a href="sec-im.html#cb444-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb444-4"><a href="sec-im.html#cb444-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;x&quot;</span>, <span class="at">y =</span> <span class="st">&quot;y (con imputación)&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Era faltante&quot;</span>) <span class="sc">+</span></span>
+<span id="cb444-5"><a href="sec-im.html#cb444-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-im-bootstrap-dispersion"></span>
 <img src="09-Imputacion_files/figure-html/fig-im-bootstrap-dispersion-1.svg" alt="Dispersión de los valores imputados por bootstrap: faltantes (Si) versus observados (No)" width="70%" />
 <p class="caption">
@@ -624,32 +624,32 @@ Figura 9.23: Dispersión de los valores imputados por bootstrap: faltantes (Si) 
 <div id="imputación-múltiple-para-la-encuesta-de-hogares" class="section level3 hasAnchor" number="9.11.3">
 <h3><span class="header-section-number">9.11.3</span> Imputación múltiple para la encuesta de hogares<a href="sec-im.html#imputación-múltiple-para-la-encuesta-de-hogares" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A continuación, se aplica la imputación múltiple a la encuesta de hogares. Se generan <span class="math inline">\(M = 10\)</span> valores plausibles para el ingreso y el empleo, ajustando en cada iteración un modelo lineal y uno multinomial a una muestra bootstrap de los datos observados:</p>
-<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="sec-im.html#cb448-1" tabindex="-1"></a>encuesta<span class="sc">$</span>Income_imp     <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Income_missin</span>
-<span id="cb448-2"><a href="sec-im.html#cb448-2" tabindex="-1"></a>encuesta<span class="sc">$</span>Employment_imp <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Employment_missin</span>
-<span id="cb448-3"><a href="sec-im.html#cb448-3" tabindex="-1"></a>encuesta_obs    <span class="ot">&lt;-</span> <span class="fu">filter</span>(encuesta, <span class="sc">!</span><span class="fu">is.na</span>(Income_missin))</span>
-<span id="cb448-4"><a href="sec-im.html#cb448-4" tabindex="-1"></a>encuesta_no_obs <span class="ot">&lt;-</span> <span class="fu">filter</span>(encuesta, <span class="fu">is.na</span>(Income_missin))</span>
-<span id="cb448-5"><a href="sec-im.html#cb448-5" tabindex="-1"></a>n0 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(encuesta_no_obs)</span>
-<span id="cb448-6"><a href="sec-im.html#cb448-6" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(encuesta_obs)</span></code></pre></div>
-<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="sec-im.html#cb449-1" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb449-2"><a href="sec-im.html#cb449-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb449-3"><a href="sec-im.html#cb449-3" tabindex="-1"></a><span class="cf">for</span> (ii <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>M) {</span>
-<span id="cb449-4"><a href="sec-im.html#cb449-4" tabindex="-1"></a>  vp  <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Income_vp_&quot;</span>,     ii)</span>
-<span id="cb449-5"><a href="sec-im.html#cb449-5" tabindex="-1"></a>  vp2 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Employment_vp_&quot;</span>, ii)</span>
-<span id="cb449-6"><a href="sec-im.html#cb449-6" tabindex="-1"></a></span>
-<span id="cb449-7"><a href="sec-im.html#cb449-7" tabindex="-1"></a>  encuesta_temp <span class="ot">&lt;-</span> encuesta_obs <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="at">size =</span> n1, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb449-8"><a href="sec-im.html#cb449-8" tabindex="-1"></a></span>
-<span id="cb449-9"><a href="sec-im.html#cb449-9" tabindex="-1"></a>  mod      <span class="ot">&lt;-</span> <span class="fu">lm</span>(Income <span class="sc">~</span> Zone <span class="sc">+</span> Sex <span class="sc">+</span> Expenditure, <span class="at">data =</span> encuesta_temp)</span>
-<span id="cb449-10"><a href="sec-im.html#cb449-10" tabindex="-1"></a>  mod.mult <span class="ot">&lt;-</span> <span class="fu">multinom</span>(Employment <span class="sc">~</span> Zone <span class="sc">+</span> Sex <span class="sc">+</span> Expenditure,</span>
-<span id="cb449-11"><a href="sec-im.html#cb449-11" tabindex="-1"></a>                       <span class="at">data =</span> encuesta_temp, <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb449-12"><a href="sec-im.html#cb449-12" tabindex="-1"></a></span>
-<span id="cb449-13"><a href="sec-im.html#cb449-13" tabindex="-1"></a>  encuesta_no_obs[[vp]]  <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod,      encuesta_no_obs)</span>
-<span id="cb449-14"><a href="sec-im.html#cb449-14" tabindex="-1"></a>  encuesta_obs[[vp]]     <span class="ot">&lt;-</span> encuesta_obs<span class="sc">$</span>Income</span>
-<span id="cb449-15"><a href="sec-im.html#cb449-15" tabindex="-1"></a></span>
-<span id="cb449-16"><a href="sec-im.html#cb449-16" tabindex="-1"></a>  encuesta_no_obs[[vp2]] <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod.mult, encuesta_no_obs, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb449-17"><a href="sec-im.html#cb449-17" tabindex="-1"></a>  encuesta_obs[[vp2]]    <span class="ot">&lt;-</span> encuesta_obs<span class="sc">$</span>Employment</span>
-<span id="cb449-18"><a href="sec-im.html#cb449-18" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="sec-im.html#cb445-1" tabindex="-1"></a>encuesta<span class="sc">$</span>Income_imp     <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Income_missin</span>
+<span id="cb445-2"><a href="sec-im.html#cb445-2" tabindex="-1"></a>encuesta<span class="sc">$</span>Employment_imp <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Employment_missin</span>
+<span id="cb445-3"><a href="sec-im.html#cb445-3" tabindex="-1"></a>encuesta_obs    <span class="ot">&lt;-</span> <span class="fu">filter</span>(encuesta, <span class="sc">!</span><span class="fu">is.na</span>(Income_missin))</span>
+<span id="cb445-4"><a href="sec-im.html#cb445-4" tabindex="-1"></a>encuesta_no_obs <span class="ot">&lt;-</span> <span class="fu">filter</span>(encuesta, <span class="fu">is.na</span>(Income_missin))</span>
+<span id="cb445-5"><a href="sec-im.html#cb445-5" tabindex="-1"></a>n0 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(encuesta_no_obs)</span>
+<span id="cb445-6"><a href="sec-im.html#cb445-6" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(encuesta_obs)</span></code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="sec-im.html#cb446-1" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb446-2"><a href="sec-im.html#cb446-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb446-3"><a href="sec-im.html#cb446-3" tabindex="-1"></a><span class="cf">for</span> (ii <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>M) {</span>
+<span id="cb446-4"><a href="sec-im.html#cb446-4" tabindex="-1"></a>  vp  <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Income_vp_&quot;</span>,     ii)</span>
+<span id="cb446-5"><a href="sec-im.html#cb446-5" tabindex="-1"></a>  vp2 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Employment_vp_&quot;</span>, ii)</span>
+<span id="cb446-6"><a href="sec-im.html#cb446-6" tabindex="-1"></a></span>
+<span id="cb446-7"><a href="sec-im.html#cb446-7" tabindex="-1"></a>  encuesta_temp <span class="ot">&lt;-</span> encuesta_obs <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="at">size =</span> n1, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb446-8"><a href="sec-im.html#cb446-8" tabindex="-1"></a></span>
+<span id="cb446-9"><a href="sec-im.html#cb446-9" tabindex="-1"></a>  mod      <span class="ot">&lt;-</span> <span class="fu">lm</span>(Income <span class="sc">~</span> Zone <span class="sc">+</span> Sex <span class="sc">+</span> Expenditure, <span class="at">data =</span> encuesta_temp)</span>
+<span id="cb446-10"><a href="sec-im.html#cb446-10" tabindex="-1"></a>  mod.mult <span class="ot">&lt;-</span> <span class="fu">multinom</span>(Employment <span class="sc">~</span> Zone <span class="sc">+</span> Sex <span class="sc">+</span> Expenditure,</span>
+<span id="cb446-11"><a href="sec-im.html#cb446-11" tabindex="-1"></a>                       <span class="at">data =</span> encuesta_temp, <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb446-12"><a href="sec-im.html#cb446-12" tabindex="-1"></a></span>
+<span id="cb446-13"><a href="sec-im.html#cb446-13" tabindex="-1"></a>  encuesta_no_obs[[vp]]  <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod,      encuesta_no_obs)</span>
+<span id="cb446-14"><a href="sec-im.html#cb446-14" tabindex="-1"></a>  encuesta_obs[[vp]]     <span class="ot">&lt;-</span> encuesta_obs<span class="sc">$</span>Income</span>
+<span id="cb446-15"><a href="sec-im.html#cb446-15" tabindex="-1"></a></span>
+<span id="cb446-16"><a href="sec-im.html#cb446-16" tabindex="-1"></a>  encuesta_no_obs[[vp2]] <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod.mult, encuesta_no_obs, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb446-17"><a href="sec-im.html#cb446-17" tabindex="-1"></a>  encuesta_obs[[vp2]]    <span class="ot">&lt;-</span> encuesta_obs<span class="sc">$</span>Employment</span>
+<span id="cb446-18"><a href="sec-im.html#cb446-18" tabindex="-1"></a>}</span></code></pre></div>
 <p>La Tabla <a href="sec-im.html#tab:tab-vp-ingreso">9.40</a> presenta las primeras columnas del conjunto de valores plausibles para el ingreso en las observaciones no observadas:</p>
-<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="sec-im.html#cb450-1" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">select</span>(encuesta_no_obs, Income, <span class="fu">matches</span>(<span class="st">&quot;Income_vp_&quot;</span>))[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="sec-im.html#cb447-1" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">select</span>(encuesta_no_obs, Income, <span class="fu">matches</span>(<span class="st">&quot;Income_vp_&quot;</span>))[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-vp-ingreso">Cuadro 9.40: </span>Valores plausibles del ingreso para las primeras 10 observaciones no observadas (primeras 4 imputaciones)</caption>
 <thead>
@@ -724,15 +724,15 @@ Figura 9.23: Dispersión de los valores imputados por bootstrap: faltantes (Si) 
 </tbody>
 </table>
 <p>La Figura <a href="sec-im.html#fig:fig-vp-ingreso-densidad">9.24</a> muestra que las distribuciones de los 10 valores plausibles son muy similares entre sí y con respecto a la distribución del ingreso completo:</p>
-<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="sec-im.html#cb451-1" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(encuesta_obs, encuesta_no_obs)</span>
-<span id="cb451-2"><a href="sec-im.html#cb451-2" tabindex="-1"></a>dat_plot10 <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(</span>
-<span id="cb451-3"><a href="sec-im.html#cb451-3" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Zone, Sex, <span class="fu">matches</span>(<span class="st">&quot;Income_vp_&quot;</span>)),</span>
-<span id="cb451-4"><a href="sec-im.html#cb451-4" tabindex="-1"></a>  <span class="at">key =</span> <span class="st">&quot;Caso&quot;</span>, <span class="at">value =</span> <span class="st">&quot;Income2&quot;</span>, <span class="sc">-</span>Zone, <span class="sc">-</span>Sex</span>
-<span id="cb451-5"><a href="sec-im.html#cb451-5" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="sec-im.html#cb452-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot10, <span class="fu">aes</span>(<span class="at">x =</span> Income2, <span class="at">col =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb452-2"><a href="sec-im.html#cb452-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb452-3"><a href="sec-im.html#cb452-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb452-4"><a href="sec-im.html#cb452-4" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">data =</span> encuesta, <span class="fu">aes</span>(<span class="at">x =</span> Income), <span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="sec-im.html#cb448-1" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(encuesta_obs, encuesta_no_obs)</span>
+<span id="cb448-2"><a href="sec-im.html#cb448-2" tabindex="-1"></a>dat_plot10 <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(</span>
+<span id="cb448-3"><a href="sec-im.html#cb448-3" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Zone, Sex, <span class="fu">matches</span>(<span class="st">&quot;Income_vp_&quot;</span>)),</span>
+<span id="cb448-4"><a href="sec-im.html#cb448-4" tabindex="-1"></a>  <span class="at">key =</span> <span class="st">&quot;Caso&quot;</span>, <span class="at">value =</span> <span class="st">&quot;Income2&quot;</span>, <span class="sc">-</span>Zone, <span class="sc">-</span>Sex</span>
+<span id="cb448-5"><a href="sec-im.html#cb448-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="sec-im.html#cb449-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot10, <span class="fu">aes</span>(<span class="at">x =</span> Income2, <span class="at">col =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb449-2"><a href="sec-im.html#cb449-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb449-3"><a href="sec-im.html#cb449-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb449-4"><a href="sec-im.html#cb449-4" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">data =</span> encuesta, <span class="fu">aes</span>(<span class="at">x =</span> Income), <span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-vp-ingreso-densidad"></span>
 <img src="09-Imputacion_files/figure-html/fig-vp-ingreso-densidad-1.svg" alt="Distribución de los 10 valores plausibles del ingreso versus la distribución del ingreso completo (línea negra)" width="70%" />
 <p class="caption">
@@ -740,22 +740,22 @@ Figura 9.24: Distribución de los 10 valores plausibles del ingreso versus la di
 </p>
 </div>
 <p>La Figura <a href="sec-im.html#fig:fig-vp-empleo-frecuencias">9.25</a> compara las frecuencias de los valores plausibles para la variable empleo con la distribución de la variable completa, verificando que las proporciones son coherentes:</p>
-<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="sec-im.html#cb453-1" tabindex="-1"></a>dat_plot11 <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(</span>
-<span id="cb453-2"><a href="sec-im.html#cb453-2" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb453-3"><a href="sec-im.html#cb453-3" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(Zone, Sex, Employment, <span class="fu">matches</span>(<span class="st">&quot;Employment_vp_&quot;</span>)),</span>
-<span id="cb453-4"><a href="sec-im.html#cb453-4" tabindex="-1"></a>  <span class="at">key =</span> <span class="st">&quot;Caso&quot;</span>, <span class="at">value =</span> <span class="st">&quot;Employment2&quot;</span>, <span class="sc">-</span>Zone, <span class="sc">-</span>Sex</span>
-<span id="cb453-5"><a href="sec-im.html#cb453-5" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb453-6"><a href="sec-im.html#cb453-6" tabindex="-1"></a>  <span class="fu">group_by</span>(Caso, Employment2) <span class="sc">%&gt;%</span></span>
-<span id="cb453-7"><a href="sec-im.html#cb453-7" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb453-8"><a href="sec-im.html#cb453-8" tabindex="-1"></a>  <span class="fu">group_by</span>(Caso) <span class="sc">%&gt;%</span></span>
-<span id="cb453-9"><a href="sec-im.html#cb453-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n))</span></code></pre></div>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="sec-im.html#cb454-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot11,</span>
-<span id="cb454-2"><a href="sec-im.html#cb454-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Employment2, <span class="at">y =</span> prop, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb454-3"><a href="sec-im.html#cb454-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
-<span id="cb454-4"><a href="sec-im.html#cb454-4" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Employment&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>),</span>
-<span id="cb454-5"><a href="sec-im.html#cb454-5" tabindex="-1"></a>                    <span class="at">na.value =</span> <span class="st">&quot;grey70&quot;</span>) <span class="sc">+</span></span>
-<span id="cb454-6"><a href="sec-im.html#cb454-6" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb454-7"><a href="sec-im.html#cb454-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="sec-im.html#cb450-1" tabindex="-1"></a>dat_plot11 <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(</span>
+<span id="cb450-2"><a href="sec-im.html#cb450-2" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb450-3"><a href="sec-im.html#cb450-3" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(Zone, Sex, Employment, <span class="fu">matches</span>(<span class="st">&quot;Employment_vp_&quot;</span>)),</span>
+<span id="cb450-4"><a href="sec-im.html#cb450-4" tabindex="-1"></a>  <span class="at">key =</span> <span class="st">&quot;Caso&quot;</span>, <span class="at">value =</span> <span class="st">&quot;Employment2&quot;</span>, <span class="sc">-</span>Zone, <span class="sc">-</span>Sex</span>
+<span id="cb450-5"><a href="sec-im.html#cb450-5" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb450-6"><a href="sec-im.html#cb450-6" tabindex="-1"></a>  <span class="fu">group_by</span>(Caso, Employment2) <span class="sc">%&gt;%</span></span>
+<span id="cb450-7"><a href="sec-im.html#cb450-7" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb450-8"><a href="sec-im.html#cb450-8" tabindex="-1"></a>  <span class="fu">group_by</span>(Caso) <span class="sc">%&gt;%</span></span>
+<span id="cb450-9"><a href="sec-im.html#cb450-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n))</span></code></pre></div>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="sec-im.html#cb451-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot11,</span>
+<span id="cb451-2"><a href="sec-im.html#cb451-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Employment2, <span class="at">y =</span> prop, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb451-3"><a href="sec-im.html#cb451-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb451-4"><a href="sec-im.html#cb451-4" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Employment&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>),</span>
+<span id="cb451-5"><a href="sec-im.html#cb451-5" tabindex="-1"></a>                    <span class="at">na.value =</span> <span class="st">&quot;grey70&quot;</span>) <span class="sc">+</span></span>
+<span id="cb451-6"><a href="sec-im.html#cb451-6" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb451-7"><a href="sec-im.html#cb451-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-vp-empleo-frecuencias"></span>
 <img src="09-Imputacion_files/figure-html/fig-vp-empleo-frecuencias-1.svg" alt="Proporciones de los valores plausibles para la variable empleo comparadas con la variable completa" width="70%" />
 <p class="caption">
@@ -766,30 +766,30 @@ Figura 9.25: Proporciones de los valores plausibles para la variable empleo comp
 <div id="estimación-del-ingreso-medio-mediante-imputación-múltiple" class="section level3 hasAnchor" number="9.11.4">
 <h3><span class="header-section-number">9.11.4</span> Estimación del ingreso medio mediante imputación múltiple<a href="sec-im.html#estimación-del-ingreso-medio-mediante-imputación-múltiple" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Se define el diseño muestral y se estima el ingreso medio para cada uno de los 10 valores plausibles:</p>
-<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="sec-im.html#cb455-1" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
-<span id="cb455-2"><a href="sec-im.html#cb455-2" tabindex="-1"></a>diseno <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb455-3"><a href="sec-im.html#cb455-3" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(<span class="at">strata =</span> Stratum, <span class="at">ids =</span> PSU, <span class="at">weights =</span> wk, <span class="at">nest =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="sec-im.html#cb456-1" tabindex="-1"></a>estimacion_vp <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span></span>
-<span id="cb456-2"><a href="sec-im.html#cb456-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb456-3"><a href="sec-im.html#cb456-3" tabindex="-1"></a>    <span class="at">vp1  =</span> <span class="fu">survey_mean</span>(Income_vp_1,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
-<span id="cb456-4"><a href="sec-im.html#cb456-4" tabindex="-1"></a>    <span class="at">vp2  =</span> <span class="fu">survey_mean</span>(Income_vp_2,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
-<span id="cb456-5"><a href="sec-im.html#cb456-5" tabindex="-1"></a>    <span class="at">vp3  =</span> <span class="fu">survey_mean</span>(Income_vp_3,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
-<span id="cb456-6"><a href="sec-im.html#cb456-6" tabindex="-1"></a>    <span class="at">vp4  =</span> <span class="fu">survey_mean</span>(Income_vp_4,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
-<span id="cb456-7"><a href="sec-im.html#cb456-7" tabindex="-1"></a>    <span class="at">vp5  =</span> <span class="fu">survey_mean</span>(Income_vp_5,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
-<span id="cb456-8"><a href="sec-im.html#cb456-8" tabindex="-1"></a>    <span class="at">vp6  =</span> <span class="fu">survey_mean</span>(Income_vp_6,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
-<span id="cb456-9"><a href="sec-im.html#cb456-9" tabindex="-1"></a>    <span class="at">vp7  =</span> <span class="fu">survey_mean</span>(Income_vp_7,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
-<span id="cb456-10"><a href="sec-im.html#cb456-10" tabindex="-1"></a>    <span class="at">vp8  =</span> <span class="fu">survey_mean</span>(Income_vp_8,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
-<span id="cb456-11"><a href="sec-im.html#cb456-11" tabindex="-1"></a>    <span class="at">vp9  =</span> <span class="fu">survey_mean</span>(Income_vp_9,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
-<span id="cb456-12"><a href="sec-im.html#cb456-12" tabindex="-1"></a>    <span class="at">vp10 =</span> <span class="fu">survey_mean</span>(Income_vp_10, <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>)</span>
-<span id="cb456-13"><a href="sec-im.html#cb456-13" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="sec-im.html#cb452-1" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
+<span id="cb452-2"><a href="sec-im.html#cb452-2" tabindex="-1"></a>diseno <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb452-3"><a href="sec-im.html#cb452-3" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(<span class="at">strata =</span> Stratum, <span class="at">ids =</span> PSU, <span class="at">weights =</span> wk, <span class="at">nest =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="sec-im.html#cb453-1" tabindex="-1"></a>estimacion_vp <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span></span>
+<span id="cb453-2"><a href="sec-im.html#cb453-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb453-3"><a href="sec-im.html#cb453-3" tabindex="-1"></a>    <span class="at">vp1  =</span> <span class="fu">survey_mean</span>(Income_vp_1,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb453-4"><a href="sec-im.html#cb453-4" tabindex="-1"></a>    <span class="at">vp2  =</span> <span class="fu">survey_mean</span>(Income_vp_2,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb453-5"><a href="sec-im.html#cb453-5" tabindex="-1"></a>    <span class="at">vp3  =</span> <span class="fu">survey_mean</span>(Income_vp_3,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb453-6"><a href="sec-im.html#cb453-6" tabindex="-1"></a>    <span class="at">vp4  =</span> <span class="fu">survey_mean</span>(Income_vp_4,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb453-7"><a href="sec-im.html#cb453-7" tabindex="-1"></a>    <span class="at">vp5  =</span> <span class="fu">survey_mean</span>(Income_vp_5,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb453-8"><a href="sec-im.html#cb453-8" tabindex="-1"></a>    <span class="at">vp6  =</span> <span class="fu">survey_mean</span>(Income_vp_6,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb453-9"><a href="sec-im.html#cb453-9" tabindex="-1"></a>    <span class="at">vp7  =</span> <span class="fu">survey_mean</span>(Income_vp_7,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb453-10"><a href="sec-im.html#cb453-10" tabindex="-1"></a>    <span class="at">vp8  =</span> <span class="fu">survey_mean</span>(Income_vp_8,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb453-11"><a href="sec-im.html#cb453-11" tabindex="-1"></a>    <span class="at">vp9  =</span> <span class="fu">survey_mean</span>(Income_vp_9,  <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb453-12"><a href="sec-im.html#cb453-12" tabindex="-1"></a>    <span class="at">vp10 =</span> <span class="fu">survey_mean</span>(Income_vp_10, <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>)</span>
+<span id="cb453-13"><a href="sec-im.html#cb453-13" tabindex="-1"></a>  )</span></code></pre></div>
 <p>La Tabla <a href="sec-im.html#tab:tab-vp-estimaciones">9.41</a> presenta las estimaciones del ingreso medio y su varianza para cada valor plausible:</p>
-<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="sec-im.html#cb457-1" tabindex="-1"></a>estimacion_vp <span class="sc">%&lt;&gt;%</span></span>
-<span id="cb457-2"><a href="sec-im.html#cb457-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">gather</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb457-3"><a href="sec-im.html#cb457-3" tabindex="-1"></a>  <span class="fu">separate</span>(key, <span class="fu">c</span>(<span class="st">&quot;vp&quot;</span>, <span class="st">&quot;estimacion&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb457-4"><a href="sec-im.html#cb457-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimacion =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(estimacion), <span class="st">&quot;promedio&quot;</span>, <span class="st">&quot;var&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb457-5"><a href="sec-im.html#cb457-5" tabindex="-1"></a>  <span class="fu">spread</span>(estimacion, value) <span class="sc">%&gt;%</span></span>
-<span id="cb457-6"><a href="sec-im.html#cb457-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vp =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="sec-im.html#cb458-1" tabindex="-1"></a>estimacion_vp</span></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="sec-im.html#cb454-1" tabindex="-1"></a>estimacion_vp <span class="sc">%&lt;&gt;%</span></span>
+<span id="cb454-2"><a href="sec-im.html#cb454-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">gather</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb454-3"><a href="sec-im.html#cb454-3" tabindex="-1"></a>  <span class="fu">separate</span>(key, <span class="fu">c</span>(<span class="st">&quot;vp&quot;</span>, <span class="st">&quot;estimacion&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb454-4"><a href="sec-im.html#cb454-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimacion =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(estimacion), <span class="st">&quot;promedio&quot;</span>, <span class="st">&quot;var&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb454-5"><a href="sec-im.html#cb454-5" tabindex="-1"></a>  <span class="fu">spread</span>(estimacion, value) <span class="sc">%&gt;%</span></span>
+<span id="cb454-6"><a href="sec-im.html#cb454-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vp =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="sec-im.html#cb455-1" tabindex="-1"></a>estimacion_vp</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-vp-estimaciones">Cuadro 9.41: </span>Estimaciones del ingreso medio y su varianza para cada valor plausible</caption>
 <thead>
@@ -853,14 +853,14 @@ Figura 9.25: Proporciones de los valores plausibles para la variable empleo comp
 </tbody>
 </table>
 <p>Aplicando las reglas de combinación de <span class="citation">Rubin (<a href="#ref-rubin1987multiple">1987</a>)</span>, la Tabla <a href="sec-im.html#tab:tab-im-resultado-media">9.42</a> presenta la estimación combinada del ingreso medio y su error estándar:</p>
-<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="sec-im.html#cb459-1" tabindex="-1"></a>Media_vp <span class="ot">&lt;-</span> <span class="fu">mean</span>(estimacion_vp<span class="sc">$</span>promedio)</span>
-<span id="cb459-2"><a href="sec-im.html#cb459-2" tabindex="-1"></a>Ubar     <span class="ot">&lt;-</span> <span class="fu">mean</span>(estimacion_vp<span class="sc">$</span>var)</span>
-<span id="cb459-3"><a href="sec-im.html#cb459-3" tabindex="-1"></a>B        <span class="ot">&lt;-</span> <span class="fu">var</span>(estimacion_vp<span class="sc">$</span>promedio)</span>
-<span id="cb459-4"><a href="sec-im.html#cb459-4" tabindex="-1"></a>var_vp   <span class="ot">&lt;-</span> Ubar <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> M) <span class="sc">*</span> B</span></code></pre></div>
-<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="sec-im.html#cb460-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb460-2"><a href="sec-im.html#cb460-2" tabindex="-1"></a>  <span class="st">`</span><span class="at">Media estimada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(Media_vp, <span class="dv">4</span>),</span>
-<span id="cb460-3"><a href="sec-im.html#cb460-3" tabindex="-1"></a>  <span class="st">`</span><span class="at">Error estándar</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(var_vp), <span class="dv">4</span>)</span>
-<span id="cb460-4"><a href="sec-im.html#cb460-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="sec-im.html#cb456-1" tabindex="-1"></a>Media_vp <span class="ot">&lt;-</span> <span class="fu">mean</span>(estimacion_vp<span class="sc">$</span>promedio)</span>
+<span id="cb456-2"><a href="sec-im.html#cb456-2" tabindex="-1"></a>Ubar     <span class="ot">&lt;-</span> <span class="fu">mean</span>(estimacion_vp<span class="sc">$</span>var)</span>
+<span id="cb456-3"><a href="sec-im.html#cb456-3" tabindex="-1"></a>B        <span class="ot">&lt;-</span> <span class="fu">var</span>(estimacion_vp<span class="sc">$</span>promedio)</span>
+<span id="cb456-4"><a href="sec-im.html#cb456-4" tabindex="-1"></a>var_vp   <span class="ot">&lt;-</span> Ubar <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> M) <span class="sc">*</span> B</span></code></pre></div>
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="sec-im.html#cb457-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb457-2"><a href="sec-im.html#cb457-2" tabindex="-1"></a>  <span class="st">`</span><span class="at">Media estimada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(Media_vp, <span class="dv">4</span>),</span>
+<span id="cb457-3"><a href="sec-im.html#cb457-3" tabindex="-1"></a>  <span class="st">`</span><span class="at">Error estándar</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(var_vp), <span class="dv">4</span>)</span>
+<span id="cb457-4"><a href="sec-im.html#cb457-4" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-im-resultado-media">Cuadro 9.42: </span>Estimación combinada del ingreso medio mediante imputación múltiple (reglas de Rubin)</caption>
 <thead>
@@ -879,19 +879,19 @@ Figura 9.25: Proporciones de los valores plausibles para la variable empleo comp
 </div>
 <div id="estimación-de-la-varianza-del-ingreso" class="section level3 hasAnchor" number="9.11.5">
 <h3><span class="header-section-number">9.11.5</span> Estimación de la varianza del ingreso<a href="sec-im.html#estimación-de-la-varianza-del-ingreso" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="sec-im.html#cb461-1" tabindex="-1"></a>estimacion_var_vp <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span></span>
-<span id="cb461-2"><a href="sec-im.html#cb461-2" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(<span class="fu">matches</span>(<span class="st">&quot;Income_vp&quot;</span>)), survey_var, <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="sec-im.html#cb458-1" tabindex="-1"></a>estimacion_var_vp <span class="ot">&lt;-</span> diseno <span class="sc">%&gt;%</span></span>
+<span id="cb458-2"><a href="sec-im.html#cb458-2" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(<span class="fu">matches</span>(<span class="st">&quot;Income_vp&quot;</span>)), survey_var, <span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>)</span></code></pre></div>
 <p>La Tabla <a href="sec-im.html#tab:tab-vp-varianza-ingreso">9.43</a> presenta las estimaciones de la varianza del ingreso para cada valor plausible:</p>
-<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="sec-im.html#cb462-1" tabindex="-1"></a>estimacion_var_vp <span class="sc">%&lt;&gt;%</span></span>
-<span id="cb462-2"><a href="sec-im.html#cb462-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">gather</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb462-3"><a href="sec-im.html#cb462-3" tabindex="-1"></a>  <span class="fu">separate</span>(key, <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;vp&quot;</span>, <span class="st">&quot;estimacion&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb462-4"><a href="sec-im.html#cb462-4" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb462-5"><a href="sec-im.html#cb462-5" tabindex="-1"></a>    <span class="at">estimacion =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(estimacion), <span class="st">&quot;promedio&quot;</span>, <span class="st">&quot;var&quot;</span>),</span>
-<span id="cb462-6"><a href="sec-im.html#cb462-6" tabindex="-1"></a>    <span class="at">A =</span> <span class="cn">NULL</span>, <span class="at">B =</span> <span class="cn">NULL</span>,</span>
-<span id="cb462-7"><a href="sec-im.html#cb462-7" tabindex="-1"></a>    <span class="at">vp =</span> <span class="fu">as.numeric</span>(vp)</span>
-<span id="cb462-8"><a href="sec-im.html#cb462-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb462-9"><a href="sec-im.html#cb462-9" tabindex="-1"></a>  <span class="fu">spread</span>(estimacion, value)</span></code></pre></div>
-<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="sec-im.html#cb463-1" tabindex="-1"></a>estimacion_var_vp</span></code></pre></div>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="sec-im.html#cb459-1" tabindex="-1"></a>estimacion_var_vp <span class="sc">%&lt;&gt;%</span></span>
+<span id="cb459-2"><a href="sec-im.html#cb459-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">gather</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb459-3"><a href="sec-im.html#cb459-3" tabindex="-1"></a>  <span class="fu">separate</span>(key, <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;vp&quot;</span>, <span class="st">&quot;estimacion&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb459-4"><a href="sec-im.html#cb459-4" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb459-5"><a href="sec-im.html#cb459-5" tabindex="-1"></a>    <span class="at">estimacion =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(estimacion), <span class="st">&quot;promedio&quot;</span>, <span class="st">&quot;var&quot;</span>),</span>
+<span id="cb459-6"><a href="sec-im.html#cb459-6" tabindex="-1"></a>    <span class="at">A =</span> <span class="cn">NULL</span>, <span class="at">B =</span> <span class="cn">NULL</span>,</span>
+<span id="cb459-7"><a href="sec-im.html#cb459-7" tabindex="-1"></a>    <span class="at">vp =</span> <span class="fu">as.numeric</span>(vp)</span>
+<span id="cb459-8"><a href="sec-im.html#cb459-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb459-9"><a href="sec-im.html#cb459-9" tabindex="-1"></a>  <span class="fu">spread</span>(estimacion, value)</span></code></pre></div>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="sec-im.html#cb460-1" tabindex="-1"></a>estimacion_var_vp</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-vp-varianza-ingreso">Cuadro 9.43: </span>Estimaciones de la varianza del ingreso para cada valor plausible</caption>
 <thead>
@@ -955,14 +955,14 @@ Figura 9.25: Proporciones de los valores plausibles para la variable empleo comp
 </tbody>
 </table>
 <p>La Tabla <a href="sec-im.html#tab:tab-im-resultado-varianza">9.44</a> presenta la estimación combinada de la varianza del ingreso:</p>
-<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="sec-im.html#cb464-1" tabindex="-1"></a>Media_var_vp <span class="ot">&lt;-</span> <span class="fu">mean</span>(estimacion_var_vp<span class="sc">$</span>promedio)</span>
-<span id="cb464-2"><a href="sec-im.html#cb464-2" tabindex="-1"></a>Ubar_var     <span class="ot">&lt;-</span> <span class="fu">mean</span>(estimacion_var_vp<span class="sc">$</span>var)</span>
-<span id="cb464-3"><a href="sec-im.html#cb464-3" tabindex="-1"></a>B_var        <span class="ot">&lt;-</span> <span class="fu">var</span>(estimacion_var_vp<span class="sc">$</span>promedio)</span>
-<span id="cb464-4"><a href="sec-im.html#cb464-4" tabindex="-1"></a>var_var_vp   <span class="ot">&lt;-</span> Ubar_var <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> M) <span class="sc">*</span> B_var</span></code></pre></div>
-<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="sec-im.html#cb465-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb465-2"><a href="sec-im.html#cb465-2" tabindex="-1"></a>  <span class="st">`</span><span class="at">Varianza estimada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(Media_var_vp, <span class="dv">4</span>),</span>
-<span id="cb465-3"><a href="sec-im.html#cb465-3" tabindex="-1"></a>  <span class="st">`</span><span class="at">Error estándar</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(var_var_vp), <span class="dv">4</span>)</span>
-<span id="cb465-4"><a href="sec-im.html#cb465-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="sec-im.html#cb461-1" tabindex="-1"></a>Media_var_vp <span class="ot">&lt;-</span> <span class="fu">mean</span>(estimacion_var_vp<span class="sc">$</span>promedio)</span>
+<span id="cb461-2"><a href="sec-im.html#cb461-2" tabindex="-1"></a>Ubar_var     <span class="ot">&lt;-</span> <span class="fu">mean</span>(estimacion_var_vp<span class="sc">$</span>var)</span>
+<span id="cb461-3"><a href="sec-im.html#cb461-3" tabindex="-1"></a>B_var        <span class="ot">&lt;-</span> <span class="fu">var</span>(estimacion_var_vp<span class="sc">$</span>promedio)</span>
+<span id="cb461-4"><a href="sec-im.html#cb461-4" tabindex="-1"></a>var_var_vp   <span class="ot">&lt;-</span> Ubar_var <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> M) <span class="sc">*</span> B_var</span></code></pre></div>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="sec-im.html#cb462-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb462-2"><a href="sec-im.html#cb462-2" tabindex="-1"></a>  <span class="st">`</span><span class="at">Varianza estimada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(Media_var_vp, <span class="dv">4</span>),</span>
+<span id="cb462-3"><a href="sec-im.html#cb462-3" tabindex="-1"></a>  <span class="st">`</span><span class="at">Error estándar</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(var_var_vp), <span class="dv">4</span>)</span>
+<span id="cb462-4"><a href="sec-im.html#cb462-4" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-im-resultado-varianza">Cuadro 9.44: </span>Estimación combinada de la varianza del ingreso mediante imputación múltiple (reglas de Rubin)</caption>
 <thead>
@@ -981,21 +981,21 @@ Figura 9.25: Proporciones de los valores plausibles para la variable empleo comp
 </div>
 <div id="estimación-de-proporciones-de-empleo" class="section level3 hasAnchor" number="9.11.6">
 <h3><span class="header-section-number">9.11.6</span> Estimación de proporciones de empleo<a href="sec-im.html#estimación-de-proporciones-de-empleo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="sec-im.html#cb466-1" tabindex="-1"></a>estimacion_prop_vp <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
-<span id="cb466-2"><a href="sec-im.html#cb466-2" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">&quot;Employment_vp_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
-<span id="cb466-3"><a href="sec-im.html#cb466-3" tabindex="-1"></a>  <span class="cf">function</span>(vp) {</span>
-<span id="cb466-4"><a href="sec-im.html#cb466-4" tabindex="-1"></a>    diseno <span class="sc">%&gt;%</span></span>
-<span id="cb466-5"><a href="sec-im.html#cb466-5" tabindex="-1"></a>      <span class="fu">group_by_at</span>(<span class="fu">vars</span>(<span class="at">Employment =</span> vp)) <span class="sc">%&gt;%</span></span>
-<span id="cb466-6"><a href="sec-im.html#cb466-6" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">prop =</span> <span class="fu">survey_mean</span>(<span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb466-7"><a href="sec-im.html#cb466-7" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">vp =</span> vp)</span>
-<span id="cb466-8"><a href="sec-im.html#cb466-8" tabindex="-1"></a>  }</span>
-<span id="cb466-9"><a href="sec-im.html#cb466-9" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">bind_rows</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="sec-im.html#cb463-1" tabindex="-1"></a>estimacion_prop_vp <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb463-2"><a href="sec-im.html#cb463-2" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">&quot;Employment_vp_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb463-3"><a href="sec-im.html#cb463-3" tabindex="-1"></a>  <span class="cf">function</span>(vp) {</span>
+<span id="cb463-4"><a href="sec-im.html#cb463-4" tabindex="-1"></a>    diseno <span class="sc">%&gt;%</span></span>
+<span id="cb463-5"><a href="sec-im.html#cb463-5" tabindex="-1"></a>      <span class="fu">group_by_at</span>(<span class="fu">vars</span>(<span class="at">Employment =</span> vp)) <span class="sc">%&gt;%</span></span>
+<span id="cb463-6"><a href="sec-im.html#cb463-6" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">prop =</span> <span class="fu">survey_mean</span>(<span class="at">vartype =</span> <span class="st">&quot;var&quot;</span>), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb463-7"><a href="sec-im.html#cb463-7" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">vp =</span> vp)</span>
+<span id="cb463-8"><a href="sec-im.html#cb463-8" tabindex="-1"></a>  }</span>
+<span id="cb463-9"><a href="sec-im.html#cb463-9" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">bind_rows</span>()</span></code></pre></div>
 <p>La Tabla <a href="sec-im.html#tab:tab-vp-proporciones">9.45</a> muestra las estimaciones de la proporción por estado de empleo para los primeros 12 registros:</p>
-<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="sec-im.html#cb467-1" tabindex="-1"></a>estimacion_prop_vp <span class="sc">%&lt;&gt;%</span></span>
-<span id="cb467-2"><a href="sec-im.html#cb467-2" tabindex="-1"></a>  <span class="fu">separate</span>(vp, <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;vp&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb467-3"><a href="sec-im.html#cb467-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="cn">NULL</span>, <span class="at">B =</span> <span class="cn">NULL</span>, <span class="at">vp =</span> <span class="fu">as.numeric</span>(vp)) <span class="sc">%&gt;%</span></span>
-<span id="cb467-4"><a href="sec-im.html#cb467-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(vp, Employment<span class="sc">:</span>prop_var)</span></code></pre></div>
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="sec-im.html#cb468-1" tabindex="-1"></a>estimacion_prop_vp <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>12L)</span></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="sec-im.html#cb464-1" tabindex="-1"></a>estimacion_prop_vp <span class="sc">%&lt;&gt;%</span></span>
+<span id="cb464-2"><a href="sec-im.html#cb464-2" tabindex="-1"></a>  <span class="fu">separate</span>(vp, <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;vp&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb464-3"><a href="sec-im.html#cb464-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A =</span> <span class="cn">NULL</span>, <span class="at">B =</span> <span class="cn">NULL</span>, <span class="at">vp =</span> <span class="fu">as.numeric</span>(vp)) <span class="sc">%&gt;%</span></span>
+<span id="cb464-4"><a href="sec-im.html#cb464-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(vp, Employment<span class="sc">:</span>prop_var)</span></code></pre></div>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="sec-im.html#cb465-1" tabindex="-1"></a>estimacion_prop_vp <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>12L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-vp-proporciones">Cuadro 9.45: </span>Estimaciones de la proporción por estado de empleo para cada valor plausible (primeras 12 filas)</caption>
 <thead>
@@ -1082,17 +1082,17 @@ Figura 9.25: Proporciones de los valores plausibles para la variable empleo comp
 </tbody>
 </table>
 <p>La Tabla <a href="sec-im.html#tab:tab-im-resultado-proporciones">9.46</a> presenta la estimación combinada de las proporciones de empleo mediante las reglas de Rubin:</p>
-<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="sec-im.html#cb469-1" tabindex="-1"></a>estimacion_prop_vp <span class="sc">%&gt;%</span></span>
-<span id="cb469-2"><a href="sec-im.html#cb469-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Employment) <span class="sc">%&gt;%</span></span>
-<span id="cb469-3"><a href="sec-im.html#cb469-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb469-4"><a href="sec-im.html#cb469-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Proporción estimada</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(prop), <span class="dv">4</span>),</span>
-<span id="cb469-5"><a href="sec-im.html#cb469-5" tabindex="-1"></a>    <span class="at">Ubar                  =</span> <span class="fu">mean</span>(prop_var),</span>
-<span id="cb469-6"><a href="sec-im.html#cb469-6" tabindex="-1"></a>    <span class="at">B                     =</span> <span class="fu">var</span>(prop)</span>
-<span id="cb469-7"><a href="sec-im.html#cb469-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb469-8"><a href="sec-im.html#cb469-8" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb469-9"><a href="sec-im.html#cb469-9" tabindex="-1"></a>    <span class="st">`</span><span class="at">Varianza total</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(Ubar <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> M) <span class="sc">*</span> B, <span class="dv">6</span>),</span>
-<span id="cb469-10"><a href="sec-im.html#cb469-10" tabindex="-1"></a>    <span class="at">Ubar =</span> <span class="cn">NULL</span>, <span class="at">B =</span> <span class="cn">NULL</span></span>
-<span id="cb469-11"><a href="sec-im.html#cb469-11" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="sec-im.html#cb466-1" tabindex="-1"></a>estimacion_prop_vp <span class="sc">%&gt;%</span></span>
+<span id="cb466-2"><a href="sec-im.html#cb466-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Employment) <span class="sc">%&gt;%</span></span>
+<span id="cb466-3"><a href="sec-im.html#cb466-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb466-4"><a href="sec-im.html#cb466-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Proporción estimada</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(prop), <span class="dv">4</span>),</span>
+<span id="cb466-5"><a href="sec-im.html#cb466-5" tabindex="-1"></a>    <span class="at">Ubar                  =</span> <span class="fu">mean</span>(prop_var),</span>
+<span id="cb466-6"><a href="sec-im.html#cb466-6" tabindex="-1"></a>    <span class="at">B                     =</span> <span class="fu">var</span>(prop)</span>
+<span id="cb466-7"><a href="sec-im.html#cb466-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb466-8"><a href="sec-im.html#cb466-8" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb466-9"><a href="sec-im.html#cb466-9" tabindex="-1"></a>    <span class="st">`</span><span class="at">Varianza total</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(Ubar <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> M) <span class="sc">*</span> B, <span class="dv">6</span>),</span>
+<span id="cb466-10"><a href="sec-im.html#cb466-10" tabindex="-1"></a>    <span class="at">Ubar =</span> <span class="cn">NULL</span>, <span class="at">B =</span> <span class="cn">NULL</span></span>
+<span id="cb466-11"><a href="sec-im.html#cb466-11" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-im-resultado-proporciones">Cuadro 9.46: </span>Estimación combinada de proporciones de empleo mediante imputación múltiple (reglas de Rubin)</caption>
 <thead>

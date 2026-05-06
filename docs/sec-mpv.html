@@ -415,17 +415,17 @@ div.csl-indent {
 <h2><span class="header-section-number">7.1</span> Inferencia en poblaciones finitas<a href="sec-mpv.html#sec-mpv" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Una cuestión fundamental en el análisis de encuestas es la medida de probabilidad que rige la inferencia. Como señala <span class="citation">Kish (<a href="#ref-kish1987statistical">1987</a>)</span>, la mayoría de los textos de inferencia estadística asumen que las observaciones son variables aleatorias independientes e idénticamente distribuidas (IID), supuesto que no se satisface cuando los datos provienen de un diseño muestral complejo.</p>
 <p>Para comprender esta distinción, es útil partir de un ejemplo sencillo. Suponga que se generaron <span class="math inline">\(N=100\)</span> realizaciones de variables aleatorias independientes Bernoulli con parámetro <span class="math inline">\(\theta=0.3\)</span>, que representa la proporción de personas desempleadas en una población finita. En este primer proceso inferencial, regido por el modelo probabilístico, el estimador <span class="math inline">\(\bar{y}_U = \sum_U y_k / N\)</span> es insesgado. La siguiente simulación de Monte Carlo lo verifica:</p>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="sec-mpv.html#cb239-1" tabindex="-1"></a>N     <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb239-2"><a href="sec-mpv.html#cb239-2" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
-<span id="cb239-3"><a href="sec-mpv.html#cb239-3" tabindex="-1"></a>nsim1 <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb239-4"><a href="sec-mpv.html#cb239-4" tabindex="-1"></a>Est0  <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, nsim1)</span>
-<span id="cb239-5"><a href="sec-mpv.html#cb239-5" tabindex="-1"></a></span>
-<span id="cb239-6"><a href="sec-mpv.html#cb239-6" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim1) {</span>
-<span id="cb239-7"><a href="sec-mpv.html#cb239-7" tabindex="-1"></a>  y       <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(N, <span class="dv">1</span>, theta)</span>
-<span id="cb239-8"><a href="sec-mpv.html#cb239-8" tabindex="-1"></a>  Est0[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
-<span id="cb239-9"><a href="sec-mpv.html#cb239-9" tabindex="-1"></a>}</span>
-<span id="cb239-10"><a href="sec-mpv.html#cb239-10" tabindex="-1"></a></span>
-<span id="cb239-11"><a href="sec-mpv.html#cb239-11" tabindex="-1"></a><span class="fu">cbind</span>(theta, <span class="at">Esp0 =</span> <span class="fu">mean</span>(Est0))</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="sec-mpv.html#cb236-1" tabindex="-1"></a>N     <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb236-2"><a href="sec-mpv.html#cb236-2" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
+<span id="cb236-3"><a href="sec-mpv.html#cb236-3" tabindex="-1"></a>nsim1 <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb236-4"><a href="sec-mpv.html#cb236-4" tabindex="-1"></a>Est0  <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, nsim1)</span>
+<span id="cb236-5"><a href="sec-mpv.html#cb236-5" tabindex="-1"></a></span>
+<span id="cb236-6"><a href="sec-mpv.html#cb236-6" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim1) {</span>
+<span id="cb236-7"><a href="sec-mpv.html#cb236-7" tabindex="-1"></a>  y       <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(N, <span class="dv">1</span>, theta)</span>
+<span id="cb236-8"><a href="sec-mpv.html#cb236-8" tabindex="-1"></a>  Est0[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb236-9"><a href="sec-mpv.html#cb236-9" tabindex="-1"></a>}</span>
+<span id="cb236-10"><a href="sec-mpv.html#cb236-10" tabindex="-1"></a></span>
+<span id="cb236-11"><a href="sec-mpv.html#cb236-11" tabindex="-1"></a><span class="fu">cbind</span>(theta, <span class="at">Esp0 =</span> <span class="fu">mean</span>(Est0))</span></code></pre></div>
 <pre><code>##      theta    Esp0
 ## [1,]   0.3 0.30076</code></pre>
 <p>Sin embargo, en la teoría de muestreo las características de interés son parámetros fijos, no realizaciones de variables aleatorias. Si un individuo está desempleado, su estado no constituye la realización de ningún evento aleatorio, sino un hecho. Lo único aleatorio en la inferencia es la muestra. Cuando la muestra se selecciona sin reemplazo mediante un diseño complejo, las variables asociadas a las extracciones no son independientes ni idénticamente distribuidas, por lo que los métodos de inferencia clásica no son directamente aplicables.</p>
@@ -434,37 +434,37 @@ div.csl-indent {
 \bar{y}_{\pi S} = \sum_{i \in S_I} \frac{t_{y_i}}{\pi_{Ii}} = \frac{\sum_{i \in S_I} \bar{y}_i}{n_I}
 \]</span></p>
 <p>donde <span class="math inline">\(\bar{y}_i\)</span> es la proporción de desempleados en el hogar <span class="math inline">\(i\)</span>-ésimo, y <span class="math inline">\(\pi_{Ii}\)</span> es su probabilidad de inclusión. Un estimador que ignora el diseño, como el promedio simple <span class="math inline">\(\bar{y}_S = \sum_{i \in S_I} t_{y_i} / \sum_{i \in S_I} N_i\)</span>, resulta sesgado. La siguiente simulación verifica empíricamente la insesgadez del estimador <span class="math inline">\(\bar{y}_{\pi S}\)</span> frente al sesgo de <span class="math inline">\(\bar{y}_S\)</span>:</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="sec-mpv.html#cb241-1" tabindex="-1"></a><span class="fu">library</span>(TeachingSampling)</span>
-<span id="cb241-2"><a href="sec-mpv.html#cb241-2" tabindex="-1"></a>N      <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb241-3"><a href="sec-mpv.html#cb241-3" tabindex="-1"></a>theta  <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
-<span id="cb241-4"><a href="sec-mpv.html#cb241-4" tabindex="-1"></a>y      <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(N, <span class="dv">1</span>, theta)</span>
-<span id="cb241-5"><a href="sec-mpv.html#cb241-5" tabindex="-1"></a>theta_N <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
-<span id="cb241-6"><a href="sec-mpv.html#cb241-6" tabindex="-1"></a>nsim2  <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb241-7"><a href="sec-mpv.html#cb241-7" tabindex="-1"></a>Est1 <span class="ot">&lt;-</span> Est2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, nsim2)</span>
-<span id="cb241-8"><a href="sec-mpv.html#cb241-8" tabindex="-1"></a></span>
-<span id="cb241-9"><a href="sec-mpv.html#cb241-9" tabindex="-1"></a>clus    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">which</span>((y[<span class="sc">-</span>N] <span class="sc">-</span> y[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb241-10"><a href="sec-mpv.html#cb241-10" tabindex="-1"></a>NI      <span class="ot">&lt;-</span> <span class="fu">length</span>(clus) <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb241-11"><a href="sec-mpv.html#cb241-11" tabindex="-1"></a>Ind     <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> N, <span class="at">ncol =</span> NI)</span>
-<span id="cb241-12"><a href="sec-mpv.html#cb241-12" tabindex="-1"></a>Tamaños <span class="ot">&lt;-</span> clus[<span class="sc">-</span><span class="dv">1</span>] <span class="sc">-</span> clus[<span class="sc">-</span>(<span class="fu">length</span>(clus))]</span>
-<span id="cb241-13"><a href="sec-mpv.html#cb241-13" tabindex="-1"></a></span>
-<span id="cb241-14"><a href="sec-mpv.html#cb241-14" tabindex="-1"></a><span class="cf">for</span> (l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(clus) <span class="sc">-</span> <span class="dv">1</span>)) {</span>
-<span id="cb241-15"><a href="sec-mpv.html#cb241-15" tabindex="-1"></a>  a <span class="ot">&lt;-</span> (clus[l] <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>clus[l <span class="sc">+</span> <span class="dv">1</span>]</span>
-<span id="cb241-16"><a href="sec-mpv.html#cb241-16" tabindex="-1"></a>  Ind[a, l] <span class="ot">&lt;-</span> a</span>
-<span id="cb241-17"><a href="sec-mpv.html#cb241-17" tabindex="-1"></a>}</span>
-<span id="cb241-18"><a href="sec-mpv.html#cb241-18" tabindex="-1"></a></span>
-<span id="cb241-19"><a href="sec-mpv.html#cb241-19" tabindex="-1"></a>nI <span class="ot">&lt;-</span> <span class="fu">floor</span>(NI <span class="sc">*</span> <span class="fl">0.3</span>)</span>
-<span id="cb241-20"><a href="sec-mpv.html#cb241-20" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim2) {</span>
-<span id="cb241-21"><a href="sec-mpv.html#cb241-21" tabindex="-1"></a>  res        <span class="ot">&lt;-</span> <span class="fu">S.piPS</span>(nI, Tamaños)</span>
-<span id="cb241-22"><a href="sec-mpv.html#cb241-22" tabindex="-1"></a>  sam        <span class="ot">&lt;-</span> res[, <span class="dv">1</span>]</span>
-<span id="cb241-23"><a href="sec-mpv.html#cb241-23" tabindex="-1"></a>  Ind.sam    <span class="ot">&lt;-</span> Ind[, sam]</span>
-<span id="cb241-24"><a href="sec-mpv.html#cb241-24" tabindex="-1"></a>  Tamaños.sam <span class="ot">&lt;-</span> Tamaños[sam]</span>
-<span id="cb241-25"><a href="sec-mpv.html#cb241-25" tabindex="-1"></a>  medias     <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">ncol</span>(Ind.sam))</span>
-<span id="cb241-26"><a href="sec-mpv.html#cb241-26" tabindex="-1"></a>  <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(Ind.sam)) medias[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(y[Ind.sam[, k]])</span>
-<span id="cb241-27"><a href="sec-mpv.html#cb241-27" tabindex="-1"></a>  Est1[j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(medias)</span>
-<span id="cb241-28"><a href="sec-mpv.html#cb241-28" tabindex="-1"></a>  Est2[j] <span class="ot">&lt;-</span> <span class="fu">sum</span>(Tamaños.sam <span class="sc">*</span> medias) <span class="sc">/</span> <span class="fu">sum</span>(Tamaños)</span>
-<span id="cb241-29"><a href="sec-mpv.html#cb241-29" tabindex="-1"></a>}</span>
-<span id="cb241-30"><a href="sec-mpv.html#cb241-30" tabindex="-1"></a></span>
-<span id="cb241-31"><a href="sec-mpv.html#cb241-31" tabindex="-1"></a><span class="fu">cbind</span>(theta_N, <span class="at">Esp1 =</span> <span class="fu">mean</span>(Est1), <span class="at">Esp2 =</span> <span class="fu">mean</span>(Est2))</span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="sec-mpv.html#cb238-1" tabindex="-1"></a><span class="fu">library</span>(TeachingSampling)</span>
+<span id="cb238-2"><a href="sec-mpv.html#cb238-2" tabindex="-1"></a>N      <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb238-3"><a href="sec-mpv.html#cb238-3" tabindex="-1"></a>theta  <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
+<span id="cb238-4"><a href="sec-mpv.html#cb238-4" tabindex="-1"></a>y      <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(N, <span class="dv">1</span>, theta)</span>
+<span id="cb238-5"><a href="sec-mpv.html#cb238-5" tabindex="-1"></a>theta_N <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb238-6"><a href="sec-mpv.html#cb238-6" tabindex="-1"></a>nsim2  <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb238-7"><a href="sec-mpv.html#cb238-7" tabindex="-1"></a>Est1 <span class="ot">&lt;-</span> Est2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, nsim2)</span>
+<span id="cb238-8"><a href="sec-mpv.html#cb238-8" tabindex="-1"></a></span>
+<span id="cb238-9"><a href="sec-mpv.html#cb238-9" tabindex="-1"></a>clus    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">which</span>((y[<span class="sc">-</span>N] <span class="sc">-</span> y[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb238-10"><a href="sec-mpv.html#cb238-10" tabindex="-1"></a>NI      <span class="ot">&lt;-</span> <span class="fu">length</span>(clus) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb238-11"><a href="sec-mpv.html#cb238-11" tabindex="-1"></a>Ind     <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> N, <span class="at">ncol =</span> NI)</span>
+<span id="cb238-12"><a href="sec-mpv.html#cb238-12" tabindex="-1"></a>Tamaños <span class="ot">&lt;-</span> clus[<span class="sc">-</span><span class="dv">1</span>] <span class="sc">-</span> clus[<span class="sc">-</span>(<span class="fu">length</span>(clus))]</span>
+<span id="cb238-13"><a href="sec-mpv.html#cb238-13" tabindex="-1"></a></span>
+<span id="cb238-14"><a href="sec-mpv.html#cb238-14" tabindex="-1"></a><span class="cf">for</span> (l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(clus) <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb238-15"><a href="sec-mpv.html#cb238-15" tabindex="-1"></a>  a <span class="ot">&lt;-</span> (clus[l] <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>clus[l <span class="sc">+</span> <span class="dv">1</span>]</span>
+<span id="cb238-16"><a href="sec-mpv.html#cb238-16" tabindex="-1"></a>  Ind[a, l] <span class="ot">&lt;-</span> a</span>
+<span id="cb238-17"><a href="sec-mpv.html#cb238-17" tabindex="-1"></a>}</span>
+<span id="cb238-18"><a href="sec-mpv.html#cb238-18" tabindex="-1"></a></span>
+<span id="cb238-19"><a href="sec-mpv.html#cb238-19" tabindex="-1"></a>nI <span class="ot">&lt;-</span> <span class="fu">floor</span>(NI <span class="sc">*</span> <span class="fl">0.3</span>)</span>
+<span id="cb238-20"><a href="sec-mpv.html#cb238-20" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim2) {</span>
+<span id="cb238-21"><a href="sec-mpv.html#cb238-21" tabindex="-1"></a>  res        <span class="ot">&lt;-</span> <span class="fu">S.piPS</span>(nI, Tamaños)</span>
+<span id="cb238-22"><a href="sec-mpv.html#cb238-22" tabindex="-1"></a>  sam        <span class="ot">&lt;-</span> res[, <span class="dv">1</span>]</span>
+<span id="cb238-23"><a href="sec-mpv.html#cb238-23" tabindex="-1"></a>  Ind.sam    <span class="ot">&lt;-</span> Ind[, sam]</span>
+<span id="cb238-24"><a href="sec-mpv.html#cb238-24" tabindex="-1"></a>  Tamaños.sam <span class="ot">&lt;-</span> Tamaños[sam]</span>
+<span id="cb238-25"><a href="sec-mpv.html#cb238-25" tabindex="-1"></a>  medias     <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">ncol</span>(Ind.sam))</span>
+<span id="cb238-26"><a href="sec-mpv.html#cb238-26" tabindex="-1"></a>  <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(Ind.sam)) medias[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(y[Ind.sam[, k]])</span>
+<span id="cb238-27"><a href="sec-mpv.html#cb238-27" tabindex="-1"></a>  Est1[j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(medias)</span>
+<span id="cb238-28"><a href="sec-mpv.html#cb238-28" tabindex="-1"></a>  Est2[j] <span class="ot">&lt;-</span> <span class="fu">sum</span>(Tamaños.sam <span class="sc">*</span> medias) <span class="sc">/</span> <span class="fu">sum</span>(Tamaños)</span>
+<span id="cb238-29"><a href="sec-mpv.html#cb238-29" tabindex="-1"></a>}</span>
+<span id="cb238-30"><a href="sec-mpv.html#cb238-30" tabindex="-1"></a></span>
+<span id="cb238-31"><a href="sec-mpv.html#cb238-31" tabindex="-1"></a><span class="fu">cbind</span>(theta_N, <span class="at">Esp1 =</span> <span class="fu">mean</span>(Est1), <span class="at">Esp2 =</span> <span class="fu">mean</span>(Est2))</span></code></pre></div>
 <pre><code>##      theta_N      Esp1       Esp2
 ## [1,]    0.23 0.2638208 0.09303125</code></pre>
 <p>Cuando los datos provienen de un diseño muestral complejo y, adicionalmente, se asume un modelo de superpoblación para los valores de la variable de interés, se configura un proceso de inferencia doble: el modelo probabilístico y el diseño de muestreo constituyen dos medidas de probabilidad distintas que deben regir conjuntamente la inferencia. En este contexto, la función de verosimilitud conjunta resulta intratable. La solución propuesta por <span class="citation">Pfeffermann (<a href="#ref-pfeffermann1993role">1993</a>)</span> es la técnica de máxima pseudo-verosimilitud (MPV), que pondera las contribuciones de cada unidad por el inverso de su probabilidad de inclusión.</p>
@@ -512,39 +512,39 @@ T = \sum_{i=1}^{n} w_i u_i(\theta) = 0
 \]</span></p>
 <p>donde <span class="math inline">\(W\)</span> es la matriz diagonal de pesos muestrales. Nótese que este resultado extiende de forma natural el estimador ordinario al contexto de encuestas complejas.</p>
 <p>La siguiente simulación de Monte Carlo anidada verifica que <span class="math inline">\(\bar{y}_{\pi S}\)</span> es insesgado bajo inferencia doble:</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="sec-mpv.html#cb243-1" tabindex="-1"></a><span class="fu">library</span>(TeachingSampling)</span>
-<span id="cb243-2"><a href="sec-mpv.html#cb243-2" tabindex="-1"></a>N     <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb243-3"><a href="sec-mpv.html#cb243-3" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
-<span id="cb243-4"><a href="sec-mpv.html#cb243-4" tabindex="-1"></a>nsim1 <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb243-5"><a href="sec-mpv.html#cb243-5" tabindex="-1"></a>Esp1 <span class="ot">&lt;-</span> Esp2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, nsim1)</span>
-<span id="cb243-6"><a href="sec-mpv.html#cb243-6" tabindex="-1"></a></span>
-<span id="cb243-7"><a href="sec-mpv.html#cb243-7" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim1) {</span>
-<span id="cb243-8"><a href="sec-mpv.html#cb243-8" tabindex="-1"></a>  y       <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(N, <span class="dv">1</span>, theta)</span>
-<span id="cb243-9"><a href="sec-mpv.html#cb243-9" tabindex="-1"></a>  clus    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">which</span>((y[<span class="sc">-</span>N] <span class="sc">-</span> y[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb243-10"><a href="sec-mpv.html#cb243-10" tabindex="-1"></a>  NI      <span class="ot">&lt;-</span> <span class="fu">length</span>(clus) <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb243-11"><a href="sec-mpv.html#cb243-11" tabindex="-1"></a>  Ind     <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> N, <span class="at">ncol =</span> NI)</span>
-<span id="cb243-12"><a href="sec-mpv.html#cb243-12" tabindex="-1"></a>  Tamaños <span class="ot">&lt;-</span> clus[<span class="sc">-</span><span class="dv">1</span>] <span class="sc">-</span> clus[<span class="sc">-</span>(<span class="fu">length</span>(clus))]</span>
-<span id="cb243-13"><a href="sec-mpv.html#cb243-13" tabindex="-1"></a>  <span class="cf">for</span> (l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(clus) <span class="sc">-</span> <span class="dv">1</span>)) {</span>
-<span id="cb243-14"><a href="sec-mpv.html#cb243-14" tabindex="-1"></a>    a <span class="ot">&lt;-</span> (clus[l] <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>clus[l <span class="sc">+</span> <span class="dv">1</span>]</span>
-<span id="cb243-15"><a href="sec-mpv.html#cb243-15" tabindex="-1"></a>    Ind[a, l] <span class="ot">&lt;-</span> a</span>
-<span id="cb243-16"><a href="sec-mpv.html#cb243-16" tabindex="-1"></a>  }</span>
-<span id="cb243-17"><a href="sec-mpv.html#cb243-17" tabindex="-1"></a>  nI      <span class="ot">&lt;-</span> <span class="fu">floor</span>(NI <span class="sc">*</span> <span class="fl">0.3</span>)</span>
-<span id="cb243-18"><a href="sec-mpv.html#cb243-18" tabindex="-1"></a>  Est1 <span class="ot">&lt;-</span> Est2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">100</span>)</span>
-<span id="cb243-19"><a href="sec-mpv.html#cb243-19" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) {</span>
-<span id="cb243-20"><a href="sec-mpv.html#cb243-20" tabindex="-1"></a>    res         <span class="ot">&lt;-</span> <span class="fu">S.piPS</span>(nI, Tamaños)</span>
-<span id="cb243-21"><a href="sec-mpv.html#cb243-21" tabindex="-1"></a>    sam         <span class="ot">&lt;-</span> res[, <span class="dv">1</span>]</span>
-<span id="cb243-22"><a href="sec-mpv.html#cb243-22" tabindex="-1"></a>    Ind.sam     <span class="ot">&lt;-</span> Ind[, sam]</span>
-<span id="cb243-23"><a href="sec-mpv.html#cb243-23" tabindex="-1"></a>    Tamaños.sam <span class="ot">&lt;-</span> Tamaños[sam]</span>
-<span id="cb243-24"><a href="sec-mpv.html#cb243-24" tabindex="-1"></a>    medias      <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">ncol</span>(Ind.sam))</span>
-<span id="cb243-25"><a href="sec-mpv.html#cb243-25" tabindex="-1"></a>    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(Ind.sam)) medias[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(y[Ind.sam[, k]])</span>
-<span id="cb243-26"><a href="sec-mpv.html#cb243-26" tabindex="-1"></a>    Est1[j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(medias)</span>
-<span id="cb243-27"><a href="sec-mpv.html#cb243-27" tabindex="-1"></a>    Est2[j] <span class="ot">&lt;-</span> <span class="fu">sum</span>(Tamaños.sam <span class="sc">*</span> medias) <span class="sc">/</span> <span class="fu">sum</span>(Tamaños)</span>
-<span id="cb243-28"><a href="sec-mpv.html#cb243-28" tabindex="-1"></a>  }</span>
-<span id="cb243-29"><a href="sec-mpv.html#cb243-29" tabindex="-1"></a>  Esp1[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(Est1)</span>
-<span id="cb243-30"><a href="sec-mpv.html#cb243-30" tabindex="-1"></a>  Esp2[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(Est2)</span>
-<span id="cb243-31"><a href="sec-mpv.html#cb243-31" tabindex="-1"></a>}</span>
-<span id="cb243-32"><a href="sec-mpv.html#cb243-32" tabindex="-1"></a></span>
-<span id="cb243-33"><a href="sec-mpv.html#cb243-33" tabindex="-1"></a><span class="fu">cbind</span>(theta, <span class="at">Esp_piS =</span> <span class="fu">mean</span>(Esp1), <span class="at">Esp_S =</span> <span class="fu">mean</span>(Esp2))</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="sec-mpv.html#cb240-1" tabindex="-1"></a><span class="fu">library</span>(TeachingSampling)</span>
+<span id="cb240-2"><a href="sec-mpv.html#cb240-2" tabindex="-1"></a>N     <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb240-3"><a href="sec-mpv.html#cb240-3" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
+<span id="cb240-4"><a href="sec-mpv.html#cb240-4" tabindex="-1"></a>nsim1 <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb240-5"><a href="sec-mpv.html#cb240-5" tabindex="-1"></a>Esp1 <span class="ot">&lt;-</span> Esp2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, nsim1)</span>
+<span id="cb240-6"><a href="sec-mpv.html#cb240-6" tabindex="-1"></a></span>
+<span id="cb240-7"><a href="sec-mpv.html#cb240-7" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim1) {</span>
+<span id="cb240-8"><a href="sec-mpv.html#cb240-8" tabindex="-1"></a>  y       <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(N, <span class="dv">1</span>, theta)</span>
+<span id="cb240-9"><a href="sec-mpv.html#cb240-9" tabindex="-1"></a>  clus    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">which</span>((y[<span class="sc">-</span>N] <span class="sc">-</span> y[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb240-10"><a href="sec-mpv.html#cb240-10" tabindex="-1"></a>  NI      <span class="ot">&lt;-</span> <span class="fu">length</span>(clus) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb240-11"><a href="sec-mpv.html#cb240-11" tabindex="-1"></a>  Ind     <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> N, <span class="at">ncol =</span> NI)</span>
+<span id="cb240-12"><a href="sec-mpv.html#cb240-12" tabindex="-1"></a>  Tamaños <span class="ot">&lt;-</span> clus[<span class="sc">-</span><span class="dv">1</span>] <span class="sc">-</span> clus[<span class="sc">-</span>(<span class="fu">length</span>(clus))]</span>
+<span id="cb240-13"><a href="sec-mpv.html#cb240-13" tabindex="-1"></a>  <span class="cf">for</span> (l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(clus) <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb240-14"><a href="sec-mpv.html#cb240-14" tabindex="-1"></a>    a <span class="ot">&lt;-</span> (clus[l] <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>clus[l <span class="sc">+</span> <span class="dv">1</span>]</span>
+<span id="cb240-15"><a href="sec-mpv.html#cb240-15" tabindex="-1"></a>    Ind[a, l] <span class="ot">&lt;-</span> a</span>
+<span id="cb240-16"><a href="sec-mpv.html#cb240-16" tabindex="-1"></a>  }</span>
+<span id="cb240-17"><a href="sec-mpv.html#cb240-17" tabindex="-1"></a>  nI      <span class="ot">&lt;-</span> <span class="fu">floor</span>(NI <span class="sc">*</span> <span class="fl">0.3</span>)</span>
+<span id="cb240-18"><a href="sec-mpv.html#cb240-18" tabindex="-1"></a>  Est1 <span class="ot">&lt;-</span> Est2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">100</span>)</span>
+<span id="cb240-19"><a href="sec-mpv.html#cb240-19" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) {</span>
+<span id="cb240-20"><a href="sec-mpv.html#cb240-20" tabindex="-1"></a>    res         <span class="ot">&lt;-</span> <span class="fu">S.piPS</span>(nI, Tamaños)</span>
+<span id="cb240-21"><a href="sec-mpv.html#cb240-21" tabindex="-1"></a>    sam         <span class="ot">&lt;-</span> res[, <span class="dv">1</span>]</span>
+<span id="cb240-22"><a href="sec-mpv.html#cb240-22" tabindex="-1"></a>    Ind.sam     <span class="ot">&lt;-</span> Ind[, sam]</span>
+<span id="cb240-23"><a href="sec-mpv.html#cb240-23" tabindex="-1"></a>    Tamaños.sam <span class="ot">&lt;-</span> Tamaños[sam]</span>
+<span id="cb240-24"><a href="sec-mpv.html#cb240-24" tabindex="-1"></a>    medias      <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">ncol</span>(Ind.sam))</span>
+<span id="cb240-25"><a href="sec-mpv.html#cb240-25" tabindex="-1"></a>    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(Ind.sam)) medias[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(y[Ind.sam[, k]])</span>
+<span id="cb240-26"><a href="sec-mpv.html#cb240-26" tabindex="-1"></a>    Est1[j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(medias)</span>
+<span id="cb240-27"><a href="sec-mpv.html#cb240-27" tabindex="-1"></a>    Est2[j] <span class="ot">&lt;-</span> <span class="fu">sum</span>(Tamaños.sam <span class="sc">*</span> medias) <span class="sc">/</span> <span class="fu">sum</span>(Tamaños)</span>
+<span id="cb240-28"><a href="sec-mpv.html#cb240-28" tabindex="-1"></a>  }</span>
+<span id="cb240-29"><a href="sec-mpv.html#cb240-29" tabindex="-1"></a>  Esp1[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(Est1)</span>
+<span id="cb240-30"><a href="sec-mpv.html#cb240-30" tabindex="-1"></a>  Esp2[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(Est2)</span>
+<span id="cb240-31"><a href="sec-mpv.html#cb240-31" tabindex="-1"></a>}</span>
+<span id="cb240-32"><a href="sec-mpv.html#cb240-32" tabindex="-1"></a></span>
+<span id="cb240-33"><a href="sec-mpv.html#cb240-33" tabindex="-1"></a><span class="fu">cbind</span>(theta, <span class="at">Esp_piS =</span> <span class="fu">mean</span>(Esp1), <span class="at">Esp_S =</span> <span class="fu">mean</span>(Esp2))</span></code></pre></div>
 <pre><code>##      theta   Esp_piS     Esp_S
 ## [1,]   0.3 0.3098651 0.1154662</code></pre>
 </div>

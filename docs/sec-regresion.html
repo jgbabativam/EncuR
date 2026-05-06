@@ -414,24 +414,24 @@ div.csl-indent {
 <div id="sec-regresion" class="section level2 hasAnchor" number="9.8">
 <h2><span class="header-section-number">9.8</span> Imputación por regresión<a href="sec-regresion.html#sec-regresion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>La imputación por regresión ajusta un modelo estadístico a partir de los datos observados y utiliza sus predicciones para estimar los valores faltantes. Para la variable ingreso se emplea un modelo lineal múltiple; para la variable empleo, un modelo de regresión multinomial dado su carácter politómico:</p>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="sec-regresion.html#cb399-1" tabindex="-1"></a><span class="fu">require</span>(nnet)</span>
-<span id="cb399-2"><a href="sec-regresion.html#cb399-2" tabindex="-1"></a>encuesta<span class="sc">$</span>Income_imp     <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Income_missin</span>
-<span id="cb399-3"><a href="sec-regresion.html#cb399-3" tabindex="-1"></a>encuesta<span class="sc">$</span>Employment_imp <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Employment_missin</span>
-<span id="cb399-4"><a href="sec-regresion.html#cb399-4" tabindex="-1"></a>encuesta_obs    <span class="ot">&lt;-</span> <span class="fu">filter</span>(encuesta, <span class="sc">!</span><span class="fu">is.na</span>(Income_missin))</span>
-<span id="cb399-5"><a href="sec-regresion.html#cb399-5" tabindex="-1"></a>encuesta_no_obs <span class="ot">&lt;-</span> <span class="fu">filter</span>(encuesta, <span class="fu">is.na</span>(Income_missin))</span>
-<span id="cb399-6"><a href="sec-regresion.html#cb399-6" tabindex="-1"></a></span>
-<span id="cb399-7"><a href="sec-regresion.html#cb399-7" tabindex="-1"></a>mod      <span class="ot">&lt;-</span> <span class="fu">lm</span>(Income <span class="sc">~</span> Zone <span class="sc">+</span> Sex <span class="sc">+</span> Expenditure, <span class="at">data =</span> encuesta_obs)</span>
-<span id="cb399-8"><a href="sec-regresion.html#cb399-8" tabindex="-1"></a>mod.mult <span class="ot">&lt;-</span> <span class="fu">multinom</span>(Employment <span class="sc">~</span> Zone <span class="sc">+</span> Sex <span class="sc">+</span> Expenditure, <span class="at">data =</span> encuesta_obs,</span>
-<span id="cb399-9"><a href="sec-regresion.html#cb399-9" tabindex="-1"></a>                     <span class="at">trace =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="sec-regresion.html#cb400-1" tabindex="-1"></a>imp      <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod, encuesta_no_obs)</span>
-<span id="cb400-2"><a href="sec-regresion.html#cb400-2" tabindex="-1"></a>imp.mult <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod.mult, encuesta_no_obs, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb400-3"><a href="sec-regresion.html#cb400-3" tabindex="-1"></a>encuesta_no_obs<span class="sc">$</span>Income_imp     <span class="ot">&lt;-</span> imp</span>
-<span id="cb400-4"><a href="sec-regresion.html#cb400-4" tabindex="-1"></a>encuesta_no_obs<span class="sc">$</span>Employment_imp <span class="ot">&lt;-</span> imp.mult</span>
-<span id="cb400-5"><a href="sec-regresion.html#cb400-5" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(encuesta_obs, encuesta_no_obs)</span></code></pre></div>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="sec-regresion.html#cb396-1" tabindex="-1"></a><span class="fu">require</span>(nnet)</span>
+<span id="cb396-2"><a href="sec-regresion.html#cb396-2" tabindex="-1"></a>encuesta<span class="sc">$</span>Income_imp     <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Income_missin</span>
+<span id="cb396-3"><a href="sec-regresion.html#cb396-3" tabindex="-1"></a>encuesta<span class="sc">$</span>Employment_imp <span class="ot">&lt;-</span> encuesta<span class="sc">$</span>Employment_missin</span>
+<span id="cb396-4"><a href="sec-regresion.html#cb396-4" tabindex="-1"></a>encuesta_obs    <span class="ot">&lt;-</span> <span class="fu">filter</span>(encuesta, <span class="sc">!</span><span class="fu">is.na</span>(Income_missin))</span>
+<span id="cb396-5"><a href="sec-regresion.html#cb396-5" tabindex="-1"></a>encuesta_no_obs <span class="ot">&lt;-</span> <span class="fu">filter</span>(encuesta, <span class="fu">is.na</span>(Income_missin))</span>
+<span id="cb396-6"><a href="sec-regresion.html#cb396-6" tabindex="-1"></a></span>
+<span id="cb396-7"><a href="sec-regresion.html#cb396-7" tabindex="-1"></a>mod      <span class="ot">&lt;-</span> <span class="fu">lm</span>(Income <span class="sc">~</span> Zone <span class="sc">+</span> Sex <span class="sc">+</span> Expenditure, <span class="at">data =</span> encuesta_obs)</span>
+<span id="cb396-8"><a href="sec-regresion.html#cb396-8" tabindex="-1"></a>mod.mult <span class="ot">&lt;-</span> <span class="fu">multinom</span>(Employment <span class="sc">~</span> Zone <span class="sc">+</span> Sex <span class="sc">+</span> Expenditure, <span class="at">data =</span> encuesta_obs,</span>
+<span id="cb396-9"><a href="sec-regresion.html#cb396-9" tabindex="-1"></a>                     <span class="at">trace =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="sec-regresion.html#cb397-1" tabindex="-1"></a>imp      <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod, encuesta_no_obs)</span>
+<span id="cb397-2"><a href="sec-regresion.html#cb397-2" tabindex="-1"></a>imp.mult <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod.mult, encuesta_no_obs, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb397-3"><a href="sec-regresion.html#cb397-3" tabindex="-1"></a>encuesta_no_obs<span class="sc">$</span>Income_imp     <span class="ot">&lt;-</span> imp</span>
+<span id="cb397-4"><a href="sec-regresion.html#cb397-4" tabindex="-1"></a>encuesta_no_obs<span class="sc">$</span>Employment_imp <span class="ot">&lt;-</span> imp.mult</span>
+<span id="cb397-5"><a href="sec-regresion.html#cb397-5" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(encuesta_obs, encuesta_no_obs)</span></code></pre></div>
 <p>La Tabla <a href="sec-regresion.html#tab:tab-regresion-empleo-antes">9.11</a> presenta la distribución de la variable empleo antes de la imputación, y la Tabla <a href="sec-regresion.html#tab:tab-regresion-empleo-despues">9.12</a> muestra cómo se redistribuyen las categorías después de imputar el 20% de observaciones faltantes:</p>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="sec-regresion.html#cb401-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb401-2"><a href="sec-regresion.html#cb401-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb401-3"><a href="sec-regresion.html#cb401-3" tabindex="-1"></a>  <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">&quot;Estado&quot;</span>, <span class="st">&quot;Proporción&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="sec-regresion.html#cb398-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb398-2"><a href="sec-regresion.html#cb398-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb398-3"><a href="sec-regresion.html#cb398-3" tabindex="-1"></a>  <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">&quot;Estado&quot;</span>, <span class="st">&quot;Proporción&quot;</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-regresion-empleo-antes">Cuadro 9.11: </span>Distribución de la variable empleo antes de la imputación por regresión (con valores faltantes)</caption>
 <thead>
@@ -459,9 +459,9 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="sec-regresion.html#cb402-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb402-2"><a href="sec-regresion.html#cb402-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb402-3"><a href="sec-regresion.html#cb402-3" tabindex="-1"></a>  <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">&quot;Estado&quot;</span>, <span class="st">&quot;Proporción&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="sec-regresion.html#cb399-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb399-2"><a href="sec-regresion.html#cb399-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb399-3"><a href="sec-regresion.html#cb399-3" tabindex="-1"></a>  <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">&quot;Estado&quot;</span>, <span class="st">&quot;Proporción&quot;</span>))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-regresion-empleo-despues">Cuadro 9.12: </span>Distribución de la variable empleo después de la imputación por regresión</caption>
 <thead>
@@ -490,8 +490,8 @@ div.csl-indent {
 </tbody>
 </table>
 <p>La Tabla <a href="sec-regresion.html#tab:tab-regresion-empleo-zona-antes">9.13</a> y la Tabla <a href="sec-regresion.html#tab:tab-regresion-empleo-zona-despues">9.14</a> muestran que la distribución marginal por zona se preserva tras la imputación:</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="sec-regresion.html#cb403-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Zone, encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb403-2"><a href="sec-regresion.html#cb403-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="sec-regresion.html#cb400-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Zone, encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb400-2"><a href="sec-regresion.html#cb400-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-regresion-empleo-zona-antes">Cuadro 9.13: </span>Distribución conjunta de zona y empleo antes de la imputación por regresión</caption>
 <thead>
@@ -539,8 +539,8 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="sec-regresion.html#cb404-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Zone, encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb404-2"><a href="sec-regresion.html#cb404-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="sec-regresion.html#cb401-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Zone, encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb401-2"><a href="sec-regresion.html#cb401-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-regresion-empleo-zona-despues">Cuadro 9.14: </span>Distribución conjunta de zona y empleo después de la imputación por regresión</caption>
 <thead>
@@ -589,8 +589,8 @@ div.csl-indent {
 </tbody>
 </table>
 <p>La Tabla <a href="sec-regresion.html#tab:tab-regresion-empleo-sexo-antes">9.15</a> y la Tabla <a href="sec-regresion.html#tab:tab-regresion-empleo-sexo-despues">9.16</a> presentan el análisis análogo por sexo:</p>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="sec-regresion.html#cb405-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Sex, encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb405-2"><a href="sec-regresion.html#cb405-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="sec-regresion.html#cb402-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Sex, encuesta<span class="sc">$</span>Employment_missin, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb402-2"><a href="sec-regresion.html#cb402-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-regresion-empleo-sexo-antes">Cuadro 9.15: </span>Distribución conjunta de sexo y empleo antes de la imputación por regresión</caption>
 <thead>
@@ -638,8 +638,8 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="sec-regresion.html#cb406-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Sex, encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb406-2"><a href="sec-regresion.html#cb406-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="sec-regresion.html#cb403-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(encuesta<span class="sc">$</span>Sex, encuesta<span class="sc">$</span>Employment_imp, <span class="at">useNA =</span> <span class="st">&quot;a&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb403-2"><a href="sec-regresion.html#cb403-2" tabindex="-1"></a>  <span class="fu">addmargins</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame.matrix</span>()</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-regresion-empleo-sexo-despues">Cuadro 9.16: </span>Distribución conjunta de sexo y empleo después de la imputación por regresión</caption>
 <thead>
@@ -688,13 +688,13 @@ div.csl-indent {
 </tbody>
 </table>
 <p>La Tabla <a href="sec-regresion.html#tab:tab-sesgo-regresion-global">9.17</a> resume los estadísticos del ingreso. El sesgo relativo de la media es de 1.2%, lo que indica una imputación precisa:</p>
-<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="sec-regresion.html#cb407-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb407-2"><a href="sec-regresion.html#cb407-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb407-3"><a href="sec-regresion.html#cb407-3" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">4</span>),</span>
-<span id="cb407-4"><a href="sec-regresion.html#cb407-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">4</span>),</span>
-<span id="cb407-5"><a href="sec-regresion.html#cb407-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">4</span>),</span>
-<span id="cb407-6"><a href="sec-regresion.html#cb407-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">4</span>)</span>
-<span id="cb407-7"><a href="sec-regresion.html#cb407-7" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="sec-regresion.html#cb404-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb404-2"><a href="sec-regresion.html#cb404-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb404-3"><a href="sec-regresion.html#cb404-3" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">4</span>),</span>
+<span id="cb404-4"><a href="sec-regresion.html#cb404-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">4</span>),</span>
+<span id="cb404-5"><a href="sec-regresion.html#cb404-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">4</span>),</span>
+<span id="cb404-6"><a href="sec-regresion.html#cb404-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">4</span>)</span>
+<span id="cb404-7"><a href="sec-regresion.html#cb404-7" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sesgo-regresion-global">Cuadro 9.17: </span>Comparación global entre ingreso original e imputado por regresión</caption>
 <thead>
@@ -715,14 +715,14 @@ div.csl-indent {
 </tbody>
 </table>
 <p>La Tabla <a href="sec-regresion.html#tab:tab-sesgo-regresion-zona">9.18</a> y la Tabla <a href="sec-regresion.html#tab:tab-sesgo-regresion-sexo">9.19</a> presentan los resultados desagregados. Los sesgos relativos por zona son de 1.5% (rural) y 1.0% (urbana):</p>
-<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="sec-regresion.html#cb408-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb408-2"><a href="sec-regresion.html#cb408-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Zona =</span> Zone) <span class="sc">%&gt;%</span></span>
-<span id="cb408-3"><a href="sec-regresion.html#cb408-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb408-4"><a href="sec-regresion.html#cb408-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb408-5"><a href="sec-regresion.html#cb408-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb408-6"><a href="sec-regresion.html#cb408-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
-<span id="cb408-7"><a href="sec-regresion.html#cb408-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
-<span id="cb408-8"><a href="sec-regresion.html#cb408-8" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="sec-regresion.html#cb405-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb405-2"><a href="sec-regresion.html#cb405-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Zona =</span> Zone) <span class="sc">%&gt;%</span></span>
+<span id="cb405-3"><a href="sec-regresion.html#cb405-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb405-4"><a href="sec-regresion.html#cb405-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb405-5"><a href="sec-regresion.html#cb405-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb405-6"><a href="sec-regresion.html#cb405-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
+<span id="cb405-7"><a href="sec-regresion.html#cb405-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
+<span id="cb405-8"><a href="sec-regresion.html#cb405-8" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sesgo-regresion-zona">Cuadro 9.18: </span>Comparación entre ingreso original e imputado por regresión, por zona</caption>
 <thead>
@@ -751,14 +751,14 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="sec-regresion.html#cb409-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb409-2"><a href="sec-regresion.html#cb409-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Sexo =</span> Sex) <span class="sc">%&gt;%</span></span>
-<span id="cb409-3"><a href="sec-regresion.html#cb409-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb409-4"><a href="sec-regresion.html#cb409-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb409-5"><a href="sec-regresion.html#cb409-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb409-6"><a href="sec-regresion.html#cb409-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
-<span id="cb409-7"><a href="sec-regresion.html#cb409-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
-<span id="cb409-8"><a href="sec-regresion.html#cb409-8" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="sec-regresion.html#cb406-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb406-2"><a href="sec-regresion.html#cb406-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Sexo =</span> Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb406-3"><a href="sec-regresion.html#cb406-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb406-4"><a href="sec-regresion.html#cb406-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb406-5"><a href="sec-regresion.html#cb406-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb406-6"><a href="sec-regresion.html#cb406-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
+<span id="cb406-7"><a href="sec-regresion.html#cb406-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
+<span id="cb406-8"><a href="sec-regresion.html#cb406-8" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sesgo-regresion-sexo">Cuadro 9.19: </span>Comparación entre ingreso original e imputado por regresión, por sexo</caption>
 <thead>
@@ -788,26 +788,26 @@ div.csl-indent {
 </tbody>
 </table>
 <p>Las Figuras <a href="sec-regresion.html#fig:fig-regresion-densidad">9.16</a> y <a href="sec-regresion.html#fig:fig-regresion-boxplot">9.17</a> muestran que la distribución imputada por regresión se aproxima bien a la original:</p>
-<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="sec-regresion.html#cb410-1" tabindex="-1"></a>dat_plot7 <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(</span>
-<span id="cb410-2"><a href="sec-regresion.html#cb410-2" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Zone, Sex, Income, Income_imp),</span>
-<span id="cb410-3"><a href="sec-regresion.html#cb410-3" tabindex="-1"></a>  <span class="at">key =</span> <span class="st">&quot;Caso&quot;</span>, <span class="at">value =</span> <span class="st">&quot;Income2&quot;</span>, <span class="sc">-</span>Zone, <span class="sc">-</span>Sex</span>
-<span id="cb410-4"><a href="sec-regresion.html#cb410-4" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="sec-regresion.html#cb411-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot7, <span class="fu">aes</span>(<span class="at">x =</span> Income2, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb411-2"><a href="sec-regresion.html#cb411-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb411-3"><a href="sec-regresion.html#cb411-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb411-4"><a href="sec-regresion.html#cb411-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income),     <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb411-5"><a href="sec-regresion.html#cb411-5" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income_imp), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="sec-regresion.html#cb407-1" tabindex="-1"></a>dat_plot7 <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(</span>
+<span id="cb407-2"><a href="sec-regresion.html#cb407-2" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Zone, Sex, Income, Income_imp),</span>
+<span id="cb407-3"><a href="sec-regresion.html#cb407-3" tabindex="-1"></a>  <span class="at">key =</span> <span class="st">&quot;Caso&quot;</span>, <span class="at">value =</span> <span class="st">&quot;Income2&quot;</span>, <span class="sc">-</span>Zone, <span class="sc">-</span>Sex</span>
+<span id="cb407-4"><a href="sec-regresion.html#cb407-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="sec-regresion.html#cb408-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot7, <span class="fu">aes</span>(<span class="at">x =</span> Income2, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb408-2"><a href="sec-regresion.html#cb408-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb408-3"><a href="sec-regresion.html#cb408-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb408-4"><a href="sec-regresion.html#cb408-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income),     <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb408-5"><a href="sec-regresion.html#cb408-5" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income_imp), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-regresion-densidad"></span>
 <img src="09-Imputacion_files/figure-html/fig-regresion-densidad-1.svg" alt="Densidad del ingreso original versus imputado por regresión" width="70%" />
 <p class="caption">
 Figura 9.16: Densidad del ingreso original versus imputado por regresión
 </p>
 </div>
-<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="sec-regresion.html#cb412-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot7, <span class="fu">aes</span>(<span class="at">x =</span> Caso, <span class="at">y =</span> Income2)) <span class="sc">+</span></span>
-<span id="cb412-2"><a href="sec-regresion.html#cb412-2" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb412-3"><a href="sec-regresion.html#cb412-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb412-4"><a href="sec-regresion.html#cb412-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Zone <span class="sc">~</span> Sex) <span class="sc">+</span></span>
-<span id="cb412-5"><a href="sec-regresion.html#cb412-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="sec-regresion.html#cb409-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot7, <span class="fu">aes</span>(<span class="at">x =</span> Caso, <span class="at">y =</span> Income2)) <span class="sc">+</span></span>
+<span id="cb409-2"><a href="sec-regresion.html#cb409-2" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb409-3"><a href="sec-regresion.html#cb409-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb409-4"><a href="sec-regresion.html#cb409-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Zone <span class="sc">~</span> Sex) <span class="sc">+</span></span>
+<span id="cb409-5"><a href="sec-regresion.html#cb409-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-regresion-boxplot"></span>
 <img src="09-Imputacion_files/figure-html/fig-regresion-boxplot-1.svg" alt="Boxplots del ingreso original e imputado por regresión, por zona y sexo" width="70%" />
 <p class="caption">

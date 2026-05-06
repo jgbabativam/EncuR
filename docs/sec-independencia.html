@@ -414,13 +414,13 @@ div.csl-indent {
 <div id="sec-independencia" class="section level2 hasAnchor" number="7.3">
 <h2><span class="header-section-number">7.3</span> Tablas de contingencia y pruebas de independencia<a href="sec-independencia.html#sec-independencia" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Con variables dicotómicas es posible construir tablas de frecuencias ponderadas que incorporan el diseño muestral. La función <code>svyby()</code> permite estimar totales o proporciones por combinaciones de categorías. A continuación, se estiman los totales de personas por condición de pobreza y sexo, presentada en la Tabla <a href="sec-independencia.html#tab:tab-totales-pobreza-sexo">7.1</a>:</p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="sec-independencia.html#cb246-1" tabindex="-1"></a>tab_pobreza_sexo <span class="ot">&lt;-</span> <span class="fu">svyby</span>(</span>
-<span id="cb246-2"><a href="sec-independencia.html#cb246-2" tabindex="-1"></a>  <span class="at">formula =</span> <span class="sc">~</span>pobreza,</span>
-<span id="cb246-3"><a href="sec-independencia.html#cb246-3" tabindex="-1"></a>  <span class="at">by      =</span> <span class="sc">~</span>Sex,</span>
-<span id="cb246-4"><a href="sec-independencia.html#cb246-4" tabindex="-1"></a>  <span class="at">FUN     =</span> svytotal,</span>
-<span id="cb246-5"><a href="sec-independencia.html#cb246-5" tabindex="-1"></a>  <span class="at">design  =</span> <span class="fu">as.svrepdesign</span>(diseno),</span>
-<span id="cb246-6"><a href="sec-independencia.html#cb246-6" tabindex="-1"></a>  <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>, <span class="at">keep.var =</span> <span class="cn">TRUE</span></span>
-<span id="cb246-7"><a href="sec-independencia.html#cb246-7" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="sec-independencia.html#cb243-1" tabindex="-1"></a>tab_pobreza_sexo <span class="ot">&lt;-</span> <span class="fu">svyby</span>(</span>
+<span id="cb243-2"><a href="sec-independencia.html#cb243-2" tabindex="-1"></a>  <span class="at">formula =</span> <span class="sc">~</span>pobreza,</span>
+<span id="cb243-3"><a href="sec-independencia.html#cb243-3" tabindex="-1"></a>  <span class="at">by      =</span> <span class="sc">~</span>Sex,</span>
+<span id="cb243-4"><a href="sec-independencia.html#cb243-4" tabindex="-1"></a>  <span class="at">FUN     =</span> svytotal,</span>
+<span id="cb243-5"><a href="sec-independencia.html#cb243-5" tabindex="-1"></a>  <span class="at">design  =</span> <span class="fu">as.svrepdesign</span>(diseno),</span>
+<span id="cb243-6"><a href="sec-independencia.html#cb243-6" tabindex="-1"></a>  <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>, <span class="at">keep.var =</span> <span class="cn">TRUE</span></span>
+<span id="cb243-7"><a href="sec-independencia.html#cb243-7" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-totales-pobreza-sexo">Cuadro 7.1: </span>Totales ponderados de pobreza por sexo</caption>
 <thead>
@@ -450,7 +450,7 @@ div.csl-indent {
 </tbody>
 </table>
 <p>La función <code>svytable()</code> permite construir la tabla cruzada que servirá de base para las pruebas de independencia, como se muestra en la Tabla <a href="sec-independencia.html#tab:tab-tabla-cruzada-pobreza">7.2</a>:</p>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="sec-independencia.html#cb247-1" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">svytable</span>(<span class="at">formula =</span> <span class="sc">~</span>pobreza <span class="sc">+</span> Sex, <span class="at">design =</span> diseno)</span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="sec-independencia.html#cb244-1" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">svytable</span>(<span class="at">formula =</span> <span class="sc">~</span>pobreza <span class="sc">+</span> Sex, <span class="at">design =</span> diseno)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-tabla-cruzada-pobreza">Cuadro 7.2: </span>Tabla cruzada ponderada: pobreza por sexo</caption>
 <thead>
@@ -474,10 +474,10 @@ div.csl-indent {
 </tbody>
 </table>
 <p>Las proporciones por columna se obtienen con <code>prop.table()</code>, como se presenta en la Tabla <a href="sec-independencia.html#tab:tab-proporciones-pobreza">7.3</a>:</p>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="sec-independencia.html#cb248-1" tabindex="-1"></a><span class="fu">prop.table</span>(tab, <span class="at">margin =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb248-2"><a href="sec-independencia.html#cb248-2" tabindex="-1"></a>  <span class="fu">as.data.frame.matrix</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb248-3"><a href="sec-independencia.html#cb248-3" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">&quot;Estado&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb248-4"><a href="sec-independencia.html#cb248-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Estado =</span> <span class="fu">paste0</span>(<span class="st">&quot;Pobreza&quot;</span>, Estado))</span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="sec-independencia.html#cb245-1" tabindex="-1"></a><span class="fu">prop.table</span>(tab, <span class="at">margin =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb245-2"><a href="sec-independencia.html#cb245-2" tabindex="-1"></a>  <span class="fu">as.data.frame.matrix</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb245-3"><a href="sec-independencia.html#cb245-3" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">&quot;Estado&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb245-4"><a href="sec-independencia.html#cb245-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Estado =</span> <span class="fu">paste0</span>(<span class="st">&quot;Pobreza&quot;</span>, Estado))</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-proporciones-pobreza">Cuadro 7.3: </span>Proporciones por sexo según condición de pobreza</caption>
 <thead>
@@ -501,13 +501,13 @@ div.csl-indent {
 </tbody>
 </table>
 <p>Utilizando <code>svymean()</code> es posible obtener las proporciones con sus errores estándar, como se muestra en la Tabla <a href="sec-independencia.html#tab:tab-proporciones-svyby">7.4</a>:</p>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="sec-independencia.html#cb249-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">svyby</span>(</span>
-<span id="cb249-2"><a href="sec-independencia.html#cb249-2" tabindex="-1"></a>         <span class="at">formula =</span> <span class="sc">~</span>pobreza,</span>
-<span id="cb249-3"><a href="sec-independencia.html#cb249-3" tabindex="-1"></a>         <span class="at">by      =</span> <span class="sc">~</span>Sex,</span>
-<span id="cb249-4"><a href="sec-independencia.html#cb249-4" tabindex="-1"></a>         <span class="at">FUN     =</span> svymean,</span>
-<span id="cb249-5"><a href="sec-independencia.html#cb249-5" tabindex="-1"></a>         <span class="at">design  =</span> <span class="fu">as.svrepdesign</span>(diseno),</span>
-<span id="cb249-6"><a href="sec-independencia.html#cb249-6" tabindex="-1"></a>         <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>, <span class="at">keep.var =</span> <span class="cn">TRUE</span></span>
-<span id="cb249-7"><a href="sec-independencia.html#cb249-7" tabindex="-1"></a>       )</span></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="sec-independencia.html#cb246-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">svyby</span>(</span>
+<span id="cb246-2"><a href="sec-independencia.html#cb246-2" tabindex="-1"></a>         <span class="at">formula =</span> <span class="sc">~</span>pobreza,</span>
+<span id="cb246-3"><a href="sec-independencia.html#cb246-3" tabindex="-1"></a>         <span class="at">by      =</span> <span class="sc">~</span>Sex,</span>
+<span id="cb246-4"><a href="sec-independencia.html#cb246-4" tabindex="-1"></a>         <span class="at">FUN     =</span> svymean,</span>
+<span id="cb246-5"><a href="sec-independencia.html#cb246-5" tabindex="-1"></a>         <span class="at">design  =</span> <span class="fu">as.svrepdesign</span>(diseno),</span>
+<span id="cb246-6"><a href="sec-independencia.html#cb246-6" tabindex="-1"></a>         <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>, <span class="at">keep.var =</span> <span class="cn">TRUE</span></span>
+<span id="cb246-7"><a href="sec-independencia.html#cb246-7" tabindex="-1"></a>       )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-proporciones-svyby">Cuadro 7.4: </span>Proporciones de pobreza por sexo estimadas con svyby</caption>
 <thead>
@@ -552,7 +552,7 @@ GDEFF = \frac{\sum_r \sum_c (1-p_{rc}) d^2(p_{rc}) - \sum_r (1-p_{r+}) d^2(p_{r+
 F_{R\text{-}S, Pearson} = \chi_{R\text{-}S}^2 \big/ [(R-1)(C-1)] \sim F_{(R-1)(C-1),\, (R-1)(C-1) \cdot df}
 \]</span></p>
 <p>En <code>R</code>, estos estadísticos se calculan con la función <code>summary()</code> que permite imprimir el estadístico chi-cuadrado de Pearson para la prueba de independencia.</p>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="sec-independencia.html#cb250-1" tabindex="-1"></a><span class="fu">summary</span>(tab, <span class="at">statistic =</span> <span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="sec-independencia.html#cb247-1" tabindex="-1"></a><span class="fu">summary</span>(tab, <span class="at">statistic =</span> <span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
 <pre><code>##            Sex
 ## pobreza     Female  Male
 ##   =Pobre     48366 43032
@@ -563,7 +563,7 @@ F_{R\text{-}S, Pearson} = \chi_{R\text{-}S}^2 \big/ [(R-1)(C-1)] \sim F_{(R-1)(C
 ## data:  NextMethod()
 ## X-squared = 0.077194, df = 1, p-value = 0.8122</code></pre>
 <p>Con base en la estadística de Pearson, se concluye que el estado de pobreza y el sexo no están relacionados con una confianza del 95%. También se puede imprimir la prueba F.</p>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="sec-independencia.html#cb252-1" tabindex="-1"></a><span class="fu">summary</span>(tab, <span class="at">statistic =</span> <span class="st">&quot;F&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="sec-independencia.html#cb249-1" tabindex="-1"></a><span class="fu">summary</span>(tab, <span class="at">statistic =</span> <span class="st">&quot;F&quot;</span>) </span></code></pre></div>
 <pre><code>##            Sex
 ## pobreza     Female  Male
 ##   =Pobre     48366 43032
@@ -586,7 +586,7 @@ Q_{wald} = \hat{\boldsymbol{Y}}^t \left(\boldsymbol{H} \hat{\boldsymbol{V}}(\hat
 F_{wald} = Q_{wald} \times \frac{df - (R-1)(C-1) + 1}{(R-1)(C-1) \cdot df} \sim F_{(R-1)(C-1),\, df-(R-1)(C-1)+1},
 \]</span></p>
 <p>como se muestra a continuación, tanto el estadístico de Wald como su versión ajustada confirman que, con una confianza del 95%, no hay evidencia de relación entre el estado de pobreza y el sexo.</p>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="sec-independencia.html#cb254-1" tabindex="-1"></a><span class="fu">summary</span>(tab, <span class="at">statistic =</span> <span class="st">&quot;Wald&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="sec-independencia.html#cb251-1" tabindex="-1"></a><span class="fu">summary</span>(tab, <span class="at">statistic =</span> <span class="st">&quot;Wald&quot;</span>)</span></code></pre></div>
 <pre><code>##            Sex
 ## pobreza     Female  Male
 ##   =Pobre     48366 43032
@@ -596,7 +596,7 @@ F_{wald} = Q_{wald} \times \frac{df - (R-1)(C-1) + 1}{(R-1)(C-1) \cdot df} \sim 
 ## 
 ## data:  NextMethod()
 ## F = 0.056213, ndf = 1, ddf = 119, p-value = 0.813</code></pre>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="sec-independencia.html#cb256-1" tabindex="-1"></a><span class="fu">summary</span>(tab, <span class="at">statistic =</span> <span class="st">&quot;adjWald&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="sec-independencia.html#cb253-1" tabindex="-1"></a><span class="fu">summary</span>(tab, <span class="at">statistic =</span> <span class="st">&quot;adjWald&quot;</span>)</span></code></pre></div>
 <pre><code>##            Sex
 ## pobreza     Female  Male
 ##   =Pobre     48366 43032

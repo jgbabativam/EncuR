@@ -415,25 +415,25 @@ div.csl-indent {
 <h2><span class="header-section-number">9.6</span> Imputación por la media condicional<a href="sec-media-condicional.html#sec-media-condicional" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>La imputación por la media condicional reemplaza cada valor faltante por la media de la variable calculada dentro de un grupo definido por una o más covariables. Este enfoque es más preciso que el incondicional cuando existe una relación entre la variable imputada y las covariables de agrupación.</p>
 <p>A continuación, se imputa el ingreso condicionando en el estrato socioeconómico. Cuando algún estrato no tiene observaciones válidas para calcular la media, se usa como respaldo la media global:</p>
-<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="sec-media-condicional.html#cb384-1" tabindex="-1"></a>encuesta <span class="sc">%&lt;&gt;%</span></span>
-<span id="cb384-2"><a href="sec-media-condicional.html#cb384-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
-<span id="cb384-3"><a href="sec-media-condicional.html#cb384-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Income_imp =</span> <span class="fu">ifelse</span>(</span>
-<span id="cb384-4"><a href="sec-media-condicional.html#cb384-4" tabindex="-1"></a>    <span class="fu">is.na</span>(Income_missin),</span>
-<span id="cb384-5"><a href="sec-media-condicional.html#cb384-5" tabindex="-1"></a>    <span class="fu">mean</span>(Income_missin, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb384-6"><a href="sec-media-condicional.html#cb384-6" tabindex="-1"></a>    Income_missin</span>
-<span id="cb384-7"><a href="sec-media-condicional.html#cb384-7" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
-<span id="cb384-8"><a href="sec-media-condicional.html#cb384-8" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span>
-<span id="cb384-9"><a href="sec-media-condicional.html#cb384-9" tabindex="-1"></a></span>
-<span id="cb384-10"><a href="sec-media-condicional.html#cb384-10" tabindex="-1"></a>encuesta <span class="sc">%&lt;&gt;%</span></span>
-<span id="cb384-11"><a href="sec-media-condicional.html#cb384-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Income_imp =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(Income_imp), promedio, Income_imp))</span></code></pre></div>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="sec-media-condicional.html#cb381-1" tabindex="-1"></a>encuesta <span class="sc">%&lt;&gt;%</span></span>
+<span id="cb381-2"><a href="sec-media-condicional.html#cb381-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
+<span id="cb381-3"><a href="sec-media-condicional.html#cb381-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Income_imp =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb381-4"><a href="sec-media-condicional.html#cb381-4" tabindex="-1"></a>    <span class="fu">is.na</span>(Income_missin),</span>
+<span id="cb381-5"><a href="sec-media-condicional.html#cb381-5" tabindex="-1"></a>    <span class="fu">mean</span>(Income_missin, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb381-6"><a href="sec-media-condicional.html#cb381-6" tabindex="-1"></a>    Income_missin</span>
+<span id="cb381-7"><a href="sec-media-condicional.html#cb381-7" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb381-8"><a href="sec-media-condicional.html#cb381-8" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span>
+<span id="cb381-9"><a href="sec-media-condicional.html#cb381-9" tabindex="-1"></a></span>
+<span id="cb381-10"><a href="sec-media-condicional.html#cb381-10" tabindex="-1"></a>encuesta <span class="sc">%&lt;&gt;%</span></span>
+<span id="cb381-11"><a href="sec-media-condicional.html#cb381-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Income_imp =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(Income_imp), promedio, Income_imp))</span></code></pre></div>
 <p>La Tabla <a href="sec-media-condicional.html#tab:tab-sesgo-media-cond-global">9.5</a> compara la media y la desviación estándar globales. El sesgo relativo de la media es inferior al 1.5% y el de la desviación estándar es inferior al 5%:</p>
-<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="sec-media-condicional.html#cb385-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb385-2"><a href="sec-media-condicional.html#cb385-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb385-3"><a href="sec-media-condicional.html#cb385-3" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb385-4"><a href="sec-media-condicional.html#cb385-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb385-5"><a href="sec-media-condicional.html#cb385-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
-<span id="cb385-6"><a href="sec-media-condicional.html#cb385-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
-<span id="cb385-7"><a href="sec-media-condicional.html#cb385-7" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="sec-media-condicional.html#cb382-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb382-2"><a href="sec-media-condicional.html#cb382-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb382-3"><a href="sec-media-condicional.html#cb382-3" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb382-4"><a href="sec-media-condicional.html#cb382-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb382-5"><a href="sec-media-condicional.html#cb382-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
+<span id="cb382-6"><a href="sec-media-condicional.html#cb382-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
+<span id="cb382-7"><a href="sec-media-condicional.html#cb382-7" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sesgo-media-cond-global">Cuadro 9.5: </span>Comparación global entre ingreso original e imputado por la media condicional</caption>
 <thead>
@@ -454,14 +454,14 @@ div.csl-indent {
 </tbody>
 </table>
 <p>La Tabla <a href="sec-media-condicional.html#tab:tab-sesgo-media-cond-zona">9.6</a> presenta los resultados desagregados por zona. El sesgo relativo de la media es de 1.87% para la zona rural y de 0.8% para la urbana:</p>
-<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="sec-media-condicional.html#cb386-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb386-2"><a href="sec-media-condicional.html#cb386-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Zona =</span> Zone) <span class="sc">%&gt;%</span></span>
-<span id="cb386-3"><a href="sec-media-condicional.html#cb386-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb386-4"><a href="sec-media-condicional.html#cb386-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb386-5"><a href="sec-media-condicional.html#cb386-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb386-6"><a href="sec-media-condicional.html#cb386-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
-<span id="cb386-7"><a href="sec-media-condicional.html#cb386-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
-<span id="cb386-8"><a href="sec-media-condicional.html#cb386-8" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="sec-media-condicional.html#cb383-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb383-2"><a href="sec-media-condicional.html#cb383-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Zona =</span> Zone) <span class="sc">%&gt;%</span></span>
+<span id="cb383-3"><a href="sec-media-condicional.html#cb383-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb383-4"><a href="sec-media-condicional.html#cb383-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb383-5"><a href="sec-media-condicional.html#cb383-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb383-6"><a href="sec-media-condicional.html#cb383-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
+<span id="cb383-7"><a href="sec-media-condicional.html#cb383-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
+<span id="cb383-8"><a href="sec-media-condicional.html#cb383-8" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sesgo-media-cond-zona">Cuadro 9.6: </span>Comparación entre ingreso original e imputado por la media condicional, por zona</caption>
 <thead>
@@ -491,14 +491,14 @@ div.csl-indent {
 </tbody>
 </table>
 <p>La Tabla <a href="sec-media-condicional.html#tab:tab-sesgo-media-cond-sexo">9.7</a> presenta el análisis por sexo:</p>
-<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="sec-media-condicional.html#cb387-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb387-2"><a href="sec-media-condicional.html#cb387-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Sexo =</span> Sex) <span class="sc">%&gt;%</span></span>
-<span id="cb387-3"><a href="sec-media-condicional.html#cb387-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb387-4"><a href="sec-media-condicional.html#cb387-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb387-5"><a href="sec-media-condicional.html#cb387-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
-<span id="cb387-6"><a href="sec-media-condicional.html#cb387-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
-<span id="cb387-7"><a href="sec-media-condicional.html#cb387-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
-<span id="cb387-8"><a href="sec-media-condicional.html#cb387-8" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="sec-media-condicional.html#cb384-1" tabindex="-1"></a>encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb384-2"><a href="sec-media-condicional.html#cb384-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Sexo =</span> Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb384-3"><a href="sec-media-condicional.html#cb384-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb384-4"><a href="sec-media-condicional.html#cb384-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media original</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb384-5"><a href="sec-media-condicional.html#cb384-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS original</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income), <span class="dv">1</span>),</span>
+<span id="cb384-6"><a href="sec-media-condicional.html#cb384-6" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media imputada</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Income_imp), <span class="dv">1</span>),</span>
+<span id="cb384-7"><a href="sec-media-condicional.html#cb384-7" tabindex="-1"></a>    <span class="st">`</span><span class="at">DS imputada</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">sd</span>(Income_imp), <span class="dv">1</span>)</span>
+<span id="cb384-8"><a href="sec-media-condicional.html#cb384-8" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-sesgo-media-cond-sexo">Cuadro 9.7: </span>Comparación entre ingreso original e imputado por la media condicional, por sexo</caption>
 <thead>
@@ -528,26 +528,26 @@ div.csl-indent {
 </tbody>
 </table>
 <p>La Figura <a href="sec-media-condicional.html#fig:fig-media-cond-densidad">9.12</a> muestra que la distribución imputada por la media condicional se aproxima mejor a la original que en el método incondicional, presentada en la Tabla <a href="sec-media-condicional.html#fig:fig-media-cond-boxplot">9.13</a>::</p>
-<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="sec-media-condicional.html#cb388-1" tabindex="-1"></a>dat_plot5 <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(</span>
-<span id="cb388-2"><a href="sec-media-condicional.html#cb388-2" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Zone, Sex, Income, Income_imp),</span>
-<span id="cb388-3"><a href="sec-media-condicional.html#cb388-3" tabindex="-1"></a>  <span class="at">key =</span> <span class="st">&quot;Caso&quot;</span>, <span class="at">value =</span> <span class="st">&quot;Income2&quot;</span>, <span class="sc">-</span>Zone, <span class="sc">-</span>Sex</span>
-<span id="cb388-4"><a href="sec-media-condicional.html#cb388-4" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="sec-media-condicional.html#cb389-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot5, <span class="fu">aes</span>(<span class="at">x =</span> Income2, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
-<span id="cb389-2"><a href="sec-media-condicional.html#cb389-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb389-3"><a href="sec-media-condicional.html#cb389-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb389-4"><a href="sec-media-condicional.html#cb389-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income),     <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb389-5"><a href="sec-media-condicional.html#cb389-5" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income_imp), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="sec-media-condicional.html#cb385-1" tabindex="-1"></a>dat_plot5 <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(</span>
+<span id="cb385-2"><a href="sec-media-condicional.html#cb385-2" tabindex="-1"></a>  encuesta <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(Zone, Sex, Income, Income_imp),</span>
+<span id="cb385-3"><a href="sec-media-condicional.html#cb385-3" tabindex="-1"></a>  <span class="at">key =</span> <span class="st">&quot;Caso&quot;</span>, <span class="at">value =</span> <span class="st">&quot;Income2&quot;</span>, <span class="sc">-</span>Zone, <span class="sc">-</span>Sex</span>
+<span id="cb385-4"><a href="sec-media-condicional.html#cb385-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="sec-media-condicional.html#cb386-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot5, <span class="fu">aes</span>(<span class="at">x =</span> Income2, <span class="at">fill =</span> Caso)) <span class="sc">+</span></span>
+<span id="cb386-2"><a href="sec-media-condicional.html#cb386-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb386-3"><a href="sec-media-condicional.html#cb386-3" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb386-4"><a href="sec-media-condicional.html#cb386-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income),     <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb386-5"><a href="sec-media-condicional.html#cb386-5" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income_imp), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-media-cond-densidad"></span>
 <img src="09-Imputacion_files/figure-html/fig-media-cond-densidad-1.svg" alt="Densidad del ingreso original versus imputado por la media condicional por estrato" width="70%" />
 <p class="caption">
 Figura 9.12: Densidad del ingreso original versus imputado por la media condicional por estrato
 </p>
 </div>
-<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="sec-media-condicional.html#cb390-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot5, <span class="fu">aes</span>(<span class="at">x =</span> Caso, <span class="at">y =</span> Income2)) <span class="sc">+</span></span>
-<span id="cb390-2"><a href="sec-media-condicional.html#cb390-2" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb390-3"><a href="sec-media-condicional.html#cb390-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb390-4"><a href="sec-media-condicional.html#cb390-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Zone <span class="sc">~</span> Sex) <span class="sc">+</span></span>
-<span id="cb390-5"><a href="sec-media-condicional.html#cb390-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="sec-media-condicional.html#cb387-1" tabindex="-1"></a><span class="fu">ggplot</span>(dat_plot5, <span class="fu">aes</span>(<span class="at">x =</span> Caso, <span class="at">y =</span> Income2)) <span class="sc">+</span></span>
+<span id="cb387-2"><a href="sec-media-condicional.html#cb387-2" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(encuesta<span class="sc">$</span>Income), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb387-3"><a href="sec-media-condicional.html#cb387-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb387-4"><a href="sec-media-condicional.html#cb387-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Zone <span class="sc">~</span> Sex) <span class="sc">+</span></span>
+<span id="cb387-5"><a href="sec-media-condicional.html#cb387-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-media-cond-boxplot"></span>
 <img src="09-Imputacion_files/figure-html/fig-media-cond-boxplot-1.svg" alt="Boxplots del ingreso original e imputado por la media condicional, por zona y sexo" width="70%" />
 <p class="caption">

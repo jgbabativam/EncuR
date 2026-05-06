@@ -414,19 +414,19 @@ div.csl-indent {
 <div id="sec-configuracion" class="section level2 hasAnchor" number="9.2">
 <h2><span class="header-section-number">9.2</span> Configuración de los datos de ejemplo<a href="sec-configuracion.html#sec-configuracion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Se cargan primero las librerías necesarias:</p>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="sec-configuracion.html#cb361-1" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
-<span id="cb361-2"><a href="sec-configuracion.html#cb361-2" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
-<span id="cb361-3"><a href="sec-configuracion.html#cb361-3" tabindex="-1"></a><span class="fu">library</span>(TeachingSampling)</span>
-<span id="cb361-4"><a href="sec-configuracion.html#cb361-4" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb361-5"><a href="sec-configuracion.html#cb361-5" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb361-6"><a href="sec-configuracion.html#cb361-6" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb361-7"><a href="sec-configuracion.html#cb361-7" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb361-8"><a href="sec-configuracion.html#cb361-8" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
-<span id="cb361-9"><a href="sec-configuracion.html#cb361-9" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code></pre></div>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="sec-configuracion.html#cb358-1" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb358-2"><a href="sec-configuracion.html#cb358-2" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
+<span id="cb358-3"><a href="sec-configuracion.html#cb358-3" tabindex="-1"></a><span class="fu">library</span>(TeachingSampling)</span>
+<span id="cb358-4"><a href="sec-configuracion.html#cb358-4" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb358-5"><a href="sec-configuracion.html#cb358-5" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb358-6"><a href="sec-configuracion.html#cb358-6" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb358-7"><a href="sec-configuracion.html#cb358-7" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb358-8"><a href="sec-configuracion.html#cb358-8" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb358-9"><a href="sec-configuracion.html#cb358-9" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code></pre></div>
 <p>Se lee la base de datos y se restringe a personas mayores de 15 años. Como referencia, se calculan las proporciones de empleo y el ingreso medio antes de introducir valores faltantes, presentada en la Tabla <a href="sec-configuracion.html#tab:tab-prop-empleo-antes">9.1</a> y en la Tabla <a href="sec-configuracion.html#tab:tab-ingreso-medio-antes">9.2</a>.</p>
-<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="sec-configuracion.html#cb362-1" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Data/encuesta.rds&quot;</span>)</span>
-<span id="cb362-2"><a href="sec-configuracion.html#cb362-2" tabindex="-1"></a>encuesta  <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Age <span class="sc">&gt;=</span> <span class="dv">15</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="sec-configuracion.html#cb363-1" tabindex="-1"></a>res</span></code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="sec-configuracion.html#cb359-1" tabindex="-1"></a>encuesta <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Data/encuesta.rds&quot;</span>)</span>
+<span id="cb359-2"><a href="sec-configuracion.html#cb359-2" tabindex="-1"></a>encuesta  <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Age <span class="sc">&gt;=</span> <span class="dv">15</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="sec-configuracion.html#cb360-1" tabindex="-1"></a>res</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-prop-empleo-antes">Cuadro 9.1: </span>Distribución del estado de empleo antes de introducir valores faltantes</caption>
 <thead>
@@ -450,10 +450,10 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="sec-configuracion.html#cb364-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb364-2"><a href="sec-configuracion.html#cb364-2" tabindex="-1"></a>  Estadístico <span class="ot">=</span> <span class="st">&quot;Ingreso medio&quot;</span>,</span>
-<span id="cb364-3"><a href="sec-configuracion.html#cb364-3" tabindex="-1"></a>  <span class="at">Valor       =</span> <span class="fu">round</span>(<span class="fu">mean</span>(encuesta<span class="sc">$</span>Income, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>)</span>
-<span id="cb364-4"><a href="sec-configuracion.html#cb364-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="sec-configuracion.html#cb361-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb361-2"><a href="sec-configuracion.html#cb361-2" tabindex="-1"></a>  Estadístico <span class="ot">=</span> <span class="st">&quot;Ingreso medio&quot;</span>,</span>
+<span id="cb361-3"><a href="sec-configuracion.html#cb361-3" tabindex="-1"></a>  <span class="at">Valor       =</span> <span class="fu">round</span>(<span class="fu">mean</span>(encuesta<span class="sc">$</span>Income, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>)</span>
+<span id="cb361-4"><a href="sec-configuracion.html#cb361-4" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-ingreso-medio-antes">Cuadro 9.2: </span>Ingreso medio de la muestra antes de introducir valores faltantes</caption>
 <thead>

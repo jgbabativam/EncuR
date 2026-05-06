@@ -424,26 +424,26 @@ Pr\left(y_{ij} = 1 \mid x_i : \boldsymbol{\beta}\right) = \frac{1}{1 + \exp\left
 \]</span></p>
 <p>donde <span class="math inline">\(\pi_{ij} = Pr\left(y_{ij} = 1 \mid x_i : \boldsymbol{\beta}\right)\)</span>.</p>
 <p>Para la ejemplificación, se redefine la submuestra de estratos seleccionando aquellos con mayor variabilidad en el gasto, y se construye la variable dicotómica de pobreza:</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="sec-logistica-multinivel.html#cb333-1" tabindex="-1"></a>encuesta_plot <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb333-2"><a href="sec-logistica-multinivel.html#cb333-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Stratum, Expenditure) <span class="sc">%&gt;%</span></span>
-<span id="cb333-3"><a href="sec-logistica-multinivel.html#cb333-3" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb333-4"><a href="sec-logistica-multinivel.html#cb333-4" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
-<span id="cb333-5"><a href="sec-logistica-multinivel.html#cb333-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sd =</span> <span class="fu">sd</span>(Expenditure)) <span class="sc">%&gt;%</span></span>
-<span id="cb333-6"><a href="sec-logistica-multinivel.html#cb333-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(sd)) <span class="sc">%&gt;%</span></span>
-<span id="cb333-7"><a href="sec-logistica-multinivel.html#cb333-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>sd) <span class="sc">%&gt;%</span></span>
-<span id="cb333-8"><a href="sec-logistica-multinivel.html#cb333-8" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>20L) <span class="sc">%&gt;%</span></span>
-<span id="cb333-9"><a href="sec-logistica-multinivel.html#cb333-9" tabindex="-1"></a>  <span class="fu">inner_join</span>(encuesta) <span class="sc">%&gt;%</span></span>
-<span id="cb333-10"><a href="sec-logistica-multinivel.html#cb333-10" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Poverty, Expenditure, Stratum, Sex, Region, Zone)</span>
-<span id="cb333-11"><a href="sec-logistica-multinivel.html#cb333-11" tabindex="-1"></a></span>
-<span id="cb333-12"><a href="sec-logistica-multinivel.html#cb333-12" tabindex="-1"></a>encuesta      <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">pobreza =</span> <span class="fu">ifelse</span>(Poverty <span class="sc">!=</span> <span class="st">&quot;NotPoor&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb333-13"><a href="sec-logistica-multinivel.html#cb333-13" tabindex="-1"></a>encuesta_plot <span class="ot">&lt;-</span> encuesta_plot <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">pobreza =</span> <span class="fu">ifelse</span>(Poverty <span class="sc">!=</span> <span class="st">&quot;NotPoor&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="sec-logistica-multinivel.html#cb330-1" tabindex="-1"></a>encuesta_plot <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb330-2"><a href="sec-logistica-multinivel.html#cb330-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Stratum, Expenditure) <span class="sc">%&gt;%</span></span>
+<span id="cb330-3"><a href="sec-logistica-multinivel.html#cb330-3" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb330-4"><a href="sec-logistica-multinivel.html#cb330-4" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
+<span id="cb330-5"><a href="sec-logistica-multinivel.html#cb330-5" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sd =</span> <span class="fu">sd</span>(Expenditure)) <span class="sc">%&gt;%</span></span>
+<span id="cb330-6"><a href="sec-logistica-multinivel.html#cb330-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(sd)) <span class="sc">%&gt;%</span></span>
+<span id="cb330-7"><a href="sec-logistica-multinivel.html#cb330-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>sd) <span class="sc">%&gt;%</span></span>
+<span id="cb330-8"><a href="sec-logistica-multinivel.html#cb330-8" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>20L) <span class="sc">%&gt;%</span></span>
+<span id="cb330-9"><a href="sec-logistica-multinivel.html#cb330-9" tabindex="-1"></a>  <span class="fu">inner_join</span>(encuesta) <span class="sc">%&gt;%</span></span>
+<span id="cb330-10"><a href="sec-logistica-multinivel.html#cb330-10" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Poverty, Expenditure, Stratum, Sex, Region, Zone)</span>
+<span id="cb330-11"><a href="sec-logistica-multinivel.html#cb330-11" tabindex="-1"></a></span>
+<span id="cb330-12"><a href="sec-logistica-multinivel.html#cb330-12" tabindex="-1"></a>encuesta      <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">pobreza =</span> <span class="fu">ifelse</span>(Poverty <span class="sc">!=</span> <span class="st">&quot;NotPoor&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb330-13"><a href="sec-logistica-multinivel.html#cb330-13" tabindex="-1"></a>encuesta_plot <span class="ot">&lt;-</span> encuesta_plot <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">pobreza =</span> <span class="fu">ifelse</span>(Poverty <span class="sc">!=</span> <span class="st">&quot;NotPoor&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
 <p>La Figura <a href="sec-logistica-multinivel.html#fig:fig-logit-pobreza-gasto">8.13</a> presenta la relación entre gasto y probabilidad de pobreza, con una curva logística ajustada:</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="sec-logistica-multinivel.html#cb334-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encuesta, <span class="fu">aes</span>(<span class="at">y =</span> pobreza, <span class="at">x =</span> Expenditure)) <span class="sc">+</span></span>
-<span id="cb334-2"><a href="sec-logistica-multinivel.html#cb334-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb334-3"><a href="sec-logistica-multinivel.html#cb334-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb334-4"><a href="sec-logistica-multinivel.html#cb334-4" tabindex="-1"></a>              <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>))) <span class="sc">+</span></span>
-<span id="cb334-5"><a href="sec-logistica-multinivel.html#cb334-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Pobreza (1 = pobre)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Gasto&quot;</span>) <span class="sc">+</span></span>
-<span id="cb334-6"><a href="sec-logistica-multinivel.html#cb334-6" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="sec-logistica-multinivel.html#cb331-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encuesta, <span class="fu">aes</span>(<span class="at">y =</span> pobreza, <span class="at">x =</span> Expenditure)) <span class="sc">+</span></span>
+<span id="cb331-2"><a href="sec-logistica-multinivel.html#cb331-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb331-3"><a href="sec-logistica-multinivel.html#cb331-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb331-4"><a href="sec-logistica-multinivel.html#cb331-4" tabindex="-1"></a>              <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>))) <span class="sc">+</span></span>
+<span id="cb331-5"><a href="sec-logistica-multinivel.html#cb331-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Pobreza (1 = pobre)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Gasto&quot;</span>) <span class="sc">+</span></span>
+<span id="cb331-6"><a href="sec-logistica-multinivel.html#cb331-6" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-logit-pobreza-gasto"></span>
 <img src="08-Multinivel_files/figure-html/fig-logit-pobreza-gasto-1.svg" alt="Relación entre gasto y condición de pobreza con curva logística ajustada" width="70%" />
 <p class="caption">
@@ -451,28 +451,28 @@ Figura 8.13: Relación entre gasto y condición de pobreza con curva logística 
 </p>
 </div>
 <p>A continuación, se ajustan modelos logísticos separados por estrato para ilustrar la heterogeneidad en la relación entre gasto y pobreza:</p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="sec-logistica-multinivel.html#cb335-1" tabindex="-1"></a>auxLogit <span class="ot">&lt;-</span> <span class="cf">function</span>(x, b0, b1) <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>(b0 <span class="sc">+</span> b1 <span class="sc">*</span> x)))</span>
-<span id="cb335-2"><a href="sec-logistica-multinivel.html#cb335-2" tabindex="-1"></a></span>
-<span id="cb335-3"><a href="sec-logistica-multinivel.html#cb335-3" tabindex="-1"></a>B0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">glm</span>(pobreza <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> encuesta_plot,</span>
-<span id="cb335-4"><a href="sec-logistica-multinivel.html#cb335-4" tabindex="-1"></a>               <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>)))</span>
-<span id="cb335-5"><a href="sec-logistica-multinivel.html#cb335-5" tabindex="-1"></a></span>
-<span id="cb335-6"><a href="sec-logistica-multinivel.html#cb335-6" tabindex="-1"></a>coef_Mod <span class="ot">&lt;-</span> encuesta_plot <span class="sc">%&gt;%</span></span>
-<span id="cb335-7"><a href="sec-logistica-multinivel.html#cb335-7" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
-<span id="cb335-8"><a href="sec-logistica-multinivel.html#cb335-8" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">B1 =</span> <span class="fu">coef</span>(<span class="fu">glm</span>(pobreza <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> Expenditure,</span>
-<span id="cb335-9"><a href="sec-logistica-multinivel.html#cb335-9" tabindex="-1"></a>                          <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>)))) <span class="sc">%&gt;%</span></span>
-<span id="cb335-10"><a href="sec-logistica-multinivel.html#cb335-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">B0 =</span> B0)</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="sec-logistica-multinivel.html#cb332-1" tabindex="-1"></a>auxLogit <span class="ot">&lt;-</span> <span class="cf">function</span>(x, b0, b1) <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>(b0 <span class="sc">+</span> b1 <span class="sc">*</span> x)))</span>
+<span id="cb332-2"><a href="sec-logistica-multinivel.html#cb332-2" tabindex="-1"></a></span>
+<span id="cb332-3"><a href="sec-logistica-multinivel.html#cb332-3" tabindex="-1"></a>B0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">glm</span>(pobreza <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> encuesta_plot,</span>
+<span id="cb332-4"><a href="sec-logistica-multinivel.html#cb332-4" tabindex="-1"></a>               <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>)))</span>
+<span id="cb332-5"><a href="sec-logistica-multinivel.html#cb332-5" tabindex="-1"></a></span>
+<span id="cb332-6"><a href="sec-logistica-multinivel.html#cb332-6" tabindex="-1"></a>coef_Mod <span class="ot">&lt;-</span> encuesta_plot <span class="sc">%&gt;%</span></span>
+<span id="cb332-7"><a href="sec-logistica-multinivel.html#cb332-7" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
+<span id="cb332-8"><a href="sec-logistica-multinivel.html#cb332-8" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">B1 =</span> <span class="fu">coef</span>(<span class="fu">glm</span>(pobreza <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> Expenditure,</span>
+<span id="cb332-9"><a href="sec-logistica-multinivel.html#cb332-9" tabindex="-1"></a>                          <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>)))) <span class="sc">%&gt;%</span></span>
+<span id="cb332-10"><a href="sec-logistica-multinivel.html#cb332-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">B0 =</span> B0)</span></code></pre></div>
 <p>La Figura <a href="sec-logistica-multinivel.html#fig:fig-logit-por-estrato">8.14</a> muestra la curva logística ajustada para cada estrato. La variación en las pendientes entre estratos sugiere que el efecto del gasto sobre la probabilidad de pobreza difiere de forma importante entre grupos:</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="sec-logistica-multinivel.html#cb336-1" tabindex="-1"></a>pred_logit <span class="ot">&lt;-</span> coef_Mod <span class="sc">%&gt;%</span></span>
-<span id="cb336-2"><a href="sec-logistica-multinivel.html#cb336-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Expenditure =</span> <span class="fu">list</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2000</span>, <span class="at">length =</span> <span class="dv">100</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb336-3"><a href="sec-logistica-multinivel.html#cb336-3" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">unnest_legacy</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb336-4"><a href="sec-logistica-multinivel.html#cb336-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Prob =</span> <span class="fu">auxLogit</span>(Expenditure, B0, B1))</span>
-<span id="cb336-5"><a href="sec-logistica-multinivel.html#cb336-5" tabindex="-1"></a></span>
-<span id="cb336-6"><a href="sec-logistica-multinivel.html#cb336-6" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pred_logit,</span>
-<span id="cb336-7"><a href="sec-logistica-multinivel.html#cb336-7" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Prob, <span class="at">x =</span> Expenditure, <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
-<span id="cb336-8"><a href="sec-logistica-multinivel.html#cb336-8" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb336-9"><a href="sec-logistica-multinivel.html#cb336-9" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Probabilidad de pobreza&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Gasto&quot;</span>) <span class="sc">+</span></span>
-<span id="cb336-10"><a href="sec-logistica-multinivel.html#cb336-10" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb336-11"><a href="sec-logistica-multinivel.html#cb336-11" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="sec-logistica-multinivel.html#cb333-1" tabindex="-1"></a>pred_logit <span class="ot">&lt;-</span> coef_Mod <span class="sc">%&gt;%</span></span>
+<span id="cb333-2"><a href="sec-logistica-multinivel.html#cb333-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Expenditure =</span> <span class="fu">list</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2000</span>, <span class="at">length =</span> <span class="dv">100</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb333-3"><a href="sec-logistica-multinivel.html#cb333-3" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">unnest_legacy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb333-4"><a href="sec-logistica-multinivel.html#cb333-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Prob =</span> <span class="fu">auxLogit</span>(Expenditure, B0, B1))</span>
+<span id="cb333-5"><a href="sec-logistica-multinivel.html#cb333-5" tabindex="-1"></a></span>
+<span id="cb333-6"><a href="sec-logistica-multinivel.html#cb333-6" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pred_logit,</span>
+<span id="cb333-7"><a href="sec-logistica-multinivel.html#cb333-7" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Prob, <span class="at">x =</span> Expenditure, <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
+<span id="cb333-8"><a href="sec-logistica-multinivel.html#cb333-8" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb333-9"><a href="sec-logistica-multinivel.html#cb333-9" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Probabilidad de pobreza&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Gasto&quot;</span>) <span class="sc">+</span></span>
+<span id="cb333-10"><a href="sec-logistica-multinivel.html#cb333-10" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb333-11"><a href="sec-logistica-multinivel.html#cb333-11" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-logit-por-estrato"></span>
 <img src="08-Multinivel_files/figure-html/fig-logit-por-estrato-1.svg" alt="Curvas logísticas ajustadas por estrato para la probabilidad de pobreza en función del gasto" width="70%" />
 <p class="caption">
@@ -499,12 +499,12 @@ Figura 8.14: Curvas logísticas ajustadas por estrato para la probabilidad de po
 \]</span>
 Note que en los modelos logísticos multinivel (GLMM) no se especifica un residual explícito de nivel 1 como en los modelos lineales multinivel. La variabilidad individual está incorporada en la distribución binomial del modelo. Para el cálculo de la correlación intraclase (ICC) se utiliza el enfoque de variable latente, donde la varianza de nivel 1 se aproxima mediante <span class="math inline">\(\pi^2/3\)</span>, correspondiente a la varianza de la distribución logística estándar <span class="citation">(<a href="#ref-snijders2011">Snijders &amp; Bosker, 2011</a>)</span>.</p>
 <p>El ajuste en <code>R</code> se realiza de la siguiente manera:</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="sec-logistica-multinivel.html#cb337-1" tabindex="-1"></a>mod_logist_null <span class="ot">&lt;-</span> <span class="fu">glmer</span>(pobreza <span class="sc">~</span> (<span class="dv">1</span> <span class="sc">|</span> Stratum),</span>
-<span id="cb337-2"><a href="sec-logistica-multinivel.html#cb337-2" tabindex="-1"></a>                         <span class="at">data    =</span> encuesta,</span>
-<span id="cb337-3"><a href="sec-logistica-multinivel.html#cb337-3" tabindex="-1"></a>                         <span class="at">weights =</span> wk2,</span>
-<span id="cb337-4"><a href="sec-logistica-multinivel.html#cb337-4" tabindex="-1"></a>                         <span class="at">family  =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="sec-logistica-multinivel.html#cb334-1" tabindex="-1"></a>mod_logist_null <span class="ot">&lt;-</span> <span class="fu">glmer</span>(pobreza <span class="sc">~</span> (<span class="dv">1</span> <span class="sc">|</span> Stratum),</span>
+<span id="cb334-2"><a href="sec-logistica-multinivel.html#cb334-2" tabindex="-1"></a>                         <span class="at">data    =</span> encuesta,</span>
+<span id="cb334-3"><a href="sec-logistica-multinivel.html#cb334-3" tabindex="-1"></a>                         <span class="at">weights =</span> wk2,</span>
+<span id="cb334-4"><a href="sec-logistica-multinivel.html#cb334-4" tabindex="-1"></a>                         <span class="at">family  =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>))</span></code></pre></div>
 <p>Los coeficientes del modelo nulo logístico por estrato se presentan en la Tabla <a href="sec-logistica-multinivel.html#tab:tab-coef-logit-nulo">8.13</a>:</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="sec-logistica-multinivel.html#cb338-1" tabindex="-1"></a><span class="fu">coef</span>(mod_logist_null)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>12L)</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="sec-logistica-multinivel.html#cb335-1" tabindex="-1"></a><span class="fu">coef</span>(mod_logist_null)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>12L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-coef-logit-nulo">Cuadro 8.13: </span>Interceptos estimados por estrato en el modelo logístico nulo (primeros 12 estratos)</caption>
 <thead>
@@ -565,11 +565,11 @@ Note que en los modelos logísticos multinivel (GLMM) no se especifica un residu
 </tbody>
 </table>
 <p>La correlación intraclase y las primeras predicciones del modelo se presentan en la Tabla <a href="sec-logistica-multinivel.html#tab:tab-icc-pred-logit-nulo">8.14</a>:</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="sec-logistica-multinivel.html#cb339-1" tabindex="-1"></a>icc_val  <span class="ot">&lt;-</span> performance<span class="sc">::</span><span class="fu">icc</span>(mod_logist_null)</span>
-<span id="cb339-2"><a href="sec-logistica-multinivel.html#cb339-2" tabindex="-1"></a>tab_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Predicción <span class="ot">=</span> <span class="fu">predict</span>(mod_logist_null, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>),</span>
-<span id="cb339-3"><a href="sec-logistica-multinivel.html#cb339-3" tabindex="-1"></a>  <span class="at">Pobreza    =</span> encuesta<span class="sc">$</span>pobreza,</span>
-<span id="cb339-4"><a href="sec-logistica-multinivel.html#cb339-4" tabindex="-1"></a>  <span class="at">Estrato    =</span> encuesta<span class="sc">$</span>Stratum</span>
-<span id="cb339-5"><a href="sec-logistica-multinivel.html#cb339-5" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="sec-logistica-multinivel.html#cb336-1" tabindex="-1"></a>icc_val  <span class="ot">&lt;-</span> performance<span class="sc">::</span><span class="fu">icc</span>(mod_logist_null)</span>
+<span id="cb336-2"><a href="sec-logistica-multinivel.html#cb336-2" tabindex="-1"></a>tab_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Predicción <span class="ot">=</span> <span class="fu">predict</span>(mod_logist_null, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>),</span>
+<span id="cb336-3"><a href="sec-logistica-multinivel.html#cb336-3" tabindex="-1"></a>  <span class="at">Pobreza    =</span> encuesta<span class="sc">$</span>pobreza,</span>
+<span id="cb336-4"><a href="sec-logistica-multinivel.html#cb336-4" tabindex="-1"></a>  <span class="at">Estrato    =</span> encuesta<span class="sc">$</span>Stratum</span>
+<span id="cb336-5"><a href="sec-logistica-multinivel.html#cb336-5" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-icc-pred-logit-nulo">Cuadro 8.14: </span>Predicciones del modelo logístico nulo y variable observada (primeras 6 observaciones)</caption>
 <thead>
@@ -620,13 +620,13 @@ Note que en los modelos logísticos multinivel (GLMM) no se especifica un residu
 </tbody>
 </table>
 <p>La Tabla <a href="sec-logistica-multinivel.html#tab:tab-calibracion-logit-nulo">8.15</a> verifica la calibración del modelo comparando las medias ponderadas de las predicciones y de la variable observada:</p>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="sec-logistica-multinivel.html#cb340-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb340-2"><a href="sec-logistica-multinivel.html#cb340-2" tabindex="-1"></a>  Estadístico <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Media ponderada observada&quot;</span>, <span class="st">&quot;Media ponderada predicha&quot;</span>),</span>
-<span id="cb340-3"><a href="sec-logistica-multinivel.html#cb340-3" tabindex="-1"></a>  <span class="at">Valor =</span> <span class="fu">c</span>(</span>
-<span id="cb340-4"><a href="sec-logistica-multinivel.html#cb340-4" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">weighted.mean</span>(encuesta<span class="sc">$</span>pobreza, encuesta<span class="sc">$</span>wk2), <span class="dv">4</span>),</span>
-<span id="cb340-5"><a href="sec-logistica-multinivel.html#cb340-5" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">weighted.mean</span>(<span class="fu">predict</span>(mod_logist_null, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>), encuesta<span class="sc">$</span>wk2), <span class="dv">4</span>)</span>
-<span id="cb340-6"><a href="sec-logistica-multinivel.html#cb340-6" tabindex="-1"></a>  )</span>
-<span id="cb340-7"><a href="sec-logistica-multinivel.html#cb340-7" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="sec-logistica-multinivel.html#cb337-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb337-2"><a href="sec-logistica-multinivel.html#cb337-2" tabindex="-1"></a>  Estadístico <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Media ponderada observada&quot;</span>, <span class="st">&quot;Media ponderada predicha&quot;</span>),</span>
+<span id="cb337-3"><a href="sec-logistica-multinivel.html#cb337-3" tabindex="-1"></a>  <span class="at">Valor =</span> <span class="fu">c</span>(</span>
+<span id="cb337-4"><a href="sec-logistica-multinivel.html#cb337-4" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">weighted.mean</span>(encuesta<span class="sc">$</span>pobreza, encuesta<span class="sc">$</span>wk2), <span class="dv">4</span>),</span>
+<span id="cb337-5"><a href="sec-logistica-multinivel.html#cb337-5" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">weighted.mean</span>(<span class="fu">predict</span>(mod_logist_null, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>), encuesta<span class="sc">$</span>wk2), <span class="dv">4</span>)</span>
+<span id="cb337-6"><a href="sec-logistica-multinivel.html#cb337-6" tabindex="-1"></a>  )</span>
+<span id="cb337-7"><a href="sec-logistica-multinivel.html#cb337-7" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-calibracion-logit-nulo">Cuadro 8.15: </span>Verificación de calibración del modelo logístico nulo: media ponderada predicha versus observada</caption>
 <thead>
@@ -661,19 +661,19 @@ Note que en los modelos logísticos multinivel (GLMM) no se especifica un residu
 \qquad \tau_{0j} \sim N(0,\sigma_\tau^2),
 \]</span></p>
 <p>donde <span class="math inline">\(i\)</span> representa al individuo y <span class="math inline">\(j\)</span> al estrato. En este modelo, únicamente el intercepto varía entre estratos, mientras que la pendiente asociada al gasto es fija.</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="sec-logistica-multinivel.html#cb341-1" tabindex="-1"></a>mod_logit_Int_Aleatorio <span class="ot">&lt;-</span> <span class="fu">glmer</span>(</span>
-<span id="cb341-2"><a href="sec-logistica-multinivel.html#cb341-2" tabindex="-1"></a>  pobreza <span class="sc">~</span> Expenditure <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Stratum),</span>
-<span id="cb341-3"><a href="sec-logistica-multinivel.html#cb341-3" tabindex="-1"></a>  <span class="at">data    =</span> encuesta,</span>
-<span id="cb341-4"><a href="sec-logistica-multinivel.html#cb341-4" tabindex="-1"></a>  <span class="at">family  =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
-<span id="cb341-5"><a href="sec-logistica-multinivel.html#cb341-5" tabindex="-1"></a>  <span class="at">weights =</span> wk2</span>
-<span id="cb341-6"><a href="sec-logistica-multinivel.html#cb341-6" tabindex="-1"></a>)</span>
-<span id="cb341-7"><a href="sec-logistica-multinivel.html#cb341-7" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(mod_logit_Int_Aleatorio)</span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="sec-logistica-multinivel.html#cb338-1" tabindex="-1"></a>mod_logit_Int_Aleatorio <span class="ot">&lt;-</span> <span class="fu">glmer</span>(</span>
+<span id="cb338-2"><a href="sec-logistica-multinivel.html#cb338-2" tabindex="-1"></a>  pobreza <span class="sc">~</span> Expenditure <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Stratum),</span>
+<span id="cb338-3"><a href="sec-logistica-multinivel.html#cb338-3" tabindex="-1"></a>  <span class="at">data    =</span> encuesta,</span>
+<span id="cb338-4"><a href="sec-logistica-multinivel.html#cb338-4" tabindex="-1"></a>  <span class="at">family  =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
+<span id="cb338-5"><a href="sec-logistica-multinivel.html#cb338-5" tabindex="-1"></a>  <span class="at">weights =</span> wk2</span>
+<span id="cb338-6"><a href="sec-logistica-multinivel.html#cb338-6" tabindex="-1"></a>)</span>
+<span id="cb338-7"><a href="sec-logistica-multinivel.html#cb338-7" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(mod_logit_Int_Aleatorio)</span></code></pre></div>
 <pre><code>## # Intraclass Correlation Coefficient
 ## 
 ##     Adjusted ICC: 0.315
 ##   Unadjusted ICC: 0.187</code></pre>
 <p>Los coeficientes estimados por estrato se recogen en la Tabla <a href="sec-logistica-multinivel.html#tab:tab-coef-logit-int-aleatorio">8.16</a>:</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="sec-logistica-multinivel.html#cb343-1" tabindex="-1"></a><span class="fu">coef</span>(mod_logit_Int_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L)</span></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="sec-logistica-multinivel.html#cb340-1" tabindex="-1"></a><span class="fu">coef</span>(mod_logit_Int_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-coef-logit-int-aleatorio">Cuadro 8.16: </span>Coeficientes del modelo logístico con intercepto aleatorio por estrato (primeros 10 estratos)</caption>
 <thead>
@@ -737,22 +737,22 @@ Note que en los modelos logísticos multinivel (GLMM) no se especifica un residu
 </tbody>
 </table>
 <p>La Figura <a href="sec-logistica-multinivel.html#fig:fig-logit-int-aleatorio">8.15</a> presenta las curvas de probabilidad predichas por estrato:</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="sec-logistica-multinivel.html#cb344-1" tabindex="-1"></a>dat_pred <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb344-2"><a href="sec-logistica-multinivel.html#cb344-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
-<span id="cb344-3"><a href="sec-logistica-multinivel.html#cb344-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Expenditure =</span> <span class="fu">list</span>(<span class="fu">seq</span>(<span class="fu">min</span>(Expenditure), <span class="fu">max</span>(Expenditure), <span class="at">len =</span> <span class="dv">100</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb344-4"><a href="sec-logistica-multinivel.html#cb344-4" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">unnest_legacy</span>()</span>
-<span id="cb344-5"><a href="sec-logistica-multinivel.html#cb344-5" tabindex="-1"></a></span>
-<span id="cb344-6"><a href="sec-logistica-multinivel.html#cb344-6" tabindex="-1"></a>dat_pred <span class="ot">&lt;-</span> <span class="fu">mutate</span>(dat_pred,</span>
-<span id="cb344-7"><a href="sec-logistica-multinivel.html#cb344-7" tabindex="-1"></a>                   <span class="at">Proba =</span> <span class="fu">predict</span>(mod_logit_Int_Aleatorio,</span>
-<span id="cb344-8"><a href="sec-logistica-multinivel.html#cb344-8" tabindex="-1"></a>                                   <span class="at">newdata =</span> dat_pred,</span>
-<span id="cb344-9"><a href="sec-logistica-multinivel.html#cb344-9" tabindex="-1"></a>                                   <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="sec-logistica-multinivel.html#cb345-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat_pred,</span>
-<span id="cb345-2"><a href="sec-logistica-multinivel.html#cb345-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Proba, <span class="at">x =</span> Expenditure, <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
-<span id="cb345-3"><a href="sec-logistica-multinivel.html#cb345-3" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb345-4"><a href="sec-logistica-multinivel.html#cb345-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> encuesta, <span class="fu">aes</span>(<span class="at">y =</span> pobreza, <span class="at">x =</span> Expenditure), <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb345-5"><a href="sec-logistica-multinivel.html#cb345-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Probabilidad de pobreza&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Gasto&quot;</span>) <span class="sc">+</span></span>
-<span id="cb345-6"><a href="sec-logistica-multinivel.html#cb345-6" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb345-7"><a href="sec-logistica-multinivel.html#cb345-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="sec-logistica-multinivel.html#cb341-1" tabindex="-1"></a>dat_pred <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb341-2"><a href="sec-logistica-multinivel.html#cb341-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
+<span id="cb341-3"><a href="sec-logistica-multinivel.html#cb341-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Expenditure =</span> <span class="fu">list</span>(<span class="fu">seq</span>(<span class="fu">min</span>(Expenditure), <span class="fu">max</span>(Expenditure), <span class="at">len =</span> <span class="dv">100</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb341-4"><a href="sec-logistica-multinivel.html#cb341-4" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">unnest_legacy</span>()</span>
+<span id="cb341-5"><a href="sec-logistica-multinivel.html#cb341-5" tabindex="-1"></a></span>
+<span id="cb341-6"><a href="sec-logistica-multinivel.html#cb341-6" tabindex="-1"></a>dat_pred <span class="ot">&lt;-</span> <span class="fu">mutate</span>(dat_pred,</span>
+<span id="cb341-7"><a href="sec-logistica-multinivel.html#cb341-7" tabindex="-1"></a>                   <span class="at">Proba =</span> <span class="fu">predict</span>(mod_logit_Int_Aleatorio,</span>
+<span id="cb341-8"><a href="sec-logistica-multinivel.html#cb341-8" tabindex="-1"></a>                                   <span class="at">newdata =</span> dat_pred,</span>
+<span id="cb341-9"><a href="sec-logistica-multinivel.html#cb341-9" tabindex="-1"></a>                                   <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="sec-logistica-multinivel.html#cb342-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat_pred,</span>
+<span id="cb342-2"><a href="sec-logistica-multinivel.html#cb342-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Proba, <span class="at">x =</span> Expenditure, <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
+<span id="cb342-3"><a href="sec-logistica-multinivel.html#cb342-3" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb342-4"><a href="sec-logistica-multinivel.html#cb342-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> encuesta, <span class="fu">aes</span>(<span class="at">y =</span> pobreza, <span class="at">x =</span> Expenditure), <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb342-5"><a href="sec-logistica-multinivel.html#cb342-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Probabilidad de pobreza&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Gasto&quot;</span>) <span class="sc">+</span></span>
+<span id="cb342-6"><a href="sec-logistica-multinivel.html#cb342-6" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb342-7"><a href="sec-logistica-multinivel.html#cb342-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-logit-int-aleatorio"></span>
 <img src="08-Multinivel_files/figure-html/fig-logit-int-aleatorio-1.svg" alt="Curvas de probabilidad predichas por estrato: modelo logístico con intercepto aleatorio" width="70%" />
 <p class="caption">
@@ -760,11 +760,11 @@ Figura 8.15: Curvas de probabilidad predichas por estrato: modelo logístico con
 </p>
 </div>
 <p>Las predicciones del modelo se presentan en la Tabla <a href="sec-logistica-multinivel.html#tab:tab-pred-logit-int-aleatorio">8.17</a>:</p>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="sec-logistica-multinivel.html#cb346-1" tabindex="-1"></a>tab_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(  Predicción <span class="ot">=</span> <span class="fu">predict</span>(mod_logit_Int_Aleatorio, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>),</span>
-<span id="cb346-2"><a href="sec-logistica-multinivel.html#cb346-2" tabindex="-1"></a>  <span class="at">Pobreza    =</span> encuesta<span class="sc">$</span>pobreza,</span>
-<span id="cb346-3"><a href="sec-logistica-multinivel.html#cb346-3" tabindex="-1"></a>  <span class="at">Estrato    =</span> encuesta<span class="sc">$</span>Stratum,</span>
-<span id="cb346-4"><a href="sec-logistica-multinivel.html#cb346-4" tabindex="-1"></a>  <span class="at">wk2        =</span> encuesta<span class="sc">$</span>wk2</span>
-<span id="cb346-5"><a href="sec-logistica-multinivel.html#cb346-5" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="sec-logistica-multinivel.html#cb343-1" tabindex="-1"></a>tab_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(  Predicción <span class="ot">=</span> <span class="fu">predict</span>(mod_logit_Int_Aleatorio, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>),</span>
+<span id="cb343-2"><a href="sec-logistica-multinivel.html#cb343-2" tabindex="-1"></a>  <span class="at">Pobreza    =</span> encuesta<span class="sc">$</span>pobreza,</span>
+<span id="cb343-3"><a href="sec-logistica-multinivel.html#cb343-3" tabindex="-1"></a>  <span class="at">Estrato    =</span> encuesta<span class="sc">$</span>Stratum,</span>
+<span id="cb343-4"><a href="sec-logistica-multinivel.html#cb343-4" tabindex="-1"></a>  <span class="at">wk2        =</span> encuesta<span class="sc">$</span>wk2</span>
+<span id="cb343-5"><a href="sec-logistica-multinivel.html#cb343-5" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-pred-logit-int-aleatorio">Cuadro 8.17: </span>Predicciones del modelo logístico con intercepto aleatorio (primeras 6 observaciones)</caption>
 <thead>
@@ -815,11 +815,11 @@ Figura 8.15: Curvas de probabilidad predichas por estrato: modelo logístico con
 </tbody>
 </table>
 <p>La Tabla <a href="sec-logistica-multinivel.html#tab:tab-calibracion-logit-int">8.18</a> verifica la calibración del modelo:</p>
-<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="sec-logistica-multinivel.html#cb347-1" tabindex="-1"></a>tab_pred <span class="sc">%&gt;%</span></span>
-<span id="cb347-2"><a href="sec-logistica-multinivel.html#cb347-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb347-3"><a href="sec-logistica-multinivel.html#cb347-3" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media predicha (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Predicción, wk2), <span class="dv">4</span>),</span>
-<span id="cb347-4"><a href="sec-logistica-multinivel.html#cb347-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media observada (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Pobreza, wk2), <span class="dv">4</span>)</span>
-<span id="cb347-5"><a href="sec-logistica-multinivel.html#cb347-5" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="sec-logistica-multinivel.html#cb344-1" tabindex="-1"></a>tab_pred <span class="sc">%&gt;%</span></span>
+<span id="cb344-2"><a href="sec-logistica-multinivel.html#cb344-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb344-3"><a href="sec-logistica-multinivel.html#cb344-3" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media predicha (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Predicción, wk2), <span class="dv">4</span>),</span>
+<span id="cb344-4"><a href="sec-logistica-multinivel.html#cb344-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media observada (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Pobreza, wk2), <span class="dv">4</span>)</span>
+<span id="cb344-5"><a href="sec-logistica-multinivel.html#cb344-5" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-calibracion-logit-int">Cuadro 8.18: </span>Verificación de calibración del modelo logístico con intercepto aleatorio</caption>
 <thead>
@@ -880,19 +880,19 @@ N\!\left(
 \]</span></p>
 <p>En este modelo, los efectos aleatorios del intercepto y la pendiente pueden estar correlacionados, lo que permite capturar heterogeneidad en la relación entre gasto y pobreza entre estratos.</p>
 <p>La implementación en R es la siguiente:</p>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="sec-logistica-multinivel.html#cb348-1" tabindex="-1"></a>mod_logit_Pen_Aleatorio <span class="ot">&lt;-</span> <span class="fu">glmer</span>(</span>
-<span id="cb348-2"><a href="sec-logistica-multinivel.html#cb348-2" tabindex="-1"></a>  pobreza <span class="sc">~</span> Expenditure <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Expenditure <span class="sc">|</span> Stratum),</span>
-<span id="cb348-3"><a href="sec-logistica-multinivel.html#cb348-3" tabindex="-1"></a>  <span class="at">data    =</span> encuesta,</span>
-<span id="cb348-4"><a href="sec-logistica-multinivel.html#cb348-4" tabindex="-1"></a>  <span class="at">weights =</span> wk2,</span>
-<span id="cb348-5"><a href="sec-logistica-multinivel.html#cb348-5" tabindex="-1"></a>  <span class="at">family  =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>)</span>
-<span id="cb348-6"><a href="sec-logistica-multinivel.html#cb348-6" tabindex="-1"></a>)</span>
-<span id="cb348-7"><a href="sec-logistica-multinivel.html#cb348-7" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(mod_logit_Pen_Aleatorio)</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="sec-logistica-multinivel.html#cb345-1" tabindex="-1"></a>mod_logit_Pen_Aleatorio <span class="ot">&lt;-</span> <span class="fu">glmer</span>(</span>
+<span id="cb345-2"><a href="sec-logistica-multinivel.html#cb345-2" tabindex="-1"></a>  pobreza <span class="sc">~</span> Expenditure <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Expenditure <span class="sc">|</span> Stratum),</span>
+<span id="cb345-3"><a href="sec-logistica-multinivel.html#cb345-3" tabindex="-1"></a>  <span class="at">data    =</span> encuesta,</span>
+<span id="cb345-4"><a href="sec-logistica-multinivel.html#cb345-4" tabindex="-1"></a>  <span class="at">weights =</span> wk2,</span>
+<span id="cb345-5"><a href="sec-logistica-multinivel.html#cb345-5" tabindex="-1"></a>  <span class="at">family  =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>)</span>
+<span id="cb345-6"><a href="sec-logistica-multinivel.html#cb345-6" tabindex="-1"></a>)</span>
+<span id="cb345-7"><a href="sec-logistica-multinivel.html#cb345-7" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(mod_logit_Pen_Aleatorio)</span></code></pre></div>
 <pre><code>## # Intraclass Correlation Coefficient
 ## 
 ##     Adjusted ICC: 0.886
 ##   Unadjusted ICC: 0.653</code></pre>
 <p>Los coeficientes del modelo por estrato se muestran en la Tabla <a href="sec-logistica-multinivel.html#tab:tab-coef-logit-pendiente">8.19</a>:</p>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="sec-logistica-multinivel.html#cb350-1" tabindex="-1"></a><span class="fu">coef</span>(mod_logit_Pen_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L)</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="sec-logistica-multinivel.html#cb347-1" tabindex="-1"></a><span class="fu">coef</span>(mod_logit_Pen_Aleatorio)<span class="sc">$</span>Stratum <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>10L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-coef-logit-pendiente">Cuadro 8.19: </span>Coeficientes del modelo logístico con intercepto y pendiente aleatoria por estrato (primeros 10 estratos)</caption>
 <thead>
@@ -956,22 +956,22 @@ N\!\left(
 </tbody>
 </table>
 <p>La Figura <a href="sec-logistica-multinivel.html#fig:fig-logit-pendiente-aleatoria">8.16</a> muestra que las curvas predichas son más heterogéneas entre estratos que en el modelo anterior:</p>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="sec-logistica-multinivel.html#cb351-1" tabindex="-1"></a>dat_pred <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb351-2"><a href="sec-logistica-multinivel.html#cb351-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
-<span id="cb351-3"><a href="sec-logistica-multinivel.html#cb351-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Expenditure =</span> <span class="fu">list</span>(<span class="fu">seq</span>(<span class="fu">min</span>(Expenditure), <span class="fu">max</span>(Expenditure), <span class="at">len =</span> <span class="dv">100</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb351-4"><a href="sec-logistica-multinivel.html#cb351-4" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">unnest_legacy</span>()</span>
-<span id="cb351-5"><a href="sec-logistica-multinivel.html#cb351-5" tabindex="-1"></a></span>
-<span id="cb351-6"><a href="sec-logistica-multinivel.html#cb351-6" tabindex="-1"></a>dat_pred <span class="ot">&lt;-</span> <span class="fu">mutate</span>(dat_pred,</span>
-<span id="cb351-7"><a href="sec-logistica-multinivel.html#cb351-7" tabindex="-1"></a>                   <span class="at">Proba =</span> <span class="fu">predict</span>(mod_logit_Pen_Aleatorio,</span>
-<span id="cb351-8"><a href="sec-logistica-multinivel.html#cb351-8" tabindex="-1"></a>                                   <span class="at">newdata =</span> dat_pred,</span>
-<span id="cb351-9"><a href="sec-logistica-multinivel.html#cb351-9" tabindex="-1"></a>                                   <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="sec-logistica-multinivel.html#cb352-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat_pred,</span>
-<span id="cb352-2"><a href="sec-logistica-multinivel.html#cb352-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Proba, <span class="at">x =</span> Expenditure, <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
-<span id="cb352-3"><a href="sec-logistica-multinivel.html#cb352-3" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb352-4"><a href="sec-logistica-multinivel.html#cb352-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> encuesta, <span class="fu">aes</span>(<span class="at">y =</span> pobreza, <span class="at">x =</span> Expenditure), <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb352-5"><a href="sec-logistica-multinivel.html#cb352-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Probabilidad de pobreza&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Gasto&quot;</span>) <span class="sc">+</span></span>
-<span id="cb352-6"><a href="sec-logistica-multinivel.html#cb352-6" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb352-7"><a href="sec-logistica-multinivel.html#cb352-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="sec-logistica-multinivel.html#cb348-1" tabindex="-1"></a>dat_pred <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb348-2"><a href="sec-logistica-multinivel.html#cb348-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum) <span class="sc">%&gt;%</span></span>
+<span id="cb348-3"><a href="sec-logistica-multinivel.html#cb348-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Expenditure =</span> <span class="fu">list</span>(<span class="fu">seq</span>(<span class="fu">min</span>(Expenditure), <span class="fu">max</span>(Expenditure), <span class="at">len =</span> <span class="dv">100</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb348-4"><a href="sec-logistica-multinivel.html#cb348-4" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">unnest_legacy</span>()</span>
+<span id="cb348-5"><a href="sec-logistica-multinivel.html#cb348-5" tabindex="-1"></a></span>
+<span id="cb348-6"><a href="sec-logistica-multinivel.html#cb348-6" tabindex="-1"></a>dat_pred <span class="ot">&lt;-</span> <span class="fu">mutate</span>(dat_pred,</span>
+<span id="cb348-7"><a href="sec-logistica-multinivel.html#cb348-7" tabindex="-1"></a>                   <span class="at">Proba =</span> <span class="fu">predict</span>(mod_logit_Pen_Aleatorio,</span>
+<span id="cb348-8"><a href="sec-logistica-multinivel.html#cb348-8" tabindex="-1"></a>                                   <span class="at">newdata =</span> dat_pred,</span>
+<span id="cb348-9"><a href="sec-logistica-multinivel.html#cb348-9" tabindex="-1"></a>                                   <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="sec-logistica-multinivel.html#cb349-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat_pred,</span>
+<span id="cb349-2"><a href="sec-logistica-multinivel.html#cb349-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Proba, <span class="at">x =</span> Expenditure, <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
+<span id="cb349-3"><a href="sec-logistica-multinivel.html#cb349-3" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb349-4"><a href="sec-logistica-multinivel.html#cb349-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> encuesta, <span class="fu">aes</span>(<span class="at">y =</span> pobreza, <span class="at">x =</span> Expenditure), <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb349-5"><a href="sec-logistica-multinivel.html#cb349-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Probabilidad de pobreza&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Gasto&quot;</span>) <span class="sc">+</span></span>
+<span id="cb349-6"><a href="sec-logistica-multinivel.html#cb349-6" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb349-7"><a href="sec-logistica-multinivel.html#cb349-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-logit-pendiente-aleatoria"></span>
 <img src="08-Multinivel_files/figure-html/fig-logit-pendiente-aleatoria-1.svg" alt="Curvas de probabilidad predichas por estrato: modelo logístico con intercepto y pendiente aleatoria" width="70%" />
 <p class="caption">
@@ -979,11 +979,11 @@ Figura 8.16: Curvas de probabilidad predichas por estrato: modelo logístico con
 </p>
 </div>
 <p>Las predicciones del modelo y la verificación de calibración se presentan en las Tablas <a href="sec-logistica-multinivel.html#tab:tab-pred-logit-pendiente">8.20</a> y <a href="sec-logistica-multinivel.html#tab:tab-calibracion-logit-pendiente">8.21</a>:</p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="sec-logistica-multinivel.html#cb353-1" tabindex="-1"></a>tab_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Predicción <span class="ot">=</span> <span class="fu">predict</span>(mod_logit_Pen_Aleatorio, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>),</span>
-<span id="cb353-2"><a href="sec-logistica-multinivel.html#cb353-2" tabindex="-1"></a>  <span class="at">Pobreza    =</span> encuesta<span class="sc">$</span>pobreza,</span>
-<span id="cb353-3"><a href="sec-logistica-multinivel.html#cb353-3" tabindex="-1"></a>  <span class="at">Estrato    =</span> encuesta<span class="sc">$</span>Stratum,</span>
-<span id="cb353-4"><a href="sec-logistica-multinivel.html#cb353-4" tabindex="-1"></a>  <span class="at">wk2        =</span> encuesta<span class="sc">$</span>wk2</span>
-<span id="cb353-5"><a href="sec-logistica-multinivel.html#cb353-5" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="sec-logistica-multinivel.html#cb350-1" tabindex="-1"></a>tab_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Predicción <span class="ot">=</span> <span class="fu">predict</span>(mod_logit_Pen_Aleatorio, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>),</span>
+<span id="cb350-2"><a href="sec-logistica-multinivel.html#cb350-2" tabindex="-1"></a>  <span class="at">Pobreza    =</span> encuesta<span class="sc">$</span>pobreza,</span>
+<span id="cb350-3"><a href="sec-logistica-multinivel.html#cb350-3" tabindex="-1"></a>  <span class="at">Estrato    =</span> encuesta<span class="sc">$</span>Stratum,</span>
+<span id="cb350-4"><a href="sec-logistica-multinivel.html#cb350-4" tabindex="-1"></a>  <span class="at">wk2        =</span> encuesta<span class="sc">$</span>wk2</span>
+<span id="cb350-5"><a href="sec-logistica-multinivel.html#cb350-5" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-pred-logit-pendiente">Cuadro 8.20: </span>Predicciones del modelo logístico con intercepto y pendiente aleatoria (primeras 6 observaciones)</caption>
 <thead>
@@ -1033,11 +1033,11 @@ Figura 8.16: Curvas de probabilidad predichas por estrato: modelo logístico con
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="sec-logistica-multinivel.html#cb354-1" tabindex="-1"></a>tab_pred <span class="sc">%&gt;%</span></span>
-<span id="cb354-2"><a href="sec-logistica-multinivel.html#cb354-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb354-3"><a href="sec-logistica-multinivel.html#cb354-3" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media predicha (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Predicción, wk2), <span class="dv">4</span>),</span>
-<span id="cb354-4"><a href="sec-logistica-multinivel.html#cb354-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media observada (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Pobreza, wk2), <span class="dv">4</span>)</span>
-<span id="cb354-5"><a href="sec-logistica-multinivel.html#cb354-5" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="sec-logistica-multinivel.html#cb351-1" tabindex="-1"></a>tab_pred <span class="sc">%&gt;%</span></span>
+<span id="cb351-2"><a href="sec-logistica-multinivel.html#cb351-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb351-3"><a href="sec-logistica-multinivel.html#cb351-3" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media predicha (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Predicción, wk2), <span class="dv">4</span>),</span>
+<span id="cb351-4"><a href="sec-logistica-multinivel.html#cb351-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media observada (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Pobreza, wk2), <span class="dv">4</span>)</span>
+<span id="cb351-5"><a href="sec-logistica-multinivel.html#cb351-5" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-calibracion-logit-pendiente">Cuadro 8.21: </span>Verificación de calibración del modelo logístico con intercepto y pendiente aleatoria</caption>
 <thead>
@@ -1105,32 +1105,32 @@ N\!\left(
 \]</span></p>
 <p>donde <span class="math inline">\(\Sigma\)</span> es la matriz completa de varianzas y covarianzas de los efectos aleatorios.</p>
 <p>La implementación en R es la siguiente:</p>
-<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="sec-logistica-multinivel.html#cb355-1" tabindex="-1"></a>mod_logit_Pen_Aleatorio2 <span class="ot">&lt;-</span> <span class="fu">glmer</span>(</span>
-<span id="cb355-2"><a href="sec-logistica-multinivel.html#cb355-2" tabindex="-1"></a>  pobreza <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Expenditure <span class="sc">+</span> Zone <span class="sc">+</span> mu <span class="sc">+</span></span>
-<span id="cb355-3"><a href="sec-logistica-multinivel.html#cb355-3" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">+</span> Expenditure <span class="sc">+</span> Zone <span class="sc">+</span> mu <span class="sc">|</span> Stratum),</span>
-<span id="cb355-4"><a href="sec-logistica-multinivel.html#cb355-4" tabindex="-1"></a>  <span class="at">data    =</span> encuesta,</span>
-<span id="cb355-5"><a href="sec-logistica-multinivel.html#cb355-5" tabindex="-1"></a>  <span class="at">weights =</span> wk2,</span>
-<span id="cb355-6"><a href="sec-logistica-multinivel.html#cb355-6" tabindex="-1"></a>  <span class="at">family  =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>)</span>
-<span id="cb355-7"><a href="sec-logistica-multinivel.html#cb355-7" tabindex="-1"></a>)</span>
-<span id="cb355-8"><a href="sec-logistica-multinivel.html#cb355-8" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(mod_logit_Pen_Aleatorio2)</span></code></pre></div>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="sec-logistica-multinivel.html#cb352-1" tabindex="-1"></a>mod_logit_Pen_Aleatorio2 <span class="ot">&lt;-</span> <span class="fu">glmer</span>(</span>
+<span id="cb352-2"><a href="sec-logistica-multinivel.html#cb352-2" tabindex="-1"></a>  pobreza <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Expenditure <span class="sc">+</span> Zone <span class="sc">+</span> mu <span class="sc">+</span></span>
+<span id="cb352-3"><a href="sec-logistica-multinivel.html#cb352-3" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">+</span> Expenditure <span class="sc">+</span> Zone <span class="sc">+</span> mu <span class="sc">|</span> Stratum),</span>
+<span id="cb352-4"><a href="sec-logistica-multinivel.html#cb352-4" tabindex="-1"></a>  <span class="at">data    =</span> encuesta,</span>
+<span id="cb352-5"><a href="sec-logistica-multinivel.html#cb352-5" tabindex="-1"></a>  <span class="at">weights =</span> wk2,</span>
+<span id="cb352-6"><a href="sec-logistica-multinivel.html#cb352-6" tabindex="-1"></a>  <span class="at">family  =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>)</span>
+<span id="cb352-7"><a href="sec-logistica-multinivel.html#cb352-7" tabindex="-1"></a>)</span>
+<span id="cb352-8"><a href="sec-logistica-multinivel.html#cb352-8" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(mod_logit_Pen_Aleatorio2)</span></code></pre></div>
 <pre><code>## [1] NA</code></pre>
 <p>Aunque <span class="math inline">\(\mu\)</span> corresponde al gasto medio del estrato, en esta especificación se incorpora como covariable con pendiente aleatoria. Por tanto, el modelo no corresponde a una formulación clásica de variable contextual de nivel 2, sino a un modelo con efectos aleatorios asociados a dicha variable.</p>
 <p>La Figura <a href="sec-logistica-multinivel.html#fig:fig-logit-zona-facet">8.17</a> presenta las curvas de probabilidad predichas desagregadas por zona, mostrando una variación importante en el efecto del gasto sobre la pobreza entre zona urbana y rural:</p>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="sec-logistica-multinivel.html#cb357-1" tabindex="-1"></a>dat_pred <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
-<span id="cb357-2"><a href="sec-logistica-multinivel.html#cb357-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum, Zone, mu) <span class="sc">%&gt;%</span></span>
-<span id="cb357-3"><a href="sec-logistica-multinivel.html#cb357-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Expenditure =</span> <span class="fu">list</span>(<span class="fu">seq</span>(<span class="fu">min</span>(Expenditure), <span class="fu">max</span>(Expenditure), <span class="at">len =</span> <span class="dv">100</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb357-4"><a href="sec-logistica-multinivel.html#cb357-4" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">unnest_legacy</span>()</span>
-<span id="cb357-5"><a href="sec-logistica-multinivel.html#cb357-5" tabindex="-1"></a></span>
-<span id="cb357-6"><a href="sec-logistica-multinivel.html#cb357-6" tabindex="-1"></a>dat_pred<span class="sc">$</span>Proba <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_logit_Pen_Aleatorio2,</span>
-<span id="cb357-7"><a href="sec-logistica-multinivel.html#cb357-7" tabindex="-1"></a>                          <span class="at">newdata =</span> dat_pred, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="sec-logistica-multinivel.html#cb358-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat_pred,</span>
-<span id="cb358-2"><a href="sec-logistica-multinivel.html#cb358-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Proba, <span class="at">x =</span> Expenditure, <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
-<span id="cb358-3"><a href="sec-logistica-multinivel.html#cb358-3" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb358-4"><a href="sec-logistica-multinivel.html#cb358-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> Zone) <span class="sc">+</span></span>
-<span id="cb358-5"><a href="sec-logistica-multinivel.html#cb358-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> encuesta, <span class="fu">aes</span>(<span class="at">y =</span> pobreza, <span class="at">x =</span> Expenditure), <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb358-6"><a href="sec-logistica-multinivel.html#cb358-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Probabilidad de pobreza&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Gasto&quot;</span>) <span class="sc">+</span></span>
-<span id="cb358-7"><a href="sec-logistica-multinivel.html#cb358-7" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb358-8"><a href="sec-logistica-multinivel.html#cb358-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="sec-logistica-multinivel.html#cb354-1" tabindex="-1"></a>dat_pred <span class="ot">&lt;-</span> encuesta <span class="sc">%&gt;%</span></span>
+<span id="cb354-2"><a href="sec-logistica-multinivel.html#cb354-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Stratum, Zone, mu) <span class="sc">%&gt;%</span></span>
+<span id="cb354-3"><a href="sec-logistica-multinivel.html#cb354-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Expenditure =</span> <span class="fu">list</span>(<span class="fu">seq</span>(<span class="fu">min</span>(Expenditure), <span class="fu">max</span>(Expenditure), <span class="at">len =</span> <span class="dv">100</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb354-4"><a href="sec-logistica-multinivel.html#cb354-4" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">unnest_legacy</span>()</span>
+<span id="cb354-5"><a href="sec-logistica-multinivel.html#cb354-5" tabindex="-1"></a></span>
+<span id="cb354-6"><a href="sec-logistica-multinivel.html#cb354-6" tabindex="-1"></a>dat_pred<span class="sc">$</span>Proba <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_logit_Pen_Aleatorio2,</span>
+<span id="cb354-7"><a href="sec-logistica-multinivel.html#cb354-7" tabindex="-1"></a>                          <span class="at">newdata =</span> dat_pred, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="sec-logistica-multinivel.html#cb355-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dat_pred,</span>
+<span id="cb355-2"><a href="sec-logistica-multinivel.html#cb355-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> Proba, <span class="at">x =</span> Expenditure, <span class="at">colour =</span> Stratum)) <span class="sc">+</span></span>
+<span id="cb355-3"><a href="sec-logistica-multinivel.html#cb355-3" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb355-4"><a href="sec-logistica-multinivel.html#cb355-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> Zone) <span class="sc">+</span></span>
+<span id="cb355-5"><a href="sec-logistica-multinivel.html#cb355-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> encuesta, <span class="fu">aes</span>(<span class="at">y =</span> pobreza, <span class="at">x =</span> Expenditure), <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb355-6"><a href="sec-logistica-multinivel.html#cb355-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Probabilidad de pobreza&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Gasto&quot;</span>) <span class="sc">+</span></span>
+<span id="cb355-7"><a href="sec-logistica-multinivel.html#cb355-7" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb355-8"><a href="sec-logistica-multinivel.html#cb355-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-logit-zona-facet"></span>
 <img src="08-Multinivel_files/figure-html/fig-logit-zona-facet-1.svg" alt="Curvas de probabilidad de pobreza predichas por estrato y zona: modelo logístico con intercepto, pendiente y gasto medio contextual" width="70%" />
 <p class="caption">
@@ -1138,12 +1138,12 @@ Figura 8.17: Curvas de probabilidad de pobreza predichas por estrato y zona: mod
 </p>
 </div>
 <p>Las predicciones por zona y la verificación de calibración se presentan en las Tablas <a href="sec-logistica-multinivel.html#tab:tab-pred-logit-zona">8.22</a> y <a href="sec-logistica-multinivel.html#tab:tab-calibracion-logit-zona">8.23</a>:</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="sec-logistica-multinivel.html#cb359-1" tabindex="-1"></a>tab_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Predicción <span class="ot">=</span> <span class="fu">predict</span>(mod_logit_Pen_Aleatorio2, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>),</span>
-<span id="cb359-2"><a href="sec-logistica-multinivel.html#cb359-2" tabindex="-1"></a>  <span class="at">Pobreza    =</span> encuesta<span class="sc">$</span>pobreza,</span>
-<span id="cb359-3"><a href="sec-logistica-multinivel.html#cb359-3" tabindex="-1"></a>  <span class="at">Estrato    =</span> encuesta<span class="sc">$</span>Stratum,</span>
-<span id="cb359-4"><a href="sec-logistica-multinivel.html#cb359-4" tabindex="-1"></a>  <span class="at">Zona       =</span> encuesta<span class="sc">$</span>Zone,</span>
-<span id="cb359-5"><a href="sec-logistica-multinivel.html#cb359-5" tabindex="-1"></a>  <span class="at">wk2        =</span> encuesta<span class="sc">$</span>wk2</span>
-<span id="cb359-6"><a href="sec-logistica-multinivel.html#cb359-6" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="sec-logistica-multinivel.html#cb356-1" tabindex="-1"></a>tab_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Predicción <span class="ot">=</span> <span class="fu">predict</span>(mod_logit_Pen_Aleatorio2, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>),</span>
+<span id="cb356-2"><a href="sec-logistica-multinivel.html#cb356-2" tabindex="-1"></a>  <span class="at">Pobreza    =</span> encuesta<span class="sc">$</span>pobreza,</span>
+<span id="cb356-3"><a href="sec-logistica-multinivel.html#cb356-3" tabindex="-1"></a>  <span class="at">Estrato    =</span> encuesta<span class="sc">$</span>Stratum,</span>
+<span id="cb356-4"><a href="sec-logistica-multinivel.html#cb356-4" tabindex="-1"></a>  <span class="at">Zona       =</span> encuesta<span class="sc">$</span>Zone,</span>
+<span id="cb356-5"><a href="sec-logistica-multinivel.html#cb356-5" tabindex="-1"></a>  <span class="at">wk2        =</span> encuesta<span class="sc">$</span>wk2</span>
+<span id="cb356-6"><a href="sec-logistica-multinivel.html#cb356-6" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>6L)</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-pred-logit-zona">Cuadro 8.22: </span>Predicciones del modelo logístico con zona (primeras 6 observaciones)</caption>
 <thead>
@@ -1200,12 +1200,12 @@ Figura 8.17: Curvas de probabilidad de pobreza predichas por estrato y zona: mod
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="sec-logistica-multinivel.html#cb360-1" tabindex="-1"></a>tab_pred <span class="sc">%&gt;%</span></span>
-<span id="cb360-2"><a href="sec-logistica-multinivel.html#cb360-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Zona) <span class="sc">%&gt;%</span></span>
-<span id="cb360-3"><a href="sec-logistica-multinivel.html#cb360-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb360-4"><a href="sec-logistica-multinivel.html#cb360-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media predicha (ponderada)</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Predicción, wk2), <span class="dv">4</span>),</span>
-<span id="cb360-5"><a href="sec-logistica-multinivel.html#cb360-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media observada (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Pobreza, wk2), <span class="dv">4</span>)</span>
-<span id="cb360-6"><a href="sec-logistica-multinivel.html#cb360-6" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="sec-logistica-multinivel.html#cb357-1" tabindex="-1"></a>tab_pred <span class="sc">%&gt;%</span></span>
+<span id="cb357-2"><a href="sec-logistica-multinivel.html#cb357-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Zona) <span class="sc">%&gt;%</span></span>
+<span id="cb357-3"><a href="sec-logistica-multinivel.html#cb357-3" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb357-4"><a href="sec-logistica-multinivel.html#cb357-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media predicha (ponderada)</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Predicción, wk2), <span class="dv">4</span>),</span>
+<span id="cb357-5"><a href="sec-logistica-multinivel.html#cb357-5" tabindex="-1"></a>    <span class="st">`</span><span class="at">Media observada (ponderada)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">weighted.mean</span>(Pobreza, wk2), <span class="dv">4</span>)</span>
+<span id="cb357-6"><a href="sec-logistica-multinivel.html#cb357-6" tabindex="-1"></a>  )</span></code></pre></div>
 <table>
 <caption><span id="tab:tab-calibracion-logit-zona">Cuadro 8.23: </span>Verificación de calibración del modelo logístico con zona: media ponderada predicha versus observada por zona</caption>
 <thead>
